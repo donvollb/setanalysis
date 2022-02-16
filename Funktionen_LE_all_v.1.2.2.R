@@ -1,5 +1,4 @@
 
-
 ### ÄÖÜ richtig angezeigt? - Reopen with Encoding -> UTF-8 ###
 
 
