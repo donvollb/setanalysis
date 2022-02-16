@@ -1,4 +1,3 @@
-
 ### ÄÖÜ richtig angezeigt? - Reopen with Encoding -> UTF-8 ###
 
 
@@ -9,8 +8,6 @@
 # Pakete laden
 suppressPackageStartupMessages(if(!require(pacman)){install.packages("pacman")})
 pacman::p_load(ggplot2, knitr, psych, descr, dplyr, kableExtra, Hmisc, cowplot)
-
-# jede Spalte +12
 
 # Globale Variablen festsetzen, sofern sie (beim Einlesen) noch nicht vorhanden sind
 # Idee: Sollte z.B. die Farbe für die Balken (color.bars) nicht schon im Skript festgelegt sein, passiert dies hier, damit die Funktionen darauf zugreifen können
