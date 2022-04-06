@@ -1,3 +1,5 @@
+
+
 ### ÄÖÜ richtig angezeigt? - Reopen with Encoding -> UTF-8 ###
 
 
@@ -7,7 +9,9 @@
 #### Setup ####
 # Pakete laden
 suppressPackageStartupMessages(if(!require(pacman)){install.packages("pacman")})
-pacman::p_load(ggplot2, knitr, psych, descr, dplyr, kableExtra, Hmisc, cowplot)
+pacman::p_load(ggplot2, knitr, psych, descr, dplyr, kableExtra, cowplot)
+
+# jede Spalte +12
 
 # Globale Variablen festsetzen, sofern sie (beim Einlesen) noch nicht vorhanden sind
 # Idee: Sollte z.B. die Farbe für die Balken (color.bars) nicht schon im Skript festgelegt sein, passiert dies hier, damit die Funktionen darauf zugreifen können
@@ -45,6 +49,9 @@ if(!exists("show.plot.sk")){show.plot.sk <- TRUE}
 # Environments
 if(!exists("list.open")){list.open <- new.env()}
 
+# Globale inkl-Variable für offene Fragen
+if(!exists("inkl.open")){inkl.open <- TRUE}
+
 
 #### ELEMENTARE FUNKTIONEN ####
 
@@ -59,8 +66,8 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
     function() {g}
   ), collapse = '')
   
-  if(hide == FALSE) {head.end <- ", echo=FALSE, results = \"asis\"}"} 
-  else {head.end <- ", echo=FALSE, results = \"hide\", fig.keep = \"all\"}" }
+  if(hide == FALSE) {head.end <- ", echo=FALSE, results = \"asis\", fig.align = \"center\"}"} 
+  else {head.end <- ", echo=FALSE, results = \"hide\", fig.keep = \"all\", fig.align = \"center\"}" }
   
   if(!exists("sub.nr")) {assign("sub.nr", 0, envir = globalenv())}
   assign("sub.nr", sub.nr+1, envir = globalenv())
@@ -219,7 +226,7 @@ replace.latex.issues <- function(x, all = TRUE) #Objekt
 aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
                       kennung) # kennung können z.B. die LV-Kennungen oder die Fallnummern sein
   {
-  labels <- Hmisc::label(vars)
+  labels <- as.character(lapply(vars, attr, which = "label"))
   x <- data.frame(data.frame(vars)[0, ])
   for (n in unique(kennung)) {
     vars.sub <- data.frame(data.frame(vars)[kennung == n, ])
@@ -229,7 +236,7 @@ aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert wer
   }
   
   for (k in 1:ncol(x)) {
-    Hmisc::label(x[, k]) <- labels[k]
+    attr(x[, k], "label") <- labels[k]
   }
   
   return(x)
@@ -239,6 +246,7 @@ aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert wer
 # Funktion für Fragen mit offenem Antwortformat (benötigt u.a. "list.open", wird am Anfang des Skripts erstellt)
 open.answers <- function(x, # Daten 
                          inkl = "nr",  # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+                         inkl.global = inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
                          nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                          freq = FALSE) # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
 {
@@ -249,7 +257,7 @@ open.answers <- function(x, # Daten
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
   
-  if (inkl == TRUE) {
+  if (inkl == TRUE && inkl.global == TRUE) {
     
     if(!exists("anchor.nr")) {assign("anchor.nr", 0, envir = globalenv())}
     assign("anchor.nr", anchor.nr+1, envir = globalenv())
@@ -258,7 +266,7 @@ open.answers <- function(x, # Daten
     anchor.top <- paste0(anchor.nr, ".top")
     anchor.bottom <- paste0(anchor.nr, ".bottom")
     
-    cat(paste0("\\hypertarget{", anchor.top, "}{}\\textbf{", nr, " ", replace.latex.issues(Hmisc::label(x)), "}  \n  \n"))
+    cat(paste0("\\hypertarget{", anchor.top, "}{}\\textbf{", nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n"))
     
     if(length(na.omit(x)) > 0) {
     cat(paste0("\\textit{Die offenen Antworten zu dieser Frage finden sich im \\hyperlink{", anchor.bottom, "}{Anhang}.}  \n \n"))
@@ -440,6 +448,7 @@ table.freq <- function(x, # Daten
                        col1.name = "", # Name der ersten Zelle des headers
                        col2.name = "N\\textsubscript{votes}", # Name der zweiten Zelle des headers
                        col.width = "default", # Spaltenbreite (siehe lv.kable)
+                       order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                        bold = TRUE, # fetter header? (siehe lv.kable)
                        bold.col1 = TRUE) # fette erste Zelle des headers? (siehe lv.kable)
   {
@@ -471,7 +480,18 @@ table.freq <- function(x, # Daten
   
   if (is.numeric(x) == TRUE) {
     if (cutoff != FALSE & max(x, na.rm = TRUE) == cutoff){jim[nrow(jim)-2, 1] <- paste0(cutoff, " oder höher")}
-    }
+  }
+  
+  
+  
+  if (order.table != FALSE) {
+    
+    decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
+    jim <- jim[c(order(jim[1:(nrow(jim)-ncol(jim)+2), 2], 
+                       decreasing = decreasing), 
+                 (nrow(jim)-ncol(jim)+3):nrow(jim)
+                 ), ]
+  }
     
   if (col.width[1] == "default" & length(jim) == 4) {col.width <- col.width4}
   if (col.width[1] == "default" & length(jim) == 3) {col.width <- col.width3}
@@ -521,7 +541,7 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
                              labels = "labels") # Fragetexte, bei "labels" werden die labels der Variablen genommen
   {
   
-  if(labels == "labels") {labels <- Hmisc::label(x)}
+  if(labels == "labels") {labels <- as.character(lapply(x, attr, which = "label"))}
   
   bob <- as.data.frame(round(psych::describe(x), digits = 2))[c(2:5,8:9)]
   bob <- cbind(labels, bob)
@@ -837,7 +857,7 @@ evasys.skala.plot <- function(x, # Daten
       boxlwd=3, 
       whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE)
   mtext(tmin, side=1, at = -0.5, line = line.tmin, font = 2, col = "gray30", cex = 0.65)
-  mtext(tmax, side=1, at = 7.6, line = line.tmax, font = 2, col = "gray30", cex = 0.65)
+  mtext(tmax, side=1, at = number*1.27, line = line.tmax, font = 2, col = "gray30", cex = 0.65)
   
   cat("  \n  \n")
 }
@@ -896,65 +916,182 @@ merge.fachsem <- function(x, # Daten
   }
 }
 
-# merge-Funktion für Skalen-Fragen auf aggregiertem Niveau (Boxplots)
-merge.sk.aggr <- function(x, # Daten
-                          kennung, # Objekt mit Kennungen (oder Fallnummern)
-                          number = 6, # Skala: 6 für Sechser, etc.
-                          tmin ="default", # linker Pol, bei "default" wird das Label automatisch gezogen
-                          tmid = "default", # mittlerer Pol (für 5er Skalen), bei "default" automatisch
-                          tmax = "default",  # rechter Pol, "default" wie oben
-                          show.table = TRUE, # Soll Tabelle angezeigt werden?
-                          fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
-                          already.aggr = FALSE) # Sind die Daten bereits agreggiert?
-  { 
+# merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
+merge.multi.sk <- function(x, # Daten
+                           kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
+                           number = 6, # Skala: 6 für Sechser, etc.
+                           nr = "", # Nummer der ersten Frage
+                           inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+                           tmin = "default", # linker Pol, bei "default" wird das Label automatisch gezogen
+                           tmid = "default", # mittlerer Pol (für 5er Skalen), bei "default" automatisch
+                           tmax = "default",  # rechter Pol, "default" wie oben
+                           show.table = TRUE, # Soll Tabelle angezeigt werden?
+                           show.plot = TRUE, # Sollen Boxplots dazu angezeigt werden?
+                           fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
+                           col2.name = "n", # Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern
+                           message = "", # Soll ein Hinweistext am Anfang erfolgen?
+                           aggr = FALSE) # Sollen Daten aggregiert werden?
+{ 
   # x = Variablen, number = 5 oder 6 (5er, Sechser oder Siebener-Skala)
   # scale = Skalenbeschreibung
   
-  labels <- Hmisc::label(x)
-  
-  x <- data.frame(x)
-  
-  if(tmin == "default") {tmin <- names((attr(x[, 1], "labels")))[1]}
-  if(tmid == "default") {tmid <- names((attr(x[, 1], "labels")))[3]}
-  if(tmax == "default") {tmax <- names((attr(x[, 1], "labels")))[number]}  
-  
-  
-  if(already.aggr == FALSE) {
-    x <- aggr.data(vars = x, kennung = kennung)
-    }
-  
-  
-  if(number == 6) {
-    text.skala <- paste0("(1) ", tmin, " - (6) ", tmax)
-    labels.skala <- c(tmin, "", "", "", "", tmax)
-  }
-  
-  if(number == 5) {
-    text.skala <- paste0("(1) ", tmin, " - (3) ", tmid," - (5) ", tmax)
-    if(tmid == ""){text.skala <- paste0("(1) ", tmin, " - (5) ", tmax)}
-    labels.skala <- c(tmin, "", tmid, "", tmax)
-  }
-  
-
-    if(show.table == TRUE) {subchunkify(table.stat.multi(x, 
-                                                         col1.name = paste0("\\textbf{Item} \\textit{[Skala: ", text.skala, "]}"),
-                                                         col2.name = "N\\textsubscript{courses}",
-                                                         bold.col1 = FALSE), 
-                                        fig_height = 7, fig_width = 9)}
+  if (inkl == "nr") {
     
-  labels <- rev(labels)
-  x <- rev(x)
-  labels <- auto.newline(labels)
+    if (nr == "") {inkl <- TRUE} else {
+      
+      header <- sub("\\..*$", "", nr)
+      nr1 <- as.numeric(sub("^.*\\.", "", nr))
+      nr.end <- nr1 + ncol(x) - 1
+      nrs.ends <- nr1:nr.end
+      nrs <- paste0(header, ".", nrs.ends)
+      
+      inkls <- NULL
+      for (k in 1:length(nrs)) {inkls[k] <- eval(parse(text = paste0("inkl.", nrs[k])))}
+      
+      x <- x[, inkls] # Variablen entfernen, die nicht vorkommen sollen
+      nrs <- nrs[inkls] # Nummern entfernen, die nicht vorkommen sollen
+      
+      if (length(nrs > 0)) {
+        
+        for (k in 1:length(nrs)) {
+          attr(x[, k], "label") <- paste0("\\textbf{", nrs[k], "} ", attr(x[, k], "label"))
+        }
+      }
+      
+      inkl <- ifelse(any(inkls == TRUE), TRUE, FALSE)
+      
+      rm(header, nr1, nr.end, nrs.ends, nrs, inkls)
+      
+    }
+    
+    
+  }
   
-  if(fig.height == "default") 
-  {subchunkify(boxplot.aggr.sk(x, labels, labels.skala, length(labels), number), fig_height = (length(labels)+1), fig_width = 9)}
-  else 
-  {subchunkify(boxplot.aggr.sk(x, labels, labels.skala, length(labels), number), fig_height = fig.height, fig_width = 9)}
   
-  
-  cat("  \n  \n")
-  
+  if (inkl == TRUE) {
+    
+    
+    
+    if (is.data.frame(x) & ncol(x) > 1) {
+      labels <- as.character(lapply(x, attr, which = "label"))
+    } else {
+      labels <- attr(x, "label")
+    }
+    
+    x <- data.frame(x)
+    
+    if (tmin == "default") {
+      tmin <- names((attr(x[, 1], "labels")))[1]
+    }
+    if (tmid == "default") {
+      tmid <- names((attr(x[, 1], "labels")))[3]
+    }
+    if (tmax == "default") {
+      tmax <- names((attr(x[, 1], "labels")))[number]
+    }
+    
+    
+    if (aggr == TRUE) {
+      x <- aggr.data(vars = x, kennung = kennung)
+    }
+    
+    
+    if (number == 6) {
+      text.skala <- paste0("(1) ", tmin, " - (6) ", tmax)
+      labels.skala <- c(tmin, "", "", "", "", tmax)
+    }
+    
+    if (number == 5) {
+      text.skala <- paste0("(1) ", tmin, " - (3) ", tmid, " - (5) ", tmax)
+      if (tmid == "") {
+        text.skala <- paste0("(1) ", tmin, " - (5) ", tmax)
+      }
+      labels.skala <- c(tmin, "", tmid, "", tmax)
+    }
+    
+    if(message != "") {cat(message)}
+    
+    x[x < 1 | x > number] <- NA
+    
+    if (show.table == TRUE) {
+      subchunkify(
+        table.stat.multi(
+          x,
+          col1.name = paste0("\\textbf{Item} \\textit{[Skala: ", text.skala, "]}"),
+          col2.name = col2.name,
+          bold.col1 = FALSE
+        ),
+        fig_height = 7,
+        fig_width = 9
+      )
+    }
+    
+    if (show.plot == TRUE) {
+      labels <- rev(labels)
+      x <- rev(x)
+      labels <- auto.newline(labels)
+      
+      if (fig.height == "default")
+      {
+        subchunkify(
+          boxplot.aggr.sk(x, labels, labels.skala, length(labels), number),
+          fig_height = (length(labels) + 1),
+          fig_width = 9
+        )
+      }
+      else
+      {
+        subchunkify(
+          boxplot.aggr.sk(x, labels, labels.skala, length(labels), number),
+          fig_height = fig.height,
+          fig_width = 9
+        )
+      }
+      
+    }
+    
+    
+    
+    cat("  \n  \n")
+    
+  }
 }
+
+# merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fach
+merge.subj <- function(x1, # Daten von Fach 1
+                       x2, # Daten von Fach 2
+                       inkl1 = "nr1", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr1" zieht sich automatisch die entsprechende inkl. Variable
+                       inkl2 = "nr2", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr2" zieht sich automatisch die entsprechende inkl. Variable
+                       nr1 = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+                       nr2 = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+{
+  if (inkl1 == "nr1") {
+    if (nr1 == "") {inkl1 <- TRUE} else {inkl1 <- eval(parse(text = paste0("inkl.", nr1)))}
+  }
+  
+  if (inkl2 == "nr2") {
+    if (nr2 == "") {inkl2 <- TRUE} else {inkl2 <- eval(parse(text = paste0("inkl.", nr2)))}
+  }
+  
+  if (inkl1 == TRUE && inkl2 == TRUE) {
+    
+    #    subj1 <- data.frame(fach = unlist(x1, use.names = FALSE))
+    #    subj2 <- data.frame(fach = unlist(x2, use.names = FALSE))
+    
+    subj <- rbind(data.frame(fach = unlist(x1, use.names = FALSE)), 
+                  data.frame(fach = unlist(x2, use.names = FALSE))) # Zusammenfügen der beiden Fächer-Spalten
+    
+    attr(subj$fach, "label") <- paste0(" & ", nr2, " ", 
+                                      substr(attr(subj$fach, "label"),1,nchar(attr(subj$fach, "label"))-2), 
+                                      " / 2. Fach? ") # Vergabe des neuen Labels
+    
+    merge.sc(subj$fach, nr = nr1) # Aufruf der merge.sc-Funktion
+    
+    cat("\\textit{Hinweis: In der Befragung wurden 1. und 2. Fach getrennt abgefragt; in dieser Tabelle werden die Antworten gemeinsam dargestellt. Daraus ergibt sich in dieser Darstellung eine Verdopplung des Stichprobenumfangs (siehe \"Total\").}  \n  \n")
+    
+  }
+}
+
 
 
 # merge-Funktion für single-choice Fragen
@@ -963,8 +1100,10 @@ merge.sc <- function(x, # Daten
                      nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                      fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen*0.75 +1
                      already.labels = FALSE, # Wurden die Daten bereits in Label umgewandelt?
+                     col2.name = "n", # Name der n-Spalte in Tabelle
+                     order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                      show.plot = show.plot.sc) # Soll der Plot angezeigt werden?
-  {
+{
   if (sum(!is.na(x)) > 0) {
     
     if(already.labels == FALSE) {x <- sjlabelled::to_label(x)}
@@ -975,17 +1114,19 @@ merge.sc <- function(x, # Daten
     
     if (inkl == TRUE) {
       
-      cat("### " , nr, " ", Hmisc::label(x), "  \n  \n")
+      cat("### " , nr, " ", attr(x, "label"), "  \n  \n")
       
       
       
-      print(table.freq(x, col1.name = "Antwortoption"))
+      print(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name, 
+                       order.table = order.table))
       
       freq.tab <- freq(x, plot = FALSE)
       results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
       results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
       results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
       colnames(results) <- c("label", "freq", "perc")
+      
       
       par(family = "Raleway")
       
@@ -1007,14 +1148,17 @@ merge.sc <- function(x, # Daten
 merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, das Labels enthalten sind
                      head = "default", # Fragetext, bei "default wird dieser automatisch aus den Lables gezogen
                      col1.name = "Antwortoption", # Erste Zelle der ersten Spalte in Tabelle
+                     col2.name = "n", # Name der n-Spalte in Tabelle
                      show.table = TRUE, # Soll Tabelle angezeigt werden?
                      fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Antwortoptionen*0.75 +1
                      inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                      nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                      lime = FALSE, # Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
                      filter = FALSE, # FILTER-Klammer für LimeSurvey
+                     valid.perc = TRUE, # mit gültigen Prozent?
+                     order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                      show.plot = show.plot.mc) # Soll der Plot angezeigt werden?
-  {
+{
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
@@ -1027,7 +1171,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       
       for (l in 1:ncol(x)) {
         
-        label <- Hmisc::label(x[, l])
+        label <- attr(x[, l], "label")
         answer <- sub("\\].*", "", label)
         answer <- sub("\\[", "", answer)
         label_cut <- sub(".*].", "", label)
@@ -1038,32 +1182,66 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
         x[x[, l] == 1 & !is.na(x[, l]), l] <- l
         
         
-        Hmisc::label(x[, l]) <- paste0(label_cut, " (Mehrfachantwort möglich): ", answer)
+        attr(x[, l], "label") <- paste0(label_cut, " (Mehrfachantwort möglich): ", answer)
       }
       
       if (filter != FALSE) {
-        Hmisc::label(x[, 1]) <- paste0("[", filter, "] ", Hmisc::label(x[, 1]))
+        attr(x[, 1], "label") <- paste0("[", filter, "] ", attr(x[, 1], "label"))
       }
-
+      
       
     }
     
+    
+    if (head == "default") {head <- sub(":.*", "", attr(x[, 1], "label"))}
+    cat("###", nr, head, "  \n  \n")
+    
+    val.labels <- sub('.*: ', '', as.character(lapply(x, attr, which = "label")))
+    
+    
+    if (valid.perc == TRUE) {
+      
+      results <- data.frame(matrix(nrow = length(x), ncol = 4))
+      colnames(results) <-
+        c(col1.name, col2.name, "\\%", "gültige \\%")
+      results[, 1] <- replace.latex.issues(val.labels)
+      for (n in 1:length(x)) {
+        results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
+        results[n, 3] <- round(results[n, 2] / nrow(x) * 100, digits = 2)
+        results[n, 4] <-
+          round(results[n, 2] / nrow(x[!is.na(x[, 1]),]) * 100, digits = 2) 
+      }
+      
+      if (order.table != FALSE) {
+        
+        decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
+        results <- results[order(results[, 2], decreasing = decreasing), ]
+        
+      }
+      
+      results[nrow(results)+1, ] <- c("NAs", nrow(x[is.na(x[, 1]),]),
+                                      round(nrow(x[is.na(x[, 1]),]) / nrow(x) * 100, 2),
+                                      "NA")
+      results[nrow(results)+1, ] <- c("Total", nrow(x),
+                                      "NA",
+                                      "NA")
+        
+    } else {
+      results <- data.frame(matrix(nrow = length(x), ncol = 3))
+      colnames(results) <-
+        c(col1.name, "N\\textsubscript{votes}", "\\%")
+      results[, 1] <- replace.latex.issues(val.labels)
+      for (n in 1:length(x)) {
+        results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
+        results[n, 3] <-
+          round(results[n, 2] / nrow(x) * 100, digits = 2)
+      }
+    
+    }
   
-  if (head == "default") {head <- sub(":.*", "", Hmisc::label(x[, 1]))}
-  cat("###", nr, head, "  \n  \n")
-  
-  val.labels <- sub('.*: ', '', Hmisc::label(x))
-  
-  results <- data.frame(matrix(nrow = length(x), ncol = 3))
-  colnames(results) <- c(col1.name, "N\\textsubscript{votes}", "\\%")
-  results[, 1] <- replace.latex.issues(val.labels)
-  for (n in 1:length(x)){
-    results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
-    results[n, 3] <- round(results[n, 2]/nrow(x)*100, digits = 2)
-  }
-  
-  
-  if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width3) , fig_height = 7, fig_width = 9)}
+    if(ncol(results) == 4) {col.width <- col.width4} else {col.width <- col.width3}
+    
+  if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width) , fig_height = 7, fig_width = 9)}
   
   colnames(results) <- c("label", "freq", "perc")
   results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
@@ -1094,12 +1272,12 @@ grade <- function(x, # Daten
   
   if (inkl == TRUE) {
   
-  label <- Hmisc::label(x)
+  label <- attr(x, "label")
   
   if(already.aggr == FALSE) {
    x <- aggr.data(x, kennung)}
   
-  cat("### ", Hmisc::label(x), "  \n  \n", sep = "")  
+  cat("### ", attr(x, "label"), "  \n  \n", sep = "")  
   
   descr <- as.data.frame(psych::describe(x)) [c(2:5,8:9)]
   descr$Item <- label
@@ -1190,7 +1368,7 @@ merge.evasys.sk <- function(x, # Daten
       
       if (lime == TRUE) {
         
-        temp <- Hmisc::label(x)
+        temp <- attr(x, "label")
         
         levs <- levels(x)
         x <- as.numeric(x, na.rm = TRUE) 
@@ -1204,11 +1382,11 @@ merge.evasys.sk <- function(x, # Daten
           temp <- sub(".$", "", temp)
         }
         
-        Hmisc::label(x) <- temp
+        attr(x, "label") <- temp
         
       }
       
-      cat("### " , nr, " ", Hmisc::label(x), "  \n  \n")
+      cat("### " , nr, " ", attr(x, "label"), "  \n  \n")
       cat("  \n  \n")
       
       xtab <- x
@@ -1219,11 +1397,13 @@ merge.evasys.sk <- function(x, # Daten
             
       if (show.alt == TRUE) {
         if(alt1 != FALSE) {
-        cat("Die Ausweichoption \"*", alt1, "*\" wurde ", sum(x == alt1.num, na.rm = TRUE), 
-            " mal gewählt.  \n  \n", sep = "")
+          
+          cat("\\begin{center}Die Ausweichoption \"\\textit{", alt1, "}\" wurde ", sum(x == alt1.num, na.rm = TRUE), 
+              " mal gewählt.\\end{center}  \n  \n", sep = "")
+          
         }
-        if(alt2 != FALSE) {cat("Die Ausweichoption \"*", alt2, "\"* wurde ", sum(x == alt2.num, na.rm = TRUE), 
-                               " mal gewählt.  \n  \n", sep = "")
+        if(alt2 != FALSE) {cat("\\begin{center}Die Ausweichoption \"\\textit{", alt2, "}\" wurde ", sum(x == alt2.num, na.rm = TRUE), 
+                               " mal gewählt.\\end{center}  \n  \n", sep = "")
         }
 
         labels <- names(attributes(x)$labels)
@@ -1272,7 +1452,7 @@ merge.num <- function(x, # Daten
     
     
       
-      cat("### " , nr, " ", Hmisc::label(x), "  \n  \n")
+      cat("### " , nr, " ", attr(x, "label"), "  \n  \n")
       
       x <- as.numeric(gsub(",", ".", x)) # falls mit Komma
       
@@ -1300,22 +1480,24 @@ merge.num <- function(x, # Daten
 # Funktion für offene Antworten
 merge.open <- function(x, # Daten
                        inkl = "nr",  # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+                       inkl.global = inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
                        nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                        anchor = FALSE, # Falls über open.answers Anker kriiert wurden hier die Nummer angeben
                        freq = FALSE) # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
   {
   
+  
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
   
-  if (inkl == TRUE) {
+  if (inkl == TRUE && inkl.global == TRUE) {
     
     if (anchor != FALSE)
     {
-      cat(paste0("\\hypertarget{", anchor, ".bottom}{}\\subsubsection{" , nr, " ", replace.latex.issues(Hmisc::label(x)), "}  \n  \n"))
+      cat(paste0("\\hypertarget{", anchor, ".bottom}{}\\subsubsection{" , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n"))
       cat(paste0("\\hyperlink{", anchor, ".top}{zurück nach oben}  \n  \n"))
-    } else {cat("### " , nr, " ", Hmisc::label(x), "  \n  \n")}
+    } else {cat("### " , nr, " ", attr(x, "label"), "  \n  \n")}
 
     if(length(na.omit(x)) > 0) { # wenn mind. 1 offene Antwort
       
@@ -1374,7 +1556,7 @@ whiskers <- function(x, # Variable, geht auch für mehrere auf einmal; muss ein 
       (1.5 * (quantile(tmp, 0.75, na.rm=TRUE) - quantile(tmp, 0.25, na.rm=TRUE)))
     
     # Bottom
-    cat(paste0("### ", colnames(x)[k], ": ", Hmisc::label(x[, k]), "  \n  \n"))
+    cat(paste0("### ", colnames(x)[k], ": ", attr(x[, k], "label"), "  \n  \n"))
     
     cat("\\center{Ausreißer nach unten/links:}  \n  \n")
     
