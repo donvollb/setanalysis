@@ -11,7 +11,7 @@
 suppressPackageStartupMessages(if(!require(pacman)){install.packages("pacman")})
 pacman::p_load(ggplot2, knitr, psych, descr, dplyr, kableExtra, cowplot)
 
-# jede Spalte +12
+# jede Spalte bei Tabellen erhöht die Breite um 12pt durch automatischen Abstand
 
 # Globale Variablen festsetzen, sofern sie (beim Einlesen) noch nicht vorhanden sind
 # Idee: Sollte z.B. die Farbe für die Balken (color.bars) nicht schon im Skript festgelegt sein, passiert dies hier, damit die Funktionen darauf zugreifen können
