@@ -136,7 +136,7 @@ blank[1, (m+1):ncol(blank)] <- TRUE # Setze TRUE in alle inkl-Spalten der ersten
 
 rstudioapi::showDialog("Abspeichern", "Speichere die überarbeitete Blank-Datei ab. 
                        <b>Denke hierbei unbedingt an die Dateiendung (.csv)</b>")
-# write.csv2(blank, file.choose(new = TRUE)) #Schreibe die Berichte Datei
+write.csv2(blank, file.choose(new = TRUE)) #Schreibe die Berichte Datei
 
 # Falls man es manuell machen möchte:
 # write.csv2(blank, "PFAD/DATEI.csv") #Schreibe die Berichte Datei
