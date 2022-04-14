@@ -13,11 +13,13 @@ library(readxl)
 
 # Blank-Datei
 
+rstudioapi::showDialog("Blank einlesen", "Wähle die <b>blank-Datei</b> aus.")
 file_blank <- file.choose()
 blank <- read_excel(file_blank) # Einlesen der Blank-Datei
 m <- ncol(blank) # wird für Schleife später benötigt, Anzahl der Spalten in der Blank Datei
 
 # TRUE-FALSE Datei
+rstudioapi::showDialog("TRUE-FALSE einlesen", "Wähle die <b>TRUE-FALSE-Datei</b> aus.")
 file_rules <- file.choose()
 rules <- read_excel(file_rules) # Einlesen der TRUE-FALSE Datei
 colnames(rules) <- c("var", "bed", "anm") # Neue Spaltennamen
@@ -132,6 +134,8 @@ blank[1, (m+1):ncol(blank)] <- TRUE # Setze TRUE in alle inkl-Spalten der ersten
 # ABSPEICHERN #
 ###############
 
+rstudioapi::showDialog("Abspeichern", "Speichere die überarbeitete Blank-Datei ab. 
+                       <b>Denke hierbei unbedingt an die Dateiendung (.csv)</b>")
 # write.csv2(blank, file.choose(new = TRUE)) #Schreibe die Berichte Datei
 
 # Falls man es manuell machen möchte:

@@ -15,11 +15,13 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) #Arbeitsverzeichnis 
 
 # Datein einlesen
 # Direkt den csv-Export von EvaSys einlesen
+rstudioapi::showDialog("Daten einlesen", "Wähle die <b>Rohdaten</b> (csv-Export von Evasys) aus.")
 file_data <- file.choose()
 data <- read.csv2(file_data, fileEncoding = "latin1")
 
 # Codebuch einlesen (aus Evasys); "header = FALSE", damit nicht erste Zeile als Spaltennamen genutzt werden 
 # Hier das Codebuch einlesen
+rstudioapi::showDialog("Codebuch einlesen", "Wähle das <b>Codebuch</b> (csv-Export von Evasys) aus.")
 file_codebook <- file.choose()
 codebook <- read.csv2(file_codebook, header = FALSE, col.names = c("var", "code"), fileEncoding = "latin1")
 
@@ -164,6 +166,8 @@ data[data == "[Freitextfeld]"] <- NA # durch die csv in die Daten gelangt
 # ABSPEICHERN #
 ###############
 # Abspeichern, unbedingt hinten an die Datei ".rda" schreiben!!!!!
+rstudioapi::showDialog("Abspeichern", "Speichere die aufbereiteten Daten ab ab. 
+                       <b>Denke hierbei unbedingt an die Dateiendung (.rda)</b>")
 save(data, file = file.choose(new = TRUE))
 
 # Falls man es manuell eingeben möchte:
