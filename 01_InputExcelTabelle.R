@@ -12,9 +12,10 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) #Arbeitsverzeichnis 
 library(readxl)
 
 # Blank-Datei
+
 file_blank <- file.choose()
-data <- read_excel(file_blank) # Einlesen der Blank-Datei
-m <- ncol(data) # wird für Schleife später benötigt, Anzahl der Spalten in der Blank Datei
+blank <- read_excel(file_blank) # Einlesen der Blank-Datei
+m <- ncol(blank) # wird für Schleife später benötigt, Anzahl der Spalten in der Blank Datei
 
 # TRUE-FALSE Datei
 file_rules <- file.choose()
@@ -23,7 +24,7 @@ colnames(rules) <- c("var", "bed", "anm") # Neue Spaltennamen
 
 # Weitere Vorbereitungen für Schleife
 rules$bed_new <- NA #Erstelle neue Spalte
-names <- colnames(data) #Namen der Spalten von data, wichtig für die Schleife
+names <- colnames(blank) #Namen der Spalten von blank, wichtig für die Schleife
 names <- paste0(names, " ") # Leerzeichen hinter jeden Namen, damit z.B. Studiengang.Teil nicht miterkannt wird
 
 
@@ -33,7 +34,7 @@ names <- paste0(names, " ") # Leerzeichen hinter jeden Namen, damit z.B. Studien
 ###########################################
 
 # Diese Schleife bearbeitet die "Regeln" in der TRUE-FALSE-Datei und wandelt sie weiter in R-Code um
-# Aus "Studiengang == "Psychologie"" wird z.B. "data$Studiengang == "Psychologie""
+# Aus "Studiengang == "Psychologie"" wird z.B. "blank$Studiengang == "Psychologie""
 # Zudem werden Regeln für header-Variablen erstellt (damit man das nicht manuell eintippen muss)
 
 
@@ -48,8 +49,8 @@ names <- paste0(names, " ") # Leerzeichen hinter jeden Namen, damit z.B. Studien
         if (grepl(names[k], rules$bed[i])) { #Wenn ein Spaltenname vorkommt
         
       rules$bed_new[i] <- gsub(names[k], 
-                               paste0("data$", names[k]),
-                               rules$bed_new[i])  # Setze vor den Namen ein "data$" uns speichere es ab
+                               paste0("blank$", names[k]),
+                               rules$bed_new[i])  # Setze vor den Namen ein "blank$" uns speichere es ab
         }
     }
     
@@ -65,8 +66,8 @@ names <- paste0(names, " ") # Leerzeichen hinter jeden Namen, damit z.B. Studien
       for (n in 1:l) { # Für jede inkl. Variable
         
       rules$bed_new[i] <- ifelse(rules$bed_new[i] == "", # Falls das Feld leer ist:
-                                 paste0(rules$bed_new[i], "data$inkl.", nr, ".", n, " == TRUE"), # Schreibe es ohne |
-                                 paste0(rules$bed_new[i], " | data$inkl.", nr, ".", n, " == TRUE")) # ansonsten mit | davor
+                                 paste0(rules$bed_new[i], "blank$inkl.", nr, ".", n, " == TRUE"), # Schreibe es ohne |
+                                 paste0(rules$bed_new[i], " | blank$inkl.", nr, ".", n, " == TRUE")) # ansonsten mit | davor
       }
       
     }
@@ -86,21 +87,21 @@ names <- paste0(names, " ") # Leerzeichen hinter jeden Namen, damit z.B. Studien
 # MAIN LOOP 2: Anwenden der Regeln und übertragen in den BLANK-Datensatz #
 ##########################################################################
 
-# In dieser Schleife werden die Regeln der "rules"-Daten angewandt und in "data" übertragen
+# In dieser Schleife werden die Regeln der "rules"-Daten angewandt und in "blank" übertragen
 # Dort wird dann automatisch für jeden Bericht entschieden, welche "inkl.-Variablen" auf "TRUE" gesetzt werden
 
 for (n in 1:nrow(rules)) { #Für jede Regel
   
-  f <- n + m #Addiere die Zeile plus die Anzahl der ursprünglichen Spalten in data (damit die Variable dahinter gesetzt wird und nichts überschreibt)
+  f <- n + m #Addiere die Zeile plus die Anzahl der ursprünglichen Spalten in blank (damit die Variable dahinter gesetzt wird und nichts überschreibt)
   
   if (rules$bed_new[n] == "immer TRUE") { # Wenn die Regel "immer TRUE" ist
-    data[f] <- rep(TRUE, nrow(data)) # Schreibe in allen Reihen "TRUE"
+    blank[f] <- rep(TRUE, nrow(blank)) # Schreibe in allen Reihen "TRUE"
   } 
   
   
   
   if (rules$bed_new[n] == "immer FALSE") { # Wenn die Regel "immer FALSE" ist
-    data[f] <- rep(FALSE, nrow(data)) # Schreibe in allen Reihen "FALSE"
+    blank[f] <- rep(FALSE, nrow(blank)) # Schreibe in allen Reihen "FALSE"
   }
   
   
@@ -108,11 +109,11 @@ for (n in 1:nrow(rules)) { #Für jede Regel
   if (rules$bed_new[n] != "immer FALSE" & rules$bed_new[n] != "immer TRUE") # Falls die Regel weder "immer TRUE" noch "immer FALSE" ist
     
   {
-    data[f] <- ifelse(eval(parse(text = rules$bed_new[n])), TRUE, FALSE) #Interpretiere die Regel als "R-Code" und schreibe so die inkl. Variablen
+    blank[f] <- ifelse(eval(parse(text = rules$bed_new[n])), TRUE, FALSE) #Interpretiere die Regel als "R-Code" und schreibe so die inkl. Variablen
    
   }
   
-   colnames(data)[f] <- rules$var[n] #Überschreibe den Namen der neuen Variable mit der jeweiligen inkl.Variable
+   colnames(blank)[f] <- rules$var[n] #Überschreibe den Namen der neuen Variable mit der jeweiligen inkl.Variable
 }
 
 ####################
@@ -125,14 +126,14 @@ for (n in 1:nrow(rules)) { #Für jede Regel
 #################################################
 
 # WICHTIG: Master-Bericht muss erster Bericht in blank sein!!!
-data[1, (m+1):ncol(data)] <- TRUE # Setze TRUE in alle inkl-Spalten der ersten Zeile
+blank[1, (m+1):ncol(blank)] <- TRUE # Setze TRUE in alle inkl-Spalten der ersten Zeile
 
 ###############
 # ABSPEICHERN #
 ###############
 
-write.csv2(data, file.choose(new = TRUE)) #Schreibe die Berichte Datei
+# write.csv2(blank, file.choose(new = TRUE)) #Schreibe die Berichte Datei
 
 # Falls man es manuell machen möchte:
-# write.csv2(data, "PFAD/DATEI.csv") #Schreibe die Berichte Datei
+# write.csv2(blank, "PFAD/DATEI.csv") #Schreibe die Berichte Datei
 
