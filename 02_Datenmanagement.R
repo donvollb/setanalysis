@@ -167,5 +167,5 @@ data[data == "[Freitextfeld]"] <- NA # durch die csv in die Daten gelangt
 save(data, file = file.choose(new = TRUE))
 
 # Falls man es manuell eingeben möchte:
-save(data, file = "PFAD/NAME.rda")
+# save(data, file = "PFAD/NAME.rda")
 
