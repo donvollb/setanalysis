@@ -8,7 +8,7 @@
 # SETUP UND DATEN EINLESEN #
 ############################
 
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) #Arbeitsverzeichnis automatisch setzen
+# setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) #Arbeitsverzeichnis automatisch setzen
 library(readxl)
 
 # Blank-Datei

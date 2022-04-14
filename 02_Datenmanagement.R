@@ -10,7 +10,7 @@
 ##########################
 
 # Arbeitsverzeichnis
-setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) #Arbeitsverzeichnis automatisch setzen
+# setwd(dirname(rstudioapi::getActiveDocumentContext()$path)) #Arbeitsverzeichnis automatisch setzen
 
 
 # Datein einlesen
