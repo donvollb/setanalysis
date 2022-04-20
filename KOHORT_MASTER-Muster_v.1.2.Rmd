@@ -62,6 +62,8 @@ header-includes:
 - \definecolor{tablecolorSTUD}{RGB}{234,255,212}    # Tabellenfarbe STUD
 - \definecolor{tablecolorABS}{RGB}{250, 230, 255}   # Tabellenfarbe ABS
 - \definecolor{tablecolorLVE}{RGB}{228, 253, 255}   # Tabellenfarbe LVE
+- \definecolor{cadetblue4}{RGB}{83,134,139}         # Schriftfarbe LVE
+- \definecolor{steelblue}{RGB}{70,130,180}          # Schriftfarbe steelblue
 ---
 
 ```{r Setup, include=FALSE}
