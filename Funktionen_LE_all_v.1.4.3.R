@@ -972,12 +972,12 @@ merge.multi.sk <- function(x, # Daten
   
   if (inkl == TRUE) {
     
+    x <- data.frame(x)
     
-    
-    if (is.data.frame(x) & ncol(x) > 1) {
+    if (ncol(x) > 1) {
       labels <- as.character(lapply(x, attr, which = "label"))
     } else {
-      labels <- attr(x, "label")
+      labels <- attr(x[, 1], "label")
     }
     
     x <- data.frame(x)
