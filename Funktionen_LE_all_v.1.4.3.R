@@ -228,7 +228,7 @@ replace.latex.issues <- function(x, all = TRUE) #Objekt
 aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
                       kennung) # kennung können z.B. die LV-Kennungen oder die Fallnummern sein
   {
-  labels <- as.character(lapply(vars, attr, which = "label"))
+  labels <- as.character(lapply(data.frame(vars), attr, which = "label"))
   x <- data.frame(data.frame(vars)[0, ])
   for (n in unique(kennung)) {
     vars.sub <- data.frame(data.frame(vars)[kennung == n, ])
