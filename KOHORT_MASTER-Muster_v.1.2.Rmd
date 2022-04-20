@@ -12,6 +12,7 @@ header-includes:
 - \usepackage{booktabs}             # für zusätzliche Stilelemente in Tabellen
 - \usepackage{xcolor}               # für Farben
 - \usepackage{tabu}                 # für Tabellen, die über mehrere Seiten gehen
+- \usepackage{tabto}                # für Tabs
 - \usepackage{makecell}             # für Layouts in Tabellen
 - \usepackage{longtable}            # für Tabellen über mehrere Seiten
 - \usepackage{array}                # ebenfalls Tabellenlayout/Matritzen 
