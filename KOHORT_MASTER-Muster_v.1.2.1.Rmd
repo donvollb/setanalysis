@@ -369,6 +369,7 @@ if (campus == "KO") {
 
 if(nrow(data) < 10){
 
+  cat("*Dieser Bericht wurde nicht erstellt, da die Substichprobe weniger als zehn Personen beinhaltet.**") # Platzhalter, nochmal überarbeiten
   knitr::knit_exit()
 
 }
