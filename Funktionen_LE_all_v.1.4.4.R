@@ -19,8 +19,8 @@ pacman::p_load(ggplot2, knitr, psych, descr, dplyr, kableExtra, cowplot)
 # Idee: Sollte z.B. die Farbe für die Balken (color.bars) nicht schon im Skript festgelegt sein, passiert dies hier, damit die Funktionen darauf zugreifen können
 # DIESE VARIABLEN HIER NICHT VERÄNDERN!
 
-# Schriftart (Raleway)
-if(!exists("font.family")){font.family <- c("Raleway")}
+# Schriftart (font.family)
+if(!exists("font.family")){font.family <- c("Red+Hat+Text")}
 
 # Spaltenbreiten (die Summen der einzelnen Spaltenbreiten sind unterschiedlich groß, da jede Spalte automatisch 12pt hinzufügt) 
 # 3 Spalten
@@ -75,7 +75,7 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
   assign("sub.nr", sub.nr+1, envir = globalenv())
   
   sub_chunk <- paste0("```{r sub_chunk_", sub.nr, ", fig.height=", fig_height, ", fig.width=", fig_width, head.end,
-                      "  \npar(family = \"Raleway\")  \n",
+                      "  \npar(family = \"", font.family, "\")  \n",
                       "  \n", 
                       "\n(", 
                       "  \n", 
@@ -388,7 +388,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
   
   tmin <- "linker Pol"
   tplu <- "rechter Pol"
-  par(family = "Raleway")
+  par(family = font.family)
   
   bobby <- x %>% 
     psych::describe(.) %>% 
@@ -411,7 +411,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
   
   axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(table(x)),1), " %", sep="")),
   par(new=TRUE),
-  par(family = "Raleway"),
+  par(family = font.family),
   bxp <- boxplot(as.numeric(x), plot=FALSE),
   bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd))),
   invisible(ifelse(bxp$stats[5,1]>6, bxp$stats[5,1] <- 6, bxp$stats[5,1] <- bxp$stats[5,1])),
@@ -421,7 +421,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
       whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE),
   mtext(tmin, side=1, at = -0.1, line = -2.6, font = 2, col = "gray30"),
   mtext(tplu, side=1, at = 7.2, line = -2.6, font = 2, col = "gray30"),
-  par(xpd=TRUE, family = "Raleway"),
+  par(xpd=TRUE, family = font.family),
   text(x=0, y=2,label="Relative Häufigkeit der Antworten", col = "black"),
   segments(x0 = 0, y0 = 1.85, x1 = 0.75, y1 = 1.7, col = "gray", lwd = 2),
   text(x=2, y=2,label="Std.-Abw.", col = "black"),
@@ -585,7 +585,7 @@ barplot.freq <- function(x, # Daten
   
   bp <- plot(descr::freq(x, plot = FALSE), 
      col = color.bars, 
-     family = "Raleway", 
+     family = font.family, 
      ylim = c(0, 5/4*max(table(x))),
      xlab = xlab,
      main = main, 
@@ -600,7 +600,7 @@ barplot.freq <- function(x, # Daten
   if (max(x, na.rm = TRUE) == cutoff){ axis(1, 
                                             at = bp[, 1], 
                                             labels = labs, tick = FALSE,
-                                            family = "Raleway")}}
+                                            family = font.family)}}
 }
 
 
@@ -623,7 +623,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
       #geom_hline(yintercept = v, color = "grey70")+
       theme(panel.background = element_rect(fill = 'white', colour = 'gray70'), #Hintergrund wird auf wei? gestellt
             panel.grid.major.x = element_line(color = "grey70")) + #Hilfslinien 
-      theme(text=element_text(family = "Raleway")) +
+      theme(text=element_text(family = font.family)) +
       scale_color_manual(values = "grey50") +
       geom_bar(stat="identity", #Balkendiagramm
                fill = color, #Farbe
@@ -632,7 +632,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
       geom_text(aes(label = paste(perc, "%", sep = "")), #Prozentzahl über die Balken schreiben
                 color ="grey30",#Farbe 
                 size = 3.5, #Schriftgroesse
-                family = "Raleway",
+                family = font.family,
                 hjust = -0.5)+ #horizentale Verschiebung des Textes
       ylim(c(0, DescTools::RoundTo((max(x$freq)*1.15), multiple=DescTools::RoundTo(max(x$freq) * 0.3, multiple=5, ceiling), ceiling))) +#automatische Einstellung des Limites der y Achse
       theme(title = element_text(color = "blue"),
@@ -645,7 +645,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
             axis.ticks.x = element_line(color = "grey48"))+ #kleinen Striche zur Unterteilung an der x Achse
       labs(y=xlab)+
       coord_flip()+ #x- und y-Achse vertauschen
-      theme(text=element_text(family = "Raleway")) 
+      theme(text=element_text(family = font.family)) 
   }
 }
 
@@ -719,7 +719,7 @@ boxplot.aggr.sk <- function(x, p, q, d, e, color = color.bars)
   opar <- par(no.readonly = TRUE)
   par(mar=c(2.1, 21.5, 0.1, 2.1)) 
   if(e == 5) {par(mar=c(4, 21.5, 0.1, 2.1))}
-  par(family = "Raleway")
+  par(family = font.family)
   boxplot(daten, xaxt="n", yaxt="n", #x- und y-Achsentext nicht anzeigen
           ylim=c(1,e), #Länge y Achse von 1 bis e
           horizontal=TRUE, #horizontale Ausrichtung
@@ -728,7 +728,7 @@ boxplot.aggr.sk <- function(x, p, q, d, e, color = color.bars)
   abline(v=c(1:e), col="gray80")#vertikale Hilfslinien 
   par(new=TRUE)
   par(fg="gray80")
-  par(family = "Raleway")
+  par(family = font.family)
   boxplot(daten, xaxt="n", yaxt="n", ylim=c(1,e), horizontal=TRUE, 
           boxwex=0.8, col= color.bars, border="black", 
           pars=list(outcol= color.bars, outpch=20))
@@ -749,7 +749,7 @@ boxplot.gesnote <- function(x) # Daten
   opar <- par(no.readonly = TRUE)
   par( mar=c(2.1, 7 , 0.1, 2.1)) # 2. Zahl anpassen, wenn Aenderung der Breite gewünscht
   par(fg="gray80")
-  par(family = "Raleway")
+  par(family = font.family)
   #Boxplot zeichnen
   boxplot(x, width=NULL, outline=TRUE, 
           boxwex=0.5,   #boxwex stellt die Groesse der Box vom boxplot ein
@@ -785,7 +785,7 @@ boxplot.workload <- function(x,p,q,d,e, nums) # x = daten, p = Text/Beschriftung
   { 
   opar <- par(no.readonly = TRUE)
   par(fg="gray80")
-  par(family = "Raleway")
+  par(family = font.family)
   par(mar=c(7, 4.1, 4.1, 4.2))
   boxplot(x, col= color.bars, border="black", ylab=NULL, xlab=NULL, horizontal = TRUE, ylim=c(0,e),
           xaxt="n", yaxt="n", boxwex = 0.8, pars=list(outcol= color.bars, outpch=20))
@@ -837,7 +837,7 @@ evasys.skala.plot <- function(x, # Daten
   
   par(mar=c(2, 5.3, 2.1, 5.3))
   par(fg="gray50") # Farbe Rand 
-  par(family = "Raleway")
+  par(family = font.family)
   barplot(rep(NA, number),ylim=c(0,sum(table(x))),axes=FALSE)
   abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80")
   bp <- barplot(xtab, #damit alle angezeigt werden
@@ -1130,7 +1130,7 @@ merge.sc <- function(x, # Daten
       colnames(results) <- c("label", "freq", "perc")
       
       
-      par(family = "Raleway")
+      par(family = font.family)
       
       if(show.plot == TRUE) {
         if(fig.height == "default") 
