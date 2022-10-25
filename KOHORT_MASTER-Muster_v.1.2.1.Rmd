@@ -44,19 +44,19 @@ header-includes:
 - urlcolor=cyan}                    # Farbe von URLs
   # Hier wird die Schriftart aus dem rmd-data Ordner geladen
 - \setmainfont[
-- Path = rmd-data/Raleway/ ,          # Pfad, wo Schrifart liegt
-- UprightFont = Raleway-Regular,      # Dateiname reguläre Schrift
-- BoldFont = Raleway-Bold ,           # Dateiname fette Schrift
-- ItalicFont = Raleway-LightItalic ,  # Dateiname kursive Schrift
-- Extension = .ttf]{Raleway}          # Dateiendungen
+- Path = rmd-data/RedHatText/ ,          # Pfad, wo Schrifart liegt
+- UprightFont = RedHatText-Regular,      # Dateiname reguläre Schrift
+- BoldFont = RedHatText-Bold ,           # Dateiname fette Schrift
+- ItalicFont = RedHatText-LightItalic ,  # Dateiname kursive Schrift
+- Extension = .ttf]{RedHatText}          # Dateiendungen
   # Hier wird noch das Inhaltsverzeichnis ein wenig zurechtgestutzt
 - \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} # Punkte zwischen Eintrag und Seite auch bei "Sections" (erste Überschriftsebene)
 - \renewcommand\cftsecfont{\mdseries}                   # Einträge bei "Sections" werden nicht fett geschrieben
 - \renewcommand\cftsecpagefont{\mdseries}               # Seitenzahlen bei "Sections" werden nicht fett geschrieben
 - \setlength{\cftsecindent}{1.5em}                      # Einträge im Inhaltsverzeichnis leicht eingerückt
   # Hier werden einige Farben für die Verwendung im LATEX-Code definiert
-- \definecolor{uniblau2}{RGB}{7, 63, 139}           # "uniblau" über RGB
-- \definecolor{uniblau}{HTML}{073F8B}               # "uniblau" über html
+- \definecolor{rptu}{RGB}{80, 114, 137}             # RPTU-Farbe (blaugrau/Schiefer)
+- \definecolor{uniblau}{RGB}{7, 63, 139}            # Altes "uniblau" über RGB (Koblenz-Landau)
 - \definecolor{darkgrey}{RGB}{200, 200, 200}        # Dunkelgrau für manche Beschriftungen
 - \definecolor{tablecolor}{RGB}{250, 230, 255}      # Tabellenfarbe im Dokument, jeweils ändern
 - \definecolor{tablecolorShowUp}{RGB}{234,248,255}  # Tabellenfarbe ShowUp
@@ -131,6 +131,8 @@ inkl.protokoll <- ifelse(exists("i"), TRUE, FALSE)
   
   
   
+  
+  
 ###### Nicht-modifizierbare Werte (nur mit Bedacht ändern) ######
 
 
@@ -145,7 +147,8 @@ inkl.protokoll <- ifelse(exists("i"), TRUE, FALSE)
 # Sub-Chunks Nummer
   sub.nr <- 0 # Für die fortlaufenden Titel der Subchunks, NICHT ÄNDERN!
 
-  
+# Schriftart
+  font.family <- "Red+Hat+Text" # Auswahl der Schriftart, gleicher Name wie bei Google Fonts 
   
   
 ##### 2. Farbsetting #####
@@ -180,16 +183,14 @@ knitr::opts_chunk$set(
 
 
 ##### 5. Auswahl der Schriftart ####
-if (!("Raleway" %in% showtextdb::font_installed())) {showtextdb::font_install(showtextdb::google_fonts("Raleway"))}
+# Prüfe, ob die gewählt Schriftart bereits in der Datenbank von {showtextdb} enthalten ist
+# Installiere sie, falls nicht
+if (!(font.family %in% showtextdb::font_installed())) {showtextdb::font_install(
+  showtextdb::google_fonts(font.family))}
 showtext::showtext_auto()
 
-# Beim ersten Mal auf einem neuen Computer: 
-# extrafont::font_import(paths = "./rmd-data/Raleway/") 
-# Schriftart Raleway wird importiert
-# extrafont::loadfonts(device="win") # Schriftart wird geladen
 
-
-par(family = "Raleway") # Grafik Einstelungen auf Raleway ändern
+par(family = font.family) # Grafik Einstelungen auf Schriftart ändern
 opar <- par() #Diese abspeichern
 
 
@@ -239,16 +240,16 @@ if(personalized_info$Campus[i] == "LD") { # Wenn es um einen Landauer Bericht ge
 ```
 
 [//4]: Universitätslogo wird eingefügt
-\lhead{\includegraphics[width=6cm]{rmd-data/uni-logo-farbig.eps}}
+\lhead{\includegraphics[height=0.7cm]{rmd-data/RPTU_Logo_line_3.png}}
 
 [//5]: Horizontale Trennstriche
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\headrule}{\hbox to\headwidth{%
-    \color{uniblau}\leaders\hrule height \headrulewidth\hfill}}
+    \color{rptu}\leaders\hrule height \headrulewidth\hfill}}
     
 \renewcommand{\footrulewidth}{1pt}
 \renewcommand{\footrule}{\hbox to\headwidth{%
-    \color{uniblau}\leaders\hrule height \footrulewidth\hfill}}
+    \color{rptu}\leaders\hrule height \footrulewidth\hfill}}
     
 [//6]: Fußzeile
 \rfoot{\color{darkgray}{Seite \thepage}}
