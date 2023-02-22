@@ -63,7 +63,7 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
                         fig_height=7, # figure height des Sub-Chunks
                         fig_width=5, # figure width des Sub-Chunks
                         hide = FALSE) # "hide" für den Sub-Chunk
-  {
+{
   g_deparsed <- paste0(deparse(
     function() {g}
   ), collapse = '')
@@ -91,7 +91,7 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
 # Automatische Zeilenumbrüche
 auto.newline <- function(x, # Objekt
                          number = 47) # Anzahl an maximalen Zeichen pro Zeile, 47 ist optimal für SC/MC-Plots
-  {
+{
   for (i in 1:length(x)) {
     if(nchar(x[i]) > number-1) {
       split <- unlist(strsplit(x[i], paste0("(?<=.{", number, "})"), perl = TRUE))
@@ -127,8 +127,8 @@ auto.newline <- function(x, # Objekt
 
 # Alternativ-Funktion für Zeilenumbrüche
 auto.newline2 <- function(x, # Objekt
-                              number = 15) # Anzahl an maximalen Zeichen pro Zeile, 47 ist optimal für SC/MC-Plots
-  {
+                          number = 15) # Anzahl an maximalen Zeichen pro Zeile, 47 ist optimal für SC/MC-Plots
+{
   for (i in 1:length(x)) {
     if(nchar(x[i]) > number-1) {
       x[i] <- gsub(paste0("(.{1,", number, "})(\\s|$)"), "\\1\n", x[i])
@@ -140,7 +140,7 @@ auto.newline2 <- function(x, # Objekt
 # Labels für MC-Fragen aus dem Fragetext ziehen: 
 get.label <- function(x, # Objekt
                       match = ": ") # String, der Label von Frage trennt
-  {
+{
   sub(paste0(".*", match), '', attr(x, "label"))
 }
 
@@ -154,59 +154,59 @@ lv.kable <- function(x, # Objekt (am besten dataframe)
                      digits = 2, # Wie viele Nachkommastellen in der Tabelle?
                      escape = FALSE, # escape Argument in kbl
                      striped = TRUE) # gestrifte Tabelle?
-  {
+{
   if(ncol(x) != length(col.width) & col.width[1] != "default") {
     stop(paste0("Es gibt eine unterschiedliche Anzahl an definierten Spaltenbreiten (col.width), nämlich ", 
                 length(col.width), " und Spalten in der Tabelle, nämlich ", ncol(x), "."))
-    }
+  }
   
   if (escape == FALSE) {
-  if(bold == TRUE & bold.col1 == TRUE) {colnames(x) <- paste0("\\textbf{", colnames(x), "}")}
-  if(bold == TRUE & bold.col1 == FALSE) {colnames(x)[-1] <- paste0("\\textbf{", colnames(x)[-1], "}")}
+    if(bold == TRUE & bold.col1 == TRUE) {colnames(x) <- paste0("\\textbf{", colnames(x), "}")}
+    if(bold == TRUE & bold.col1 == FALSE) {colnames(x)[-1] <- paste0("\\textbf{", colnames(x)[-1], "}")}
   }
   
   
-latex.table <-  suppressWarnings(kableExtra::kbl(x, 
-             booktabs = TRUE,
-             longtable = TRUE,
-             format = "latex",
-             digits = digits,
-             linesep = "\\addlinespace",
-             escape = escape,
-             caption = caption,
-             row.names = FALSE))
- 
-if (col.width[1] != "default") {
- for (k in 1:length(col.width)) {
-   latex.table <- column_spec(latex.table, k, width = col.width[k], latex_valign = "m")
- }  }
-
-if (striped == TRUE) {
- latex.table <- row_spec(latex.table, row = seq(from = 0, to = nrow(x), by = 2), background = table.color)
-}
-
-if(bold == TRUE & escape == TRUE) {latex.table <- row_spec(latex.table, 0, bold=TRUE)}
-
-# if(bold.col1 == FALSE) {latex.table <- column_spec(latex.table, 1, bold = FALSE)}
-
-return(latex.table)
+  latex.table <-  suppressWarnings(kableExtra::kbl(x, 
+                                                   booktabs = TRUE,
+                                                   longtable = TRUE,
+                                                   format = "latex",
+                                                   digits = digits,
+                                                   linesep = "\\addlinespace",
+                                                   escape = escape,
+                                                   caption = caption,
+                                                   row.names = FALSE))
+  
+  if (col.width[1] != "default") {
+    for (k in 1:length(col.width)) {
+      latex.table <- column_spec(latex.table, k, width = col.width[k], latex_valign = "m")
+    }  }
+  
+  if (striped == TRUE) {
+    latex.table <- row_spec(latex.table, row = seq(from = 0, to = nrow(x), by = 2), background = table.color)
+  }
+  
+  if(bold == TRUE & escape == TRUE) {latex.table <- row_spec(latex.table, 0, bold=TRUE)}
+  
+  # if(bold.col1 == FALSE) {latex.table <- column_spec(latex.table, 1, bold = FALSE)}
+  
+  return(latex.table)
   
 }
 
 
 # Ersetzen von "problematischen" Zeichen für LaTex
 replace.latex.issues <- function(x, all = TRUE) #Objekt
-  {
+{
   
   if(all == TRUE) {
-  x <- gsub("&", "\\\\&", x)
-  x <- gsub("_", "\\\\_", x)
-  x <- gsub("'", "\\'", x)
-  x <- gsub("%", "\\\\%", x)
+    x <- gsub("&", "\\\\&", x)
+    x <- gsub("_", "\\\\_", x)
+    x <- gsub("'", "\\'", x)
+    x <- gsub("%", "\\\\%", x)
   } else {
     #  x <- gsub("  ", " ", x)
     for (f in 1:5) {x <- gsub("\\.$", "", x)} 
-    }
+  }
   
   for (k in 1:length(x))
   {if(grepl("^\\[", x[k])) {
@@ -227,7 +227,7 @@ replace.latex.issues <- function(x, all = TRUE) #Objekt
 # Funktion zum Aggregieren von Daten anhand einer Kennung/Fallnummer
 aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
                       kennung) # kennung können z.B. die LV-Kennungen oder die Fallnummern sein
-  {
+{
   labels <- as.character(lapply(data.frame(vars), attr, which = "label"))
   x <- data.frame(data.frame(vars)[0, ])
   for (n in unique(kennung)) {
@@ -242,7 +242,7 @@ aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert wer
   }
   
   return(x)
-
+  
 }
 
 # Funktion für Fragen mit offenem Antwortformat (benötigt u.a. "list.open", wird am Anfang des Skripts erstellt)
@@ -261,7 +261,7 @@ open.answers <- function(x, # Daten
   }
   
   if (inkl == TRUE && inkl.global == TRUE) {
-    if(no.pagebreak == TRUE) {cat("\\minibeginn\n")}
+    if(no.pagebreak == TRUE) {cat("\\begin{minipage}{\\linewidth} \n")}
     if(!exists("anchor.nr")) {assign("anchor.nr", 0, envir = globalenv())}
     assign("anchor.nr", anchor.nr+1, envir = globalenv())
     
@@ -278,7 +278,7 @@ open.answers <- function(x, # Daten
     }
     if(no.pagebreak == TRUE) {
       cat("\n\\bigskip")
-      cat("\n\\miniende")
+      cat("\n\\end{minipage}")
     }
     cat("   \n  \n")
     
@@ -323,40 +323,40 @@ label.test <- function(col, # Spalte aus personalizd.info, z.B. personalized.inf
 bsp.boxplot <- function(x = "default", # Daten, bei "default" wird ein Beispieldatensatz genutzt
                         color = color.bars, # Farbe des Boxplots
                         family = font.family)  # Schriftart
-  {
+{
   
   if(x[1] == "default") {
-  x <- c(2.1, 3.9, 3.9, 3.9, 3.9, 4.4, 4.4, 4.5, 4.5, 4.7, 4.7, 5, 5, 5.2, 5, 5.5, 5.5, 5.5, 5.5, 5.7, 5.7, 5.7, 5.7, 5.7)
+    x <- c(2.1, 3.9, 3.9, 3.9, 3.9, 4.4, 4.4, 4.5, 4.5, 4.7, 4.7, 5, 5, 5.2, 5, 5.5, 5.5, 5.5, 5.5, 5.7, 5.7, 5.7, 5.7, 5.7)
   }
   
-subchunkify(c(
-  opar <- par(no.readonly = TRUE),
-  par(mar=c(4.8,10,4.1,6)), #bltr
-  par(fg="gray50"), # Farbe Rand 
-  par(family = font.family),
-  boxplot(x, horizontal = TRUE, ylim=c(1,6), col = c(color.bars), 
-          border="black", xaxt="n", axes = TRUE, pars=list(outcol= color.bars, outpch=20)),
-  abline(v=c(1,2,3,4,5,6), col = "gray80"),
-  boxplot(x, horizontal = TRUE, ylim=c(1,6), col = c(color.bars) , 
-          border="black", xaxt="n", axes = TRUE, pars=list(outcol= color.bars, outpch=20), add = TRUE),
-  mtext(c("trifft gar \nnicht zu", "", "", "", "", "trifft voll \nzu"), 
-        side=1, line=1, at=c(1, 2, 3, 4, 5, 6), las=1, col="gray30", cex=1, font = 2),
-  mtext(c("BOXPLOT-BEISPIEL"), side=2, line=2, at=c(1), las=1, col=c(color.font), cex=1, font = 2),
-  par(xpd=TRUE),
-  text(x=4.5, y=2,label="Median", col = "grey30"),
-  segments(x0 = 4.5, y0 = 1.85, x1 = 5, y1 = 1.2, col = "grey30", lwd = 1),
-  text(x=4, y= -0.4,label="6-stufige Skala", col = c(color.font)),
-  segments(x0 = 4.8, y0 = -0.35, x1 = 5.5, y1 = -0.05, col = c(color.font), lwd = 1),
-  segments(x0 = 1.4, y0 = -0.01, x1 = 3.35, y1 = -0.4, col = c(color.font), lwd = 1),
-  text(x=1.5, y= 2,label="Ausreisser", col = "grey30"),
-  segments(x0 = 2.1, y0 = 1.05, x1 = 1.5, y1 = 1.85, col = "grey30", lwd = 1),
-  text(x=5.5, y= 2,label="Max", col = "grey30"),
-  segments(x0 = 5.7, y0 = 1.05, x1 = 5.5, y1 = 1.85, col = "grey30", lwd = 1)), 
-  fig_height = 2.7, # optimal: 2.7
-  fig_width = 10, # optimal: 10
-  hide = TRUE) # damit nicht Text dazu "ausgespuckt" wird
+  subchunkify(c(
+    opar <- par(no.readonly = TRUE),
+    par(mar=c(4.8,10,4.1,6)), #bltr
+    par(fg="gray50"), # Farbe Rand 
+    par(family = font.family),
+    boxplot(x, horizontal = TRUE, ylim=c(1,6), col = c(color.bars), 
+            border="black", xaxt="n", axes = TRUE, pars=list(outcol= color.bars, outpch=20)),
+    abline(v=c(1,2,3,4,5,6), col = "gray80"),
+    boxplot(x, horizontal = TRUE, ylim=c(1,6), col = c(color.bars) , 
+            border="black", xaxt="n", axes = TRUE, pars=list(outcol= color.bars, outpch=20), add = TRUE),
+    mtext(c("trifft gar \nnicht zu", "", "", "", "", "trifft voll \nzu"), 
+          side=1, line=1, at=c(1, 2, 3, 4, 5, 6), las=1, col="gray30", cex=1, font = 2),
+    mtext(c("BOXPLOT-BEISPIEL"), side=2, line=2, at=c(1), las=1, col=c(color.font), cex=1, font = 2),
+    par(xpd=TRUE),
+    text(x=4.5, y=2,label="Median", col = "grey30"),
+    segments(x0 = 4.5, y0 = 1.85, x1 = 5, y1 = 1.2, col = "grey30", lwd = 1),
+    text(x=4, y= -0.4,label="6-stufige Skala", col = c(color.font)),
+    segments(x0 = 4.8, y0 = -0.35, x1 = 5.5, y1 = -0.05, col = c(color.font), lwd = 1),
+    segments(x0 = 1.4, y0 = -0.01, x1 = 3.35, y1 = -0.4, col = c(color.font), lwd = 1),
+    text(x=1.5, y= 2,label="Ausreisser", col = "grey30"),
+    segments(x0 = 2.1, y0 = 1.05, x1 = 1.5, y1 = 1.85, col = "grey30", lwd = 1),
+    text(x=5.5, y= 2,label="Max", col = "grey30"),
+    segments(x0 = 5.7, y0 = 1.05, x1 = 5.5, y1 = 1.85, col = "grey30", lwd = 1)), 
+    fig_height = 2.7, # optimal: 2.7
+    fig_width = 10, # optimal: 10
+    hide = TRUE) # damit nicht Text dazu "ausgespuckt" wird
   
-cat("  \n  \n")
+  cat("  \n  \n")
   
   
 }
@@ -364,9 +364,9 @@ cat("  \n  \n")
 
 # Beispiel einer Statistik-Tabelle
 bsp.table.stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
-  {
+{
   if(all == TRUE) {
-
+    
     jim <- as.data.frame(cbind("Frage", "Häufigkeit", "Mittelwert", "Standard-\nabweichung", "Median", "kleinster beob. Wert", "größter beob. Wert"))
     colnames(jim) <- c("Item", "n", "M", "SD", "MD", "Min", "Max")
     tab <- lv.kable(jim, col.width = c("30pt", "50pt", "50pt", "60pt", "35pt", "60pt", "60pt"))
@@ -380,15 +380,15 @@ bsp.table.stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frag
   }
   
   return(tab)
-
+  
 }
 
 
 # Beispiel einer Sechserskala
 bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
-  {
+{
   if(x[1] == "default") {
-  x <- c(1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6)
+    x <- c(1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6)
   }
   
   tmin <- "linker Pol"
@@ -403,41 +403,41 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
     data.frame()
   
   subchunkify(c(
-  
-  par(mar=c(5.1,10,4.1,10)),
-  par(fg="gray50"), # Farbe Rand 
-  barplot(rep(NA,length(table(x))),ylim=c(0,sum(table(x))),axes=FALSE),
-  abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80"),
-  bp <- barplot(table(x), 
-                ylim=c(0, sum(table(x))), 
-                col = color.bars,
-                axes = FALSE, add = TRUE),
-  box(),
-  
-  axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(table(x)),1), " %", sep="")),
-  par(new=TRUE),
-  par(family = font.family),
-  bxp <- boxplot(as.numeric(x), plot=FALSE),
-  bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd))),
-  invisible(ifelse(bxp$stats[5,1]>6, bxp$stats[5,1] <- 6, bxp$stats[5,1] <- bxp$stats[5,1])),
-  invisible(ifelse(bxp$stats[1,1]<1, bxp$stats[1,1] <- 1, bxp$stats[1,1] <- bxp$stats[1,1])),
-  bxp(bxp, horizontal = TRUE, ylim=c(0.6,6.4), xlim = c(0.3,1.3), boxcol = rgb(0.55, 0, 0), staplewex = 0.6, staplelwd=2,
-      boxlwd=3, 
-      whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE),
-  mtext(tmin, side=1, at = -0.1, line = -2.6, font = 2, col = "gray30"),
-  mtext(tplu, side=1, at = 7.2, line = -2.6, font = 2, col = "gray30"),
-  par(xpd=TRUE, family = font.family),
-  text(x=0, y=2,label="Relative Häufigkeit der Antworten", col = "black"),
-  segments(x0 = 0, y0 = 1.85, x1 = 0.75, y1 = 1.7, col = "gray", lwd = 2),
-  text(x=2, y=2,label="Std.-Abw.", col = "black"),
-  segments(x0 = 2, y0 = 1.85, x1 = 2.35, y1 = 1.2, col = "gray", lwd = 2),
-  text(x=3, y=2,label="Mittelwert", col = "black"),
-  segments(x0 = 3, y0 = 1.85, x1 = 3.5, y1 = 1.2, col = "gray", lwd = 2),
-  text(x=0, y= -0.4,label="Skala", col = "black"),
-  segments(x0 = 0, y0 = -0.25, x1 = 0.9, y1 = -0.1, col = "gray", lwd = 2),
-  text(x=4, y= -0.4,label="Säulendiagramm", col = "black"),
-  segments(x0 = 4, y0 = -0.25, x1 = 3, y1 = 0.4, col = "gray", lwd = 2)), 
-  fig_height = 2.7, fig_width = 10, hide = TRUE)
+    
+    par(mar=c(5.1,10,4.1,10)),
+    par(fg="gray50"), # Farbe Rand 
+    barplot(rep(NA,length(table(x))),ylim=c(0,sum(table(x))),axes=FALSE),
+    abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80"),
+    bp <- barplot(table(x), 
+                  ylim=c(0, sum(table(x))), 
+                  col = color.bars,
+                  axes = FALSE, add = TRUE),
+    box(),
+    
+    axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(table(x)),1), " %", sep="")),
+    par(new=TRUE),
+    par(family = font.family),
+    bxp <- boxplot(as.numeric(x), plot=FALSE),
+    bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd))),
+    invisible(ifelse(bxp$stats[5,1]>6, bxp$stats[5,1] <- 6, bxp$stats[5,1] <- bxp$stats[5,1])),
+    invisible(ifelse(bxp$stats[1,1]<1, bxp$stats[1,1] <- 1, bxp$stats[1,1] <- bxp$stats[1,1])),
+    bxp(bxp, horizontal = TRUE, ylim=c(0.6,6.4), xlim = c(0.3,1.3), boxcol = rgb(0.55, 0, 0), staplewex = 0.6, staplelwd=2,
+        boxlwd=3, 
+        whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE),
+    mtext(tmin, side=1, at = -0.1, line = -2.6, font = 2, col = "gray30"),
+    mtext(tplu, side=1, at = 7.2, line = -2.6, font = 2, col = "gray30"),
+    par(xpd=TRUE, family = font.family),
+    text(x=0, y=2,label="Relative Häufigkeit der Antworten", col = "black"),
+    segments(x0 = 0, y0 = 1.85, x1 = 0.75, y1 = 1.7, col = "gray", lwd = 2),
+    text(x=2, y=2,label="Std.-Abw.", col = "black"),
+    segments(x0 = 2, y0 = 1.85, x1 = 2.35, y1 = 1.2, col = "gray", lwd = 2),
+    text(x=3, y=2,label="Mittelwert", col = "black"),
+    segments(x0 = 3, y0 = 1.85, x1 = 3.5, y1 = 1.2, col = "gray", lwd = 2),
+    text(x=0, y= -0.4,label="Skala", col = "black"),
+    segments(x0 = 0, y0 = -0.25, x1 = 0.9, y1 = -0.1, col = "gray", lwd = 2),
+    text(x=4, y= -0.4,label="Säulendiagramm", col = "black"),
+    segments(x0 = 4, y0 = -0.25, x1 = 3, y1 = 0.4, col = "gray", lwd = 2)), 
+    fig_height = 2.7, fig_width = 10, hide = TRUE)
   
   cat("  \n  \n")
 }
@@ -458,7 +458,7 @@ table.freq <- function(x, # Daten
                        order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                        bold = TRUE, # fetter header? (siehe lv.kable)
                        bold.col1 = TRUE) # fette erste Zelle des headers? (siehe lv.kable)
-  {
+{
   
   jim <- data.frame(round(descr::freq(x, plot=FALSE), 1))
   jim <- data.frame(rownames(jim), jim)
@@ -470,7 +470,7 @@ table.freq <- function(x, # Daten
   
   
   if(show.all == FALSE) 
-    {
+  {
     jim <- jim[jim[, 2] != 0 & jim[, 2] != "0", ] # Falls nur gewählte Optionen angezeigt werden sollen
   }
   
@@ -497,15 +497,15 @@ table.freq <- function(x, # Daten
     jim <- jim[c(order(jim[1:(nrow(jim)-ncol(jim)+2), 2], 
                        decreasing = decreasing), 
                  (nrow(jim)-ncol(jim)+3):nrow(jim)
-                 ), ]
+    ), ]
   }
-    
+  
   if (col.width[1] == "default" & length(jim) == 4) {col.width <- col.width4}
   if (col.width[1] == "default" & length(jim) == 3) {col.width <- col.width3}
-
+  
   lv.kable(jim, caption = caption, col.width = col.width, bold = bold,
            bold.col1 = bold.col1)
-
+  
 }
 
 
@@ -517,7 +517,7 @@ table.stat.single <- function(x, # Daten
                               col1.width = col1.width.tss, # Breite der ersten Zeile
                               bold = TRUE, # fetter header? (siehe lv.kable)
                               bold.col1 = TRUE) # fette erste Zeile im header? (siehe lv.kable)
-  {
+{
   
   if (md == FALSE) {
     bob <- data.frame(round(psych::describe(x),2))[c(2:4, 8:9)]
@@ -535,7 +535,7 @@ table.stat.single <- function(x, # Daten
                         col.width = c(col1.width, "25pt", "25pt", "25pt", "25pt", "25pt"), 
                         bold = bold,
                         bold.col1 = bold.col1)
-               }
+             }
 }
 
 
@@ -546,7 +546,7 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
                              bold = TRUE, # fetter header? (siehe lv.kable)
                              bold.col1 = TRUE, # fette erste Zeile im header? (siehe lv.kable)
                              labels = "labels") # Fragetexte, bei "labels" werden die labels der Variablen genommen
-  {
+{
   
   if(labels == "labels") {labels <- as.character(lapply(x, attr, which = "label"))}
   
@@ -554,12 +554,12 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
   bob <- cbind(labels, bob)
   bob[, 1] <- replace.latex.issues(bob[, 1])
   colnames(bob) <- c(col1.name, 
-                       col2.name, 
-                       "M", 
-                       "SD", 
-                       "MD", 
-                       "Min", 
-                       "Max")
+                     col2.name, 
+                     "M", 
+                     "SD", 
+                     "MD", 
+                     "Min", 
+                     "Max")
   
   lv.kable(bob, caption = caption, 
            col.width = col.width.sm, 
@@ -578,7 +578,7 @@ barplot.freq <- function(x, # Daten
                          xlab = "", # Beschriftung x-Achse
                          main = "", # Titel der Abbildung
                          cutoff = FALSE) # cutoff, bei z.B. 12 werden alle Werte über 12 als "12+" abgebildet
-  {
+{
   
   if(cutoff != FALSE) {
     xax <- ifelse(max(x, na.rm = TRUE) == cutoff, "n", "t")
@@ -589,23 +589,23 @@ barplot.freq <- function(x, # Daten
   }
   
   bp <- plot(descr::freq(x, plot = FALSE), 
-     col = color.bars, 
-     family = font.family, 
-     ylim = c(0, 5/4*max(table(x))),
-     xlab = xlab,
-     main = main, 
-     ylab = "Häufigkeit",
-     xaxt = xax,
-     border = "gray50",
-     cex.lab = 1,
-     font.lab = 2,
-     col.lab = "gray30")
+             col = color.bars, 
+             family = font.family, 
+             ylim = c(0, 5/4*max(table(x))),
+             xlab = xlab,
+             main = main, 
+             ylab = "Häufigkeit",
+             xaxt = xax,
+             border = "gray50",
+             cex.lab = 1,
+             font.lab = 2,
+             col.lab = "gray30")
   
   if(cutoff != FALSE){
-  if (max(x, na.rm = TRUE) == cutoff){ axis(1, 
-                                            at = bp[, 1], 
-                                            labels = labs, tick = FALSE,
-                                            family = font.family)}}
+    if (max(x, na.rm = TRUE) == cutoff){ axis(1, 
+                                              at = bp[, 1], 
+                                              labels = labs, tick = FALSE,
+                                              family = font.family)}}
 }
 
 
@@ -614,7 +614,7 @@ barplot.freq <- function(x, # Daten
 barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)
                           color = color.bars, # Farbe der Balken
                           xlab = "") # Beschriftung x-Achse
-  { 
+{ 
   
   cody <- x
   
@@ -662,7 +662,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
 # Boxplot für Rücklaufsabbildung (LVE)
 boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
                               kennung) #  Kennungen
-  {
+{
   z <- data.frame(kennung, x) # Erstelle einen Datensatz aus beiden
   z.uni <- z[!duplicated(z$kennung),] # Nehme nur eine Zeile pro Kennung
   tb.kennung <- data.frame(table(kennung)) # Zähle, wie oft jede Kennung vorkommt 
@@ -719,7 +719,7 @@ boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
 
 # Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden
 boxplot.aggr.sk <- function(x, p, q, d, e, color = color.bars)
-  { #x = daten, p = labels/Text/Beschriftungen Y Achse, q = Skala x Achse, d = Anzahl von p, e = Anzahl von q
+{ #x = daten, p = labels/Text/Beschriftungen Y Achse, q = Skala x Achse, d = Anzahl von p, e = Anzahl von q
   daten <- cbind(x)
   opar <- par(no.readonly = TRUE)
   par(mar=c(2.1, 21.5, 0.1, 2.1)) 
@@ -749,7 +749,7 @@ boxplot.aggr.sk <- function(x, p, q, d, e, color = color.bars)
 
 # Abbildung der Gesamtnote
 boxplot.gesnote <- function(x) # Daten
-  {
+{
   #Grafikparameter bestimmen
   opar <- par(no.readonly = TRUE)
   par( mar=c(2.1, 7 , 0.1, 2.1)) # 2. Zahl anpassen, wenn Aenderung der Breite gewünscht
@@ -787,7 +787,7 @@ boxplot.gesnote <- function(x) # Daten
 
 # Boxplot mit workloads der LVs: Funktioniert, sollte überarbeitet werden
 boxplot.workload <- function(x,p,q,d,e, nums) # x = daten, p = Text/Beschriftungen Y Achse, q = Skala x Achse, d = Anzahl von p, e = Anzahl von q
-  { 
+{ 
   opar <- par(no.readonly = TRUE)
   par(fg="gray80")
   par(family = font.family)
@@ -857,7 +857,7 @@ boxplot.vert <- function(x,
   if (dont.know == TRUE) {colnames(x.aggr) <- c("ja", "nein", "weiß nicht")
   } else {colnames(x.aggr) <- c("ja", "nein")}
   
-  cat(paste0("### ", Hmisc::label(x), "  \n  \n"))
+  cat(paste0("\\subsubsection{ ", Hmisc::label(x), "}  \n  \n"))
   par(family = "Raleway")  
   par(fg="gray80")
   par(mar=c(8, 4.1, 4.1, 2.1)) # 2. Zahl anpassen, wenn Änderung der Breite
@@ -898,7 +898,7 @@ evasys.skala.plot <- function(x, # Daten
                               tmin, # Beschriftung links
                               tmax, # Beschriftung rechts
                               number = 6) # Skala (6 für Sechserskala etc.)
-  { 
+{ 
   x[!(x %in% c(1:number))] <- NA
   x <- x[!is.na(x)]
   
@@ -961,43 +961,43 @@ merge.fachsem <- function(x, # Daten
                           group = "a", # Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
                           inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                           nr = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-  {
+{
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
   
   if (inkl == TRUE) {
-  
-  if(group == "a"){
-    caps <- "(ALLE)"
-    xl <- "Fachsemester alle"
-  }
-  
-  if(group == "b"){
-    caps <- "(NUR BACHELOR)"
-    xl <- "Fachsemester Bachelor"
-  }
-  
-  if(group == "m"){
-    caps <- "(NUR MASTER)"
-    xl <- "Fachsemester Master"
-  }
-  
-  
-  x[x >= cutoff] <- cutoff
-  
-  
-  cat(paste0("## FACHSEMESTER ", caps, "  \n  \n"))
-  cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehoert: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
-  
-  print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
-  
-  cat("  \n  \n")
-  
-  subchunkify(barplot.freq(x, xlab = xl, cutoff = cutoff), fig_height = 5, fig_width = 10) # xlab ist Label x-Achse
-  
-  cat("  \n  \n")
-  
+    
+    if(group == "a"){
+      caps <- "(ALLE)"
+      xl <- "Fachsemester alle"
+    }
+    
+    if(group == "b"){
+      caps <- "(NUR BACHELOR)"
+      xl <- "Fachsemester Bachelor"
+    }
+    
+    if(group == "m"){
+      caps <- "(NUR MASTER)"
+      xl <- "Fachsemester Master"
+    }
+    
+    
+    x[x >= cutoff] <- cutoff
+    
+    
+    cat(paste0("## FACHSEMESTER ", caps, "  \n  \n"))
+    cat("\\subsubsection{ Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehoert: in welchem Fachsemester sind Sie eingeschrieben?}  \n  \n")
+    
+    print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
+    
+    cat("  \n  \n")
+    
+    subchunkify(barplot.freq(x, xlab = xl, cutoff = cutoff), fig_height = 5, fig_width = 10) # xlab ist Label x-Achse
+    
+    cat("  \n  \n")
+    
   }
 }
 
@@ -1197,8 +1197,8 @@ merge.subj <- function(x1, # Daten von Fach 1
                   data.frame(fach = unlist(x2, use.names = FALSE))) # Zusammenfügen der beiden Fächer-Spalten
     
     attr(subj$fach, "label") <- paste0(" & ", nr2, " ", 
-                                      substr(attr(subj$fach, "label"),1,nchar(attr(subj$fach, "label"))-2), 
-                                      " / 2. Fach? ") # Vergabe des neuen Labels
+                                       substr(attr(subj$fach, "label"),1,nchar(attr(subj$fach, "label"))-2), 
+                                       " / 2. Fach? ") # Vergabe des neuen Labels
     
     merge.sc(subj$fach, nr = nr1) # Aufruf der merge.sc-Funktion
     
@@ -1229,8 +1229,8 @@ merge.sc <- function(x, # Daten
     }
     
     if (inkl == TRUE) {
-      if(no.pagebreak == TRUE) {cat("\\minibeginn\n")}
-      cat("### " , nr, " ", attr(x, "label"), "  \n  \n")
+      if(no.pagebreak == TRUE) {cat("\\begin{minipage}{\\linewidth} \n")}
+      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
       
       
       
@@ -1254,7 +1254,7 @@ merge.sc <- function(x, # Daten
       }
       if(no.pagebreak == TRUE) {
         cat("\n\\bigskip")
-        cat("\n\\miniende")
+        cat("\n\\end{minipage}")
       }
       cat("   \n  \n")
       
@@ -1314,7 +1314,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     
     
     if (head == "default") {head <- sub(":.*", "", attr(x[, 1], "label"))}
-    cat("###", nr, head, "  \n  \n")
+    cat("\\subsubsection{", nr, replace.latex.issues(head), "}  \n  \n")
     
     val.labels <- sub('.*: ', '', as.character(lapply(x, attr, which = "label")))
     
@@ -1345,7 +1345,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       results[nrow(results)+1, ] <- c("Total", nrow(x),
                                       "NA",
                                       "NA")
-        
+      
     } else {
       results <- data.frame(matrix(nrow = length(x), ncol = 3))
       colnames(results) <-
@@ -1356,25 +1356,25 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
         results[n, 3] <-
           round(results[n, 2] / nrow(x) * 100, digits = 2)
       }
-    
+      
     }
-  
+    
     if(ncol(results) == 4) {col.width <- col.width4} else {col.width <- col.width3}
     
-  if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width) , fig_height = 7, fig_width = 9)}
-  
-  colnames(results) <- c("label", "freq", "perc")
-  results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
-  
-  if(show.plot == TRUE) {
-  if(fig.height == "default") 
-  {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = (1 + 0.75*nrow(results)), fig_width = 9)}
-  else 
-  {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = fig.height, fig_width = 9)}
-  }
-  
-  cat("  \n  \n")
-  
+    if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width) , fig_height = 7, fig_width = 9)}
+    
+    colnames(results) <- c("label", "freq", "perc")
+    results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
+    
+    if(show.plot == TRUE) {
+      if(fig.height == "default") 
+      {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = (1 + 0.75*nrow(results)), fig_width = 9)}
+      else 
+      {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = fig.height, fig_width = 9)}
+    }
+    
+    cat("  \n  \n")
+    
   }
 }
 
@@ -1385,7 +1385,7 @@ grade <- function(x, # Daten
                   already.aggr = FALSE, # Sind die Daten bereits aggregiert, bei TRUE wird nicht aggregiert
                   inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                   nr = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-  {
+{
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
@@ -1397,7 +1397,7 @@ grade <- function(x, # Daten
     if(already.aggr == FALSE) {
       x <- aggr.data(x, kennung)}
     
-    cat("### ", attr(x, "label"), "  \n  \n", sep = "")  
+    cat("\\subsubsection{ ", attr(x, "label"), "}  \n  \n", sep = "")  
     
     descr <- as.data.frame(psych::describe(x)) [c(2:5,8:9)]
     descr$Item <- label
@@ -1439,7 +1439,7 @@ merge.wl <- function(ECTS, # ECTS der Daten
                      WL, # WL der Daten (ECTS und WL müssen gleiche Länge haben, d.h. entweder ist bereits beides aggregiert oder keins)
                      kennung, # Kennung/Fallnummer zum Aggregieren
                      already.aggr = FALSE) # Sind die Daten bereits aggregiert? 
-  {
+{
   if(already.aggr == FALSE) {
     tmp <- data.frame(ECTS, WL)
     x <- tmp[0, ]
@@ -1506,8 +1506,8 @@ merge.evasys.sk <- function(x, # Daten
         attr(x, "label") <- temp
         
       }
-      if(no.pagebreak == TRUE) {cat("\\minibeginn\n")}
-      cat("### " , nr, " ", attr(x, "label"), "  \n  \n")
+      if(no.pagebreak == TRUE) {cat("\\begin{minipage}{\\linewidth} \n")}
+      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
       cat("  \n  \n")
       
       xtab <- x
@@ -1540,7 +1540,7 @@ merge.evasys.sk <- function(x, # Daten
       }
       if(no.pagebreak == TRUE) {
         cat("\n\\bigskip")
-        cat("\n\\miniende")
+        cat("\n\\end{minipage}")
       }
       cat("   \n  \n")
     }
@@ -1561,23 +1561,23 @@ merge.num <- function(x, # Daten
                       show.table = TRUE, # Soll die Tabelle gezeigt werden
                       fig.height = 6, # Höhe der Abbildung
                       cutoff = FALSE) # Soll es einen cutoff geben? Alle Werte >= cutoff werden zusammengefasst; Ist nicht mit cuts möglich!
-  {
-
+{
+  
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
   
   if (inkl == TRUE) {
-  
-  if(cut.breaks[1] != "" & cutoff != FALSE) {
-    stop("Es können nicht \"cut.breaks\" und \"cutoff\" != FALSE sein.")
-  }
-  
-  if (sum(!is.na(x)) > 0) {
     
+    if(cut.breaks[1] != "" & cutoff != FALSE) {
+      stop("Es können nicht \"cut.breaks\" und \"cutoff\" != FALSE sein.")
+    }
     
+    if (sum(!is.na(x)) > 0) {
       
-      cat("### " , nr, " ", attr(x, "label"), "  \n  \n")
+      
+      
+      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
       
       x <- as.numeric(gsub(",", ".", x)) # falls mit Komma
       
@@ -1609,7 +1609,7 @@ merge.open <- function(x, # Daten
                        nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                        anchor = FALSE, # Falls über open.answers Anker kriiert wurden hier die Nummer angeben
                        freq = FALSE) # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
-  {
+{
   
   
   if (inkl == "nr") {
@@ -1622,8 +1622,8 @@ merge.open <- function(x, # Daten
     {
       cat(paste0("\\hypertarget{", anchor, ".bottom}{}\\subsubsection{" , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n"))
       cat(paste0("\\hyperlink{", anchor, ".top}{zurück nach oben}  \n  \n"))
-    } else {cat("### " , nr, " ", attr(x, "label"), "  \n  \n")}
-
+    } else {cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")}
+    
     if(length(na.omit(x)) > 0) { # wenn mind. 1 offene Antwort
       
       x <- x[order(x)]
@@ -1635,10 +1635,10 @@ merge.open <- function(x, # Daten
         x <- data.frame(table(x))
         colnames(x) <- c("Antwort", "Häufigkeit")
         print(lv.kable(x, col.width = c("388pt", "50pt"), striped = FALSE, escape = TRUE))
-
-
+        
+        
       } else {
-
+        
         colnames(x) <- "Antwort"
         print(lv.kable(x, col.width = "450pt", striped = FALSE, escape = TRUE))
       }
@@ -1682,8 +1682,8 @@ whiskers <- function(x, # Variable, geht auch für mehrere auf einmal; muss ein 
       (1.5 * (quantile(tmp, 0.75, na.rm=TRUE) - quantile(tmp, 0.25, na.rm=TRUE)))
     
     # Bottom
-    if(no.pagebreak == TRUE) {cat("\\minibeginn\n")}
-    cat(paste0("### ", colnames(x)[k], ": ", attr(x[, k], "label"), "  \n  \n"))
+    if(no.pagebreak == TRUE) {cat("\\begin{minipage}{\\linewidth} \n")}
+    cat(paste0("\\subsubsection{ ", colnames(x)[k], ": ", attr(x[, k], "label"), "}  \n  \n"))
     
     cat("\\center{Ausreißer nach unten/links:}  \n  \n")
     
@@ -1727,7 +1727,7 @@ whiskers <- function(x, # Variable, geht auch für mehrere auf einmal; muss ein 
     cat("\\bigskip \n")
     cat("\\bigskip \n")
     if(no.pagebreak == TRUE) {
-      cat("\n\\miniende \n")
+      cat("\n\\end{minipage} \n")
     }
   }
   

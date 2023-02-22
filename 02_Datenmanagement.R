@@ -32,6 +32,8 @@ codebook[, 2] <- gsub("'", "", codebook[, 2])
 # Alle Variablennamen aus dem Codebuch extrahieren
 var.names.raw <- unique(codebook[codebook$var == "Variable:", 2])
 
+# Einige Variablennamen bekommen bei Evasys wegen der Filter "X.Filter.." am Anfang, das muss korrigiert werden
+colnames(data) <- gsub("^X\\.FILTER\\.\\.", "", colnames(data))
 
 
 
