@@ -274,7 +274,7 @@ open.answers <- function(x, # Daten
     if(length(na.omit(x)) > 0) {
       cat(paste0("\\textit{Die offenen Antworten zu dieser Frage finden sich im \\hyperlink{", anchor.bottom, "}{Anhang}.}  \n \n"))
     } else {
-      cat("*Keine offenen Antworten zu dieser Frage.*  \n  \n")
+      cat("\\textit{Keine offenen Antworten zu dieser Frage.}  \n  \n")
     }
     if(no.pagebreak == TRUE) {
       cat("\n\\bigskip")
@@ -1196,9 +1196,9 @@ merge.subj <- function(x1, # Daten von Fach 1
     subj <- rbind(data.frame(fach = unlist(x1, use.names = FALSE)), 
                   data.frame(fach = unlist(x2, use.names = FALSE))) # Zusammenfügen der beiden Fächer-Spalten
     
-    attr(subj$fach, "label") <- paste0(" & ", nr2, " ", 
-                                       substr(attr(subj$fach, "label"),1,nchar(attr(subj$fach, "label"))-2), 
-                                       " / 2. Fach? ") # Vergabe des neuen Labels
+    attr(subj$fach, "label") <- paste0(" & ", nr2, " ",
+                                       sub("\\?.*", "", attr(subj$fach, "label")),
+                                       " / 2. Fach? ")  # Vergabe des neuen Labels
     
     merge.sc(subj$fach, nr = nr1) # Aufruf der merge.sc-Funktion
     
@@ -1646,7 +1646,7 @@ merge.open <- function(x, # Daten
       
     } else {
       
-      cat("*Keine offenen Antworten zu dieser Frage.*  \n")
+      cat("\\textit{Keine offenen Antworten zu dieser Frage.}  \n")
       
     }
     
