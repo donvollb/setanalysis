@@ -423,28 +423,56 @@ Extension = .ttf]{RedHatText}          % Dateiendungen
   
   
 % Hier werden einige Farben für die Verwendung im LATEX-Code definiert
-% blau-grau (Schiefer)
-\definecolor{bluegray}{HTML}{507289}             % RPTU-Farbe (Schiefer)
-\definecolor{bluegraytable}{HTML}{EFF2F4}       % RPTU-Farbe-Tabelle (Schiefer)
-% grün-grau
-\definecolor{greengray}{HTML}{77b6ba}             % RPTU-Farbe (Ozean)
-\definecolor{greengraytable}{HTML}{F3F8F9}       % RPTU-Farbe-Tabelle (Ozean)
-% dunkelblau
-\definecolor{darkblue}{HTML}{042c58}             % RPTU-Farbe (Nacht)
-\definecolor{darkbluetable}{HTML}{9AA8AE}       % RPTU-Farbe-Tabelle (Nacht)
 
-\definecolor{uniblau}{RGB}{7, 63, 139}            % Altes "uniblau" über RGB (Koblenz-Landau)
+% blau-grau (Schiefer)
+\definecolor{bluegray}{HTML}{507289}             
+\definecolor{bluegraytable}{HTML}{EFF2F4}       
+
+% grün-grau (Ozean)
+\definecolor{greengray}{HTML}{77b6ba}             
+\definecolor{greengraytable}{HTML}{F3F8F9}       
+
+% dunkelblau (Nacht)
+\definecolor{darkblue}{HTML}{042c58}             
+\definecolor{darkbluetable}{HTML}{E8ECF0} 
+
+% hellblau (Tag)
+\definecolor{lightblue}{HTML}{6ab2e7}             
+\definecolor{lightbluetable}{HTML}{F2F8FD} 
+
+% dunkelgrün (Petrol)
+\definecolor{darkgreen}{HTML}{006b6b}             
+\definecolor{darkgreentable}{HTML}{9AA8AE} 
+
+% hellgrün (Apfel)
+\definecolor{darkgreen}{HTML}{26d07c}             
+\definecolor{darkgreentable}{HTML}{EBFBF3} 
+
+% violett (Pflaume)
+\definecolor{darkgreen}{HTML}{4c3575}             
+\definecolor{darkgreentable}{HTML}{#EFEDF3} 
+
+% pink (Fuchsia)
+\definecolor{darkgreen}{HTML}{d13896}             
+\definecolor{darkgreentable}{HTML}{FBEDF6} 
+
+% rot (Himbeere)
+\definecolor{darkgreen}{HTML}{e31b4c}             
+\definecolor{darkgreentable}{HTML}{FCEAEF} 
+
+% orange (Mango)
+\definecolor{darkgreen}{HTML}{ffa252}             
+\definecolor{darkgreentable}{HTML}{FFF7EF} 
+
+% Allgemeine Farbe
 \definecolor{darkgrey}{RGB}{200, 200, 200}        % Dunkelgrau für manche Beschriftungen
-\definecolor{tablecolorShowUp}{RGB}{234,248,255}  % Tabellenfarbe ShowUp
-\definecolor{tablecolorSTUD}{RGB}{234,255,212}    % Tabellenfarbe STUD
-\definecolor{tablecolorABS}{RGB}{250, 230, 255}   % Tabellenfarbe ABS
-\definecolor{tablecolorLVE}{RGB}{228, 253, 255}   % Tabellenfarbe LVE
-\definecolor{cadetblue4}{RGB}{83,134,139}         % Schriftfarbe LVE
 \definecolor{steelblue}{RGB}{70,130,180}          % Schriftfarbe steelblue
 
+% Standardfarben, falls nicht anders definiert
 \colorlet{maincolor}{bluegray}
 \colorlet{tablecolor}{bluegraytable}       
 
+% Falls eine spezifische Farbe (der definierten) genannt wird, werden die Standardfarben überschrieben
 $if(color)$
 \colorlet{maincolor}{$color$}
 \colorlet{tablecolor}{$color$table}  
