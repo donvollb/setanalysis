@@ -420,17 +420,35 @@ Extension = .ttf]{RedHatText}          % Dateiendungen
 \renewcommand\cftsecpagefont{\mdseries}
 % Seitenzahlen bei "Sections" werden nicht fett geschrieben
 \setlength{\cftsecindent}{1.5em}                      % Einträge im Inhaltsverzeichnis leicht eingerückt
-  % Hier werden einige Farben für die Verwendung im LATEX-Code definiert
-\definecolor{rptu}{RGB}{80, 114, 137}             % RPTU-Farbe (blaugrau/Schiefer)
+  
+  
+% Hier werden einige Farben für die Verwendung im LATEX-Code definiert
+% blau-grau (Schiefer)
+\definecolor{rptu_blue-gray}{HTML}{507289}             % RPTU-Farbe (Schiefer)
+\definecolor{rptu_blue-gray_table}{HTML}{dfe6ea}       % RPTU-Farbe-Tabelle (Schiefer)
+% grün-grau
+\definecolor{rptu_green-gray}{HTML}{77b6ba}             % RPTU-Farbe (Ozean)
+\definecolor{rptu_green-gray_table}{HTML}{e6f2f3}       % RPTU-Farbe-Tabelle (Ozean)
+% dunkelblau
+\definecolor{rptu_darkblue}{HTML}{042c58}             % RPTU-Farbe (Nacht)
+\definecolor{rptu_darkblue_table}{HTML}{D2D9E1}       % RPTU-Farbe-Tabelle (Nacht)
+
 \definecolor{uniblau}{RGB}{7, 63, 139}            % Altes "uniblau" über RGB (Koblenz-Landau)
 \definecolor{darkgrey}{RGB}{200, 200, 200}        % Dunkelgrau für manche Beschriftungen
-\definecolor{tablecolor}{RGB}{250, 230, 255}      % Tabellenfarbe im Dokument, jeweils ändern
 \definecolor{tablecolorShowUp}{RGB}{234,248,255}  % Tabellenfarbe ShowUp
 \definecolor{tablecolorSTUD}{RGB}{234,255,212}    % Tabellenfarbe STUD
 \definecolor{tablecolorABS}{RGB}{250, 230, 255}   % Tabellenfarbe ABS
 \definecolor{tablecolorLVE}{RGB}{228, 253, 255}   % Tabellenfarbe LVE
 \definecolor{cadetblue4}{RGB}{83,134,139}         % Schriftfarbe LVE
 \definecolor{steelblue}{RGB}{70,130,180}          % Schriftfarbe steelblue
+
+\colorlet{maincolor}{rptu_blue-gray}
+\colorlet{tablecolor}{rptu_blue-gray_table}       
+
+$if(color)$
+\colorlet{maincolor}{$color$}
+\colorlet{tablecolor}{$color$}  
+$endif$
 
 $endfor$
 \ifLuaTeX
@@ -595,11 +613,11 @@ $endif$
 % Horizontale Trennstriche
 \renewcommand{\headrulewidth}{1pt}
 \renewcommand{\headrule}{\hbox to\headwidth{%
-    \color{rptu}\leaders\hrule height \headrulewidth\hfill}}
+    \color{maincolor}\leaders\hrule height \headrulewidth\hfill}}
     
 \renewcommand{\footrulewidth}{1pt}
 \renewcommand{\footrule}{\hbox to\headwidth{%
-    \color{rptu}\leaders\hrule height \footrulewidth\hfill}}
+    \color{maincolor}\leaders\hrule height \footrulewidth\hfill}}
     
 % Fußzeile
 \rfoot{\color{darkgray}{Seite \thepage}}
