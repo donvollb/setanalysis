@@ -6,6 +6,8 @@ output:
 editor_options:                     
   chunk_output_type: console
 lfoot: Studieneingangsbefragung WiSe 2022-23
+lheadlogo: rmd-data/RPTU_Logo_line_3.png
+rheadlogo: rmd-data/meze-logo.png
   # Kurztitel für linken Teil der Fußleiste
 color: lightblue
   # mögliche Farben: bluegray, greengray, darkblue, lightblue, darkgreen, lightgreen, violett, pink, red, orange (RPTU-Standardfarben)
