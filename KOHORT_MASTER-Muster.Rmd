@@ -2,69 +2,14 @@
 output:                             
   pdf_document:                     
     latex_engine: xelatex
+    template: https://gitlab.rhrk.uni-kl.de/dvollbracht/scripts-evaluation/-/raw/main/template.tex
 editor_options:                     
   chunk_output_type: console
-header-includes:
-  # Hier werden verschiedene Pakete für LATEX geladen
-- \usepackage{fancyhdr}             # für Kopf- und Fußzeile
-- \usepackage{graphicx}             # für das Einbinden von Graphiken
-- \usepackage{eurosym}              # für Eurosymbole
-- \usepackage{booktabs}             # für zusätzliche Stilelemente in Tabellen
-- \usepackage{xcolor}               # für Farben
-- \usepackage{tabu}                 # für Tabellen, die über mehrere Seiten gehen
-- \usepackage{tabto}                # für Tabs
-- \usepackage{makecell}             # für Layouts in Tabellen
-- \usepackage{longtable}            # für Tabellen über mehrere Seiten
-- \usepackage{array}                # ebenfalls Tabellenlayout/Matritzen 
-- \usepackage{multirow}             # für Tabellen mit mehrzeiligen Zellen
-- \usepackage{wrapfig}              # für Bilder und Tabellen, die von text umschlossen werden
-- \usepackage{float}                # für Abbildungen/Tabellen
-- \usepackage{colortbl}             # für farbige Zeilen/Spalten in Tabellen
-- \usepackage{pdflscape}            # für mögliche Rotation der Seiten
-- \usepackage{threeparttable}       # für Titel/Anmerkungen von Tabellen
-- \usepackage[normalem]{ulem}       # für Unterstriche
-- \usepackage{fontspec}             # für Schriftarten
-- \usepackage{hyperref}             # für Hyperlinks
-- \usepackage{geometry}             # für Seitenränder
-- \usepackage{tocloft}              # für Inhaltsverzeichnismodifikationen
-  # Ab hier wird das Layout der Seitenränder definiert
-- \geometry{
-- a4paper,                          # Seitengröße
-- left = 2cm,                       # Abstand links
-- right = 2cm,                      # Abstand rechts
-- headheight = 2cm,                 # Höhe Kopfzeile
-- top = 3cm,                        # Abstand Seiteninhalt nach oben (unabhängig von Kopfzeile)
-- bottom = 2cm,                     # Abstand Seiteninhalt nach unten (unabhängig von Fußzeile)
-- footskip = 1.5cm}                 # Höhe Fußzeile
-  # Ab hier beginnt das Setup für die Hyperlinks
-- \hypersetup{
-- colorlinks=true,                  # farbige Links?
-- linkcolor=blue,                   # Farbe der Hyperlinks zu Abschnitten innerhalb des Dokuments
-- filecolor=magenta,                # Farbe von Hyperlinks zu Dateien
-- urlcolor=cyan}                    # Farbe von URLs
-  # Hier wird die Schriftart aus dem rmd-data Ordner geladen
-- \setmainfont[
-- Path = rmd-data/RedHatText/ ,          # Pfad, wo Schrifart liegt
-- UprightFont = RedHatText-Regular,      # Dateiname reguläre Schrift
-- BoldFont = RedHatText-Bold ,           # Dateiname fette Schrift
-- ItalicFont = RedHatText-LightItalic ,  # Dateiname kursive Schrift
-- Extension = .ttf]{RedHatText}          # Dateiendungen
-  # Hier wird noch das Inhaltsverzeichnis ein wenig zurechtgestutzt
-- \renewcommand{\cftsecleader}{\cftdotfill{\cftdotsep}} # Punkte zwischen Eintrag und Seite auch bei "Sections" (erste Überschriftsebene)
-- \renewcommand\cftsecfont{\mdseries}                   # Einträge bei "Sections" werden nicht fett geschrieben
-- \renewcommand\cftsecpagefont{\mdseries}               # Seitenzahlen bei "Sections" werden nicht fett geschrieben
-- \setlength{\cftsecindent}{1.5em}                      # Einträge im Inhaltsverzeichnis leicht eingerückt
-  # Hier werden einige Farben für die Verwendung im LATEX-Code definiert
-- \definecolor{rptu}{RGB}{80, 114, 137}             # RPTU-Farbe (blaugrau/Schiefer)
-- \definecolor{uniblau}{RGB}{7, 63, 139}            # Altes "uniblau" über RGB (Koblenz-Landau)
-- \definecolor{darkgrey}{RGB}{200, 200, 200}        # Dunkelgrau für manche Beschriftungen
-- \definecolor{tablecolor}{RGB}{250, 230, 255}      # Tabellenfarbe im Dokument, jeweils ändern
-- \definecolor{tablecolorShowUp}{RGB}{234,248,255}  # Tabellenfarbe ShowUp
-- \definecolor{tablecolorSTUD}{RGB}{234,255,212}    # Tabellenfarbe STUD
-- \definecolor{tablecolorABS}{RGB}{250, 230, 255}   # Tabellenfarbe ABS
-- \definecolor{tablecolorLVE}{RGB}{228, 253, 255}   # Tabellenfarbe LVE
-- \definecolor{cadetblue4}{RGB}{83,134,139}         # Schriftfarbe LVE
-- \definecolor{steelblue}{RGB}{70,130,180}          # Schriftfarbe steelblue
+lfoot: Studieneingangsbefragung WiSe 2022-23
+  # Kurztitel für linken Teil der Fußleiste
+color: lightblue
+  # mögliche Farben: bluegray, greengray, darkblue, lightblue, darkgreen, lightgreen, violett, pink, red, orange (RPTU-Standardfarben)
+  # alternativ kann man eigene Farben über \definecolor definieren und sie "maincolor" und "tablecolor" nennen.
 ---
 
 ```{r Setup, include=FALSE}
@@ -114,24 +59,13 @@ inkl.protokoll <- ifelse(exists("i"), TRUE, FALSE)
      # i gibt die Zeile der personalized_info Datei an und steht für einen Bericht
 
 
-# Campus
-  if(!exists("campus")) {campus <- "KO"}
-  # Zum Testen einstellen, je nach dem werden die entsprechenden Daten eingelesen
-
 
 # Berichtart Variable -> # LVE, ABS, STUD, SHOWUP? 
   bericht <- "STUD"
       # Um welchen Bericht handelt es sich? # Diese Variable wird gewählt um bspw. das Farbchema zu setzten
       # WICHTIG: Einhalten der Abkürzung!
   
-  
-# Kurztitel der Umfrage (für Fußzeile im Bericht)
-  lfoot <- "Studierendenbefragung ZFUW Frühjahr 2021"
-  
-  
-  
-  
-  
+
   
 ###### Nicht-modifizierbare Werte (nur mit Bedacht ändern) ######
 
@@ -154,12 +88,12 @@ inkl.protokoll <- ifelse(exists("i"), TRUE, FALSE)
 ##### 2. Farbsetting #####
 
   
-#Farbe der Balken/Text, unbedingt einstellen! -> automatisiert
+# Farbe der Balken/Text, unbedingt einstellen! -> automatisiert
 
-if (bericht == "LVE"){color.bars <- "cadetblue4"} 
-if (bericht == "ABS"){color.bars <- "plum4"}
-if (bericht == "STUD"){color.bars <- "darkseagreen"}
-if (bericht == "SHOWUP"){color.bars <- rgb(109, 172, 220, maxColorValue = 255)}
+if (bericht == "LVE"){color.bars <- "#507289"} # blaugrau (Schiefer)
+if (bericht == "ABS"){color.bars <- "#4c3575"} # violett (Pflaume)
+if (bericht == "STUD"){color.bars <- "#77b6ba"} # grüngrau (Ozean)
+if (bericht == "SHOWUP"){color.bars <- "#6ab2e7"} # hellblau (Tag)
 
   
 
@@ -199,63 +133,18 @@ opar <- par() #Diese abspeichern
 #### C - DATENSÄTZE UND FUNKTIONEN LADEN ####
 
 # Daten einlesen
-if (campus== "KO") {
-    load(file="Daten/KO.Daten_STUD_2021.rda")} else {load(file="Daten/LD.Daten_STUD_2021.rda")}
+load(file="...")
 
 # Individuelle Info für Einzelberichte
-#personalized_info <- read.csv2("Tabellen/KO_STUD_2021.csv")
-if (campus== "KO") {
-  personalized_info <- read.csv2("Tabellen/KO_STUD_2021.csv")} else {
-    personalized_info <- read.csv2("Tabellen/LD_STUD_2021.csv")}
-
-if (campus== "KO") {data <- data.ko} else {data <- data.ld}
+personalized_info <- read.csv2("...")
 
 
 # Funktionen laden
-source("Test_Ordner/Funktionen_LE_all_v.1.0.1.R", encoding = "UTF-8")
+devtools::source_url(url = "https://gitlab.rhrk.uni-kl.de/dvollbracht/scripts-evaluation/-/raw/main/Funktionen_LE_all.R", 
+                     encoding = "UTF-8")
 
 
 ```
-
-[//1]: Das hier ist ein Kommentar und wird nicht im finalen Dokument angezeigt.
-
-[//2]: Stil des Dokuments
-\pagestyle{fancy}
-\fancyhf{}
-
-```{r campus ueberschrift}
-# FUNKTION DES CHUNKS:
-# Jeweils für KO und LD den Header abändern
-
-if(personalized_info$Campus[i] == "LD") { # Wenn es um einen Landauer Bericht geht
-  
-  # Nehme das MeZe Logo
-  cat("\\rhead{\\includegraphics[height=1.2cm]{rmd-data/meze-logo.png}}") 
-  
-  } else { 
-    # Ansonsten schreibe für KO "BÜRO FÜR EVALUATION..."
-    cat("\\rhead{\\color{darkgray}{BÜRO FÜR EVALUATION IN STUDIUM \\& LEHRE |\\\\
-      LEHREVALUATION KOBLENZ}}")
-    }
-```
-
-[//4]: Universitätslogo wird eingefügt
-\lhead{\includegraphics[height=0.7cm]{rmd-data/RPTU_Logo_line_3.png}}
-
-[//5]: Horizontale Trennstriche
-\renewcommand{\headrulewidth}{1pt}
-\renewcommand{\headrule}{\hbox to\headwidth{%
-    \color{rptu}\leaders\hrule height \headrulewidth\hfill}}
-    
-\renewcommand{\footrulewidth}{1pt}
-\renewcommand{\footrule}{\hbox to\headwidth{%
-    \color{rptu}\leaders\hrule height \footrulewidth\hfill}}
-    
-[//6]: Fußzeile
-\rfoot{\color{darkgray}{Seite \thepage}}
-
-[//7]: In der nächsten Zeile wird der Kurztitel der Umfrage eingefügt (weiter oben definiert)
-\lfoot{\color{darkgray}{`r lfoot`}}
 
 
 ```{r inkl Variablen, include=FALSE}
@@ -334,20 +223,13 @@ rm(data_copy)
 ```{r Protokoll, eval = inkl.protokoll}
 # FUNKTION DES CHUNKS
 # Protokoll überschreiben 
-if (campus == "KO") {
-  protokoll <- read.csv2("Tabellen/KO_Berichte_Protokoll_STUD_2021.csv") # diese Datei wurde im Skript "Automatisierung" erstellt
-  protokoll$N[i] <- nrow(data) # Anzahl der Personen dokumentieren
-  write.csv2(protokoll, # die Datei wieder speichern
-           file = "Tabellen/KO_Berichte_Protokoll_STUD_2021.csv", 
-           row.names = FALSE) 
-  
-} else {
+
   protokoll <- read.csv2("Tabellen/LD_Berichte_Protokoll_STUD_2021.csv") # diese Datei wurde im Skript "Automatisierung" erstellt
   protokoll$N[i] <- nrow(data) # Anzahl der Personen dokumentieren
   write.csv2(protokoll, # die Datei wieder speichern
            file = "Tabellen/LD_Berichte_Protokoll_STUD_2021.csv", 
            row.names = FALSE) 
-}
+
 ```
 
 [//8]: Titel wird geschrieben
