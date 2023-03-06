@@ -641,11 +641,19 @@ $endif$
 \fancyhf{}
 
 $if(lheadlogo)$
-\lhead{\includegraphics[height=1.1cm]{$lheadlogo$}}
+$if(lheadheight)$
+\lhead{\includegraphics[height=$lheadheight$]{$lheadlogo$}}
+$else$
+\lhead{\includegraphics[height=0.7cm]{$lheadlogo$}}
+$endif$
 $endif$
 
 $if(rheadlogo)$
-\rhead{\includegraphics[height=1.1cm]{$rheadlogo$}}
+$if(rheadheight)$
+\rhead{\includegraphics[height=$rheadheight$]{$rheadlogo$}}
+$else$
+\rhead{\includegraphics[height=1.0cm]{$rheadlogo$}}
+$endif$
 $endif$
 
 % Horizontale Trennstriche
