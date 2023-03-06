@@ -459,12 +459,12 @@ Extension = .ttf]{RedHatText}          % Dateiendungen
 \definecolor{pinktable}{HTML}{FBEDF6} 
 
 % rot (Himbeere)
-\definecolor{darkgreen}{HTML}{e31b4c}             
-\definecolor{darkgreentable}{HTML}{FCEAEF} 
+\definecolor{red}{HTML}{e31b4c}             
+\definecolor{redtable}{HTML}{FCEAEF} 
 
 % orange (Mango)
-\definecolor{darkgreen}{HTML}{ffa252}             
-\definecolor{darkgreentable}{HTML}{FFF7EF} 
+\definecolor{orange}{HTML}{ffa252}             
+\definecolor{orangetable}{HTML}{FFF7EF} 
 
 % Allgemeine Farbe
 \definecolor{darkgrey}{RGB}{200, 200, 200}        % Dunkelgrau für manche Beschriftungen
@@ -634,12 +634,19 @@ $if(has-frontmatter)$
 \mainmatter
 $endif$
 
+
+%-------------SEITENINHALTE---------------%
 % fancy als pagestyle
 \pagestyle{fancy}
 \fancyhf{}
 
-\lhead{\includegraphics[height=0.7cm]{rmd-data/RPTU_Logo.png}}
-\rhead{\includegraphics[height=1.2cm]{rmd-data/meze-logo.png}}
+$if(lheadlogo)$
+\lhead{\includegraphics[height=1.1cm]{$lheadlogo$}}
+$endif$
+
+$if(rheadlogo)$
+\rhead{\includegraphics[height=1.1cm]{$rheadlogo$}}
+$endif$
 
 % Horizontale Trennstriche
 \renewcommand{\headrulewidth}{1pt}
