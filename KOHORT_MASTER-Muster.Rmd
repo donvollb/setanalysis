@@ -2,7 +2,7 @@
 output:                             
   pdf_document:                     
     latex_engine: xelatex
-    template: template.tex
+    template: https://gitlab.rhrk.uni-kl.de/dvollbracht/scripts-evaluation/-/raw/main/template.tex
 editor_options:                     
   chunk_output_type: console
 lfoot: Studieneingangsbefragung WiSe 2022-23
