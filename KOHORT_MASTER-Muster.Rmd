@@ -1,0 +1,406 @@
+---
+output:                             
+  pdf_document:                     
+    latex_engine: xelatex
+    template: template.tex
+editor_options:                     
+  chunk_output_type: console
+lfoot: Studieneingangsbefragung WiSe 2022-23
+  # Kurztitel für linken Teil der Fußleiste
+color: lightblue
+  # mögliche Farben: bluegray, greengray, darkblue, lightblue, darkgreen, lightgreen, violett, pink, red, orange (RPTU-Standardfarben)
+  # alternativ kann man eigene Farben über \definecolor definieren und sie "maincolor" und "tablecolor" nennen.
+---
+
+```{r Setup, include=FALSE}
+### Unten links befindet sich der Dropdown navigator. Hiermit kannst du zwischen den Chunks und Überschriften switchen
+
+# Oben im YAML bei "\definecolor{tablecolor}{RGB}{234,255,212}" die Werte in der geschweiften Klammer durch die richtige Farbe (siehe andere Farben) ersetzen
+
+
+# ÄÖU richtig angezeigt? (Reopen with Encoding: UTF-8)
+
+# FUNKTION DES CHUNKS:
+# Pakete laden, Golbale Variablen setzen und Datensätze/Funktionsdatei einlesen
+
+
+
+#### A - PAKETE ####
+#Mit der Pacman-Funktion werden die nötigen Pakete geladen und fehlende installiert. Bei Bedarf wird sie erweitert
+suppressPackageStartupMessages(if(!require(pacman)){install.packages("pacman")})
+pacman::p_load(dplyr, # Datenselektion
+               tidyverse, # Datenselektion
+               ggplot2, # Graphen
+               rgdal, # Brauchen wir das noch?
+               Hmisc, # labels
+               R6, # Objektorientiertes Programmieren, brauchen wir das noch?
+               extrafont, # Schriftarten
+               Cairo, # Für pdfs
+               sjlabelled, # Für label-managemant
+               kableExtra, # Für pdf-Tabellen
+               DescTools, # Für statistische Analysen
+               showtext # Für Schriftart
+               ) 
+
+
+#### B - GLOBALE VARIABLEN ####
+
+##### 1. Variable #####
+
+###### Protokollvariable (nicht ändern, muss hier oben stehen!)
+# Falls i existiert, was nur bei der AUtomatisierungsscheleife der Fall ist, wird das Protokoll mitgeschrieben
+inkl.protokoll <- ifelse(exists("i"), TRUE, FALSE)
+
+###### Modifizierbare Werte ######
+
+# i Variable
+  if(!exists("i")) {i <- 3} 
+     # i beim Testen für den jeweiligen Bericht einstellen
+     # i gibt die Zeile der personalized_info Datei an und steht für einen Bericht
+
+
+
+# Berichtart Variable -> # LVE, ABS, STUD, SHOWUP? 
+  bericht <- "STUD"
+      # Um welchen Bericht handelt es sich? # Diese Variable wird gewählt um bspw. das Farbchema zu setzten
+      # WICHTIG: Einhalten der Abkürzung!
+  
+
+  
+###### Nicht-modifizierbare Werte (nur mit Bedacht ändern) ######
+
+
+# anchor Variable für offene Variablen
+  anchor.nr <- 0
+       # Die anchor Vairable dient zu erstellen von Hyperlinksvon offenen Fragen
+  
+# Environment für offene Fragen
+  list.open <- new.env()
+       # In die Environment werden offene Fragen gepackt
+  
+# Sub-Chunks Nummer
+  sub.nr <- 0 # Für die fortlaufenden Titel der Subchunks, NICHT ÄNDERN!
+
+# Schriftart
+  font.family <- "Red+Hat+Text" # Auswahl der Schriftart, gleicher Name wie bei Google Fonts 
+  
+  
+##### 2. Farbsetting #####
+
+  
+# Farbe der Balken/Text, unbedingt einstellen! -> automatisiert
+
+if (bericht == "LVE"){color.bars <- "#507289"} # blaugrau (Schiefer)
+if (bericht == "ABS"){color.bars <- "#4c3575"} # violett (Pflaume)
+if (bericht == "STUD"){color.bars <- "#77b6ba"} # grüngrau (Ozean)
+if (bericht == "SHOWUP"){color.bars <- "#6ab2e7"} # hellblau (Tag)
+
+  
+
+##### 3. Einstellungen zu Grafiken #####
+show.plot.mc <- FALSE # Sollen die Plots der MC-Fragen angezeigt werden?
+show.plot.sc <- FALSE # Sollen die Plots der SC-Fragen angezeigt werden?
+show.plot.sk <- TRUE  # Sollen die Plots der SK-Fragen angezeigt werden?
+
+
+
+##### 4. Chunk Einstellungen ####
+
+knitr::opts_chunk$set(
+	comment = "",
+	dev = "cairo_pdf",
+	results = "asis",
+	echo = FALSE,
+	warning = FALSE,
+	message = FALSE
+)
+
+
+##### 5. Auswahl der Schriftart ####
+# Prüfe, ob die gewählt Schriftart bereits in der Datenbank von {showtextdb} enthalten ist
+# Installiere sie, falls nicht
+if (!(font.family %in% showtextdb::font_installed())) {showtextdb::font_install(
+  showtextdb::google_fonts(font.family))}
+showtext::showtext_auto()
+
+
+par(family = font.family) # Grafik Einstelungen auf Schriftart ändern
+opar <- par() #Diese abspeichern
+
+
+
+
+#### C - DATENSÄTZE UND FUNKTIONEN LADEN ####
+
+# Daten einlesen
+load(file="...")
+
+# Individuelle Info für Einzelberichte
+personalized_info <- read.csv2("...")
+
+
+# Funktionen laden
+devtools::source_url(url = "https://gitlab.rhrk.uni-kl.de/dvollbracht/scripts-evaluation/-/raw/main/Funktionen_LE_all.R", 
+                     encoding = "UTF-8")
+
+
+```
+
+
+```{r inkl Variablen, include=FALSE}
+# FUNKTION DES CHUNKS
+
+#### inkl.-Variablen einlesen ####
+
+# Für inkl.open -> Transformation von "x" in TRUE/FALSE
+if ("inkl.open" %in% colnames(personalized_info)) {
+  
+  personalized_info$inkl.open[is.na(personalized_info$inkl.open)] <- FALSE
+  personalized_info$inkl.open[personalized_info$inkl.open == ""] <- FALSE
+  personalized_info$inkl.open[personalized_info$inkl.open == "x"] <- TRUE
+}
+
+
+# Namen der inkl. Variablen und header definierten
+names.inkl <- names(dplyr::select(personalized_info, dplyr::starts_with("inkl."), dplyr::starts_with("header"))) # Namen der Header und inkl. einlesen
+
+
+for (n in 1:length(names.inkl)) { # Für jeden der Namen
+  
+  x <- names.inkl[n] # Speichere den Namen ab
+  if(personalized_info[i, x] == "TRUE") { assign(as.character(x), TRUE) } else { assign(as.character(x), FALSE) } 
+  #Falls in der jeweiligen Zeile "TRUE" steht, also die Frage vorkommen soll, setze die inkl. Variable auf TRUE (ansonsten FALSE)
+}
+
+rm(n, x, names.inkl)
+
+```
+
+
+```{r Daten editieren}
+# FUNKTION DES CHUNKS:
+# Falls Daten editiert werden müssen oder Namen unkenntlich gemacht werden müssen 
+# Wenn etwa ein Variablenname im Nachhinein geändert werden muss
+
+#### A - Daten editieren ####
+
+
+#### B - Namen unkenntlich machen ####
+
+# Beispiel
+# data[, 68] <- gsub("Fr. Ulitsch", "-[Name gelöscht]-", data[, 68])
+```
+
+
+```{r Titel und Stichprobe, include = FALSE}
+# FUNKTION DES CHUNKS:
+# Titel und Stichprobenbeschreibung aus personalized info ziehen
+
+Titel <- as.character(personalized_info$Titel[i]) #Titel speichern
+Stichprobe <- as.character(personalized_info$Stichprobe_Text[i]) #Stichprobentext speichern
+```
+
+
+```{r Daten filtern, include = FALSE}
+# FUNKTION DES CHUNKS:
+# Daten je nach Stichprobe filtern 
+# Muss je nach Befragung stark abgeändert werden
+# Bei ZFUW-STUD müssen z.B. auch Sub-Datensätze erstellt werden
+
+# Bei der Selektion können die Labels verloren gehen, daher am besten am Anfang:
+# Kopie mit Labels ablegen
+data_copy <- data
+
+
+
+# Am Ende des Chunks: Labels zurückkopieren
+data <- sjlabelled::copy_labels(data, data_copy)
+# Kopie entfernen
+rm(data_copy)
+```
+
+
+```{r Protokoll, eval = inkl.protokoll}
+# FUNKTION DES CHUNKS
+# Protokoll überschreiben 
+
+  protokoll <- read.csv2("Tabellen/LD_Berichte_Protokoll_STUD_2021.csv") # diese Datei wurde im Skript "Automatisierung" erstellt
+  protokoll$N[i] <- nrow(data) # Anzahl der Personen dokumentieren
+  write.csv2(protokoll, # die Datei wieder speichern
+           file = "Tabellen/LD_Berichte_Protokoll_STUD_2021.csv", 
+           row.names = FALSE) 
+
+```
+
+[//8]: Titel wird geschrieben
+\begin{LARGE}
+\begin{center}
+\textbf{`r Titel`}
+\end{center}
+\end{LARGE}
+
+
+```{r Abrruch Schleife, message=FALSE, warning=FALSE, include=FALSE}
+
+# FUNKTION DES CHUNKS
+# Abbrechen der Knit-Schleife bei zu kleinen Stichproben
+
+# Erst nach dem Titel einfügen, da eine leere Seite nicht geknittet werden kann!
+
+# wenn N<10, knitten abbrechen
+# das pdf wird trotzdem erstellt (knitten geht insgesamt schneller)
+
+if(nrow(data) < 10){
+
+  cat("*Dieser Bericht wurde nicht erstellt, da die Substichprobe weniger als zehn Personen beinhaltet.**") # Platzhalter, nochmal überarbeiten
+  knitr::knit_exit()
+
+}
+
+```
+
+```{r Setup Erste Seite}
+
+# FUNKTION DES CHUNKS:
+
+# Nutzen, falls Vorbereitungen zum Anzeigen der Stichprobe auf der ersten Seite erfolgen müssen
+
+#### Variablen ####
+
+# Befragungszeitraum
+bef.zeit <- "01.01.1970 - 12.12.2070"
+
+# Befragungsart definieren (für erste Seite)
+bef.art <- "Online-Umfrage (via Losungs-Verfahren)"
+
+# Rücklauf
+# Eventuell je nach Bericht ändern lassen
+ruecklauf <- ifelse(campus == "KO", 
+                    "Es wurden xxx Koblenzer Studierende aus dem x. und x. Semester eingeladen; xxx (xx%) nahmen teil.",
+                    "Es wurden xxx Landauer Studierende aus dem x. und x. Semester eingeladen; xxx (xx%) nahmen teil.")
+
+# Anzahl Stimmen im Bericht
+# Normalerweise Länge des Datensatzes
+stg_ges <- nrow(data)
+```
+
+[//9]: vspace steht für vertical space, also vertikalen Abstand
+
+\vspace{10mm}
+
+[//10]: Überschrift für erste Seite (nicht der Titel!)
+
+\addtocontents{toc}{\vspace{0.2cm}}
+
+# Angaben zur Befragung und zur Stichprobengröße
+
+\vspace{6mm}
+
+\textbf{Befragungszeitraum} `r bef.zeit` 
+\vspace{6mm}
+
+\textbf{Art der Befragung:} `r bef.art`
+\vspace{6mm}
+
+\textbf{Stichprobenbeschreibung:}  `r Stichprobe` 
+\vspace{6mm}
+
+\textbf{Rücklauf:} `r ruecklauf`
+\vspace{6mm}
+
+\textbf{Anzahl an Stimmen in diesem Bericht:} `r stg_ges`
+\vspace{14mm}
+
+\color{darkgray}\hrule
+
+\color{black}
+\vspace{11mm}
+
+\textit{Hinweis: Die Zuordnung zur Stichprobe dieses Ergebnisberichts ergibt sich aus den Angaben der Umfragenteilnehmenden.}
+
+\pagebreak
+
+### Legende zu den deskriptiven Statistiken und Säulendiagrammen
+
+```{r Vorbereitung_Legende}
+# FUNKTION DES CHUNKS
+# Chunk für Legenden
+
+print(bsp.table.stat())
+
+cat("  \n  \n")
+
+bsp.evasys.sk6()
+
+```
+
+
+### Legende zu den Häufigkeitstabellen
+ - *"Häufigkeit"* absolute Häufigkeit 
+ - *"Prozent / %"* prozentuale Häufigkeit, bezieht sich auf alle Werte inkl. der fehlenden Werte
+ - *"gültige %"*  gültige Prozent, hier sind fehlende Werte von der Berechnung ausgeschlossen
+ - *"NAs"* steht für fehlende Werte bzw. keine Angabe.
+
+### Zusätzliche Hinweise
+- Bei Fragen, die mit *eckigen Klammertermen beginnen*, handelt es sich um Filterfragen: je nach vorheriger Angabe also für die Teilnehmer der Online-Umfrage nicht sichtbar (~ kumulierte Prozent also potentiell <100).
+
+- Manche Fragen wurden im *Multiple-Choice-Format* (Mehrfachnennung möglich) programmiert, können also Mehrfachantworten erhalten (~ kumulierte Prozent also potentiell >100).
+
+
+[//11]: pagebreak bedeutet Neue Seite
+\pagebreak
+
+[//12]: Erstellung Inhaltsverzeichnis
+\setcounter{tocdepth}{2}
+\renewcommand*\contentsname{INHALTSVERZEICHNIS}
+\begingroup
+\hypersetup{linkcolor=black}
+\tableofcontents
+\thispagestyle{fancy}
+\endgroup
+
+\pagebreak 
+
+```{r header2}
+# Ab hier kommen Chunks mit Fragen
+
+# Falls nicht jeder header in jeder Umfrage: oben 
+# eval = headerx (x ist die Zahl des headers) einfügen 
+# (header-Varibale muss dazu in personalozed info stehen)
+
+# Überschrift Beispiel:
+# Das "  \n  \n" am Ende sorgt für Umbrüche und Zurücksetzen der Formatierung
+cat("# 2. Allgemeine Angaben  \n  \n")
+
+# Ab hier Auswertung, nach Muster einfügen
+
+merge.sc(data$studgang, nr = "2.1")
+
+merge.num(data$fachsem, nr = "2.4", xlab = "Fachsemester", cutoff = 12)
+
+merge.mc(dplyr::select(data, module_AUW_A:module_AUW_O), nr = "4.1", inkl = TRUE)
+
+open.answers(data$WL_3, nr = "29.3")
+
+
+# Am Ende Seitenumbruch
+cat("\\pagebreak  \n  \n")
+
+```
+
+
+```{r header.open}
+# Chunk für offene Fragen, kann so bleiben. 
+
+if (anchor.nr != 0)  { # anchor.nr wird ungleich 0, wenn offene Fragen vorkommen
+  
+  cat("# Anhang: Fragen mit offenem Antwortformat  \n  \n")
+
+  for (k in 1:anchor.nr) {
+    x <- eval(parse(text = paste0("list.open$var.", k)))
+    q.nr <- eval(parse(text = paste0("list.open$nr.", k)))
+    merge.open(x, nr = q.nr, anchor = k, inkl = eval(parse(text = paste0("inkl.", q.nr))))}
+  rm(anchor.nr, q.nr)
+}
+
+```
