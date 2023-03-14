@@ -1075,13 +1075,13 @@ merge.multi.sk <- function(x, # Daten
       labels <- attr(x[, 1], "label")
     }
     
-    x <- data.frame(x) #Warum ein zweites Mal?
     
     ListeLabels <- list()
     for (k in 1:length(x)) {
-      ListeLabels[[k]] <- names((attr(x[, k], "labels")))
+      ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number]  #nicht Relevante Labels werden abgeschnitten
     }
-    TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:length(x))
+    
+    TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
     
     if (tmin == "default") {
       LabelLinks <- unique(as.list(TabelleLabels[1,]))
