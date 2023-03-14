@@ -969,17 +969,17 @@ merge.fachsem <- function(x, # Daten
   if (inkl == TRUE) {
     
     if(group == "a"){
-      caps <- "(ALLE)"
+      caps <- "(alle)"
       xl <- "Fachsemester alle"
     }
     
     if(group == "b"){
-      caps <- "(NUR BACHELOR)"
+      caps <- "(nur Bachelor)"
       xl <- "Fachsemester Bachelor"
     }
     
     if(group == "m"){
-      caps <- "(NUR MASTER)"
+      caps <- "(nur Master)"
       xl <- "Fachsemester Master"
     }
     
@@ -987,7 +987,7 @@ merge.fachsem <- function(x, # Daten
     x[x >= cutoff] <- cutoff
     
     
-    cat(paste0("## FACHSEMESTER ", caps, "  \n  \n"))
+    cat(paste0("## Fachsemester ", caps, "  \n  \n"))
     cat("\\subsubsection{ Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehoert: in welchem Fachsemester sind Sie eingeschrieben?}  \n  \n")
     
     print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
