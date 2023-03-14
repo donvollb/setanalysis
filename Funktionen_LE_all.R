@@ -331,7 +331,7 @@ bsp.boxplot <- function(x = "default", # Daten, bei "default" wird ein Beispield
   
   subchunkify(c(
     opar <- par(no.readonly = TRUE),
-    par(mar=c(4.8,10,4.1,6)), #bltr
+    par(mar=c(4.8,11,4.1,6)), #bltr
     par(fg="gray50"), # Farbe Rand 
     par(family = font.family),
     boxplot(x, horizontal = TRUE, ylim=c(1,6), col = c(color.bars), 
@@ -681,7 +681,7 @@ boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
   
   #Grafikparameter spezifizieren
   opar <- par(no.readonly = TRUE)
-  par(mar=c(2.1, 6 , 0.1, 2.5)) # 2. Zahl anpassen, wenn Aenderung der Breite gewuenscht (b l t r )
+  par(mar=c(2.1, 5 , 0.1, 2.5)) # 2. Zahl anpassen, wenn Aenderung der Breite gewuenscht (b l t r )
   par(fg="gray80")
   #Boxplot zeichnen
   boxplot(x, width=NULL, outline=TRUE, 
