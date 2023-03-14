@@ -681,7 +681,7 @@ boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
   
   #Grafikparameter spezifizieren
   opar <- par(no.readonly = TRUE)
-  par(mar=c(2.1, 5 , 0.1, 2.5)) # 2. Zahl anpassen, wenn Aenderung der Breite gewuenscht (b l t r )
+  par(mar=c(2.1, 6 , 0.1, 2.5)) # 2. Zahl anpassen, wenn Aenderung der Breite gewuenscht (b l t r )
   par(fg="gray80")
   #Boxplot zeichnen
   boxplot(x, width=NULL, outline=TRUE, 
