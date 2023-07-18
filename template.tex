@@ -34,6 +34,7 @@ $if(background-image)$
   \includegraphics[width=\paperwidth]{$background-image$}%
 }
 $endif$
+\usepackage{fancyhdr}             % für Kopf- und Fußzeile
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
@@ -368,7 +369,7 @@ $header-includes$
 
 %----------- ABGEÄNDERTER TEIL ----------------%
 % Pakete
-\usepackage{fancyhdr}             % für Kopf- und Fußzeile
+% \usepackage{fancyhdr}             % für Kopf- und Fußzeile
 \usepackage{graphicx}             % für das Einbinden von Graphiken
 \usepackage{eurosym}              % für Eurosymbole
 \usepackage{booktabs}             % für zusätzliche Stilelemente in Tabellen
