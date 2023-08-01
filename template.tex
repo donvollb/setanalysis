@@ -34,7 +34,6 @@ $if(background-image)$
   \includegraphics[width=\paperwidth]{$background-image$}%
 }
 $endif$
-\usepackage{fancyhdr}             % für Kopf- und Fußzeile
 \usepackage{pgfpages}
 \setbeamertemplate{caption}[numbered]
 \setbeamertemplate{caption label separator}{: }
@@ -317,6 +316,9 @@ $if(block-headings)$
 \fi
 $endif$
 $endif$
+$if(pagestyle)$
+\pagestyle{$pagestyle$}
+$endif$
 $if(csl-refs)$
 \newlength{\cslhangindent}
 \setlength{\cslhangindent}{1.5em}
@@ -369,7 +371,7 @@ $header-includes$
 
 %----------- ABGEÄNDERTER TEIL ----------------%
 % Pakete
-% \usepackage{fancyhdr}             % für Kopf- und Fußzeile
+\usepackage{fancyhdr}             % für Kopf- und Fußzeile
 \usepackage{graphicx}             % für das Einbinden von Graphiken
 \usepackage{eurosym}              % für Eurosymbole
 \usepackage{booktabs}             % für zusätzliche Stilelemente in Tabellen
@@ -518,35 +520,35 @@ $endif$
 $if(verbatim-in-note)$
 \VerbatimFootnotes % allow verbatim text in footnotes
 $endif$
-% \hypersetup{
-% $if(title-meta)$
-%   pdftitle={$title-meta$},
-% $endif$
-% $if(author-meta)$
-%   pdfauthor={$author-meta$},
-% $endif$
-% $if(lang)$
-%   pdflang={$lang$},
-% $endif$
-% $if(subject)$
-%   pdfsubject={$subject$},
-% $endif$
-% $if(keywords)$
-%   pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
-% $endif$
-% $if(colorlinks)$
-%   colorlinks=true,
-%   linkcolor={$if(linkcolor)$$linkcolor$$else$Maroon$endif$},
-%   filecolor={$if(filecolor)$$filecolor$$else$Maroon$endif$},
-%   citecolor={$if(citecolor)$$citecolor$$else$Blue$endif$},
-%   urlcolor={$if(urlcolor)$$urlcolor$$else$Blue$endif$},
-% $else$
-% $if(boxlinks)$
-% $else$
-%   hidelinks,
-% $endif$
-% $endif$
-%   pdfcreator={LaTeX via pandoc}}
+\hypersetup{
+$if(title-meta)$
+  pdftitle={$title-meta$},
+$endif$
+$if(author-meta)$
+  pdfauthor={$author-meta$},
+$endif$
+$if(lang)$
+  pdflang={$lang$},
+$endif$
+$if(subject)$
+  pdfsubject={$subject$},
+$endif$
+$if(keywords)$
+  pdfkeywords={$for(keywords)$$keywords$$sep$, $endfor$},
+$endif$
+$if(colorlinks)$
+  colorlinks=true,
+  linkcolor={$if(linkcolor)$$linkcolor$$else$Maroon$endif$},
+  filecolor={$if(filecolor)$$filecolor$$else$Maroon$endif$},
+  citecolor={$if(citecolor)$$citecolor$$else$Blue$endif$},
+  urlcolor={$if(urlcolor)$$urlcolor$$else$Blue$endif$},
+$else$
+$if(boxlinks)$
+$else$
+  hidelinks,
+$endif$
+$endif$
+  pdfcreator={LaTeX via pandoc}}
 
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
