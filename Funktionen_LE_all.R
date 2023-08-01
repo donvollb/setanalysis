@@ -29,6 +29,10 @@ if(!exists("col.width3")){col.width3 <- c("305pt", "50pt", "30pt")}
 if(!exists("col.width4")){col.width4 <- c("243pt", "50pt", "30pt", "50pt")}
 # 7 Spalten (für table.stat.multi)
 if(!exists("col.width.sm")){col.width.sm <- c("182pt", "30pt", "25pt", "25pt", "25pt", "25pt", "25pt")}
+# 8 Spalten (für table.stat.multi mit einer Ausweichoption)
+if(!exists("col.width.sm.alt1")){col.width.sm.alt1 <- c("168pt", "22pt", "22pt", "22pt", "22pt", "22pt", "22pt", "25pt")}
+# 9 Spalten (für table.stat.multi mit zwei Ausweichoptionen)
+if(!exists("col.width.sm.alt2")){col.width.sm.alt2 <- c("152pt", "21pt", "18pt", "18pt", "18pt", "18pt", "18pt", "25pt", "25pt")}
 # Erste Spalte von table.stat.single (Zum Beispiel breiter machen, wenn N_courses_ statt N)
 if(!exists("col1.width.tss")){col1.width.tss <- "25pt"}
 
@@ -543,6 +547,10 @@ table.stat.single <- function(x, # Daten
 table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.kable)
                              col1.name = "Item", # Name der ersten Zelle des headers
                              col2.name = "N\\textsubscript{votes}", # Name der zweiten Zelle des headers
+                             alt1 = FALSE, # Text für erste Ausweichoption 
+                             alt2 = FALSE, # Text für zweite Ausweichoption
+                             alt1.list = NULL, # Antworthäufigkeiten erste Ausweichoption
+                             alt2.list = NULL, # Antworthäufigkeiten zweite Ausweichoption
                              bold = TRUE, # fetter header? (siehe lv.kable)
                              bold.col1 = TRUE, # fette erste Zeile im header? (siehe lv.kable)
                              labels = "labels") # Fragetexte, bei "labels" werden die labels der Variablen genommen
@@ -561,8 +569,25 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
                      "Min", 
                      "Max")
   
+  widths <- col.width.sm
+  
+  if (alt1 != FALSE) {
+    bob <- cbind(bob, alt1.list)
+    colnames(bob)[length(colnames(bob))] <- alt1
+    widths <- col.width.sm.alt1
+  }
+  
+  if (alt2 != FALSE) {
+    
+    if (alt1 == FALSE) {stop("alt1 ist FALSE, alt2 aber nicht. Bitte bei nur einer Ausweichoption alt1 verwenden.")}
+    bob <- cbind(bob, alt2.list)
+    colnames(bob)[length(colnames(bob))] <- alt2
+    widths <- col.width.sm.alt2
+  }
+  
+  
   lv.kable(bob, caption = caption, 
-           col.width = col.width.sm, 
+           col.width = widths, 
            bold = bold,
            bold.col1 = bold.col1)
 }
@@ -1004,7 +1029,11 @@ merge.fachsem <- function(x, # Daten
 # merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
 merge.multi.sk <- function(x, # Daten
                            kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
-                           number = "default", # Skala: 6 für Sechser, etc.
+                           number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
+                           alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
+                           alt2 = FALSE, # Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
+                           alt1.num = 0, # Welche Zahl entspricht alt1
+                           alt2.num = 7, # Welche Zahl entspricht alt2
                            nr = "", # Nummer der ersten Frage
                            inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                            tmin = "default", # linker Pol, bei "default" wird das Label automatisch gezogen
@@ -1128,6 +1157,24 @@ merge.multi.sk <- function(x, # Daten
     
     if(message != "") {cat(message)}
     
+    
+    # Alternativantworten in Listen schreiben (für die Tabelle)
+    if (alt1 != FALSE) {
+      
+      alt1.list <- NULL
+      for (l in 1:ncol(x)) {
+        alt1.list <- c(alt1.list, sum(x[, l] == alt1.num, na.rm = TRUE))
+      }
+    }
+    
+    if (alt2 != FALSE) {
+      
+      alt2.list <- NULL
+      for (l in 1:ncol(x)) {
+        alt2.list <- c(alt2.list, sum(x[, l] == alt2.num, na.rm = TRUE))
+      }
+    }
+    
     x[x < 1 | x > number] <- NA
     
     if (show.table == TRUE) {
@@ -1136,7 +1183,11 @@ merge.multi.sk <- function(x, # Daten
           x,
           col1.name = paste0("\\textbf{Item} \\textit{[Skala: ", text.skala, "]}"),
           col2.name = col2.name,
-          bold.col1 = FALSE
+          bold.col1 = FALSE,
+          alt1 = alt1,
+          alt2 = alt2,
+          alt1.list = alt1.list,
+          alt2.list = alt2.list
         ),
         fig_height = 7,
         fig_width = 9
