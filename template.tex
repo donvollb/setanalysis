@@ -8,28 +8,31 @@ $if(CJKmainfont)$
 \PassOptionsToPackage{space}{xeCJK}
 $endif$
 %
-\documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$if(beamer)$
-  ignorenonframetext,
-$if(handout)$
-  handout,
-$endif$
-$if(aspectratio)$
-  aspectratio=$aspectratio$,
-$endif$
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
-]{$documentclass$}
-$if(beamer)$
-$if(background-image)$
+
+\documentclass[xcolor=dvipsnames]{beamer} 
+
+% \documentclass[
+% $if(fontsize)$
+%   $fontsize$,
+% $endif$
+% $if(papersize)$
+%   $papersize$paper,
+% $endif$
+% $if(beamer)$
+%   ignorenonframetext,
+% $if(handout)$
+%   handout,
+% $endif$
+% $if(aspectratio)$
+%   aspectratio=$aspectratio$,
+% $endif$
+% $endif$
+% $for(classoption)$
+%   $classoption$$sep$,
+% $endfor$
+% ]{$documentclass$}
+% $if(beamer)$
+% $if(background-image)$
 \usebackgroundtemplate{%
   \includegraphics[width=\paperwidth]{$background-image$}%
 }
