@@ -361,6 +361,8 @@ bsp.evasys.sk6()
 \thispagestyle{fancy}
 \endgroup
 
+\hypersetup{linkcolor=blue}
+
 \pagebreak 
 
 ```{r header2}
