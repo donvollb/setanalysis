@@ -1551,7 +1551,7 @@ merge.evasys.sk <- function(x, # Daten
         
         if(lime.brackets == TRUE) {
           temp <- sub("^.", "", temp)
-          temp <- sub(".$", "", temp)
+          temp <- sub("//].*$", "", temp)
         }
         
         attr(x, "label") <- temp
