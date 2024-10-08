@@ -1,4 +1,9 @@
 
+# neu seit 30.09.2024: true_round statt round
+# Hintergrund: round-Funktion rundet bei .5 zur nächsten geraden Zahl
+# (https://stat.ethz.ch/pipermail/r-help/2008-June/164927.html)
+
+
 
 ### ÄÖÜ richtig angezeigt? - Reopen with Encoding -> UTF-8 ###
 
@@ -29,6 +34,10 @@ if(!exists("col.width3")){col.width3 <- c("305pt", "50pt", "30pt")}
 if(!exists("col.width4")){col.width4 <- c("243pt", "50pt", "30pt", "50pt")}
 # 7 Spalten (für table.stat.multi)
 if(!exists("col.width.sm")){col.width.sm <- c("182pt", "30pt", "25pt", "25pt", "25pt", "25pt", "25pt")}
+# 8 Spalten (für table.stat.multi mit einer Ausweichoption)
+if(!exists("col.width.sm.alt1")){col.width.sm.alt1 <- c("168pt", "22pt", "22pt", "22pt", "22pt", "22pt", "22pt", "25pt")}
+# 9 Spalten (für table.stat.multi mit zwei Ausweichoptionen)
+if(!exists("col.width.sm.alt2")){col.width.sm.alt2 <- c("152pt", "21pt", "18pt", "18pt", "18pt", "18pt", "18pt", "25pt", "25pt")}
 # Erste Spalte von table.stat.single (Zum Beispiel breiter machen, wenn N_courses_ statt N)
 if(!exists("col1.width.tss")){col1.width.tss <- "25pt"}
 
@@ -85,6 +94,16 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
                       "\n```")
   
   cat(knitr::knit(text = knitr::knit_expand(text = sub_chunk), quiet = TRUE))
+}
+
+# Eigene Funktion zum Runden
+true_round <- function(number, digits) {
+  posneg <- sign(number)
+  number <- abs(number) * 10 ^ digits
+  number <- number + 0.5 + sqrt(.Machine$double.eps)
+  number <- trunc(number)
+  number <- number / 10 ^ digits
+  number * posneg
 }
 
 
@@ -331,7 +350,7 @@ bsp.boxplot <- function(x = "default", # Daten, bei "default" wird ein Beispield
   
   subchunkify(c(
     opar <- par(no.readonly = TRUE),
-    par(mar=c(4.8,10,4.1,6)), #bltr
+    par(mar=c(4.8,11,4.1,6)), #bltr
     par(fg="gray50"), # Farbe Rand 
     par(family = font.family),
     boxplot(x, horizontal = TRUE, ylim=c(1,6), col = c(color.bars), 
@@ -397,7 +416,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
   
   bobby <- x %>% 
     psych::describe(.) %>% 
-    round(.,2) %>% 
+    true_round(.,2) %>% 
     data.frame() %>%
     dplyr::select(n, mean, sd, min, max) %>% 
     data.frame()
@@ -414,7 +433,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
                   axes = FALSE, add = TRUE),
     box(),
     
-    axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(table(x)),1), " %", sep="")),
+    axis(side = 3, at=bp, tick = FALSE, labels = paste(true_round(100*prop.table(table(x)),1), " %", sep="")),
     par(new=TRUE),
     par(family = font.family),
     bxp <- boxplot(as.numeric(x), plot=FALSE),
@@ -457,10 +476,11 @@ table.freq <- function(x, # Daten
                        col.width = "default", # Spaltenbreite (siehe lv.kable)
                        order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                        bold = TRUE, # fetter header? (siehe lv.kable)
-                       bold.col1 = TRUE) # fette erste Zelle des headers? (siehe lv.kable)
+                       bold.col1 = TRUE, # fette erste Zelle des headers? (siehe lv.kable)
+                       n.dig.perc = 1) # Anzahl Nachkommastellen bei den Prozentangaben
 {
   
-  jim <- data.frame(round(descr::freq(x, plot=FALSE), 1))
+  jim <- data.frame(true_round(descr::freq(x, plot=FALSE), n.dig.perc))
   jim <- data.frame(rownames(jim), jim)
   rownames(jim) <- NULL
   
@@ -520,7 +540,7 @@ table.stat.single <- function(x, # Daten
 {
   
   if (md == FALSE) {
-    bob <- data.frame(round(psych::describe(x),2))[c(2:4, 8:9)]
+    bob <- data.frame(true_round(psych::describe(x),2))[c(2:4, 8:9)]
     colnames(bob) <- c(col1.name, "M", "SD", "Min", "Max")
     
     lv.kable(bob, caption = caption, 
@@ -528,7 +548,7 @@ table.stat.single <- function(x, # Daten
              bold = bold,
              bold.col1 = bold.col1) } else {
                
-               bob <- data.frame(round(psych::describe(x),2))[c(2:5, 8:9)]
+               bob <- data.frame(true_round(psych::describe(x),2))[c(2:5, 8:9)]
                colnames(bob) <- c(col1.name, "M", "SD", "MD", "Min", "Max")
                
                lv.kable(bob, caption = caption, 
@@ -536,13 +556,41 @@ table.stat.single <- function(x, # Daten
                         bold = bold,
                         bold.col1 = bold.col1)
              }
+  
 }
 
+
+
+# NEUE Funktion ab 15.3.2024
+# nur Text für Ausweichoption
+text.alternative <- function(x, # Daten
+                             show.alt = TRUE, # Zeige Ausweichoptionen, falls es sie gibt
+                             number = 6, # Skala (OHNE AUSWEICHOPTIONEN!)
+                             alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
+                             alt1.num = 0) {
+
+if (show.alt == TRUE) {
+    if(alt1 != FALSE) {
+
+      cat("\\begin{center}Die Ausweichoption \"\\textit{", alt1, "}\" wurde ", sum(x == alt1.num, na.rm = TRUE),
+          " mal gewählt.\\end{center}  \n  \n", sep = "")
+
+    }
+
+    cat("  \n \n")
+
+    }
+}
+  
 
 # Einfache Statistiktabelle für mehrere Items mit Fragetexten
 table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.kable)
                              col1.name = "Item", # Name der ersten Zelle des headers
                              col2.name = "N\\textsubscript{votes}", # Name der zweiten Zelle des headers
+                             alt1 = FALSE, # Text für erste Ausweichoption 
+                             alt2 = FALSE, # Text für zweite Ausweichoption
+                             alt1.list = NULL, # Antworthäufigkeiten erste Ausweichoption
+                             alt2.list = NULL, # Antworthäufigkeiten zweite Ausweichoption
                              bold = TRUE, # fetter header? (siehe lv.kable)
                              bold.col1 = TRUE, # fette erste Zeile im header? (siehe lv.kable)
                              labels = "labels") # Fragetexte, bei "labels" werden die labels der Variablen genommen
@@ -550,7 +598,7 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
   
   if(labels == "labels") {labels <- as.character(lapply(x, attr, which = "label"))}
   
-  bob <- as.data.frame(round(psych::describe(x), digits = 2))[c(2:5,8:9)]
+  bob <- as.data.frame(true_round(psych::describe(x), digits = 2))[c(2:5,8:9)]
   bob <- cbind(labels, bob)
   bob[, 1] <- replace.latex.issues(bob[, 1])
   colnames(bob) <- c(col1.name, 
@@ -561,11 +609,87 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
                      "Min", 
                      "Max")
   
+  widths <- col.width.sm
+  
+  if (alt1 != FALSE) {
+    bob <- cbind(bob, alt1.list)
+    colnames(bob)[length(colnames(bob))] <- alt1
+    widths <- col.width.sm.alt1
+  }
+  
+  if (alt2 != FALSE) {
+    
+    if (alt1 == FALSE) {stop("alt1 ist FALSE, alt2 aber nicht. Bitte bei nur einer Ausweichoption alt1 verwenden.")}
+    bob <- cbind(bob, alt2.list)
+    colnames(bob)[length(colnames(bob))] <- alt2
+    widths <- col.width.sm.alt2
+  }
+  
+  
   lv.kable(bob, caption = caption, 
-           col.width = col.width.sm, 
+           col.width = widths, 
            bold = bold,
            bold.col1 = bold.col1)
 }
+
+
+
+# NEU ab 23.04.2024
+# Tabelle mit deskr. Statistiken für ein Item getrennt nach Subgruppen einer anderen Variable
+# (basierend auf table.stat.single)
+table.stat.subgroup <- function(x, # Daten Item
+                                sub, # Daten Subgruppe
+                              caption = NULL, # caption der Tabelle (siehe lv.kable)
+                              md = FALSE, # Mit Median?
+                              col1.name = "N\\textsubscript{votes}", # Name der ersten Zelle des headers
+                              col1.width = col1.width.tss, # Breite der ersten Zeile
+                              bold = TRUE, # fetter header? (siehe lv.kable)
+                              bold.col1 = TRUE) # fette erste Zeile im header? (siehe lv.kable)
+{
+  
+  if (md == FALSE) {
+    
+    tmp <- psych::describeBy(x, group=sub)
+    
+    tmp2 <- tmp[[1]][c(2:4, 8:9)]
+    
+    for(j in 2:nlevels(sub)) {
+      tmp2 <- rbind(tmp2, tmp[[j]][c(2:4, 8:9)])
+    }
+    
+    tmp2$group <- levels(sub)
+    tmp2 <- tmp2[c(6, 1:5)]
+    
+    colnames(tmp2) <- c("Untergruppe", col1.name, "M", "SD", "Min", "Max")
+    
+    lv.kable(tmp2, caption = caption, 
+             col.width = c("50pt", col1.width, "25pt", "25pt", "25pt", "25pt"), 
+             bold = bold,
+             bold.col1 = bold.col1) } else {
+               
+               tmp <- psych::describeBy(x, group=sub)
+               
+               tmp2 <- tmp[[1]][c(2:5, 8:9)]
+               
+               for(j in 2:nlevels(sub)) {
+                 tmp2 <- rbind(tmp2, tmp[[j]][c(2:5, 8:9)])
+               }
+               
+               tmp2$group <- levels(sub)
+               tmp2 <- tmp2[c(7, 1:6)]
+               
+               colnames(tmp2) <- c("Untergruppe", col1.name, "M", "SD", "MD", "Min", "Max")
+               
+               lv.kable(tmp2, caption = caption, 
+                        col.width = c("50pt", col1.width, "25pt", "25pt", "25pt", "25pt", "25pt"), 
+                        bold = bold,
+                        bold.col1 = bold.col1)
+             }
+  
+}
+
+
+
 
 
 
@@ -911,7 +1035,7 @@ evasys.skala.plot <- function(x, # Daten
   
   bobby <- x %>% 
     psych::describe(.) %>% 
-    round(.,2) %>% 
+    true_round(.,2) %>% 
     data.frame() %>%
     dplyr::select(n, mean, sd, min, max) %>% 
     data.frame()
@@ -931,7 +1055,7 @@ evasys.skala.plot <- function(x, # Daten
   axis(side = 1, at=bp, tick = FALSE, labels = c(1:number), 
        cex.axis = 0.65, line = -0.7)
   
-  axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(xtab),1), " %", sep=""), 
+  axis(side = 3, at=bp, tick = FALSE, labels = paste(true_round(100*prop.table(xtab),1), " %", sep=""), 
        cex.axis = 0.65, line = -0.5)
   par(new=TRUE)
   bxp <- boxplot(as.numeric(x), plot=FALSE)
@@ -969,17 +1093,17 @@ merge.fachsem <- function(x, # Daten
   if (inkl == TRUE) {
     
     if(group == "a"){
-      caps <- "(ALLE)"
+      caps <- "(alle)"
       xl <- "Fachsemester alle"
     }
     
     if(group == "b"){
-      caps <- "(NUR BACHELOR)"
+      caps <- "(nur Bachelor)"
       xl <- "Fachsemester Bachelor"
     }
     
     if(group == "m"){
-      caps <- "(NUR MASTER)"
+      caps <- "(nur Master)"
       xl <- "Fachsemester Master"
     }
     
@@ -987,7 +1111,7 @@ merge.fachsem <- function(x, # Daten
     x[x >= cutoff] <- cutoff
     
     
-    cat(paste0("## FACHSEMESTER ", caps, "  \n  \n"))
+    cat(paste0("## Fachsemester ", caps, "  \n  \n"))
     cat("\\subsubsection{ Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehoert: in welchem Fachsemester sind Sie eingeschrieben?}  \n  \n")
     
     print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
@@ -1004,7 +1128,11 @@ merge.fachsem <- function(x, # Daten
 # merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
 merge.multi.sk <- function(x, # Daten
                            kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
-                           number = "default", # Skala: 6 für Sechser, etc.
+                           number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
+                           alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
+                           alt2 = FALSE, # Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
+                           alt1.num = 0, # Welche Zahl entspricht alt1
+                           alt2.num = 7, # Welche Zahl entspricht alt2
                            nr = "", # Nummer der ersten Frage
                            inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                            tmin = "default", # linker Pol, bei "default" wird das Label automatisch gezogen
@@ -1075,13 +1203,13 @@ merge.multi.sk <- function(x, # Daten
       labels <- attr(x[, 1], "label")
     }
     
-    x <- data.frame(x) #Warum ein zweites Mal?
     
     ListeLabels <- list()
     for (k in 1:length(x)) {
-      ListeLabels[[k]] <- names((attr(x[, k], "labels")))
+      ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number]  #nicht Relevante Labels werden abgeschnitten
     }
-    TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:length(x))
+    
+    TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
     
     if (tmin == "default") {
       LabelLinks <- unique(as.list(TabelleLabels[1,]))
@@ -1128,6 +1256,24 @@ merge.multi.sk <- function(x, # Daten
     
     if(message != "") {cat(message)}
     
+    
+    # Alternativantworten in Listen schreiben (für die Tabelle)
+    if (alt1 != FALSE) {
+      
+      alt1.list <- NULL
+      for (l in 1:ncol(x)) {
+        alt1.list <- c(alt1.list, sum(x[, l] == alt1.num, na.rm = TRUE))
+      }
+    }
+    
+    if (alt2 != FALSE) {
+      
+      alt2.list <- NULL
+      for (l in 1:ncol(x)) {
+        alt2.list <- c(alt2.list, sum(x[, l] == alt2.num, na.rm = TRUE))
+      }
+    }
+    
     x[x < 1 | x > number] <- NA
     
     if (show.table == TRUE) {
@@ -1136,7 +1282,11 @@ merge.multi.sk <- function(x, # Daten
           x,
           col1.name = paste0("\\textbf{Item} \\textit{[Skala: ", text.skala, "]}"),
           col2.name = col2.name,
-          bold.col1 = FALSE
+          bold.col1 = FALSE,
+          alt1 = alt1,
+          alt2 = alt2,
+          alt1.list = alt1.list,
+          alt2.list = alt2.list
         ),
         fig_height = 7,
         fig_width = 9
@@ -1218,7 +1368,8 @@ merge.sc <- function(x, # Daten
                      col2.name = "n", # Name der n-Spalte in Tabelle
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                      show.plot = show.plot.sc, # Soll der Plot angezeigt werden?
-                     no.pagebreak = TRUE) # Seitenumbrüche mittendrin verhindern?
+                     no.pagebreak = TRUE, # Seitenumbrüche mittendrin verhindern?
+                     n.dig.perc = 1) # Anzahl Nachkommastellen bei den Prozentangaben
 {
   if (sum(!is.na(x)) > 0) {
     
@@ -1235,10 +1386,10 @@ merge.sc <- function(x, # Daten
       
       
       print(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name, 
-                       order.table = order.table))
+                       order.table = order.table, n.dig.perc = n.dig.perc))
       
-      freq.tab <- freq(x, plot = FALSE)
-      results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
+      freq.tab <- descr::freq(x, plot = FALSE)
+      results <- data.frame(rownames(freq.tab), true_round(freq.tab[, 1:2], digits = n.dig.perc))
       results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
       results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
       colnames(results) <- c("label", "freq", "perc")
@@ -1277,7 +1428,8 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      filter = FALSE, # FILTER-Klammer für LimeSurvey
                      valid.perc = TRUE, # mit gültigen Prozent?
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = show.plot.mc) # Soll der Plot angezeigt werden?
+                     show.plot = show.plot.mc, # Soll der Plot angezeigt werden?
+                     n.dig.perc = 1) # Anzahl Nachkommastellen bei den Prozentangaben
 {
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
@@ -1327,9 +1479,9 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       results[, 1] <- replace.latex.issues(val.labels)
       for (n in 1:length(x)) {
         results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
-        results[n, 3] <- round(results[n, 2] / nrow(x) * 100, digits = 2)
+        results[n, 3] <- true_round(results[n, 2] / nrow(x) * 100, digits = n.dig.perc)
         results[n, 4] <-
-          round(results[n, 2] / nrow(x[!is.na(x[, 1]),]) * 100, digits = 2) 
+          true_round(results[n, 2] / nrow(x[!is.na(x[, 1]),]) * 100, digits = n.dig.perc) 
       }
       
       if (order.table != FALSE) {
@@ -1340,7 +1492,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       }
       
       results[nrow(results)+1, ] <- c("NAs", nrow(x[is.na(x[, 1]),]),
-                                      round(nrow(x[is.na(x[, 1]),]) / nrow(x) * 100, 2),
+                                      true_round(nrow(x[is.na(x[, 1]),]) / nrow(x) * 100, n.dig.perc),
                                       "NA")
       results[nrow(results)+1, ] <- c("Total", nrow(x),
                                       "NA",
@@ -1354,7 +1506,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       for (n in 1:length(x)) {
         results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
         results[n, 3] <-
-          round(results[n, 2] / nrow(x) * 100, digits = 2)
+          true_round(results[n, 2] / nrow(x) * 100, digits = n.dig.perc)
       }
       
     }
@@ -1377,6 +1529,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     
   }
 }
+
 
 # merge-Funktion für Schulnoten
 grade <- function(x, # Daten
@@ -1499,8 +1652,8 @@ merge.evasys.sk <- function(x, # Daten
         }
         
         if(lime.brackets == TRUE) {
-          temp <- sub("^.", "", temp)
-          temp <- sub(".$", "", temp)
+          temp <- sub("^\\[", "", temp)
+          temp <- sub("].*$", "", temp)
         }
         
         attr(x, "label") <- temp
@@ -1691,7 +1844,7 @@ whiskers <- function(x, # Variable, geht auch für mehrere auf einmal; muss ein 
     if(length(tmp[tmp < whisk_bot & !is.na(tmp)]) > 0) {
       
       tab <- dfaggr[dfaggr$M < whisk_bot & !is.na(dfaggr$M), ]
-      tab$M <- round(tab$M, digits = 2)
+      tab$M <- true_round(tab$M, digits = 2)
       tab <- tab[order(tab$M), ]
       tab[tab == "Tutorium/Mentorium/Kolloqium"] <- "Tutorium/ Mentorium/ Kolloqium"
       print(lv.kable(tab, col.width = c("50pt", "30pt", "100pt", "60pt")))
@@ -1711,7 +1864,7 @@ whiskers <- function(x, # Variable, geht auch für mehrere auf einmal; muss ein 
     if(length(tmp[tmp > whisk_top & !is.na(tmp)]) > 0) {
       
       tab <- dfaggr[dfaggr$M > whisk_top & !is.na(dfaggr$M), ]
-      tab$M <- round(tab$M, digits = 2)
+      tab$M <- true_round(tab$M, digits = 2)
       tab <- tab[order(tab$M), ]
       tab[tab == "Tutorium/Mentorium/Kolloqium"] <- "Tutorium/ Mentorium/ Kolloqium"
       print(lv.kable(tab, col.width = c("50pt", "30pt", "100pt", "60pt")))
