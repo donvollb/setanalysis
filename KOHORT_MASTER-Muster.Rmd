@@ -2,16 +2,20 @@
 output:                             
   pdf_document:                     
     latex_engine: xelatex
-    template: https://gitlab.rhrk.uni-kl.de/dvollbracht/scripts-evaluation/-/raw/main/template.tex
+    template: https://raw.githubusercontent.com/donvollb/set-analysis/refs/heads/main/template.tex
 editor_options:                     
   chunk_output_type: console
-lfoot: Studieneingangsbefragung WiSe 2022-23
-lheadlogo: rmd-data/RPTU_Logo_line_3.png
-rheadlogo: rmd-data/meze-logo.png
+lfoot: Studieneingangsbefragung 2023
   # Kurztitel für linken Teil der Fußleiste
 color: lightblue
-  # mögliche Farben: bluegray, greengray, darkblue, lightblue, darkgreen, lightgreen, violett, pink, red, orange (RPTU-Standardfarben)
   # alternativ kann man eigene Farben über \definecolor definieren und sie "maincolor" und "tablecolor" nennen.
+  # mögliche Farben: bluegray, greengray, darkblue, lightblue, darkgreen, lightgreen, violett, pink, red, orange (RPTU-Standardfarben)
+colorlinks: true
+linkcolor: lightblue
+lheadlogo: rmd-data/RPTU_Logo_line_3.png
+rheadlogo: rmd-data/Logo_Schrift_blue.png
+header-includes:
+- \usepackage{fancyhdr}             # für Kopf- und Fußzeile
 ---
 
 ```{r Setup, include=FALSE}
@@ -142,7 +146,7 @@ personalized_info <- read.csv2("...")
 
 
 # Funktionen laden
-devtools::source_url(url = "https://gitlab.rhrk.uni-kl.de/dvollbracht/scripts-evaluation/-/raw/main/Funktionen_LE_all.R", 
+devtools::source_url(url = "https://raw.githubusercontent.com/donvollb/set-analysis/refs/heads/main/Funktionen_LE_all.R", 
                      encoding = "UTF-8")
 
 
