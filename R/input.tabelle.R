@@ -8,8 +8,7 @@
 #' @examples
 #' input.tabelle()
 #' input.tabelle("path/to/blank/data.xlsx", "path/to/rules/data.xlsx")
-
-
+#' @export
 input.tabelle <- function(blank.path = NULL,
                           rules.path = NULL) {
   

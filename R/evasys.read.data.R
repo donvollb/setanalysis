@@ -8,7 +8,7 @@
 #' @examples
 #' evasys.read.data()
 #' evasys.read.data("path/to/raw/data.csv", "path/to/codebook.csv")
-
+#' @export
 evasys.read.data <- function(raw.data.path = NULL, codebook.path = NULL) {
   
   ##########################
