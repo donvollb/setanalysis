@@ -1,4 +1,4 @@
-Package: set.analysis
+Package: SETanalysis
 Title: Dieses Paket enthält die Funktionen, die in den LV-Berichten verwendet werden
 Version: 0.0.0.9000
 Authors@R: 
