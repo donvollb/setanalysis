@@ -9,6 +9,7 @@ License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+LazyData: true
 Imports:
   ggplot2,
   knitr,
@@ -19,3 +20,5 @@ Imports:
   cowplot,
   flextable,
   readxl
+Depends: 
+    R (>= 3.5)
