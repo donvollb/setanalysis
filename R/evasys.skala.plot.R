@@ -37,12 +37,12 @@ evasys.skala.plot <- function(x, # Daten
 
   par(mar=c(2, 5.3, 2.1, 5.3))
   par(fg="gray50") # Farbe Rand
-  par(family = font.family)
+  par(family = settings$font.family)
   barplot(rep(NA, number),ylim=c(0,sum(table(x))),axes=FALSE)
   abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80")
   bp <- barplot(xtab, #damit alle angezeigt werden
                 ylim=c(0, sum(table(x))),
-                col = color.bars,
+                col = settings$color.bars,
                 axes = FALSE, add = TRUE, axisnames = FALSE)
   box()
   axis(side = 1, at=bp, tick = FALSE, labels = c(1:number),

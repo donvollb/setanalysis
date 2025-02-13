@@ -9,7 +9,7 @@ table.stat.single(
   caption = NULL,
   md = FALSE,
   col1.name = "N_votes",
-  col1.width = col1.width.tss,
+  col1.width = settings$col1.width.tss,
   bold = TRUE,
   bold.col1 = TRUE
 )

@@ -19,7 +19,7 @@ merge.sc <- function(x, # Daten
                      already.labels = FALSE, # Wurden die Daten bereits in Label umgewandelt?
                      col2.name = "n", # Name der n-Spalte in Tabelle
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = show.plot.sc, # Soll der Plot angezeigt werden?
+                     show.plot = settings$show.plot.sc, # Soll der Plot angezeigt werden?
                      no.pagebreak = TRUE) # Seitenumbrüche mittendrin verhindern?
 {
   if (sum(!is.na(x)) > 0) {
@@ -39,10 +39,10 @@ merge.sc <- function(x, # Daten
 
       #      print(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name, # kein Print bei Flextable
       #                       order.table = order.table))
-      flextable_to_rmd(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
+      flextable::flextable_to_rmd(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
                                   order.table = order.table))
 
-      freq.tab <- freq(x, plot = FALSE)
+      freq.tab <- flextable::freq(x, plot = FALSE)
       results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
       results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
       results <- results[!(rownames(results) %in% c("NA's", "Total")), ]

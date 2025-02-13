@@ -16,7 +16,7 @@
   alt2.num = 7,
   lime = FALSE,
   lime.brackets = FALSE,
-  show.plot = show.plot.sk,
+  show.plot = settings$show.plot.sk,
   no.pagebreak = TRUE
 )
 }

@@ -4,7 +4,7 @@
 \alias{boxplot.aggr.sk}
 \title{Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden}
 \usage{
-\method{boxplot}{aggr.sk}(x, p, q, d, e, color = color.bars)
+\method{boxplot}{aggr.sk}(x, p, q, d, e, color = settings$color.bars)
 }
 \arguments{
 \item{x}{daten}

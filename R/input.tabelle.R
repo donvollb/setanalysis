@@ -22,7 +22,7 @@ input.tabelle <- function(blank.path = NULL,
     rstudioapi::showDialog("Blank einlesen", "Wähle die <b>blank-Datei</b> aus.")
     blank.path <- file.choose()
   }
-  blank <- read_excel(blank.path) # Einlesen der blank-Datei
+  blank <- readxl::read_excel(blank.path) # Einlesen der blank-Datei
   m <- ncol(blank) # wird für Schleife später benötigt, Anzahl der Spalten in der Blank Datei
   
   if (is.null(rules.path)) {
@@ -32,7 +32,7 @@ input.tabelle <- function(blank.path = NULL,
     )
     rules.path <- file.choose()
   }
-  rules <- read_excel(rules.path) # Einlesen der TRUE-FALSE Datei
+  rules <- readxl::read_excel(rules.path) # Einlesen der TRUE-FALSE Datei
   colnames(rules) <- c("var", "bed", "anm") # Neue Spaltennamen
   
   # Weitere Vorbereitungen für Schleife

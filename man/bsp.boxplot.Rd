@@ -4,7 +4,11 @@
 \alias{bsp.boxplot}
 \title{Beispiel-Boxplot mit Beschriftung}
 \usage{
-bsp.boxplot(x = "default", color = color.bars, family = font.family)
+bsp.boxplot(
+  x = "default",
+  color = settings$color.bars,
+  family = settings$font.family
+)
 }
 \arguments{
 \item{x}{Daten, bei "default" wird ein Beispieldatensatz genutzt}
