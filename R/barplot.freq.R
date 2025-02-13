@@ -1,4 +1,14 @@
-# Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordinalen Skalennivaus genutzt werden)
+#' Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordinalen Skalennivaus genutzt werden)
+#'
+#' @param x Daten
+#' @param color Farbe Balken
+#' @param xlab Beschriftung x-Achse
+#' @param main Titel der Abbildung
+#' @param cutoff Cutoff,z.B. werden bei 12alle Werte über 12 als "12+" abgebildet
+#'
+#' @returns Barplot
+#' @export
+
 barplot.freq <- function(x, # Daten
                          color = color.bars, # Farbe Balken
                          xlab = "", # Beschriftung x-Achse

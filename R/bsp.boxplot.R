@@ -1,4 +1,12 @@
-# Beispiel-Boxplot mit Beschriftung
+#' Beispiel-Boxplot mit Beschriftung
+#'
+#' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt
+#' @param color Farbe des Boxplots
+#' @param family Schriftart
+#'
+#' @returns Beispiel-Boxplot
+#' @export
+
 bsp.boxplot <- function(x = "default", # Daten, bei "default" wird ein Beispieldatensatz genutzt
                         color = color.bars, # Farbe des Boxplots
                         family = font.family)  # Schriftart

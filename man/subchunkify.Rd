@@ -9,19 +9,15 @@ subchunkify(g, fig_height = 7, fig_width = 5, hide = FALSE)
 \arguments{
 \item{g}{Code (kann auch mit Aufzählung ("c(...)") benutzt werden)}
 
-\item{fig_height}{A number.}
+\item{fig_height}{Höhe des Sub-Chunks}
 
-\item{fig_width}{A number.}
+\item{fig_width}{Breite des Sub-Chunks}
 
-\item{hide}{description}
+\item{hide}{Soll für die results-Option des Chunks "asis" verwendet werden?}
 }
 \value{
-Einen Subchunk
+Subchunk
 }
 \description{
 Erzeugt Subchunks für die Berichte
-}
-\examples{
-add(1, 1)
-add(10, 1)
 }

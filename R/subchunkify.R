@@ -1,21 +1,22 @@
 #' Erzeugt Subchunks für die Berichte
 #'
 #' @param g Code (kann auch mit Aufzählung ("c(...)") benutzt werden)
-#' @param fig_height A number.
-#' @param fig_width A number.
-#' @param hide description
-#' @returns Einen Subchunk
-#' @examples
-#' add(1, 1)
-#' add(10, 1)
+#' @param fig_height Höhe des Sub-Chunks
+#' @param fig_width Breite des Sub-Chunks
+#' @param hide Soll für die results-Option des Chunks "asis" verwendet werden?
+#' 
+#' @returns Subchunk
+#' 
+#' @export
+
 
 
 
 # Erzeugen von Sub-Chunks
 subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt werden)
-                        fig_height = 7, # figure height des Sub-Chunks
-                        fig_width  = 5, # figure width des Sub-Chunks
-                        hide = FALSE) # "hide" für den Sub-Chunk
+                        fig_height = 7, # Höhe des Sub-Chunks
+                        fig_width  = 5, # Breite des Sub-Chunks
+                        hide = FALSE) # Soll für die results-Option des Chunks "asis" verwendet werden?
 {
   g_deparsed <- paste0(deparse(
     function() {g}

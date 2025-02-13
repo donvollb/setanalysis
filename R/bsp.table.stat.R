@@ -1,4 +1,15 @@
-# Beispiel einer Statistik-Tabelle
+#' Beispiel einer Statistik-Tabelle
+#'
+#' @param all 
+#'
+#' @returns
+#' Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
+#' "Median", "kleinster beob. Wert", "größter beob. Wert"
+#'
+#' @usage bsp.table.stat()
+#'
+#' @export
+
 bsp.table.stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
 {
   if(all == TRUE) {

@@ -1,4 +1,21 @@
-# Funktion für Abbildungen analog zu alten EvaSys-Skalen
+#' Funktion für Abbildungen analog zu alten EvaSys-Skalen
+#'
+#' @param x Daten
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @param show.alt Zeige Ausweichoptionen, falls es sie gibt
+#' @param number Anzahl Antwortoptionen des Items (OHNE AUSWEICHOPTIONEN!)
+#' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
+#' @param alt2 Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
+#' @param alt1.num Welche Zahl entspricht alt1
+#' @param alt2.num Welche Zahl entspricht alt2
+#' @param lime Handelt es sich um exportierte LimeSurvey-Daten?
+#' @param lime.brackets Müssen eckige Klammern um den Fragetext herum entfernt werden?
+#' @param show.plot Zeige Plot?
+#' @param no.pagebreak Sollen Seitenumbrüche verhindert werden?
+#'
+#' @export
+
 merge.evasys.sk <- function(x, # Daten
                             inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                             nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird

@@ -1,12 +1,20 @@
-#' Extrahiert bei MC-Fragen das Label der Antwortoption
+#' Funktion zur Tabellenerstellung
 #'
-#' @param x Ein dataframe.
-#' @param col.width Vektor mit den Breiten der verschiedenen Spalten
-#' @param bold Soll die Kopfzeile (welche die Spaltennamen enthält) header fett sein?
-#' @examples
-#' lv.kable(head(mtcars, 10))
+#' @param x Objekt (üblicherweise Dataframe)
+#' @param caption Titel der Tabelle
+#' @param col.width Vektor der Spaltenbreiten, bei "default" automatische Spaltenbreiten
+#' @param bold Sollen die Kopfzeile fettgedruckt sein?
+#' @param bold.col1 Soll die erste Zelle der Kopfzeile fettgedruckt sein?
+#' @param digits Anzahl der Nachkommastellen
+#' @param escape ?
+#' @param striped Soll die Tabelle Streifen (Schattierungen) erhalten
+#'
+#' @returns Tabelle
+#' @export
+#'
+#' @examples lv.kable(head(mtcars, 10))
 
-# Tabellenerstellung (Abkürzung von kable)
+
 lv.kable <- function(x, # Objekt (am besten dataframe)
                      caption = NULL, # caption der Tabelle
                      col.width = "default", # Spaltenbreite (Vektor, z.B. "c("30pt", "50pt")), bei "deafult" gibt es automatische Spaltenbreiten

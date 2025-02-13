@@ -1,4 +1,21 @@
-# merge-Funktion für MC-Fragen
+#' merge-Funktion für MC-Fragen
+#'
+#' @param x Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, dass Labels enthalten sind
+#' @param head Fragetext, bei "default" wird dieser automatisch aus den Labels gezogen
+#' @param col1.name Name der Antwortoption in der Tabelle
+#' @param col2.name Name der n-Spalte in der Tabelle
+#' @param show.table Soll die Tabelle angezeigt werden?
+#' @param fig.height Höhe der Abbildung, bei "default" ist es „Anzahl der Antwortoptionen“ * 0.75 + 1
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @param lime Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
+#' @param filter FILTER-Klammer für LimeSurvey
+#' @param valid.perc Mit gültigen Prozent?
+#' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
+#' @param show.plot Soll der Plot angezeigt werden?
+#'
+#' @export
+
 merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, das Labels enthalten sind
                      head = "default", # Fragetext, bei "default wird dieser automatisch aus den Lables gezogen
                      col1.name = "Antwortoption", # Erste Zelle der ersten Spalte in Tabelle
