@@ -1,4 +1,17 @@
-# merge-Funktion für single-choice Fragen
+#' merge-Funktion für single-choice Fragen
+#'
+#' @param x Daten
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @param fig.height Höhe der Abbildung, bei "default" ist es „Anzahl der Fragen“ * 0.75 + 1
+#' @param already.labels Wurden die Daten bereits in Label umgewandelt?
+#' @param col2.name Name der n-Spalte in der Tabelle
+#' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
+#' @param show.plot Soll der Plot angezeigt werden?
+#' @param no.pagebreak Seitenumbrüche mittendrin verhindern?
+#'
+#' @export
+
 merge.sc <- function(x, # Daten
                      inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                      nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird

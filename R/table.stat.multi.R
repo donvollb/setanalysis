@@ -1,4 +1,20 @@
-# Einfache Statistiktabelle für mehrere Items mit Fragetexten
+#' Einfache Statistiktabelle für mehrere Items mit Fragetexten
+#'
+#' @param x Daten
+#' @param caption Überschrift der Tabelle (siehe lv.kable) 
+#' @param col1.name Name der ersten Zelle der Kopfzeile
+#' @param col2.name Name der zweiten Zelle der Kopfzeile
+#' @param alt1 Text für erste Ausweichoption
+#' @param alt2 Text für zweite Ausweichoption
+#' @param alt1.list Antworthäufigkeiten erste Ausweichoption
+#' @param alt2.list Antworthäufigkeiten zweite Ausweichoption
+#' @param bold Sollen die Kopfzeile fettgedruckt sein? (siehe lv.kable)
+#' @param bold.col1 Soll die erste Zelle der Kopfzeile fettgedruckt sein? (siehe lv.kable)
+#' @param labels Fragetexte, bei "labels" werden die Labels der Variablen genommen
+#'
+#' @returns Tabelle
+#' @export
+
 table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.kable)
                              col1.name = "Item", # Name der ersten Zelle des headers
                              col2.name = "N_votes", # Name der zweiten Zelle des headers

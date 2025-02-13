@@ -1,4 +1,26 @@
-# merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
+#' merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
+#'
+#' @param x Daten
+#' @param kennung Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt) 
+#' @param number Anzahl Antwortoptionen der Items (OHNE AUSWEICHOPTIONEN!), wird bei "default" automatisch gezogen
+#' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
+#' @param alt2 Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
+#' @param alt1.num Welche Zahl entspricht alt1
+#' @param alt2.num Welche Zahl entspricht alt2
+#' @param nr Nummer der ersten Frage
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param tmin linker Pol, bei "default" wird das Label automatisch gezogen
+#' @param tmid mittlerer Pol (für 5er Skalen), bei "default" automatisch
+#' @param tmax rechter Pol, "default" wie oben
+#' @param show.table Soll die Tabelle angezeigt werden?
+#' @param show.plot Sollen Boxplots dazu angezeigt werden?
+#' @param fig.height Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
+#' @param col2.name Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern
+#' @param message Soll ein Hinweistext am Anfang erfolgen?
+#' @param aggr Sollen Daten aggregiert werden?
+#'
+#' @export
+
 merge.multi.sk <- function(x, # Daten
                            kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
                            number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
@@ -18,8 +40,6 @@ merge.multi.sk <- function(x, # Daten
                            message = "", # Soll ein Hinweistext am Anfang erfolgen?
                            aggr = FALSE) # Sollen Daten aggregiert werden?
 {
-  # x = Variablen, number = 5 oder 6 (5er, Sechser oder Siebener-Skala)
-  # scale = Skalenbeschreibung
 
   if (inkl == "nr") {
 

@@ -1,4 +1,15 @@
-# merge-Funktion für Fachsemester
+#' merge-Funktion für Fachsemester
+#'
+#' @param x Daten
+#' @param fig.height Höhe des Plots im Dokument 
+#' @param cutoff cutoff-Wert, alle Werte >= cutGoff werden zusammengefasst
+#' @param group Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#'
+#' @export
+
+
 merge.fachsem <- function(x, # Daten
                           fig.height = 5, # figure-height des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
                           cutoff = 12, # cutoff-Wert, alle Werte >= cutoff werden zusammengefasst

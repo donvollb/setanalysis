@@ -1,4 +1,11 @@
-# Boxplot für Rücklaufsabbildung (LVE)
+#' Boxplot für Rücklaufsabbildung (LVE)
+#'
+#' @param x Objekt mit Teilnehmendenzahlen
+#' @param kennung Kennungen
+#'
+#' @returns Boxplot der Rückläufe
+#' @export
+
 boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
                               kennung) #  Kennungen
 {

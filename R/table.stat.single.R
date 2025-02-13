@@ -1,11 +1,23 @@
-# Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle
+#' Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle
+#'
+#' @param x Daten
+#' @param caption Überschrift der Tabelle 
+#' @param md Mit Median?
+#' @param col1.name Name der ersten Zelle der Kopfzeile
+#' @param col1.width Breite der Kopfzeile
+#' @param bold Fettdruck der Kopfzeile
+#' @param bold.col1 Fettdruck der ersten Zelle der Kopfzeile
+#'
+#' @returns Tabelle
+#' @export
+
 table.stat.single <- function(x, # Daten
                               caption = NULL, # caption der Tabelle (siehe lv.kable)
                               md = FALSE, # Mit Median?
                               col1.name = "N_votes", # Name der ersten Zelle des headers
                               col1.width = col1.width.tss, # Breite der ersten Zeile
                               bold = TRUE, # fetter header? (siehe lv.kable)
-                              bold.col1 = TRUE) # fette erste Zeile im header? (siehe lv.kable)
+                              bold.col1 = TRUE) # fette erste Zelle im header? (siehe lv.kable)
 {
 
   if (md == FALSE) {

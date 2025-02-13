@@ -1,4 +1,14 @@
-# merge-Funktion für Schulnoten
+#' merge-Funktion für Schulnoten
+#'
+#' @param x Daten
+#' @param kennung Kennung/Fallnummer zum Aggregieren 
+#' @param show.table Soll Tabelle gezeigt werden?
+#' @param already.aggr Sind die Daten bereits aggregiert, bei TRUE wird nicht aggregiert
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#'
+#' @export
+
 grade <- function(x, # Daten
                   kennung, # Kennung/Fallnummer zum Aggregieren
                   show.table = TRUE, # Soll Tabelle gezeigt werden?

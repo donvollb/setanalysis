@@ -2,7 +2,7 @@
 % Please edit documentation in R/lv.kable.R
 \name{lv.kable}
 \alias{lv.kable}
-\title{Extrahiert bei MC-Fragen das Label der Antwortoption}
+\title{Funktion zur Tabellenerstellung}
 \usage{
 lv.kable(
   x,
@@ -16,14 +16,27 @@ lv.kable(
 )
 }
 \arguments{
-\item{x}{Ein dataframe.}
+\item{x}{Objekt (üblicherweise Dataframe)}
 
-\item{col.width}{Vektor mit den Breiten der verschiedenen Spalten}
+\item{caption}{Titel der Tabelle}
 
-\item{bold}{Soll die Kopfzeile (welche die Spaltennamen enthält) header fett sein?}
+\item{col.width}{Vektor der Spaltenbreiten, bei "default" automatische Spaltenbreiten}
+
+\item{bold}{Sollen die Kopfzeile fettgedruckt sein?}
+
+\item{bold.col1}{Soll die erste Zelle der Kopfzeile fettgedruckt sein?}
+
+\item{digits}{Anzahl der Nachkommastellen}
+
+\item{escape}{?}
+
+\item{striped}{Soll die Tabelle Streifen (Schattierungen) erhalten}
+}
+\value{
+Tabelle
 }
 \description{
-Extrahiert bei MC-Fragen das Label der Antwortoption
+Funktion zur Tabellenerstellung
 }
 \examples{
 lv.kable(head(mtcars, 10))

@@ -1,4 +1,14 @@
-# merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fach
+#' merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fach
+#'
+#' @param x1 Daten von Fach 1
+#' @param x2 Daten von Fach 2
+#' @param inkl1 TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr1" zieht sich automatisch die entsprechende inkl. Variable
+#' @param inkl2 TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr2" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr1 Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @param nr2 Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#'
+#' @export
+
 merge.subj <- function(x1, # Daten von Fach 1
                        x2, # Daten von Fach 2
                        inkl1 = "nr1", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr1" zieht sich automatisch die entsprechende inkl. Variable

@@ -1,4 +1,15 @@
-# Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden
+#' Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden
+#'
+#' @param x daten
+#' @param p labels/Text/Beschriftungen Y Achse
+#' @param q Skala x Achse
+#' @param d Anzahl von p
+#' @param e Anzahl von q
+#' @param color Farbe, Standard ist der Wert von color.bars
+#'
+#' @returns Boxplot
+#' @export
+
 boxplot.aggr.sk <- function(x, p, q, d, e, color = color.bars)
 { #x = daten, p = labels/Text/Beschriftungen Y Achse, q = Skala x Achse, d = Anzahl von p, e = Anzahl von q
   daten <- cbind(x)

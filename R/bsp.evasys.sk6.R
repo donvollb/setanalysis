@@ -1,4 +1,10 @@
-# Beispiel einer Sechserskala
+#' Beispiel einer Sechserskala
+#'
+#' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt 
+#'
+#' @returns Grafik
+#' @export
+
 bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
 {
   if(x[1] == "default") {

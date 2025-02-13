@@ -1,5 +1,16 @@
-# Barplot-Boxplot Hypbrid für die Darstellung von ordinalskalierten Variablen
-#optimale chunk-einstellung: fig.width=6, fig.height=1.4
+#' Barplot-Boxplot Hypbrid für die Darstellung von ordinalskalierten Variablen
+#'
+#' @description
+#' Die optimale Chunk-Einstellung hierfür ist: fig.width = 6, fig.height = 1.4
+#' 
+#' @param x Daten
+#' @param tmin Beschriftung links
+#' @param tmax Beschriftung rechts
+#' @param number Skala (6 für Sechserskala etc.)
+#'
+#' @returns Barplot-Boxplot-Hybrid
+#' @export
+
 evasys.skala.plot <- function(x, # Daten
                               tmin, # Beschriftung links
                               tmax, # Beschriftung rechts

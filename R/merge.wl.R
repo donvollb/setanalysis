@@ -1,4 +1,12 @@
-# merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
+#' merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
+#'
+#' @param ECTS ECTS der Daten
+#' @param WL WL der Daten (ECTS und WL müssen gleiche Länge haben, d.h. entweder ist bereits beides aggregiert oder keins)
+#' @param kennung Kennung/Fallnummer zum Aggregieren
+#' @param already.aggr Sind die Daten bereits aggregiert?
+#'
+#' @export
+
 merge.wl <- function(ECTS, # ECTS der Daten
                      WL, # WL der Daten (ECTS und WL müssen gleiche Länge haben, d.h. entweder ist bereits beides aggregiert oder keins)
                      kennung, # Kennung/Fallnummer zum Aggregieren

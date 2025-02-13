@@ -1,4 +1,10 @@
-# Abbildung der Gesamtnote
+#' Abbildung der Gesamtnote
+#'
+#' @param x Daten
+#'
+#' @returns Boxplot der Gesamtnote
+#' @export
+
 boxplot.gesnote <- function(x) # Daten
 {
   #Grafikparameter bestimmen
