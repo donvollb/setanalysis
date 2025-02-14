@@ -17,7 +17,7 @@
 
 lv.kable <- function(x, # Objekt (am besten dataframe)
                      caption = NULL, # caption der Tabelle
-                     col.width = "default", # Spaltenbreite (Vektor, z.B. "c("30pt", "50pt")), bei "deafult" gibt es automatische Spaltenbreiten
+                     col.width = "default", # Spaltenbreite (Vektor, z.B. "c("30pt", "50pt")), bei "default" gibt es automatische Spaltenbreiten
                      bold = TRUE, # Soll der header fett sein?
                      bold.col1 = TRUE, # Soll die erste Zelle des Headers fett sein? Sinnvoll, falls alle bis auf erste Zelle fett sein sollen
                      digits = 2, # Wie viele Nachkommastellen in der Tabelle?
@@ -111,7 +111,7 @@ lv.kable <- function(x, # Objekt (am besten dataframe)
       )
     )
     # Spaltenbreite anpassen
-    latex.table <- width(
+    latex.table <- flextable::width(
       latex.table,
       width = col.width, # von pt-Angaben in Quarto-Dokument grob umgerechnet in mm
       unit = "mm"

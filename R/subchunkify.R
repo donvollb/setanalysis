@@ -26,10 +26,12 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
   else {head.end <- ", echo=FALSE, results = \"hide\", fig.keep = \"all\", fig.align = \"center\", out.width = \"100%\"}" }
 
   if(!exists("sub.nr")) {assign("sub.nr", 0, envir = globalenv())}
-  assign("sub.nr", sub.nr+1, envir = globalenv())
+  assign("sub.nr", sub.nr + 1, envir = globalenv())
+  
+  
 
   sub_chunk <- paste0("```{r sub_chunk_", sub.nr, ", fig.height=", fig_height, ", fig.width=", fig_width, head.end,
-                      "  \npar(family = \"", font.family, "\")  \n",
+                      "  \npar(family = \"", settings$font.family, "\")  \n",
                       "  \n",
                       "\n(",
                       "  \n",

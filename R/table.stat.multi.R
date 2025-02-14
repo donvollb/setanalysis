@@ -40,12 +40,12 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
                      "Min",
                      "Max")
 
-  widths <- col.width.sm
+  widths <- settings$col.width.sm
 
   if (alt1 != FALSE) {
     bob <- cbind(bob, alt1.list)
     colnames(bob)[length(colnames(bob))] <- alt1
-    widths <- col.width.sm.alt1
+    widths <- settings$col.width.sm.alt1
   }
 
   if (alt2 != FALSE) {
@@ -53,7 +53,7 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
     if (alt1 == FALSE) {stop("alt1 ist FALSE, alt2 aber nicht. Bitte bei nur einer Ausweichoption alt1 verwenden.")}
     bob <- cbind(bob, alt2.list)
     colnames(bob)[length(colnames(bob))] <- alt2
-    widths <- col.width.sm.alt2
+    widths <- settings$col.width.sm.alt2
   }
 
 

@@ -28,7 +28,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      filter = FALSE, # FILTER-Klammer für LimeSurvey
                      valid.perc = TRUE, # mit gültigen Prozent?
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = show.plot.mc) # Soll der Plot angezeigt werden?
+                     show.plot = settings$show.plot.mc) # Soll der Plot angezeigt werden?
 {
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
@@ -110,7 +110,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
     }
 
-    if(ncol(results) == 4) {col.width <- col.width4} else {col.width <- col.width3}
+    if(ncol(results) == 4) {col.width <- settings$col.width4} else {col.width <- settings$col.width3}
 
     if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width) , fig_height = 7, fig_width = 9)}
 

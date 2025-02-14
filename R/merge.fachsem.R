@@ -11,7 +11,7 @@
 
 
 merge.fachsem <- function(x, # Daten
-                          fig.height = 5, # figure-height des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
+                          fig.height = 5, # Höhe des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
                           cutoff = 12, # cutoff-Wert, alle Werte >= cutoff werden zusammengefasst
                           group = "a", # Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
                           inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
@@ -49,9 +49,9 @@ merge.fachsem <- function(x, # Daten
     #print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
     #table.freq(x, col1.name = xl, cutoff = cutoff)
 
-    flextable_to_rmd( # Ausgabe der Flextable
+    flextable::flextable_to_rmd( # Ausgabe der Flextable
       table.freq(x, col1.name = xl, cutoff = cutoff) %>%
-        append_chunks(as_sub("votes"), i=1, j=2, part="header") # votes tiefergestellt
+        flextable::append_chunks(flextable::as_sub("votes"), i=1, j=2, part="header") # votes tiefergestellt
     )
 
 

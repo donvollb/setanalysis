@@ -58,18 +58,18 @@ boxplot.vert <- function(x,
   par(mar=c(8, 4.1, 4.1, 2.1)) # 2. Zahl anpassen, wenn Änderung der Breite
   # gewünscht (unten links oben rechts)
   boxplot(x.aggr,
-          col = color.bars,
+          col = settings$color.bars,
           xaxt = "n",
           boxwex = 0.6,
-          pars=list(outcol= color.bars, outpch=20), border = "black",
+          pars=list(outcol = settings$color.bars, outpch=20), border = "black",
           ylim = c(0, 100))
   abline(h = c(20,40,60,80), col = "gray80")
   par(new = TRUE)
   boxplot(x.aggr,
-          col = color.bars,
+          col = settings$color.bars,
           xaxt = "n",
           boxwex = 0.6,
-          pars=list(outcol= color.bars, outpch=20), add = TRUE, border = "black",
+          pars=list(outcol = settings$color.bars, outpch=20), add = TRUE, border = "black",
           ylim = c(0, 100))
   
   title(ylab = "Häufigkeit in Prozent pro LV", xlab = "Antwortoption",

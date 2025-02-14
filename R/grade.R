@@ -51,7 +51,7 @@ grade <- function(x, # Daten
 
 
       if(show.table == TRUE) {
-        flextable_to_rmd(
+        flextable::flextable_to_rmd(
           #        subchunkify(
           table.stat.multi(x,
                            #                           col1.name = "\\textbf{Item} \\textit{[Skala: Schulnoten]}",
@@ -59,13 +59,13 @@ grade <- function(x, # Daten
                            #                           col2.name = "N\\textsubscript{courses}",
                            col2.name = "N",
                            bold.col1 = FALSE) %>%
-            append_chunks(as_sub("courses"), i=1, j=2, part="header") %>% # courses tiefergestellt
-            bold(i=1, j=1, part="header", bold=FALSE) %>%
-            mk_par(
+            flextable::append_chunks(as_sub("courses"), i=1, j=2, part="header") %>% # courses tiefergestellt
+            flextable::bold(i=1, j=1, part="header", bold=FALSE) %>%
+            flextable::mk_par(
               i=1, j=1, part="header",
-              as_paragraph(
-                as_b("Item"),
-                colorize(as_i(" [Skala: Schulnoten]"), color="gray20")
+              flextable::as_paragraph(
+                flextable::as_b("Item"),
+                flextable::colorize(as_i(" [Skala: Schulnoten]"), color="gray20")
               )
             )
 

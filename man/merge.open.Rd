@@ -7,7 +7,7 @@
 \method{merge}{open}(
   x,
   inkl = "nr",
-  inkl.global = inkl.open,
+  inkl.global = settings$inkl.open,
   nr = "",
   anchor = FALSE,
   freq = FALSE
