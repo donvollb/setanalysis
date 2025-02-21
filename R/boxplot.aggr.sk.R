@@ -10,7 +10,7 @@
 #' @returns Boxplot
 #' @export
 
-boxplot.aggr.sk <- function(x, p, q, d, e, color = settings$color.bars)
+boxplot.aggr.sk <- function(x, p, q, d, e, color = set.analysis.defaults$color.bars)
 { #x = daten, p = labels/Text/Beschriftungen Y Achse, q = Skala x Achse, d = Anzahl von p, e = Anzahl von q
   daten <- cbind(x)
   opar <- par(no.readonly = TRUE)

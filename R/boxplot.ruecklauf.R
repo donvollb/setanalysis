@@ -44,16 +44,16 @@ boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
   boxplot(x, width=NULL, outline=TRUE,
           boxwex=0.5,   #boxwex stellt die Größe der Box vom boxplot ein
           horizontal=TRUE, #Orientierung: horizontal
-          col = settings$color.bars, #Füllfarbe
+          col = set.analysis.defaults$color.bars, #Füllfarbe
           ylim=c(0,120), #Länge der y Achse
           xaxt="n", #keine Beschriftung der x Achse
           border="black", #Farbe der Außenlinie
-          pars = list(outcol = settings$color.bars, outpch=20))#Spezifizierung für Ausreißer. Farbe & Art/Charakter
+          pars = list(outcol = set.analysis.defaults$color.bars, outpch=20))#Spezifizierung für Ausreißer. Farbe & Art/Charakter
   abline(v=c(0,20,40,60,80,100)) #vertikale Hilfslinien
   #Boxplot wird über Hilfslinie gezeichnet (Befehl von oben wiederholt)
   boxplot(x, width=NULL, outline=TRUE, boxwex=0.5,
-          horizontal=TRUE, col = settings$color.bars, ylim = c(0,120), xaxt="n",
-          border="black", pars = list(outcol = settings$color.bars, outpch=20), add = TRUE)
+          horizontal=TRUE, col = set.analysis.defaults$color.bars, ylim = c(0,120), xaxt="n",
+          border="black", pars = list(outcol = set.analysis.defaults$color.bars, outpch=20), add = TRUE)
   mtext(c("Rücklauf \nin Prozent"), #Text
         side=2, #on which side of the plot (1=bottom, 2=left, 3=top, 4=right).
         line=1, #Linienart (durchgezogene Linie)

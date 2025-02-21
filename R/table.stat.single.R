@@ -15,7 +15,7 @@ table.stat.single <- function(x, # Daten
                               caption = NULL, # caption der Tabelle (siehe lv.kable)
                               md = FALSE, # Mit Median?
                               col1.name = "N_votes", # Name der ersten Zelle des headers
-                              col1.width = settings$col1.width.tss, # Breite der ersten Zeile
+                              col1.width = set.analysis.defaults$col1.width.tss, # Breite der ersten Zeile
                               bold = TRUE, # fetter header? (siehe lv.kable)
                               bold.col1 = TRUE) # fette erste Zelle im header? (siehe lv.kable)
 {

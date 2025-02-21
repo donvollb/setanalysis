@@ -19,7 +19,7 @@ merge.sc <- function(x, # Daten
                      already.labels = FALSE, # Wurden die Daten bereits in Label umgewandelt?
                      col2.name = "n", # Name der n-Spalte in Tabelle
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = settings$show.plot.sc, # Soll der Plot angezeigt werden?
+                     show.plot = set.analysis.defaults$show.plot.sc, # Soll der Plot angezeigt werden?
                      no.pagebreak = TRUE) # Seitenumbrüche mittendrin verhindern?
 {
   if (sum(!is.na(x)) > 0) {

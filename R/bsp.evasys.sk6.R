@@ -13,7 +13,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
 
   tmin <- "linker Pol"
   tplu <- "rechter Pol"
-  par(family = settings$font.family)
+  par(family = set.analysis.defaults$font.family)
 
   bobby <- x |>
     psych::describe() |>
@@ -30,13 +30,13 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
     abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80"),
     bp <- barplot(table(x),
                   ylim=c(0, sum(table(x))),
-                  col = settings$color.bars,
+                  col = set.analysis.defaults$color.bars,
                   axes = FALSE, add = TRUE),
     box(),
 
     axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(table(x)),1), " %", sep="")),
     par(new=TRUE),
-    par(family = settings$font.family),
+    par(family = set.analysis.defaults$font.family),
     bxp <- boxplot(as.numeric(x), plot=FALSE),
     bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd))),
     invisible(ifelse(bxp$stats[5,1]>6, bxp$stats[5,1] <- 6, bxp$stats[5,1] <- bxp$stats[5,1])),
@@ -46,7 +46,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
         whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE),
     mtext(tmin, side=1, at = -0.1, line = -2.6, font = 2, col = "gray30"),
     mtext(tplu, side=1, at = 7.2, line = -2.6, font = 2, col = "gray30"),
-    par(xpd=TRUE, family = settings$font.family),
+    par(xpd=TRUE, family = set.analysis.defaults$font.family),
     text(x=0, y=2,label="Relative Häufigkeit der Antworten", col = "black"),
     segments(x0 = 0, y0 = 1.85, x1 = 0.75, y1 = 1.7, col = "gray", lwd = 2),
     text(x=2, y=2,label="Std.-Abw.", col = "black"),

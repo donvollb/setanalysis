@@ -12,7 +12,7 @@
   already.labels = FALSE,
   col2.name = "n",
   order.table = FALSE,
-  show.plot = settings$show.plot.sc,
+  show.plot = set.analysis.defaults$show.plot.sc,
   no.pagebreak = TRUE
 )
 }

@@ -7,7 +7,7 @@
 \method{merge}{open}(
   x,
   inkl = "nr",
-  inkl.global = settings$inkl.open,
+  inkl.global = set.analysis.defaults$inkl.open,
   nr = "",
   anchor = FALSE,
   freq = FALSE
