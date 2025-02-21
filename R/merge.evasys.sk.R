@@ -59,7 +59,7 @@ merge.evasys.sk <- function(x, # Daten
 
       }
       if(no.pagebreak == TRUE) {cat("\\begin{minipage}{\\linewidth} \n")}
-      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
+      cat("###", nr, attr(x, "label"), "\n \n")
       cat("  \n  \n")
 
       xtab <- x

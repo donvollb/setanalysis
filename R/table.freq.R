@@ -30,8 +30,6 @@ table.freq <- function(x, # Daten
   jim <- data.frame(rownames(jim), jim)
   rownames(jim) <- NULL
 
-  jim[, 1] <- replace.latex.issues(jim[, 1])
-
   jim[jim == "NA's"] <- "NAs"
 
 

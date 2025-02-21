@@ -33,7 +33,7 @@ merge.sc <- function(x, # Daten
     if (inkl == TRUE) {
       if(no.pagebreak == TRUE) #{cat("\\begin{minipage}{\\linewidth} \n")} # funktioniert nicht in Quarto
       {cat("\\pagebreak  \n  \n")}
-      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
+      cat("###", nr, attr(x, "label"), "\n \n")
 
 
 

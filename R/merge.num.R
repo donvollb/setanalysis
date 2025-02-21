@@ -40,7 +40,7 @@ merge.num <- function(x, # Daten
 
 
 
-      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
+      cat("### ", nr, " ", attr(x, "label"), "\n \n")
 
       x <- as.numeric(gsub(",", ".", x)) # falls mit Komma
 
