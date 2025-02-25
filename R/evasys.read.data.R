@@ -109,7 +109,7 @@ evasys.read.data <- function(raw.data.path = NULL, codebook.path = NULL) {
       if (i != length(var.names)) {
         attrs <- codebook[which(codebook$code == var.name.tmp):(which(codebook$code == var.names[i+1])[1]-2), ] # Extrahiere die relevanten Zeilen aus dem Codebuch
       } else {
-        attrs <- codebook[which(codebook$code == var.name.tmp):(nrow(codebook)-3), ] # Falls es die letzte ist, nimm als Ende die drittletzte Zeile
+        attrs <- codebook[which(codebook$code == var.name.tmp):(nrow(codebook)-2), ] # Falls es die letzte ist, nimm als Ende die vorletzte Zeile
       }
       
       # Nun haben wir im Objekt attrs den Abschnitt im Codebuch gespeichert, der die Informationen zu aktuelle Variable enthält
