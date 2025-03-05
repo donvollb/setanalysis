@@ -38,3 +38,7 @@
 \description{
 merge-Funktion für single-choice Fragen
 }
+\examples{
+markdown.in.viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
+
+}

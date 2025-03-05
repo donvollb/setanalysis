@@ -17,3 +17,7 @@ Boxplot der Rückläufe
 \description{
 Boxplot für Rücklaufsabbildung (LVE)
 }
+\examples{
+boxplot.ruecklauf(BspDaten$dataLVE$Teilnehmer, BspDaten$dataLVE$Kennung)
+
+}

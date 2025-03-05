@@ -29,3 +29,7 @@ grade(
 \description{
 merge-Funktion für Schulnoten
 }
+\examples{
+markdown.in.viewer(grade(BspDaten$dataLVE$Note,
+                                   kennung = BspDaten$dataLVE$Kennung)
+}
