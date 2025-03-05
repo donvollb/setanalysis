@@ -7,6 +7,8 @@
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
+#' @examples markdown.in.viewer(grade(BspDaten$dataLVE$Note,
+#'                                    kennung = BspDaten$dataLVE$Kennung)
 #' @export
 
 grade <- function(x, # Daten
@@ -19,66 +21,40 @@ grade <- function(x, # Daten
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
-
+  
   if (inkl == TRUE) {
-
+    
     label <- attr(x, "label")
-
+    
     if(already.aggr == FALSE) {
       x <- aggr.data(x, kennung)}
-
-    cat("\\subsubsection{ ", attr(x, "label"), "}  \n  \n", sep = "")
-
-    descr <- as.data.frame(psych::describe(x)) [c(2:5,8:9)]
-    descr$Item <- label
+    
+    cat("*** ", attr(x, "label"), "\n \n", sep = "")
+    
     descr <- descr[c(7, 1:6)]
-    if(sum(descr$n) == 0){cat("*Tabelle wurde wegen fehlender Daten nicht erstellt.*  \n  \n")} else {
-      colnames(descr) <- c(paste0("\\textbf{Item} \\textit{[Skala: Schulnoten]}"),
-                           "\\textbf{N\\textsubscript{courses}}",
-                           "\\textbf{M}",
-                           "\\textbf{SD}",
-                           "\\textbf{Md}",
-                           "\\textbf{Min}",
-                           "\\textbf{Max}")
-      kableExtra::kbl(descr, row.names = FALSE, booktabs = TRUE,
-                      digits = 2,
-                      longtable = TRUE,
-                      format="latex",
-                      linesep = "\\addlinespace",
-                      escape = FALSE,
-                      #      ) %>% column_spec(1, width = "230pt") -> table
-      ) %>% column_spec(1, width = 81) -> table
-
-
+      
+    if(length(x) == 0){cat("**Tabelle wurde wegen fehlender Daten nicht erstellt.**  \n  \n")} 
+      
       if(show.table == TRUE) {
         flextable::flextable_to_rmd(
-          #        subchunkify(
           table.stat.multi(x,
-                           #                           col1.name = "\\textbf{Item} \\textit{[Skala: Schulnoten]}",
+                           labels = label,
                            col1.name = "Item [Skala: Schulnoten]",
-                           #                           col2.name = "N\\textsubscript{courses}",
                            col2.name = "N",
-                           bold.col1 = FALSE) %>%
-            flextable::append_chunks(as_sub("courses"), i=1, j=2, part="header") %>% # courses tiefergestellt
-            flextable::bold(i=1, j=1, part="header", bold=FALSE) %>%
+                           bold.col1 = FALSE) |>
+            flextable::append_chunks(flextable::as_sub("courses"), i=1, j=2, part="header") |> # courses tiefergestellt
+            flextable::bold(i=1, j=1, part="header", bold=FALSE) |>
             flextable::mk_par(
               i=1, j=1, part="header",
               flextable::as_paragraph(
-                flextable::as_b("Item"),
-                flextable::colorize(as_i(" [Skala: Schulnoten]"), color="gray20")
+                flextable::as_b("Item "),
+                flextable::colorize(flextable::as_i("[Skala: Schulnoten]"), color="gray20")
               )
             )
-
-          #                           fig_height = 7, fig_width = 9
-          #                    )
         )
       }
-
+      
       subchunkify(boxplot.gesnote(x), fig_height = 2, fig_width = 9)
-
-
+      
     }
-
-
   }
-}
