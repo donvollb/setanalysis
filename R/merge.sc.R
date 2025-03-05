@@ -10,6 +10,8 @@
 #' @param show.plot Soll der Plot angezeigt werden?
 #' @param no.pagebreak Seitenumbrüche mittendrin verhindern?
 #'
+#' @examples markdown.in.viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
+#'
 #' @export
 
 merge.sc <- function(x, # Daten
@@ -32,7 +34,7 @@ merge.sc <- function(x, # Daten
 
     if (inkl == TRUE) {
       if(no.pagebreak == TRUE) #{cat("\\begin{minipage}{\\linewidth} \n")} # funktioniert nicht in Quarto
-      {cat("\\pagebreak  \n  \n")}
+      {cat("{{< pagebreak >}} \n  \n")}
       cat("###", nr, attr(x, "label"), "\n \n")
 
 
@@ -42,14 +44,14 @@ merge.sc <- function(x, # Daten
       flextable::flextable_to_rmd(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
                                   order.table = order.table))
 
-      freq.tab <- flextable::freq(x, plot = FALSE)
+      freq.tab <- descr::freq(x, plot = FALSE)
       results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
-      results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
+      
+      # automatische Zeilenumbrüche bei langen Labels ---------------------
+      results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, width = 40), collapse = "\n"))
+      
       results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
       colnames(results) <- c("label", "freq", "perc")
-
-
-      par(family = "Raleway")
 
       if(show.plot == TRUE) {
         if(fig.height == "default")
@@ -58,8 +60,7 @@ merge.sc <- function(x, # Daten
         {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = fig.height, fig_width = 9)}
       }
       if(no.pagebreak == TRUE) {
-        cat("\n\\bigskip")
-        #cat("\n\\end{minipage}") # funktioniert nicht in Quarto
+        cat("\n\n\n")
       }
       cat("   \n  \n")
 
