@@ -17,6 +17,13 @@ set.analysis.defaults$show.plot.mc <- TRUE
 set.analysis.defaults$show.plot.sk <- TRUE
 set.analysis.defaults$inkl.open <- TRUE
 
+# Schriftart laden --------------------------------------------------------
+
+if (!(set.analysis.defaults$font.family %in% showtextdb::font_installed())) {
+  showtextdb::font_install(showtextdb::google_fonts(font.family))}
+showtext::showtext_auto()
+
+
 # Funktion, um diese Einstellungen zu ändern ------------------------------
 
 #' Funktion um Einstellungsvariablen anzupassen
