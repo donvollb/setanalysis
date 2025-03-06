@@ -7,7 +7,7 @@
 \method{open}{answers}(
   x,
   inkl = "nr",
-  inkl.global = settings$inkl.open,
+  inkl.global = set.analysis.defaults$inkl.open,
   nr = "",
   freq = FALSE,
   no.pagebreak = TRUE

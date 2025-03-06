@@ -28,7 +28,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      filter = FALSE, # FILTER-Klammer für LimeSurvey
                      valid.perc = TRUE, # mit gültigen Prozent?
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = settings$show.plot.mc) # Soll der Plot angezeigt werden?
+                     show.plot = set.analysis.defaults$show.plot.mc) # Soll der Plot angezeigt werden?
 {
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
@@ -65,7 +65,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
 
     if (head == "default") {head <- sub(":.*", "", attr(x[, 1], "label"))}
-    cat("\\subsubsection{", nr, replace.latex.issues(head), "}  \n  \n")
+    cat("### ", nr, head, "\n \n")
 
     val.labels <- sub('.*: ', '', as.character(lapply(x, attr, which = "label")))
 
@@ -75,7 +75,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       results <- data.frame(matrix(nrow = length(x), ncol = 4))
       colnames(results) <-
         c(col1.name, col2.name, "\\%", "gültige \\%")
-      results[, 1] <- replace.latex.issues(val.labels)
+      results[, 1] <- val.labels
       for (n in 1:length(x)) {
         results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
         results[n, 3] <- round(results[n, 2] / nrow(x) * 100, digits = 2)
@@ -101,7 +101,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       results <- data.frame(matrix(nrow = length(x), ncol = 3))
       colnames(results) <-
         c(col1.name, "N_votes", "\\%")
-      results[, 1] <- replace.latex.issues(val.labels)
+      results[, 1] <- val.labels
       for (n in 1:length(x)) {
         results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
         results[n, 3] <-
@@ -110,7 +110,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
     }
 
-    if(ncol(results) == 4) {col.width <- settings$col.width4} else {col.width <- settings$col.width3}
+    if(ncol(results) == 4) {col.width <- set.analysis.defaults$col.width4} else {col.width <- set.analysis.defaults$col.width3}
 
     if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width) , fig_height = 7, fig_width = 9)}
 

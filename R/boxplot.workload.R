@@ -14,14 +14,14 @@ boxplot.workload <- function(x,p,q,d,e, nums) # x = daten, p = Text/Beschriftung
 {
   opar <- par(no.readonly = TRUE)
   par(fg="gray80")
-  par(family = settings$font.family)
+  par(family = set.analysis.defaults$font.family)
   #par(mar=c(7, 4.1, 4.1, 4.2))
   par(mar=c(7, 4.1, 2, 4.2))
-  boxplot(x, col= settings$color.bars, border="black", ylab=NULL, xlab=NULL, horizontal = TRUE, ylim=c(0,e),
-          xaxt="n", yaxt="n", boxwex = 0.8, pars=list(outcol = settings$color.bars, outpch=20))
+  boxplot(x, col= set.analysis.defaults$color.bars, border="black", ylab=NULL, xlab=NULL, horizontal = TRUE, ylim=c(0,e),
+          xaxt="n", yaxt="n", boxwex = 0.8, pars=list(outcol = set.analysis.defaults$color.bars, outpch=20))
   abline(v = c(0:e))
-  boxplot(x, col= settings$color.bars, border="black", ylab=NULL, xlab=NULL, horizontal = TRUE, ylim=c(0,e),
-          xaxt="n", yaxt="n", boxwex = 0.8, pars=list(outcol = settings$color.bars, outpch=20), add = TRUE)
+  boxplot(x, col= set.analysis.defaults$color.bars, border="black", ylab=NULL, xlab=NULL, horizontal = TRUE, ylim=c(0,e),
+          xaxt="n", yaxt="n", boxwex = 0.8, pars=list(outcol = set.analysis.defaults$color.bars, outpch=20), add = TRUE)
   axis(side=2, at=1:d, labels=FALSE)
   mtext(p, side=2, line=1, at=1:d, las=1, col="black", cex=0.8)
   axis(side=4, at=1:d, labels=FALSE, tick = FALSE)

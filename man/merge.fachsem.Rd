@@ -22,3 +22,7 @@
 \description{
 merge-Funktion für Fachsemester
 }
+\examples{
+merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown.in.viewer()
+
+}

@@ -7,8 +7,9 @@
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
+#' @examples merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown.in.viewer()
+#'
 #' @export
-
 
 merge.fachsem <- function(x, # Daten
                           fig.height = 5, # Höhe des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
@@ -43,14 +44,14 @@ merge.fachsem <- function(x, # Daten
 
 
     cat(paste0("## Fachsemester ", caps, "  \n  \n"))
-    cat("\\subsubsection{ Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehoert: in welchem Fachsemester sind Sie eingeschrieben?}  \n  \n")
+    cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehört: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
 
     # kein print bei Flextable
     #print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
     #table.freq(x, col1.name = xl, cutoff = cutoff)
 
     flextable::flextable_to_rmd( # Ausgabe der Flextable
-      table.freq(x, col1.name = xl, cutoff = cutoff) %>%
+      table.freq(x, col1.name = xl, cutoff = cutoff) |>
         flextable::append_chunks(flextable::as_sub("votes"), i=1, j=2, part="header") # votes tiefergestellt
     )
 

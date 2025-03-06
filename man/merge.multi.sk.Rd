@@ -26,7 +26,7 @@
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Itemdaten (Dataframe mit mehreren Spalten)}
 
 \item{kennung}{Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt)}
 
@@ -64,4 +64,13 @@
 }
 \description{
 merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
+}
+\examples{
+# Objekt erstellen, dass mehrere Fragen enthält:
+KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
+
+# Funktion ausführen:
+markdown.in.viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
+                   kennung = BspDaten$dataLVE$Kennung))
+
 }

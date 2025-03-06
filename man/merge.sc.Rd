@@ -12,7 +12,7 @@
   already.labels = FALSE,
   col2.name = "n",
   order.table = FALSE,
-  show.plot = settings$show.plot.sc,
+  show.plot = set.analysis.defaults$show.plot.sc,
   no.pagebreak = TRUE
 )
 }
@@ -37,4 +37,8 @@
 }
 \description{
 merge-Funktion für single-choice Fragen
+}
+\examples{
+markdown.in.viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
+
 }

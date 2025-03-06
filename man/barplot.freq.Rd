@@ -4,7 +4,13 @@
 \alias{barplot.freq}
 \title{Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordinalen Skalennivaus genutzt werden)}
 \usage{
-\method{barplot}{freq}(x, color = settings$color.bars, xlab = "", main = "", cutoff = FALSE)
+\method{barplot}{freq}(
+  x,
+  color = set.analysis.defaults$color.bars,
+  xlab = "",
+  main = "",
+  cutoff = FALSE
+)
 }
 \arguments{
 \item{x}{Daten}

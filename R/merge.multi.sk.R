@@ -1,6 +1,6 @@
 #' merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
 #'
-#' @param x Daten
+#' @param x Itemdaten (Dataframe mit mehreren Spalten)
 #' @param kennung Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt) 
 #' @param number Anzahl Antwortoptionen der Items (OHNE AUSWEICHOPTIONEN!), wird bei "default" automatisch gezogen
 #' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
@@ -19,7 +19,16 @@
 #' @param message Soll ein Hinweistext am Anfang erfolgen?
 #' @param aggr Sollen Daten aggregiert werden?
 #'
+#' @examples
+#' # Objekt erstellen, dass mehrere Fragen enthält:
+#' KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
+#' 
+#' # Funktion ausführen:
+#' markdown.in.viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
+#'                    kennung = BspDaten$dataLVE$Kennung))
+#' 
 #' @export
+
 
 merge.multi.sk <- function(x, # Daten
                            kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
@@ -60,7 +69,7 @@ merge.multi.sk <- function(x, # Daten
       if (length(nrs > 0)) {
 
         for (k in 1:length(nrs)) {
-          attr(x[, k], "label") <- paste0("\\textbf{", nrs[k], "} ", attr(x[, k], "label"))
+          attr(x[, k], "label") <- paste0("**", nrs[k], "** ", attr(x[, k], "label"))
         }
       }
 
@@ -184,13 +193,13 @@ merge.multi.sk <- function(x, # Daten
           alt2 = alt2,
           alt1.list = alt1.list,
           alt2.list = alt2.list
-        ) %>%
-          flextable::bold(i=1, j=1, part="header", bold=FALSE) %>%
+        ) |>
+          flextable::bold(i=1, j=1, part="header", bold=FALSE) |>
           flextable::mk_par(
             i=1, j=1, part="header",
             flextable::as_paragraph(
               flextable::as_b("Item"),
-              flextable::colorize(as_i(paste0(" [Skala: ", text.skala, "]")), color="gray20")
+              flextable::colorize(flextable::as_i(paste0(" [Skala: ", text.skala, "]")), color="gray20")
             )
           )
 
@@ -211,7 +220,10 @@ merge.multi.sk <- function(x, # Daten
     if (show.plot == TRUE) {
       labels <- rev(labels)
       x <- rev(x)
-      labels <- auto.newline(labels)
+
+      # Automatische Zeilenumbrüche einfügen ----------------------------
+      labels <- sapply(labels, \(x) paste(strwrap(x, width = 47), collapse = "\n")) 
+
 
       if (fig.height == "default")
       {

@@ -6,8 +6,8 @@
 \usage{
 bsp.boxplot(
   x = "default",
-  color = settings$color.bars,
-  family = settings$font.family
+  color = set.analysis.defaults$color.bars,
+  family = set.analysis.defaults$font.family
 )
 }
 \arguments{

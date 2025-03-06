@@ -17,7 +17,7 @@
   filter = FALSE,
   valid.perc = TRUE,
   order.table = FALSE,
-  show.plot = settings$show.plot.mc
+  show.plot = set.analysis.defaults$show.plot.mc
 )
 }
 \arguments{

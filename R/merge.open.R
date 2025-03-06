@@ -11,9 +11,9 @@
 
 merge.open <- function(x, # Daten
                        inkl = "nr",  # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                       inkl.global = settings$inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
+                       inkl.global = set.analysis.defaults$inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
                        nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-                       anchor = FALSE, # Falls über open.answers Anker kriiert wurden hier die Nummer angeben
+                       anchor = FALSE, # Falls über open.answers Anker kreiert wurden hier die Nummer angeben
                        freq = FALSE) # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
 {
 
@@ -26,14 +26,13 @@ merge.open <- function(x, # Daten
 
     if (anchor != FALSE)
     {
-      cat(paste0("\\hypertarget{", anchor, ".bottom}{}\\subsubsection{" , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n"))
+      cat("###", nr, attr(x, "label"), paste0("{#", anchor, ".bottom}"),  "\n \n")
       cat(paste0("\\hyperlink{", anchor, ".top}{zurück nach oben}  \n  \n"))
-    } else {cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")}
+    } else {cat("###", nr, attr(x, "label"), "\n \n")}
 
     if(length(na.omit(x)) > 0) { # wenn mind. 1 offene Antwort
 
       x <- x[order(x)]
-      x <- replace.latex.issues(x, all = FALSE)
       x <- as.data.frame(x[!is.na(x)])
 
 
@@ -54,7 +53,7 @@ merge.open <- function(x, # Daten
 
     } else {
 
-      cat("\\textit{Keine offenen Antworten zu dieser Frage.}  \n")
+      cat("*Keine offenen Antworten zu dieser Frage.*\n")
 
     }
 

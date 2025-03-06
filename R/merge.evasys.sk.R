@@ -27,7 +27,7 @@ merge.evasys.sk <- function(x, # Daten
                             alt2.num = 7, # Welche Zahl entspricht alt2
                             lime = FALSE, # Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
                             lime.brackets = FALSE, # Müssen eckige Klammern um den Fragetext herum entfernt werden?
-                            show.plot = settings$show.plot.sk, # Zeige Plot?
+                            show.plot = set.analysis.defaults$show.plot.sk, # Zeige Plot?
                             no.pagebreak = TRUE) # Seitenumbrüche verhindern?
 {
 
@@ -59,7 +59,7 @@ merge.evasys.sk <- function(x, # Daten
 
       }
       if(no.pagebreak == TRUE) {cat("\\begin{minipage}{\\linewidth} \n")}
-      cat("\\subsubsection{ " , nr, " ", replace.latex.issues(attr(x, "label")), "}  \n  \n")
+      cat("###", nr, attr(x, "label"), "\n \n")
       cat("  \n  \n")
 
       xtab <- x

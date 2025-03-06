@@ -30,8 +30,6 @@ table.freq <- function(x, # Daten
   jim <- data.frame(rownames(jim), jim)
   rownames(jim) <- NULL
 
-  jim[, 1] <- replace.latex.issues(jim[, 1])
-
   jim[jim == "NA's"] <- "NAs"
 
 
@@ -66,8 +64,8 @@ table.freq <- function(x, # Daten
     ), ]
   }
 
-  if (col.width[1] == "default" & length(jim) == 4) {col.width <- settings$col.width4}
-  if (col.width[1] == "default" & length(jim) == 3) {col.width <- settings$col.width3}
+  if (col.width[1] == "default" & length(jim) == 4) {col.width <- set.analysis.defaults$col.width4}
+  if (col.width[1] == "default" & length(jim) == 3) {col.width <- set.analysis.defaults$col.width3}
 
   lv.kable(jim, caption = caption, col.width = col.width, bold = bold,
            bold.col1 = bold.col1)
