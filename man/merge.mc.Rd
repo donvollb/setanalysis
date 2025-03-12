@@ -50,3 +50,14 @@
 \description{
 merge-Funktion für MC-Fragen
 }
+\examples{
+
+# Gewünschte Items auswählen -------------------------------------------
+
+Abschlüsse <- dplyr::select(BspDaten$dataSHOWUP, abschluss_1:abschluss_8)
+
+# merge.mc-Funktion ausführen und anzeigen -----------------------------
+
+merge.mc(Abschlüsse) |> markdown.in.viewer()
+
+}

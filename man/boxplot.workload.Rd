@@ -4,24 +4,30 @@
 \alias{boxplot.workload}
 \title{Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden}
 \usage{
-\method{boxplot}{workload}(x, p, q, d, e, nums)
+\method{boxplot}{workload}(
+  x,
+  q = c("0h", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h",
+    "mehr als\\n12h"),
+  e = 13,
+  n = NA
+)
 }
 \arguments{
 \item{x}{Daten}
 
-\item{p}{Text/Beschriftungen Y Achse}
-
 \item{q}{Skala x Achse}
 
-\item{d}{Anzahl von p}
+\item{e}{Anzahl der Antwortoptionen der Skala}
 
-\item{e}{Anzahl von q}
-
-\item{nums}{?}
+\item{n}{Anzahl der Veranstaltungen}
 }
 \value{
 Boxplot
 }
 \description{
 Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden
+}
+\examples{
+boxplot.workload(x = BspDaten$dataLVE$WL)
+
 }

@@ -28,8 +28,6 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
   if(!exists("sub.nr")) {assign("sub.nr", 0, envir = globalenv())}
   assign("sub.nr", sub.nr + 1, envir = globalenv())
   
-  
-
   sub_chunk <- paste0("```{r sub_chunk_", sub.nr, ", fig.height=", fig_height, ", fig.width=", fig_width, head.end,
                       "  \npar(family = \"", set.analysis.defaults$font.family, "\")  \n",
                       "  \n",

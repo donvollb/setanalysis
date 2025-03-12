@@ -15,3 +15,7 @@ Grafik
 \description{
 Beispiel einer Sechserskala
 }
+\examples{
+bsp.evasys.sk6() |> markdown.in.viewer()
+
+}

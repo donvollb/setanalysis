@@ -4,12 +4,10 @@
 \alias{merge.wl}
 \title{merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)}
 \usage{
-\method{merge}{wl}(ECTS, WL, kennung, already.aggr = FALSE)
+\method{merge}{wl}(WL, kennung, already.aggr = FALSE)
 }
 \arguments{
-\item{ECTS}{ECTS der Daten}
-
-\item{WL}{WL der Daten (ECTS und WL müssen gleiche Länge haben, d.h. entweder ist bereits beides aggregiert oder keins)}
+\item{WL}{WL der Daten}
 
 \item{kennung}{Kennung/Fallnummer zum Aggregieren}
 
@@ -17,4 +15,9 @@
 }
 \description{
 merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
+}
+\examples{
+merge.wl(BspDaten$dataLVE$WL,
+BspDaten$dataLVE$Kennung, already.aggr = FALSE) |> markdown.in.viewer()
+
 }
