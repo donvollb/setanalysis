@@ -12,6 +12,15 @@
 #' @param fig.height Höhe der Abbildung
 #' @param cutoff Soll es einen cutoff geben? Alle Werte >= cutoff werden zusammengefasst; Ist nicht mit cuts möglich!
 #'
+#' @examples
+#' 
+#' markdown.in.viewer(merge.num(BspDaten$dataSHOWUP$zugang_note,
+#'                              xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
+#'                              cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
+#'                              cut.labels = c("1,0 bis 1,4","1,5 bis 1,9","2,0 bis 2,4",
+#'                                             "2,5 bis 2,9","3,0 bis 3,4","3,5 bis 4.0"))
+#' 
+#'
 #' @export
 
 merge.num <- function(x, # Daten
@@ -33,33 +42,35 @@ merge.num <- function(x, # Daten
   if (inkl == TRUE) {
 
     if(cut.breaks[1] != "" & cutoff != FALSE) {
-      stop("Es können nicht \"cut.breaks\" und \"cutoff\" != FALSE sein.")
+      stop('Es können nicht "cut.breaks" und "cutoff" != FALSE sein.')
     }
 
     if (sum(!is.na(x)) > 0) {
-
-
 
       cat("### ", nr, " ", attr(x, "label"), "\n \n")
 
       x <- as.numeric(gsub(",", ".", x)) # falls mit Komma
 
 
-      if(show.table == TRUE){print(table.stat.single(as.numeric(x, na.rm = TRUE),
-                                                     col1.name = "n", md = TRUE))
-        cat("  \n  \n")}
-
+      if(show.table == TRUE) {
+        print(table.stat.single(as.numeric(x, na.rm = TRUE),
+                                col1.name = "n", md = TRUE))
+        cat("  \n  \n")
+        }
+      
       if (cut.breaks[1] != "") {
         x <- cut(as.numeric(x, na.rm = TRUE),
                  breaks = cut.breaks,
-                 labels = cut.labels)}
-      if (cutoff != FALSE) {x[x >= cutoff] <- cutoff}
+                 labels = cut.labels)
+        }
+      
+      if (cutoff != FALSE) { x[x >= cutoff] <- cutoff }
 
-      subchunkify(barplot.freq(x, cutoff = cutoff, xlab = xlab, main = main), fig_width = 9, fig_height = fig.height)
+      subchunkify(barplot.freq(x, cutoff = cutoff, xlab = xlab, main = main),
+                  fig_width = 9, fig_height = fig.height)
+
       cat("  \n  \n")
-
-
-
+      
     }
   }
 }
