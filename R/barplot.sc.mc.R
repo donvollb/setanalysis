@@ -31,13 +31,13 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
       ggplot2::geom_bar(stat="identity", #Balkendiagramm
                fill = color, #Farbe
                width=0.8)+ #Breite der Balken
-      ggplot2::geom_col(fill = color, color = "black", size = 0.3) +
+      ggplot2::geom_col(fill = color, color = "black", linewidth = 0.3) +
       ggplot2::geom_text(ggplot2::aes(label = paste(perc, "%", sep = "")), #Prozentzahl über die Balken schreiben
                 color ="grey30",#Farbe 
                 size = 3.5, #Schriftgröße
                 family = set.analysis.defaults$font.family,
                 hjust = -0.5)+ #horizontale Verschiebung des Textes
-      ggplot2::ylim(c(0, DescTools::RoundTo((max(x$freq)*1.15), multiple=DescTools::RoundTo(max(x$freq) * 0.3, multiple=5, ceiling), ceiling))) +#automatische Einstellung des Limites der y Achse
+      ggplot2::ylim(c(0, DescTools::RoundTo((max(x$freq) * 1.15), multiple = DescTools::RoundTo(max(x$freq) * 0.3, multiple=5, ceiling), ceiling))) +#automatische Einstellung des Limites der y Achse
       ggplot2::theme(title = ggplot2::element_text(color = "blue"),
             axis.title.y = ggplot2::element_blank(),  #y-Achsen Titel, element_blank() meint kein Text
             axis.title.x = ggplot2::element_text(color = "grey30", size = 14, face = "bold"),  #x Achsen Titel
