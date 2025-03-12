@@ -3,6 +3,9 @@
 #' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt 
 #'
 #' @returns Grafik
+#' 
+#' @examples bsp.evasys.sk6() |> markdown.in.viewer()
+#' 
 #' @export
 
 bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
