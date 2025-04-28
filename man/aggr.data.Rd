@@ -9,7 +9,7 @@ aggr.data(vars, kennung)
 \arguments{
 \item{vars}{Variablen (oder eine Variable), die aggregiert werden sollen}
 
-\item{kennungen}{Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen}
+\item{kennung}{Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen}
 }
 \description{
 Testet, ob die Labels aus personalized.info so im Datensatz vorkommen

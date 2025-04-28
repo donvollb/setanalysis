@@ -27,5 +27,4 @@ merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fa
 merge.subj(BspDaten$dataSHOWUP$fach1_2FB,
            BspDaten$dataSHOWUP$fach2_2FB) |> markdown.in.viewer()
 
-
 }
