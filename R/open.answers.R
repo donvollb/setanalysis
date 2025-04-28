@@ -9,7 +9,7 @@
 #'
 #' @examples open.answers(BspDaten$dataSHOWUP$offen) |> markdown.in.viewer()
 #'
-#' @export
+#' @export open.answers
 
 open.answers <- function(x, # Daten
                          inkl = "nr",  # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
@@ -25,24 +25,23 @@ open.answers <- function(x, # Daten
 
   if (inkl == TRUE && inkl.global == TRUE) {
     if(no.pagebreak == TRUE) {cat("::: {break-inside = avoid} \n\n")} # Seitenumbrüche verhindern
-    if(!exists("anchor.nr")) {assign("anchor.nr", 0, envir = globalenv())}
-    assign("anchor.nr", anchor.nr + 1, envir = globalenv())
+    anchor.nr <- list.open.answers$anchor.nr
 
-    anchor.top <- paste0(anchor.nr, ".top")
-    anchor.bottom <- paste0(anchor.nr, ".bottom")
+    anchor.top <- paste0("#sec-", anchor.nr, ".top")
+    anchor.bottom <- paste0("#sec-", anchor.nr, ".bottom")
 
-    cat(paste0("### ", nr, attr(x, "label"), " {#sec-", anchor.top, "} \n\n"))
+    cat(paste0("### ", nr, attr(x, "label"), " {", anchor.top, "} \n\n"))
 
     if(length(na.omit(x)) > 0) {
-      cat(paste0("*Die offenen Antworten zu dieser Frage finden sich im [Anhang](#", anchor.bottom, ").*  \n\n"))
+      cat(paste0("*Die offenen Antworten zu dieser Frage finden sich im [Anhang](", anchor.bottom, ").*  \n\n"))
     } else {
       cat("*Keine offenen Antworten zu dieser Frage.*  \n\n")
     }
     if(no.pagebreak == TRUE) { cat(":::\n") } # Seitenumbrüche ab hier wieder erlauben
     cat(" \n\n")
-
+    list.open.answers$anchor.nr <- anchor.nr + 1
   }
 
-  assign(paste0("var.", anchor.nr), x, envir = list.open)
-  assign(paste0("nr.", anchor.nr), nr, envir = list.open)
+  assign(paste0("var.", anchor.nr), x, envir = list.open.answers)
+  assign(paste0("nr.", anchor.nr), nr, envir = list.open.answers)
 }
