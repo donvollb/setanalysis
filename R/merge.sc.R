@@ -12,7 +12,7 @@
 #'
 #' @examples markdown.in.viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
 #'
-#' @export
+#' @export merge.sc
 
 merge.sc <- function(x, # Daten
                      inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable

@@ -7,7 +7,8 @@
 #' @param cutoff Cutoff,z.B. werden bei 12alle Werte über 12 als "12+" abgebildet
 #'
 #' @returns Barplot
-#' @export
+#'
+#' @export barplot.freq
 
 barplot.freq <- function(x, # Daten
                          color = set.analysis.defaults$color.bars, # Farbe Balken

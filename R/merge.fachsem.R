@@ -9,7 +9,7 @@
 #'
 #' @examples merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown.in.viewer()
 #'
-#' @export
+#' @export merge.fachsem
 
 merge.fachsem <- function(x, # Daten
                           fig.height = 5, # Höhe des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen

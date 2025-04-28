@@ -7,7 +7,7 @@
 #' 
 #' @examples boxplot.ruecklauf(BspDaten$dataLVE$Teilnehmer, BspDaten$dataLVE$Kennung)
 #' 
-#' @export
+#' @export boxplot.ruecklauf
 
 boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
                               kennung) #  Kennungen

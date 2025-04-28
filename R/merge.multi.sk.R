@@ -15,7 +15,7 @@
 #' @param show.table Soll die Tabelle angezeigt werden?
 #' @param show.plot Sollen Boxplots dazu angezeigt werden?
 #' @param fig.height Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
-#' @param col2.name Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern
+#' @param col2.name Titel der n-Spalte
 #' @param message Soll ein Hinweistext am Anfang erfolgen?
 #' @param aggr Sollen Daten aggregiert werden?
 #'
@@ -27,7 +27,7 @@
 #' markdown.in.viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
 #'                    kennung = BspDaten$dataLVE$Kennung))
 #' 
-#' @export
+#' @export merge.multi.sk
 
 
 merge.multi.sk <- function(x, # Daten

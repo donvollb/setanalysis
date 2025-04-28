@@ -5,7 +5,8 @@
 #' @param dont.know gibt es eine "weiß nicht"-Option?
 #'
 #' @returns Boxplot
-#' @export
+#' 
+#' @export boxplot.vert
 
 boxplot.vert <- function(x,
                          kennung,

@@ -9,7 +9,7 @@
 #' @param bold.col1 Fettdruck der ersten Zelle der Kopfzeile
 #'
 #' @returns Tabelle
-#' @export
+#' @export table.stat.single
 
 table.stat.single <- function(x, # Daten
                               caption = NULL, # caption der Tabelle (siehe lv.kable)

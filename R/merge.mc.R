@@ -24,7 +24,7 @@
 #' 
 #' merge.mc(Abschlüsse) |> markdown.in.viewer()
 #'
-#' @export
+#' @export merge.mc
 
 merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, das Labels enthalten sind
                      head = "default", # Fragetext, bei "default wird dieser automatisch aus den Lables gezogen

@@ -9,7 +9,7 @@
 #' merge.wl(BspDaten$dataLVE$WL,
 #' BspDaten$dataLVE$Kennung, already.aggr = FALSE) |> markdown.in.viewer()
 #' 
-#' @export
+#' @export merge.wl
 
 merge.wl <- function(WL, # WL der Daten
                      kennung, # Kennung/Fallnummer zum Aggregieren

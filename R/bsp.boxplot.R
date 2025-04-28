@@ -5,7 +5,8 @@
 #' @param family Schriftart
 #'
 #' @returns Beispiel-Boxplot
-#' @export
+#' 
+#' @export bsp.boxplot
 
 bsp.boxplot <- function(x = "default", # Daten, bei "default" wird ein Beispieldatensatz genutzt
                         color = set.analysis.defaults$color.bars, # Farbe des Boxplots

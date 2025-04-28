@@ -3,7 +3,8 @@
 #' @param x Daten
 #'
 #' @returns Boxplot der Gesamtnote
-#' @export
+#' 
+#' @export boxplot.gesnote
 
 boxplot.gesnote <- function(x) # Daten
 {

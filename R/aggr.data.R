@@ -1,9 +1,9 @@
 #' Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
 #'
 #' @param vars Variablen (oder eine Variable), die aggregiert werden sollen
-#' @param kennungen Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen
+#' @param kennung Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen
 #' 
-#' @export
+#' @export aggr.data
 
 # Funktion zum Aggregieren von Daten anhand einer Kennung/Fallnummer
 aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen

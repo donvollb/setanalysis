@@ -5,11 +5,11 @@
 #' @param e Anzahl der Antwortoptionen der Skala
 #' @param n Anzahl der Veranstaltungen
 #'
-#' @examples
-#' boxplot.workload(x = BspDaten$dataLVE$WL)
+#' @examples boxplot.workload(x = BspDaten$dataLVE$WL)
 #' 
 #' @returns Boxplot
-#' @export
+#' 
+#' @export boxplot.workload
 
 boxplot.workload <- function(x, # Daten
                              q = c("0h", "1h", "2h", "3h", "4h", "5h", "6h", "7h",

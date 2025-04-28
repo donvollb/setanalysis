@@ -21,7 +21,7 @@
 #'                                             "2,5 bis 2,9","3,0 bis 3,4","3,5 bis 4.0"))
 #' 
 #'
-#' @export
+#' @export merge.num
 
 merge.num <- function(x, # Daten
                       inkl = "nr",  # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable

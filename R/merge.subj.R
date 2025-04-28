@@ -12,8 +12,7 @@
 #' merge.subj(BspDaten$dataSHOWUP$fach1_2FB,
 #'            BspDaten$dataSHOWUP$fach2_2FB) |> markdown.in.viewer()
 #' 
-#'
-#' @export
+#' @export merge.subj
 
 merge.subj <- function(x1, # Daten von Fach 1
                        x2, # Daten von Fach 2
