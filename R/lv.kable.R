@@ -80,6 +80,15 @@ lv.kable <- function(x, # Objekt (am besten dataframe)
     even_body = "#ecf1f4" # RPTU blaugrau (10 %)
   )
 
+  if (striped == FALSE) {
+    latex.table <- flextable::theme_zebra(
+      latex.table,
+      odd_header = "transparent", # RPTU blaugrau (10 %)
+      odd_body = "transparent",
+      even_header = "transparent",
+      even_body = "transparent" # RPTU blaugrau (10 %)
+    )
+  }
 
 
 
@@ -140,9 +149,7 @@ lv.kable <- function(x, # Objekt (am besten dataframe)
   #      latex.table <- column_spec(latex.table, k, width = col.width[k], latex_valign = "m")
   #    }  }
 
-  #  if (striped == TRUE) {
-  #    latex.table <- row_spec(latex.table, row = seq(from = 0, to = nrow(x), by = 2), background = table.color)
-  #  }
+
 
   #  if(bold == TRUE & escape == TRUE) {latex.table <- row_spec(latex.table, 0, bold=TRUE)}
 
