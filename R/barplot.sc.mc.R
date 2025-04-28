@@ -5,7 +5,8 @@
 #' @param xlab Beschriftung x-Achse
 #'
 #' @returns Barplot
-#' @export
+#' 
+#' @export barplot.sc.mc
 
 
 # Horizontaler Barplot für Abbildungen von SC/MC-Fragen
@@ -22,7 +23,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
     cody <- cody[cody$freq > 0, ]
     cody$label <- factor(cody$label, levels = rev(cody$label)) #Reihenfolge der Label festlegen
     
-    ggplot2::ggplot(data=cody, ggplot2::aes(x=label, y=freq)) + #auf x-Achse wird Kategorie/Label dargestellt, auf y-Achse Haeufigkeiten
+    ggplot2::ggplot(data=cody, ggplot2::aes(x = .data$label, y = .data$freq)) + #auf x-Achse wird Kategorie/Label dargestellt, auf y-Achse Haeufigkeiten
       #geom_hline(yintercept = v, color = "grey70")+
       ggplot2::theme(panel.background = ggplot2::element_rect(fill = 'white', colour = 'gray70'), #Hintergrund wird auf wei? gestellt
             panel.grid.major.x = ggplot2::element_line(color = "grey70")) + #Hilfslinien 
@@ -32,7 +33,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
                fill = color, #Farbe
                width=0.8)+ #Breite der Balken
       ggplot2::geom_col(fill = color, color = "black", linewidth = 0.3) +
-      ggplot2::geom_text(ggplot2::aes(label = paste(perc, "%", sep = "")), #Prozentzahl über die Balken schreiben
+      ggplot2::geom_text(ggplot2::aes(label = paste(.data$perc, "%", sep = "")), #Prozentzahl über die Balken schreiben
                 color ="grey30",#Farbe 
                 size = 3.5, #Schriftgröße
                 family = set.analysis.defaults$font.family,
