@@ -56,7 +56,7 @@
 
 \item{fig.height}{Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1}
 
-\item{col2.name}{Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern}
+\item{col2.name}{Titel der n-Spalte}
 
 \item{message}{Soll ein Hinweistext am Anfang erfolgen?}
 

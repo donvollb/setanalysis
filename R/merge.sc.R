@@ -12,7 +12,7 @@
 #'
 #' @examples markdown.in.viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
 #'
-#' @export
+#' @export merge.sc
 
 merge.sc <- function(x, # Daten
                      inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
@@ -41,7 +41,7 @@ merge.sc <- function(x, # Daten
 
       #      print(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name, # kein Print bei Flextable
       #                       order.table = order.table))
-      flextable::flextable_to_rmd(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
+      subchunkify(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
                                   order.table = order.table))
 
       freq.tab <- descr::freq(x, plot = FALSE)

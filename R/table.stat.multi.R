@@ -13,7 +13,8 @@
 #' @param labels Fragetexte, bei "labels" werden die Labels der Variablen genommen
 #'
 #' @returns Tabelle
-#' @export
+#' 
+#' @export table.stat.multi
 
 table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.kable)
                              col1.name = "Item", # Name der ersten Zelle des headers

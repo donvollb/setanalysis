@@ -1,14 +1,14 @@
 #' Beispiel einer Statistik-Tabelle
 #'
-#' @param all 
+#' @param all Soll die Tabelle Fragen enthalten? Dann TRUE, sonst FALSE
 #'
 #' @returns
 #' Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
 #' "Median", "kleinster beob. Wert", "größter beob. Wert"
 #'
-#' @usage bsp.table.stat()
+#' @examples bsp.table.stat()
 #'
-#' @export
+#' @export bsp.table.stat
 
 bsp.table.stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
 {

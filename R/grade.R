@@ -8,7 +8,7 @@
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
 #' @examples markdown.in.viewer(grade(BspDaten$dataLVE$Note,
-#'                                    kennung = BspDaten$dataLVE$Kennung)
+#'                                    kennung = BspDaten$dataLVE$Kennung))
 #' @export
 
 grade <- function(x, # Daten
@@ -30,13 +30,11 @@ grade <- function(x, # Daten
       x <- aggr.data(x, kennung)}
     
     cat("*** ", attr(x, "label"), "\n \n", sep = "")
-    
-    descr <- descr[c(7, 1:6)]
       
     if(length(x) == 0){cat("**Tabelle wurde wegen fehlender Daten nicht erstellt.**  \n  \n")} 
       
       if(show.table == TRUE) {
-        flextable::flextable_to_rmd(
+        subchunkify(
           table.stat.multi(x,
                            labels = label,
                            col1.name = "Item [Skala: Schulnoten]",

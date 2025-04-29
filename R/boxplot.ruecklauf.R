@@ -7,7 +7,7 @@
 #' 
 #' @examples boxplot.ruecklauf(BspDaten$dataLVE$Teilnehmer, BspDaten$dataLVE$Kennung)
 #' 
-#' @export
+#' @export boxplot.ruecklauf
 
 boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
                               kennung) #  Kennungen
@@ -31,8 +31,8 @@ boxplot.ruecklauf <- function(x, # Objekt mit Teilnehmendenzahlen
   #  print(table.stat.single(x, col1.name = "N\\textsubscript{courses}")) # kein print() bei Flextable
   #  table.stat.single(x, col1.name = "N_courses") # klappt nicht
   #  knitr::knit_print(table.stat.single(x, col1.name = "N_courses")) # klappt nicht
-  #  flextable_to_rmd(table.stat.single(x, col1.name = "N_courses")) # für if und for bei Quarto erforderliche Funktion
-  flextable::flextable_to_rmd( # Ausgabe der Flextable
+  #  subchunkify(table.stat.single(x, col1.name = "N_courses")) # für if und for bei Quarto erforderliche Funktion
+  subchunkify( # Ausgabe der Flextable
     table.stat.single(x, col1.name = "N") |>
       flextable::append_chunks(flextable::as_sub("courses"), i=1, j=1, part="header") # courses tiefergestellt
   )

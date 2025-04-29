@@ -3,7 +3,10 @@
 #' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt 
 #'
 #' @returns Grafik
-#' @export
+#' 
+#' @examples bsp.evasys.sk6() |> markdown.in.viewer()
+#' 
+#' @export bsp.evasys.sk6
 
 bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
 {
@@ -19,7 +22,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
     psych::describe() |>
     round(2) |>
     data.frame() |>
-    dplyr::select(n, mean, sd, min, max) |>
+    subset(select = c("n", "mean", "sd", "min", "max")) |>
     data.frame()
 
   subchunkify(c(

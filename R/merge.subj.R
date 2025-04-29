@@ -7,7 +7,12 @@
 #' @param nr1 Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #' @param nr2 Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
-#' @export
+#' @examples
+#' 
+#' merge.subj(BspDaten$dataSHOWUP$fach1_2FB,
+#'            BspDaten$dataSHOWUP$fach2_2FB) |> markdown.in.viewer()
+#' 
+#' @export merge.subj
 
 merge.subj <- function(x1, # Daten von Fach 1
                        x2, # Daten von Fach 2

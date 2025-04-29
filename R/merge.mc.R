@@ -14,7 +14,17 @@
 #' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
 #' @param show.plot Soll der Plot angezeigt werden?
 #'
-#' @export
+#' @examples
+#' 
+#' # Gewünschte Items auswählen -------------------------------------------
+#' 
+#' Abschlüsse <- dplyr::select(BspDaten$dataSHOWUP, abschluss_1:abschluss_8)
+#' 
+#' # merge.mc-Funktion ausführen und anzeigen -----------------------------
+#' 
+#' merge.mc(Abschlüsse) |> markdown.in.viewer()
+#'
+#' @export merge.mc
 
 merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, das Labels enthalten sind
                      head = "default", # Fragetext, bei "default wird dieser automatisch aus den Lables gezogen
@@ -103,25 +113,32 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
         c(col1.name, "N_votes", "\\%")
       results[, 1] <- val.labels
       for (n in 1:length(x)) {
-        results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
-        results[n, 3] <-
-          round(results[n, 2] / nrow(x) * 100, digits = 2)
+        results[n, 2] <- as.numeric(sum(x[, n] != 0, na.rm = TRUE))
+        results[n, 3] <- round(results[n, 2] / nrow(x) * 100, digits = 2)
       }
-
     }
 
-    if(ncol(results) == 4) {col.width <- set.analysis.defaults$col.width4} else {col.width <- set.analysis.defaults$col.width3}
+    if(ncol(results) == 4) {col.width <- set.analysis.defaults$col.width4
+                    } else {col.width <- set.analysis.defaults$col.width3}
 
-    if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width) , fig_height = 7, fig_width = 9)}
+    if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width),
+                                        fig_height = 7, fig_width = 9)}
 
     colnames(results) <- c("label", "freq", "perc")
-    results[, 1] <- as.character(auto.newline2(results[, 1], number = 40))
+    
+    # Automatische Zeilenumbrüche einfügen --------------------------------
+    results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, 40), collapse = "\n"))
+    
+    # freq-Spale in numerische Daten umwandeln (bisher character) ---------
+    results$freq <- as.numeric(results$freq)
 
     if(show.plot == TRUE) {
-      if(fig.height == "default")
-      {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = (1 + 0.75*nrow(results)), fig_width = 9)}
-      else
-      {subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"), fig_height = fig.height, fig_width = 9)}
+      
+      # Automatisch die Höhe der Abbildung festlegen ----------------------
+      if(fig.height == "default") {fig.height <- (1 + 0.75 * nrow(results))}
+      
+      subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"),
+                   fig_height = fig.height, fig_width = 9)
     }
 
     cat("  \n  \n")

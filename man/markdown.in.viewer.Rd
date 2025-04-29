@@ -11,7 +11,7 @@ markdown.in.viewer(markdown_function)
 \item{markdown_function}{Funktion, welche Markdown-Code erzeugt}
 }
 \value{
-Vorschau im Viewer, wie dieser Markdown im Dokement aussehen würde
+Vorschau im Viewer, wie das Endergebnis im Dokument aussehen würde
 }
 \description{
 Diese Funktion ist dafür gedacht, die anderen Funktionen, die

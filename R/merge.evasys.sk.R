@@ -14,7 +14,7 @@
 #' @param show.plot Zeige Plot?
 #' @param no.pagebreak Sollen Seitenumbrüche verhindert werden?
 #'
-#' @export
+#' @export merge.evasys.sk
 
 merge.evasys.sk <- function(x, # Daten
                             inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable

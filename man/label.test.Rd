@@ -11,7 +11,7 @@ label.test(col, var, exception = "alle")
 
 \item{var}{Variable aus Datensatz, die der Spalte entspricht}
 
-\item{expcetion}{Ausnahmen, die nicht überprüft werden sollen}
+\item{exception}{Ausnahmen, die nicht überprüft werden sollen}
 }
 \description{
 Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
@@ -23,4 +23,5 @@ label.test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
 
 # So sieht es aus, wenn die Labels nicht komplett übereinstimmen:
 label.test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
+
 }

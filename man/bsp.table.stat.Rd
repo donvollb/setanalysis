@@ -4,10 +4,10 @@
 \alias{bsp.table.stat}
 \title{Beispiel einer Statistik-Tabelle}
 \usage{
-bsp.table.stat()
+bsp.table.stat(all = TRUE)
 }
 \arguments{
-\item{all}{}
+\item{all}{Soll die Tabelle Fragen enthalten? Dann TRUE, sonst FALSE}
 }
 \value{
 Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
@@ -15,4 +15,8 @@ Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
 }
 \description{
 Beispiel einer Statistik-Tabelle
+}
+\examples{
+bsp.table.stat()
+
 }

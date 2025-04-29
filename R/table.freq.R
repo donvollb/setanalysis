@@ -12,7 +12,8 @@
 #' @param bold.col1 Soll die erste Zelle der Kopfzeile fett sein? (siehe lv.kable)
 #'
 #' @returns Tabelle
-#' @export
+#' 
+#' @export table.freq
 
 table.freq <- function(x, # Daten
                        caption = NULL, # caption der Tabelle (siehe lv.kable)

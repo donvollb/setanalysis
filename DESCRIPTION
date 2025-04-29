@@ -16,9 +16,10 @@ Imports:
   psych,
   descr,
   dplyr,
-  kableExtra,
-  cowplot,
   flextable,
-  readxl
+  showtext,
+  readxl,
+  graphics,
+  markdown
 Depends: 
     R (>= 3.5)

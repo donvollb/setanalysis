@@ -9,7 +9,7 @@
 #'
 #' @examples merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown.in.viewer()
 #'
-#' @export
+#' @export merge.fachsem
 
 merge.fachsem <- function(x, # Daten
                           fig.height = 5, # Höhe des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
@@ -50,7 +50,7 @@ merge.fachsem <- function(x, # Daten
     #print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
     #table.freq(x, col1.name = xl, cutoff = cutoff)
 
-    flextable::flextable_to_rmd( # Ausgabe der Flextable
+    subchunkify( # Ausgabe der Flextable
       table.freq(x, col1.name = xl, cutoff = cutoff) |>
         flextable::append_chunks(flextable::as_sub("votes"), i=1, j=2, part="header") # votes tiefergestellt
     )

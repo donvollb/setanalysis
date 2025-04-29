@@ -18,23 +18,23 @@ evasys.skala.plot <- function(x, # Daten
 {
   x[!(x %in% c(1:number))] <- NA
   x <- x[!is.na(x)]
-
-
-  tmin <- auto.newline2(tmin, number = 15)
-  tmax <- auto.newline2(tmax, number = 15)
+  
+  
+  tmin <- sapply(tmin, \(x) paste(strwrap(x, width = 15), collapse = "\n"))
+  tmax <- sapply(tmax, \(x) paste(strwrap(x, width = 15), collapse = "\n"))
 
   line.tmin <- ifelse(grepl("\\n", tmin), -1.7, -2)
   line.tmax <- ifelse(grepl("\\n", tmax), -1.7, -2)
-
-  bobby <- x %>%
-    psych::describe(.) %>%
-    round(.,2) %>%
-    data.frame() %>%
-    dplyr::select(n, mean, sd, min, max) %>%
+  
+  bobby <- x |>
+    psych::describe() |>
+    round(2) |>
+    data.frame() |>
+    subset(select = c("n", "mean", "sd", "min", "max")) |>
     data.frame()
-
+  
   xtab <- table(c(x, 1:number)) - 1 #damit alle angezeigt werden
-
+  
   par(mar=c(2, 5.3, 2.1, 5.3))
   par(fg="gray50") # Farbe Rand
   par(family = set.analysis.defaults$font.family)
