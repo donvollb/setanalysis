@@ -34,7 +34,7 @@ grade <- function(x, # Daten
     if(length(x) == 0){cat("**Tabelle wurde wegen fehlender Daten nicht erstellt.**  \n  \n")} 
       
       if(show.table == TRUE) {
-        flextable::flextable_to_rmd(
+        subchunkify(
           table.stat.multi(x,
                            labels = label,
                            col1.name = "Item [Skala: Schulnoten]",

@@ -179,9 +179,9 @@ merge.multi.sk <- function(x, # Daten
     x[x < 1 | x > number] <- NA
 
     if (show.table == TRUE) {
-      flextable::flextable_to_rmd(
+      subchunkify(
         #      subchunkify(
-        #        flextable_to_rmd(
+        #        subchunkify(
         table.stat.multi(
           x,
           #          col1.name = paste0("\\textbf{Item} \\textit{[Skala: ", text.skala, "]}"),

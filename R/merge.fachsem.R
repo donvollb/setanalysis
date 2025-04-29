@@ -50,7 +50,7 @@ merge.fachsem <- function(x, # Daten
     #print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
     #table.freq(x, col1.name = xl, cutoff = cutoff)
 
-    flextable::flextable_to_rmd( # Ausgabe der Flextable
+    subchunkify( # Ausgabe der Flextable
       table.freq(x, col1.name = xl, cutoff = cutoff) |>
         flextable::append_chunks(flextable::as_sub("votes"), i=1, j=2, part="header") # votes tiefergestellt
     )

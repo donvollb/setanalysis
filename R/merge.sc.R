@@ -41,7 +41,7 @@ merge.sc <- function(x, # Daten
 
       #      print(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name, # kein Print bei Flextable
       #                       order.table = order.table))
-      flextable::flextable_to_rmd(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
+      subchunkify(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
                                   order.table = order.table))
 
       freq.tab <- descr::freq(x, plot = FALSE)
