@@ -1,5 +1,14 @@
 # Code, der bei jedem Laden des Pakets ausgeführt wird --------------------
 
+# Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
+
+#' @importFrom grDevices rgb
+#' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
+#' @importFrom stats median na.omit sd setNames
+#' @importFrom utils capture.output read.csv2
+
+NULL
+
 ## Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
 
 #' Globale Umgebung für die Paketkonfiguration
@@ -53,7 +62,7 @@ list.open.answers$anchor.nr <- 1
 #' `color.bars = "red"` oder `show.plot.sc = FALSE`.
 #' Die Namen der Argumente müssen mit den Namen der Einstellungsvariablen übereinstimmen.
 #'
-#' @export
+#' @export change.analysis.defaults
 #'
 #' @examples
 #' 
@@ -85,10 +94,3 @@ change.analysis.defaults <- function(...) {
       assign(names(changes)[i], changes[[i]], envir = set.analysis.defaults)
     }
 }
-
-# Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
-
-#' @importFrom grDevices rgb
-#' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
-#' @importFrom stats median na.omit sd setNames
-#' @importFrom utils capture.output read.csv2
