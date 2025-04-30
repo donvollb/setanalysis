@@ -1,19 +1,12 @@
-# Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
-
-#' @importFrom grDevices rgb
-#' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
-#' @importFrom stats median na.omit sd setNames
-#' @importFrom utils capture.output read.csv2
-
 # Code, der bei jedem Laden des Pakets ausgeführt wird --------------------
 
 ## Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
-
 
 #' Globale Umgebung für die Paketkonfiguration
 #'
 #' Diese Umgebung wird verwendet, um Konfigurationswerte wie Farben zu speichern.
 #' @export set.analysis.defaults
+
 set.analysis.defaults <<- new.env(parent = emptyenv())
 
 set.analysis.defaults$font.family <- "Red Hat Text"
@@ -51,8 +44,6 @@ list.open.answers$anchor.nr <- 1
   showtext::showtext_auto()
   
 }
-
-
 
 # Funktion, um diese Einstellungen zu ändern ------------------------------
 
@@ -94,3 +85,10 @@ change.analysis.defaults <- function(...) {
       assign(names(changes)[i], changes[[i]], envir = set.analysis.defaults)
     }
 }
+
+# Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
+
+#' @importFrom grDevices rgb
+#' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
+#' @importFrom stats median na.omit sd setNames
+#' @importFrom utils capture.output read.csv2
