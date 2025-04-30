@@ -26,7 +26,12 @@ merge.sc <- function(x, # Daten
 {
   if (sum(!is.na(x)) > 0) {
 
-    if(already.labels == FALSE) {x <- sjlabelled::to_label(x)}
+    if(already.labels == FALSE) {
+      #x <- sjlabelled::to_label(x) #bisherige Lösung, jetzt ohne sjlabelled
+      a <- attributes(x)
+      x <- factor(x, levels = a$labels, labels = names(a$labels))
+      attr(x, "label") <- a$label
+      }
 
     if (inkl == "nr") {
       if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}

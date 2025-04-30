@@ -17,9 +17,12 @@ Imports:
   descr,
   dplyr,
   flextable,
+  sysfonts,
   showtext,
+  svglite,
+  DescTools,
   readxl,
   graphics,
   markdown
 Depends: 
-    R (>= 3.5)
+    R (>= 4.1.0)

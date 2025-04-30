@@ -1,3 +1,5 @@
+# Code, der bei jedem Laden des Pakets ausgeführt wird --------------------
+
 # Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
 
 #' @importFrom grDevices rgb
@@ -5,30 +7,18 @@
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
 
-# Code, der bei jedem Laden des Pakets ausgeführt wird --------------------
-
-## Schriftart laden -------------------------------------------------------
-
-.onAttach <- function(libname, pkgname) {
-  
-  if (!(set.analysis.defaults$font.family %in% showtextdb::font_installed())) {
-    
-    sysfonts::font_add_google(set.analysis.defaults$font.family, set.analysis.defaults$font.family)}
-  showtext::showtext_auto()
-  
-}
-
+NULL
 
 ## Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
-
 
 #' Globale Umgebung für die Paketkonfiguration
 #'
 #' Diese Umgebung wird verwendet, um Konfigurationswerte wie Farben zu speichern.
 #' @export set.analysis.defaults
+
 set.analysis.defaults <<- new.env(parent = emptyenv())
 
-set.analysis.defaults$font.family <- "Red+Hat+Text"
+set.analysis.defaults$font.family <- "Red Hat Text"
 set.analysis.defaults$col.width3 <- c(108, 18, 11)
 set.analysis.defaults$col.width4 <- c(86, 18, 11, 18)
 set.analysis.defaults$col.width.sm <- c(64, 11, 9, 9, 9, 9, 9)
@@ -53,6 +43,16 @@ list.open.answers <<- new.env(parent = emptyenv())
 list.open.answers$anchor.nr <- 1
 
 
+## Schriftart laden -------------------------------------------------------
+
+.onAttach <- function(libname, pkgname) {
+  
+  if (!("Red Hat Text" %in% sysfonts::font_families())) {
+    
+    sysfonts::font_add_google("Red Hat Text")}
+  showtext::showtext_auto()
+  
+}
 
 # Funktion, um diese Einstellungen zu ändern ------------------------------
 
@@ -62,7 +62,7 @@ list.open.answers$anchor.nr <- 1
 #' `color.bars = "red"` oder `show.plot.sc = FALSE`.
 #' Die Namen der Argumente müssen mit den Namen der Einstellungsvariablen übereinstimmen.
 #'
-#' @export
+#' @export change.analysis.defaults
 #'
 #' @examples
 #' 

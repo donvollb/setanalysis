@@ -43,7 +43,7 @@ merge.subj <- function(x1, # Daten von Fach 1
 
     merge.sc(subj$fach, nr = nr1) # Aufruf der merge.sc-Funktion
 
-    cat("\\textit{Hinweis: In der Befragung wurden 1. und 2. Fach getrennt abgefragt; in dieser Tabelle werden die Antworten gemeinsam dargestellt. Daraus ergibt sich in dieser Darstellung eine Verdopplung des Stichprobenumfangs (siehe \"Total\").}  \n  \n")
+    cat("*Hinweis: In der Befragung wurden 1. und 2. Fach getrennt abgefragt; in dieser Tabelle werden die Antworten gemeinsam dargestellt. Daraus ergibt sich in dieser Darstellung eine Verdopplung des Stichprobenumfangs (siehe „Total“).*  \n  \n")
 
   }
 }
