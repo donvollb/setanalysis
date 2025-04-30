@@ -18,7 +18,7 @@
 #'                              xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
 #'                              cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
 #'                              cut.labels = c("1,0 bis 1,4","1,5 bis 1,9","2,0 bis 2,4",
-#'                                             "2,5 bis 2,9","3,0 bis 3,4","3,5 bis 4.0"))
+#'                                             "2,5 bis 2,9","3,0 bis 3,4","3,5 bis 4.0")))
 #' 
 #'
 #' @export merge.num
@@ -53,7 +53,7 @@ merge.num <- function(x, # Daten
 
 
       if(show.table == TRUE) {
-        print(table.stat.single(as.numeric(x, na.rm = TRUE),
+        subchunkify(table.stat.single(as.numeric(x, na.rm = TRUE),
                                 col1.name = "n", md = TRUE))
         cat("  \n  \n")
         }

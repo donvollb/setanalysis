@@ -67,7 +67,7 @@ merge.evasys.sk <- function(x, # Daten
 
       xtab <- x
       xtab <- xtab[xtab %in% c(1:number)]
-      print(table.stat.single(xtab, col1.name = "n", md = TRUE))
+      subchunkify(table.stat.single(xtab, col1.name = "n", md = TRUE))
 
       cat("  \n  \n")
 
