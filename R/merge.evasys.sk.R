@@ -46,9 +46,12 @@ merge.evasys.sk <- function(x, # Daten
         levs <- levels(x)
         x <- as.numeric(x, na.rm = TRUE)
 
-        for (l in 1:length(levs)) {
-          x <- sjlabelled::add_labels(x, labels = setNames(l, levs[l]))
-        }
+        # das hier war die alte Lösung mit sjlabelled, jetzt base R
+        # for (l in 1:length(levs)) {
+        #   x <- sjlabelled::add_labels(x, labels = setNames(l, levs[l]))
+        # }
+        
+        attr(x, "labels") <- setNames(1:length(levs), levs)
 
         if(lime.brackets == TRUE) {
           temp <- sub("^\\[", "", temp)
