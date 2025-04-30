@@ -45,9 +45,9 @@ list.open.answers$anchor.nr <- 1
 
 .onAttach <- function(libname, pkgname) {
   
-  if (!(set.analysis.defaults$font.family %in% showtextdb::font_installed())) {
+  if (!("Red Hat Text" %in% sysfonts::font_families())) {
     
-    sysfonts::font_add_google(set.analysis.defaults$font.family, set.analysis.defaults$font.family)}
+    sysfonts::font_add_google("Red Hat Text")}
   showtext::showtext_auto()
   
 }
