@@ -17,8 +17,8 @@ Imports:
   descr,
   dplyr,
   flextable,
-  showtext,
   sysfonts,
+  showtext,
   readxl,
   graphics,
   markdown
