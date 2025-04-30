@@ -16,7 +16,7 @@
 #' @export set.analysis.defaults
 set.analysis.defaults <<- new.env(parent = emptyenv())
 
-set.analysis.defaults$font.family <- "Red+Hat+Text"
+set.analysis.defaults$font.family <- "Red Hat Text"
 set.analysis.defaults$col.width3 <- c(108, 18, 11)
 set.analysis.defaults$col.width4 <- c(86, 18, 11, 18)
 set.analysis.defaults$col.width.sm <- c(64, 11, 9, 9, 9, 9, 9)
