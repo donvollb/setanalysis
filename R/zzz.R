@@ -7,18 +7,6 @@
 
 # Code, der bei jedem Laden des Pakets ausgeführt wird --------------------
 
-## Schriftart laden -------------------------------------------------------
-
-.onAttach <- function(libname, pkgname) {
-  
-  if (!(set.analysis.defaults$font.family %in% showtextdb::font_installed())) {
-    
-    sysfonts::font_add_google(set.analysis.defaults$font.family, set.analysis.defaults$font.family)}
-  showtext::showtext_auto()
-  
-}
-
-
 ## Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
 
 
@@ -51,6 +39,18 @@ set.analysis.defaults$inkl.open <- TRUE
 list.open.answers <<- new.env(parent = emptyenv())
 
 list.open.answers$anchor.nr <- 1
+
+
+## Schriftart laden -------------------------------------------------------
+
+.onAttach <- function(libname, pkgname) {
+  
+  if (!(set.analysis.defaults$font.family %in% showtextdb::font_installed())) {
+    
+    sysfonts::font_add_google(set.analysis.defaults$font.family, set.analysis.defaults$font.family)}
+  showtext::showtext_auto()
+  
+}
 
 
 
