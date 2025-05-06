@@ -1,4 +1,4 @@
-# SETanalysis
+# setanalysis
 *R-Paket zur Erstellung von personaliserten Evaluationsberichten, u.a. aus evasys.*
 
 Dieses R-Paket erleichtert verschiedene Schritte zur Erstellung von personalisierten Ergebnisberichten von Befragungen, isb. Evaluationen.
