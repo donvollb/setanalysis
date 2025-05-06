@@ -69,7 +69,3 @@
 - generell: Kürzen, was geht; Latex-Code raus
 
 
-#### quarto-template ####
-- erster großer Durchgang: weiter Latex-Code in quarto/Markdown-Syntax umwandeln
-- welche Pakete brauchen wir noch?
-- welche Bausteine im Skript brauchen wir
