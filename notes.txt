@@ -1,0 +1,75 @@
+#### Funktionen ####
+
+## generell
+- Paketstruktur erstellen
+- Alternative für minipage in Quarto (latexunabhängig)
+- verschachtelte if-else Bedingungen ein wenig auflösen und entschärfen (z.B. mit else if oder return/stop)
+- wenn nicht schon geschehen: Alles nicht direkt offensichtliche auskommentieren
+- Bonus: größere for-Schleifen vektorisieren
+
+## Was wollen wir?
+- eine Datei pro Funktion
+- Grunddoku: Argumente beschreiben
+- # notrun Beispiel
+- Nice to have: Beispieldaten/Datensätze
+- Nice to have: automatisierte Tests?
+
+## konkrete Funktionen
+
+# subchunkify:
+- prüfen, ob Alternativen
+- quarto-Syntax einarbeiten
+
+# auto.newline
+- brauchen wir das? Falls ja: schlanker programmieren und mit newline2 mergen
+
+# auto.newline2
+- durchschauen
+
+# get.label
+- übertragen
+
+# lv.kable
+- noch Argumente überprüfen: Ist alles integriert?
+- in lv.table umbenennen
+- andere Lösung für defaults
+
+# aggr.data
+- vielleicht eleganter, aber kann man so lassen
+
+# open.answers
+- Latex-code rausschmeißen, quarto Syntax benutzen
+
+# label.test
+- sjlabelled verbannen
+
+# NEU? inkl.checks für wrapper Funktionen?
+- vielleicht, erstmal nicht wichtig
+
+# Funktionen für Beispiele und Legenden: so lassen
+
+# Tabellen-Funktionen
+- generell durchschauen, vielleicht eleganter möglich?
+- Latex-Zeug entfernen
+- vielleicht besser die colwidths regeln
+
+# Barplots: nur barplot.freq mitnehmen
+
+
+# Boxplots
+- generell alle durchschauen
+- Gesamtnote und ECTS: evtl. zusammenfassen, auf jeden Fall aber die Aufteilung nach ECTS in der Workloadabbildung rausnehmen
+- boxplot.vert: Erstmal nicht mitnehmen
+
+# evasys.sk.plot
+- einfach mal drüberschauen
+
+# merge-Funktionen:
+- alle bis auf whiskers mitnehmen
+- generell: Kürzen, was geht; Latex-Code raus
+
+
+#### quarto-template ####
+- erster großer Durchgang: weiter Latex-Code in quarto/Markdown-Syntax umwandeln
+- welche Pakete brauchen wir noch?
+- welche Bausteine im Skript brauchen wir

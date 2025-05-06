@@ -1,5 +1,7 @@
-# scripts-evaluation
+# SETanalysis
+*R-Paket zur Erstellung von personaliserten Evaluationsberichten, u.a. aus evasys.*
 
-Scripts for R and R-Markdown for analyzing and visualizing teaching evaluation data. 
+Dieses R-Paket erleichtert verschiedene Schritte zur Erstellung von personalisierten Ergebnisberichten von Befragungen, isb. Evaluationen.
+Es bietet zudem Funktionen, Daten direkt aus evasys aufzubereiten und tabellarisch/graphisch darzustellen.
 
-This line has been added in RStudio. Test.
+Dieses Paket wird gerade noch erstellt und diese Anleitung weiter ergänzt. 
