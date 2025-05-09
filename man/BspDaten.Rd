@@ -5,17 +5,25 @@
 \alias{BspDaten}
 \title{Beispiel-Daten}
 \format{
-An object of class \code{list} of length 3.
+\subsection{\code{BspDaten}}{
+
+Eine Liste aus drei Datenrahmen
+
+\describe{
+\item{dataLVE}{Daten der LVE 2024}
+\item{dataSHOWUP}{Daten der SHOWUP 2024/25}
+\item{pInfo}{Exemplarische personalised-Info-Tabelle}
+}
+}
 }
 \usage{
 BspDaten
 }
 \description{
 Dieses Objekt enthält mehrere Beispieldaten, die in den Beispielen der
-Dokumentation genutzt werden. Die Daten entstamme der LVE 2024.
+Dokumentation genutzt werden. Die Daten entstamme der LVE 2024 und der SHOWUP 2024/25.
 }
 \examples{
-BspDaten$dataLVE
-BspDaten$pInfo$FB.txt
+BspDaten$dataLVE$FachSemN |> hist()
 }
 \keyword{datasets}
