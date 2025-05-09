@@ -8,6 +8,19 @@ Es bietet zudem Funktionen, Daten direkt aus evasys aufzubereiten und tabellaris
 
 Dieses Paket wird gerade noch erstellt und diese Anleitung weiter ergänzt. 
 
+## Installation
+
+```r
+# falls nötig: devtools installieren
+# install.packages("devtools")
+
+# devtools laden
+library(devtools)
+
+# Paket installieren
+install_github("donvollb/setanalysis")
+```
+
 ## License
 
 - [MIT License](LICENSE)
