@@ -13,6 +13,10 @@
 #' @param lime.brackets Müssen eckige Klammern um den Fragetext herum entfernt werden?
 #' @param show.plot Zeige Plot?
 #' @param no.pagebreak Sollen Seitenumbrüche verhindert werden?
+#' 
+#' @examples
+#' merge.evasys.sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown.in.viewer()
+#' 
 #'
 #' @export merge.evasys.sk
 
@@ -28,7 +32,7 @@ merge.evasys.sk <- function(x, # Daten
                             lime = FALSE, # Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
                             lime.brackets = FALSE, # Müssen eckige Klammern um den Fragetext herum entfernt werden?
                             show.plot = set.analysis.defaults$show.plot.sk, # Zeige Plot?
-                            no.pagebreak = TRUE) # Seitenumbrüche verhindern?
+                            no.pagebreak = FALSE) # Seitenumbrüche verhindern (Funktioniert leider nicht mehr)
 {
 
   if (sum(!is.na(x)) > 0) {
@@ -89,7 +93,7 @@ merge.evasys.sk <- function(x, # Daten
         cat("  \n \n")
 
         if(show.plot == TRUE) {
-          subchunkify(evasys.skala.plot (x, tmin, tmax, number = number), fig_height = 1.4, fig_width = 6)
+          subchunkify(evasys.skala.plot(x, tmin, tmax, number = number), fig_height = 1.4, fig_width = 6)
         }
 
       }
