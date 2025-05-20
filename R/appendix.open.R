@@ -1,10 +1,5 @@
 #' Funktion um alle offenen Antworten unten in den Anhang zu packen
 #'
-#' @param x Daten
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param inkl.global Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#'
 #' @examples
 #' # Damit diese Funktion sinnvoll funktioniert, muss vorher mindestens eine
 #' # offene Frage aufgerufen worden

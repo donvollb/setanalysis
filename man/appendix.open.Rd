@@ -6,15 +6,6 @@
 \usage{
 appendix.open()
 }
-\arguments{
-\item{x}{Daten}
-
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
-
-\item{inkl.global}{Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden}
-
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
-}
 \description{
 Funktion um alle offenen Antworten unten in den Anhang zu packen
 }
