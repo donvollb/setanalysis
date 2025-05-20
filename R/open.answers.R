@@ -24,24 +24,19 @@ open.answers <- function(x, # Daten
   }
 
   if (inkl == TRUE && inkl.global == TRUE) {
-    if(no.pagebreak == TRUE) {cat("::: {break-inside = avoid} \n\n")} # Seitenumbrüche verhindern
+    list.open.answers$anchor.nr <- list.open.answers$anchor.nr + 1
     anchor.nr <- list.open.answers$anchor.nr
 
-    anchor.top <- paste0("#sec-", anchor.nr, ".top")
-    anchor.bottom <- paste0("#sec-", anchor.nr, ".bottom")
-
-    cat(paste0("### ", nr, attr(x, "label"), " {", anchor.top, "} \n\n"))
+    cat(paste0("### ", nr, " ", attr(x, "label"), " {#sec-", anchor.nr, ".top} \n\n"))
 
     if(length(na.omit(x)) > 0) {
-      cat(paste0("*Die offenen Antworten zu dieser Frage finden sich im [Anhang](", anchor.bottom, ").*  \n\n"))
+      cat(paste0("*Die offenen Antworten zu dieser Frage finden sich im [Anhang](#sec-", anchor.nr, ".bottom).*  \n\n"))
     } else {
       cat("*Keine offenen Antworten zu dieser Frage.*  \n\n")
     }
-    if(no.pagebreak == TRUE) { cat(":::\n") } # Seitenumbrüche ab hier wieder erlauben
-    cat(" \n\n")
-    list.open.answers$anchor.nr <- anchor.nr + 1
+    
+    
+    assign(paste0("var.", anchor.nr), x, envir = list.open.answers)
+    assign(paste0("nr.", anchor.nr), nr, envir = list.open.answers)
   }
-
-  assign(paste0("var.", anchor.nr), x, envir = list.open.answers)
-  assign(paste0("nr.", anchor.nr), nr, envir = list.open.answers)
 }
