@@ -84,7 +84,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
       results <- data.frame(matrix(nrow = length(x), ncol = 4))
       colnames(results) <-
-        c(col1.name, col2.name, "\\%", "gültige \\%")
+        c(col1.name, col2.name, "%", "gültige %")
       results[, 1] <- val.labels
       for (n in 1:length(x)) {
         results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)

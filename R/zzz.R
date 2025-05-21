@@ -40,7 +40,7 @@ set.analysis.defaults$inkl.open <- TRUE
 
 list.open.answers <<- new.env(parent = emptyenv())
 
-list.open.answers$anchor.nr <- 1
+list.open.answers$anchor.nr <- 0
 
 
 ## Schriftart laden -------------------------------------------------------
