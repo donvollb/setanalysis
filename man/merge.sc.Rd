@@ -13,7 +13,7 @@
   col2.name = "n",
   order.table = FALSE,
   show.plot = set.analysis.defaults$show.plot.sc,
-  no.pagebreak = TRUE
+  pagebreak = FALSE
 )
 }
 \arguments{
