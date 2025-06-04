@@ -29,8 +29,6 @@ grade <- function(x, # Daten
     if(already.aggr == FALSE) {
       x <- aggr.data(x, kennung)}
     
-    cat("*** ", attr(x, "label"), "\n \n", sep = "")
-      
     if(length(x) == 0){cat("**Tabelle wurde wegen fehlender Daten nicht erstellt.**  \n  \n")} 
       
       if(show.table == TRUE) {
