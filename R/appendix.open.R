@@ -12,7 +12,7 @@ appendix.open <- function() {
   
   anchor.nr <- list.open.answers$anchor.nr
   
-  if (anchor.nr == 0)  {return()} # stoppen, wenn keine offenen Fragen aufgerufen wurden
+  if (anchor.nr == 0)  {return(invisible())} # stoppen, wenn keine offenen Fragen aufgerufen wurden
   
   cat("# Anhang: Fragen mit offenem Antwortformat  \n  \n")
   
