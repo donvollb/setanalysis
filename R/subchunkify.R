@@ -22,8 +22,8 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
     function() {g}
   ), collapse = '')
 
-  if(hide == FALSE) {head.end <- ", echo=FALSE, results = \"asis\", out.width = \"100%\"}"}
-  else {head.end <- ", echo=FALSE, results = \"hide\", fig.keep = \"all\", out.width = \"100%\"}" }
+  if(hide == FALSE) {head.end <- ", echo=FALSE, results = \"asis\", fig.align = \"center\", out.width = \"100%\"}"}
+  else {head.end <- ", echo=FALSE, results = \"hide\", fig.keep = \"all\", fig.align = \"center\", out.width = \"100%\"}" }
 
   if(!exists("sub.nr")) {assign("sub.nr", 0, envir = globalenv())}
   assign("sub.nr", sub.nr + 1, envir = globalenv())
