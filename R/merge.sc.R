@@ -30,8 +30,7 @@ merge.sc <- function(x, # Daten
 
   if (inkl != TRUE) return(invisible()) # wenn inkl nicht TRUE, wird Funktion beendet
   
-  if (sum(!is.na(x)) == 0) stop("Ausgewählte Spalte enthält keine Werte")
-
+  if (sum(!is.na(x)) == 0) return(invisible()) # selbiges bei fehlenden Werten
   if(already.labels == FALSE) {
     #x <- sjlabelled::to_label(x) #bisherige Lösung, jetzt ohne sjlabelled
     a <- attributes(x)
