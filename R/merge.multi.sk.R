@@ -69,7 +69,7 @@ merge.multi.sk <- function(x, # Daten
       if (length(nrs > 0)) {
 
         for (k in 1:length(nrs)) {
-          attr(x[, k], "label") <- paste0("**", nrs[k], "** ", attr(x[, k], "label"))
+          attr(x[, k], "label") <- paste(nrs[k], attr(x[, k], "label"))
         }
       }
 
@@ -80,8 +80,8 @@ merge.multi.sk <- function(x, # Daten
     }
   }
 
-  if (inkl == TRUE) {
-
+  if (inkl != TRUE) { return(invisible()) } # wenn inkl nicht TRUE, wird Funktion beendet
+  
     if (number == "default") { # zieht sich automatisch die Anzahl der Stufen
       # Items, falls diese nicht angegeben wurde
 
@@ -184,8 +184,6 @@ merge.multi.sk <- function(x, # Daten
         #        subchunkify(
         table.stat.multi(
           x,
-          #          col1.name = paste0("\\textbf{Item} \\textit{[Skala: ", text.skala, "]}"),
-          #          col1.name = paste0("Item [Skala: ", text.skala, "]"),
           col1.name = "Item",
           col2.name = col2.name,
           bold.col1 = FALSE,
@@ -202,18 +200,6 @@ merge.multi.sk <- function(x, # Daten
               flextable::colorize(flextable::as_i(paste0(" [Skala: ", text.skala, "]")), color="gray20")
             )
           )
-
-        #        append_chunks(
-        #          i=1,
-        #          j=1,
-        #          part="header",
-        #            colorize(as_i(paste0(" [Skala: ", text.skala, "]")), color="black")
-        #        )
-
-
-        #        fig_height = 7,
-        #        fig_width = 9
-        #      )
       )
     }
 
@@ -245,5 +231,4 @@ merge.multi.sk <- function(x, # Daten
     }
 
     cat("  \n  \n")
-  }
 }
