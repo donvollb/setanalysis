@@ -6,6 +6,7 @@
 #' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
+#' @importFrom flextable flextable
 
 NULL
 
@@ -43,15 +44,23 @@ list.open.answers <<- new.env(parent = emptyenv())
 list.open.answers$anchor.nr <- 0
 
 
-## Schriftart laden -------------------------------------------------------
+## Bei Start des Pakets Schriftart laden ----------------------------------
 
 .onAttach <- function(libname, pkgname) {
   
-  if (!("Red Hat Text" %in% sysfonts::font_families())) {
-    
-    sysfonts::font_add_google("Red Hat Text")}
-  showtext::showtext_auto()
+ try(silent = TRUE, { # Fehlermeldungen ignorieren (ist für Installation nötig)
   
+  if (!"Red Hat Text" %in% sysfonts::font_families()) {
+   
+  sysfonts::font_add("Red Hat Text", 
+    regular = system.file("fonts/RHT.ttf",            package = "setanalysis"),
+       bold = system.file("fonts/RHT Bold.ttf",       package = "setanalysis"),
+     italic = system.file("fonts/RHT Italic.ttf",     package = "setanalysis"),
+ bolditalic = system.file("fonts/RHT BoldItalic.ttf", package = "setanalysis"))
+  
+  showtext::showtext_auto()
+  }}
+)
 }
 
 # Funktion, um diese Einstellungen zu ändern ------------------------------
