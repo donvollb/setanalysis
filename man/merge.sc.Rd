@@ -13,7 +13,8 @@
   col2.name = "n",
   order.table = FALSE,
   show.plot = set.analysis.defaults$show.plot.sc,
-  pagebreak = FALSE
+  pagebreak = FALSE,
+  digits = 1
 )
 }
 \arguments{
@@ -33,7 +34,9 @@
 
 \item{show.plot}{Soll der Plot angezeigt werden?}
 
-\item{no.pagebreak}{Seitenumbrüche mittendrin verhindern?}
+\item{pagebreak}{Seitenumbrüche mittendrin verhindern?}
+
+\item{digits}{Anzahl der Nachkommastellen in der Tabelle}
 }
 \description{
 merge-Funktion für single-choice Fragen

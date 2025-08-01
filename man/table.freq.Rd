@@ -14,7 +14,8 @@ table.freq(
   col.width = "default",
   order.table = FALSE,
   bold = TRUE,
-  bold.col1 = TRUE
+  bold.col1 = TRUE,
+  digits = 1
 )
 }
 \arguments{
