@@ -34,7 +34,17 @@ lv.kable <- function(x, # Objekt (am besten dataframe)
   #    if(bold == TRUE & bold.col1 == FALSE) {colnames(x)[-1] <- paste0("\\textbf{", colnames(x)[-1], "}")}
   #  }
 
+  # Erkennen von ganzzahligen Werten und Umwandlung in Integer
+  
+  for (Spalte in names(x)) {
+    if (is.numeric(x[[Spalte]])) {
+      if (all(is.na(x[[Spalte]]) | x[[Spalte]] == round(x[[Spalte]]))) {
+        x[[Spalte]] <- as.integer(x[[Spalte]])
+      }
+    }
+  }
 
+  
   # Erstellen einer Flextable
   latex.table <-  flextable::flextable(x)
 
@@ -156,6 +166,6 @@ lv.kable <- function(x, # Objekt (am besten dataframe)
   #  if(bold.col1 == FALSE) {latex.table <- column_spec(latex.table, 1, bold = FALSE)}
 
 
-  latex.table
+  flextable::colformat_double(latex.table, digits = digits)
 
 }
