@@ -14,7 +14,6 @@ merge_auto <- function(x,
                        inkl = "nr",
                        ...) { # Argumente zum „weitergeben“ in die Funktion
 
-if (isTRUE(nr_auto & nr == "" & inkl == "nr")) {nr <- attr(x, "nr")}
 
 if (typeof(x) != "list") {
   type <- attr(x, "type")
@@ -22,6 +21,11 @@ if (typeof(x) != "list") {
   type <- paste0("multi.", attr(x[, 1], "type"))
 }
 
+if (isTRUE(nr_auto & nr == "" & inkl == "nr")) {
+  if (type %in% c("multi.mc", "multi.sk")) {nr <- attr(x[, 1], "nr")
+  } else {nr <- attr(x, "nr")}}
+  
+  
 # Erkennung, ob es sich um offene oder numerische Fragen handelt
 ## Zuerst prüfen, ob es überhaupt Buchstaben gibt
 
@@ -50,7 +54,7 @@ if (type == "open/num") {
 Funktionsliste <- list(
       sc = merge.sc,
       sk = merge.evasys.sk,
-    open = merge.open,
+    open = open.answers,
      num = merge.num,
 multi.mc = merge.mc,
 multi.sk = merge.multi.sk
