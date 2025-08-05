@@ -13,6 +13,7 @@
 #' @param valid.perc Mit gültigen Prozent?
 #' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
 #' @param show.plot Soll der Plot angezeigt werden?
+#' @param digits Wie viele Nachkommastellen sollen angezeigt werden?
 #'
 #' @examples
 #' 
@@ -38,6 +39,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      filter = FALSE, # FILTER-Klammer für LimeSurvey
                      valid.perc = TRUE, # mit gültigen Prozent?
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
+                     digits = 1, # Wie viele Nachkommastellen sollen angezeigt werden?
                      show.plot = set.analysis.defaults$show.plot.mc) # Soll der Plot angezeigt werden?
 {
   if (inkl == "nr") {
@@ -83,14 +85,12 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     if (valid.perc == TRUE) {
 
       results <- data.frame(matrix(nrow = length(x), ncol = 4))
-      colnames(results) <-
-        c(col1.name, col2.name, "%", "gültige %")
+      colnames(results) <- c(col1.name, col2.name, "%", "gültige %")
       results[, 1] <- val.labels
       for (n in 1:length(x)) {
         results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
-        results[n, 3] <- round(results[n, 2] / nrow(x) * 100, digits = 2)
-        results[n, 4] <-
-          round(results[n, 2] / nrow(x[!is.na(x[, 1]),]) * 100, digits = 2)
+        results[n, 3] <- results[n, 2] / nrow(x) * 100
+        results[n, 4] <- results[n, 2] / nrow(x[!is.na(x[, 1]),]) * 100
       }
 
       if (order.table != FALSE) {
@@ -100,12 +100,12 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
       }
 
-      results[nrow(results)+1, ] <- c("NAs", nrow(x[is.na(x[, 1]),]),
-                                      round(nrow(x[is.na(x[, 1]),]) / nrow(x) * 100, 2),
-                                      "NA")
-      results[nrow(results)+1, ] <- c("Total", nrow(x),
-                                      "NA",
-                                      "NA")
+      results[nrow(results) + 1, ] <- list("NAs", nrow(x[is.na(x[, 1]),]),
+                                      nrow(x[is.na(x[, 1]),]) / nrow(x) * 100,
+                                      NA)
+      results[nrow(results) + 1, ] <- list("Total", nrow(x),
+                                      NA,
+                                      NA)
 
     } else {
       results <- data.frame(matrix(nrow = length(x), ncol = 3))
@@ -114,14 +114,15 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       results[, 1] <- val.labels
       for (n in 1:length(x)) {
         results[n, 2] <- as.numeric(sum(x[, n] != 0, na.rm = TRUE))
-        results[n, 3] <- round(results[n, 2] / nrow(x) * 100, digits = 2)
+        results[n, 3] <- results[n, 2] / nrow(x) * 100
       }
     }
 
     if(ncol(results) == 4) {col.width <- set.analysis.defaults$col.width4
                     } else {col.width <- set.analysis.defaults$col.width3}
 
-    if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width),
+    if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width,
+                                                 digits = digits),
                                         fig_height = 7, fig_width = 9)}
 
     colnames(results) <- c("label", "freq", "perc")

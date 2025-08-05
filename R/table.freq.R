@@ -24,10 +24,11 @@ table.freq <- function(x, # Daten
                        col.width = "default", # Spaltenbreite (siehe lv.kable)
                        order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                        bold = TRUE, # fetter header? (siehe lv.kable)
-                       bold.col1 = TRUE) # fette erste Zelle des headers? (siehe lv.kable)
+                       bold.col1 = TRUE, # fette erste Zelle des headers? (siehe lv.kable)
+                       digits = 1)
 {
 
-  jim <- data.frame(round(descr::freq(x, plot=FALSE), 1))
+  jim <- data.frame(descr::freq(x, plot=FALSE))
   jim <- data.frame(rownames(jim), jim)
   rownames(jim) <- NULL
 
@@ -69,6 +70,6 @@ table.freq <- function(x, # Daten
   if (col.width[1] == "default" & length(jim) == 3) {col.width <- set.analysis.defaults$col.width3}
 
   lv.kable(jim, caption = caption, col.width = col.width, bold = bold,
-           bold.col1 = bold.col1)
+           bold.col1 = bold.col1, digits = digits)
 
 }

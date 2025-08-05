@@ -8,7 +8,8 @@
 #' @param col2.name Name der n-Spalte in der Tabelle
 #' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
 #' @param show.plot Soll der Plot angezeigt werden?
-#' @param no.pagebreak Seitenumbrüche mittendrin verhindern?
+#' @param pagebreak Seitenumbrüche mittendrin verhindern?
+#' @param digits Anzahl der Nachkommastellen in der Tabelle
 #'
 #' @examples markdown.in.viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
 #'
@@ -22,7 +23,8 @@ merge.sc <- function(x, # Daten
                      col2.name = "n", # Name der n-Spalte in Tabelle
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                      show.plot = set.analysis.defaults$show.plot.sc, # Soll der Plot angezeigt werden?
-                     pagebreak = FALSE) # Seitenumbruch dahinter?
+                     pagebreak = FALSE, # Seitenumbruch dahinter?
+                     digits = 1) #Anzahl Nachkommastellen
 {
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
@@ -41,7 +43,7 @@ merge.sc <- function(x, # Daten
   cat("###", nr, attr(x, "label"), "\n \n")
 
   subchunkify(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
-                         order.table = order.table))
+                         order.table = order.table, digits = digits))
 
   freq.tab <- descr::freq(x, plot = FALSE)
   results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))

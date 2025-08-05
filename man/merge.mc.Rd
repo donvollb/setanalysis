@@ -17,6 +17,7 @@
   filter = FALSE,
   valid.perc = TRUE,
   order.table = FALSE,
+  digits = 1,
   show.plot = set.analysis.defaults$show.plot.mc
 )
 }
@@ -44,6 +45,8 @@
 \item{valid.perc}{Mit gültigen Prozent?}
 
 \item{order.table}{Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren}
+
+\item{digits}{Wie viele Nachkommastellen sollen angezeigt werden?}
 
 \item{show.plot}{Soll der Plot angezeigt werden?}
 }
