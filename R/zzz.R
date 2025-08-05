@@ -53,10 +53,10 @@ list.open.answers$anchor.nr <- 0
   if (!"Red Hat Text" %in% sysfonts::font_families()) {
    
   sysfonts::font_add("Red Hat Text", 
-    regular = system.file("fonts/RHT.ttf",            package = "setanalysis"),
-       bold = system.file("fonts/RHT Bold.ttf",       package = "setanalysis"),
-     italic = system.file("fonts/RHT Italic.ttf",     package = "setanalysis"),
- bolditalic = system.file("fonts/RHT BoldItalic.ttf", package = "setanalysis"))
+    regular = system.file("fonts/RHMixed.ttf",            package = "setanalysis"),
+       bold = system.file("fonts/RHMixed Bold.ttf",       package = "setanalysis"),
+     italic = system.file("fonts/RHMixed Italic.ttf",     package = "setanalysis"),
+ bolditalic = system.file("fonts/RHMixed BoldItalic.ttf", package = "setanalysis"))
   
   showtext::showtext_auto()
   }}
