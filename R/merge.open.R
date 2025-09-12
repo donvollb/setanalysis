@@ -35,14 +35,40 @@ merge.open <- function(x, # Daten
 
     if(length(na.omit(x)) > 0) { # wenn mind. 1 offene Antwort
 
+      # Leerzeichen vorne und hinten entfernen
+      x <- trimws(x)
+
+      # Alphabetisch sortieren und in Dataframe umwandeln
       x <- x[order(x)]
       x <- as.data.frame(x[!is.na(x)])
 
 
       if(freq == TRUE) {
-        x <- data.frame(table(x))
-        colnames(x) <- c("Antwort", "Häufigkeit")
-        subchunkify(lv.kable(x, col.width = c(137, 18), striped = FALSE, escape = TRUE))
+        
+        # Wieder in Vektor umwandeln
+        x <- unlist(x, use.names = FALSE)
+        
+        # Gruppen nach Kleinbuchstaben bilden
+        Gruppen <- split(x, tolower(x))
+        
+        # für jede Gruppe: die häufigste Schreibweise auswählen
+        most_used <- function(x) {x |> table() |> which.max() |> names() |> first()}
+        Hauptschreibweisen <- sapply(Gruppen, most_used)
+        
+        # Häufigkeiten (aller Varianten) zählen
+        Häufigkeiten <- lengths(Gruppen)
+        
+        # Tabelle mit den Repräsentanten und den Häufigkeiten
+        Tabelle <- data.frame(Antwort = Hauptschreibweisen,
+                           Häufigkeit = Häufigkeiten,
+                            row.names = NULL)
+        
+        # Nach Häufigkeit sortieren
+        Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
+        
+        # Formatierung der Tabelle
+        subchunkify(lv.kable(Tabelle, col.width = c(137, 18),
+                             striped = FALSE, escape = TRUE))
 
 
       } else {
@@ -62,3 +88,4 @@ merge.open <- function(x, # Daten
 
   }
 }
+
