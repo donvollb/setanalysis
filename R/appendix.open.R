@@ -1,5 +1,7 @@
 #' Funktion um alle offenen Antworten unten in den Anhang zu packen
 #'
+#' @param freq Sollen die offenen Antworten nach Häufigkeit gruppiert werden?
+#'
 #' @examples
 #' # Damit diese Funktion sinnvoll funktioniert, muss vorher mindestens eine
 #' # offene Frage aufgerufen worden
@@ -8,7 +10,7 @@
 #'
 #' @export appendix.open
 
-appendix.open <- function() {
+appendix.open <- function(freq = FALSE) {
   
   anchor.nr <- list.open.answers$anchor.nr
   
@@ -19,5 +21,5 @@ appendix.open <- function() {
   for (k in seq_len(anchor.nr)) {
     x <- eval(parse(text = paste0("list.open.answers$var.", k)))
     q.nr <- eval(parse(text = paste0("list.open.answers$nr.", k)))
-    merge.open(x, nr = q.nr, anchor = k)}
+    merge.open(x, nr = q.nr, anchor = k, freq = freq)}
 }

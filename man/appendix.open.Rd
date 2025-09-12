@@ -4,7 +4,10 @@
 \alias{appendix.open}
 \title{Funktion um alle offenen Antworten unten in den Anhang zu packen}
 \usage{
-appendix.open()
+appendix.open(freq = FALSE)
+}
+\arguments{
+\item{freq}{Sollen die offenen Antworten nach Häufigkeit gruppiert werden?}
 }
 \description{
 Funktion um alle offenen Antworten unten in den Anhang zu packen

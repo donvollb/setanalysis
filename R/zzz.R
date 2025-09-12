@@ -7,6 +7,7 @@
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
 #' @importFrom flextable flextable
+#' @importFrom dplyr first
 
 NULL
 
