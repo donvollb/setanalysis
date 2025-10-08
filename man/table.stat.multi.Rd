@@ -47,3 +47,8 @@ Tabelle
 \description{
 Einfache Statistiktabelle für mehrere Items mit Fragetexten
 }
+\examples{
+
+table.stat.multi(BspDaten$Tabellen$multi)
+
+}
