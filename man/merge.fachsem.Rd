@@ -23,6 +23,6 @@
 merge-Funktion für Fachsemester
 }
 \examples{
-merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown.in.viewer()
+merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()
 
 }

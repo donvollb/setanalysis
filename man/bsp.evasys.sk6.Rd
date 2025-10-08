@@ -16,6 +16,6 @@ Grafik
 Beispiel einer Sechserskala
 }
 \examples{
-bsp.evasys.sk6() |> markdown.in.viewer()
+bsp.evasys.sk6() |> markdown_in_viewer()
 
 }

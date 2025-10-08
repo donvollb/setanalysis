@@ -30,6 +30,6 @@
 Funktion für Fragen mit offenem Antwortformat (benötigt u.a. "list.open", wird am Anfang des Skripts erstellt)
 }
 \examples{
-open.answers(BspDaten$dataSHOWUP$offen) |> markdown.in.viewer()
+open.answers(BspDaten$dataSHOWUP$offen) |> markdown_in_viewer()
 
 }

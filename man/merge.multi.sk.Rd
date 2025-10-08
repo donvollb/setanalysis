@@ -70,7 +70,7 @@ merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden soll
 KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
 
 # Funktion ausführen:
-markdown.in.viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
+markdown_in_viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
                    kennung = BspDaten$dataLVE$Kennung))
 
 }

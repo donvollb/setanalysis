@@ -23,7 +23,7 @@
 #' 
 #' # merge.mc-Funktion ausführen und anzeigen -----------------------------
 #' 
-#' merge.mc(Abschlüsse) |> markdown.in.viewer()
+#' merge.mc(Abschlüsse) |> markdown_in_viewer()
 #'
 #' @export merge.mc
 

@@ -51,7 +51,7 @@
 Funktion für Abbildungen analog zu alten EvaSys-Skalen
 }
 \examples{
-merge.evasys.sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown.in.viewer()
+merge.evasys.sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown_in_viewer()
 
 
 }

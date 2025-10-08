@@ -18,6 +18,6 @@ merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
 }
 \examples{
 merge.wl(BspDaten$dataLVE$WL,
-BspDaten$dataLVE$Kennung, already.aggr = FALSE) |> markdown.in.viewer()
+BspDaten$dataLVE$Kennung, already.aggr = FALSE) |> markdown_in_viewer()
 
 }

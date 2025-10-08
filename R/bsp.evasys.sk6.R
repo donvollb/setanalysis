@@ -4,7 +4,7 @@
 #'
 #' @returns Grafik
 #' 
-#' @examples bsp.evasys.sk6() |> markdown.in.viewer()
+#' @examples bsp.evasys.sk6() |> markdown_in_viewer()
 #' 
 #' @export bsp.evasys.sk6
 

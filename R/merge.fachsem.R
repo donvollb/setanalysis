@@ -7,7 +7,7 @@
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
-#' @examples merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown.in.viewer()
+#' @examples merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()
 #'
 #' @export merge.fachsem
 

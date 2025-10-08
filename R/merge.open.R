@@ -7,7 +7,7 @@
 #' @param anchor Falls über open.answers Anker kriiert wurden hier die Nummer angeben
 #' @param freq Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
 #'
-#' @examples merge.open(BspDaten$dataSHOWUP$offen, anchor = 1) |> markdown.in.viewer()
+#' @examples merge.open(BspDaten$dataSHOWUP$offen, anchor = 1) |> markdown_in_viewer()
 #'
 #' @export merge.open
 

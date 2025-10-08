@@ -30,6 +30,6 @@
 Funktion für offene Antworten
 }
 \examples{
-merge.open(BspDaten$dataSHOWUP$offen, anchor = 1) |> markdown.in.viewer()
+merge.open(BspDaten$dataSHOWUP$offen, anchor = 1) |> markdown_in_viewer()
 
 }

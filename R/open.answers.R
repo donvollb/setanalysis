@@ -7,7 +7,7 @@
 #' @param freq Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
 #' @param no.pagebreak Seitenumbrüche mittendrin verhindern?
 #'
-#' @examples open.answers(BspDaten$dataSHOWUP$offen) |> markdown.in.viewer()
+#' @examples open.answers(BspDaten$dataSHOWUP$offen) |> markdown_in_viewer()
 #'
 #' @export open.answers
 

@@ -15,7 +15,7 @@
 #' @param no.pagebreak Sollen Seitenumbrüche verhindert werden?
 #' 
 #' @examples
-#' merge.evasys.sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown.in.viewer()
+#' merge.evasys.sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown_in_viewer()
 #' 
 #'
 #' @export merge.evasys.sk

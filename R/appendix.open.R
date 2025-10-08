@@ -6,7 +6,7 @@
 #' # Damit diese Funktion sinnvoll funktioniert, muss vorher mindestens eine
 #' # offene Frage aufgerufen worden
 #' invisible(capture.output(open.answers(BspDaten$dataSHOWUP$offen)))
-#' appendix.open() |> markdown.in.viewer()
+#' appendix.open() |> markdown_in_viewer()
 #'
 #' @export appendix.open
 
