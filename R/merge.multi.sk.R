@@ -212,7 +212,7 @@ merge.multi.sk <- function(x, # Daten
       if (fig.height == "default")
       {
         subchunkify(
-          boxplot.aggr.sk(x, labels, labels.skala, length(labels), number),
+          boxplot.aggr.sk(x, labels, labels.skala),
           fig_height = (length(labels) + 1),
           fig_width = 9
         )
@@ -220,7 +220,7 @@ merge.multi.sk <- function(x, # Daten
       else
       {
         subchunkify(
-          boxplot.aggr.sk(x, labels, labels.skala, length(labels), number),
+          boxplot.aggr.sk(x, labels, labels.skala),
           fig_height = fig.height,
           fig_width = 9
         )
