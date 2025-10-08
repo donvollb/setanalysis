@@ -6,16 +6,19 @@
 \usage{
 bsp.boxplot(
   x = "default",
-  color = set.analysis.defaults$color.bars,
-  family = set.analysis.defaults$font.family
+  boxcolor = set.analysis.defaults$color.bars,
+  textfamily = set.analysis.defaults$font.family,
+  textcolor = set.analysis.defaults$color.font
 )
 }
 \arguments{
 \item{x}{Daten, bei "default" wird ein Beispieldatensatz genutzt}
 
-\item{color}{Farbe des Boxplots}
+\item{boxcolor}{Farbe des Boxplots}
 
-\item{family}{Schriftart}
+\item{textfamily}{Schriftart}
+
+\item{textcolor}{Farbe des Textes (Y-Achsenbeschriftungen?)}
 }
 \value{
 Beispiel-Boxplot
