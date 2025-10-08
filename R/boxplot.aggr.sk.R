@@ -27,6 +27,7 @@ boxplot.aggr.sk <- function(x, # Daten
   n_skala <- length(skala)
   
   opar <- par(no.readonly = TRUE)
+  
   if(n_skala == 5) {
     par(mar = c(4, 21.5, 0.1, 2.1)) # mehr Platz für Hinweistext bei 5er Skala
     } else {
@@ -34,26 +35,33 @@ boxplot.aggr.sk <- function(x, # Daten
   }
  
 
-  par(family = set.analysis.defaults$font.family)
-  boxplot(daten,
-          xaxt = "n", yaxt = "n", # x- und y-Achsentext nicht anzeigen
-          ylim = c(1, n_skala), # Länge y Achse von 1 bis n_skala
-    horizontal = TRUE, # horizontale Ausrichtung
-        boxwex = 0.8, # stellt Größe der Box des Boxplots ein
-        border = "white")
+  par(family = font_family,
+          fg = "gray80",
+        lend = "square", # Linienenden eckig
+       ljoin = "mitre")  # Linienschnitt eckig
+  
+  # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
+  
+  plot(
+    1,  # Dummy-Wert
+    type = "n",  # Keine Daten zeichnen
+    xlim = c(1, n_skala),  # x-Achse: Skalenwerte
+    ylim = c(0.5, length(daten) + 0.5),  # y-Achse: Anzahl der Gruppen + Puffer
+    xlab = "", ylab = "",  # Keine Achsenbeschriftung
+    xaxt = "n", yaxt = "n",  # Keine Achsen zeichnen
+    bty = "n"  # Kein Rahmen
+  )
+  
   
   abline(v = c(1:n_skala), col="gray80") #vertikale Hilfslinien bei jedem Skalenpunkt
   
-  par(new = TRUE)
-  par(fg = "gray80")
-  par(family = font_family)
-  
   boxplot(daten,
+          add = TRUE,
           xaxt = "n",
           yaxt = "n",
-          ylim=c(1, n_skala), horizontal=TRUE,
-          boxwex=0.8, col= color, border="black",
-          pars=list(outcol= color, outpch=20))
+          xlim = c(1, n_skala), horizontal = TRUE,
+        boxwex = 0.8, col = color, border = "black",
+          pars = list(outcol = color, outpch = 20))
   
   mtext(item_labels,
         side = 2,
