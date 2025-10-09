@@ -6,20 +6,14 @@
 \usage{
 \method{boxplot}{workload}(
   x,
-  q = c("0h", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h", "12h",
-    "mehr als\\n12h"),
-  e = 13,
-  n = NA
+  skala = c("0h", "1h", "2h", "3h", "4h", "5h", "6h", "7h", "8h", "9h", "10h", "11h",
+    "12h", "mehr als\\n12h")
 )
 }
 \arguments{
 \item{x}{Daten}
 
-\item{q}{Skala x Achse}
-
-\item{e}{Anzahl der Antwortoptionen der Skala}
-
-\item{n}{Anzahl der Veranstaltungen}
+\item{skala}{Skala x-Achse}
 }
 \value{
 Boxplot
@@ -28,6 +22,6 @@ Boxplot
 Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden
 }
 \examples{
-boxplot.workload(x = BspDaten$dataLVE$WL)
+boxplot.workload(x = BspDaten$Plots$WL)
 
 }

@@ -4,24 +4,35 @@
 \alias{boxplot.aggr.sk}
 \title{Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden}
 \usage{
-\method{boxplot}{aggr.sk}(x, p, q, d, e, color = set.analysis.defaults$color.bars)
+\method{boxplot}{aggr.sk}(
+  x,
+  item_labels,
+  skala,
+  color = set.analysis.defaults$color.bars,
+  font_family = set.analysis.defaults$font.family
+)
 }
 \arguments{
-\item{x}{daten}
+\item{x}{Daten}
 
-\item{p}{labels/Text/Beschriftungen Y Achse}
+\item{item_labels}{Labels/Text/Beschriftungen der Y-Achse}
 
-\item{q}{Skala x Achse}
+\item{skala}{Skala der x-Achse}
 
-\item{d}{Anzahl von p}
+\item{color}{Farbe der Boxen}
 
-\item{e}{Anzahl von q}
-
-\item{color}{Farbe, Standard ist der Wert von color.bars}
+\item{font_family}{Schriftart}
 }
 \value{
 Boxplot
 }
 \description{
 Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden
+}
+\examples{
+
+boxplot.aggr.sk(BspDaten$Plots$aggr.data,
+                BspDaten$Plots$aggr.labels,
+                BspDaten$Plots$aggr.skala)
+
 }

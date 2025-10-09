@@ -7,7 +7,7 @@
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
-#' @examples markdown.in.viewer(grade(BspDaten$dataLVE$Note,
+#' @examples markdown_in_viewer(grade(BspDaten$dataLVE$Note,
 #'                                    kennung = BspDaten$dataLVE$Kennung))
 #' @export
 

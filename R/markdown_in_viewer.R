@@ -7,12 +7,14 @@
 #' Markdown-Code mit [cat()] direkt in die Konsole drucken zu testen, sie ist
 #' nicht für die Verwendung in einem Dokument gedacht.
 #'
+#' `markdown.in.viewer()` ist eine veraltete Schreibweise der gleichen Funktion
+#'
 #' @returns Vorschau im Viewer, wie das Endergebnis im Dokument aussehen würde
 #' @export
 #'
-#' @examples markdown.in.viewer(merge.fachsem(BspDaten$dataLVE$FachSemN))
+#' @examples markdown_in_viewer(merge.fachsem(BspDaten$dataLVE$FachSemN))
 
-markdown.in.viewer <- function(markdown_function) {
+markdown_in_viewer <- function(markdown_function) {
   
   # Bisherige Bildoptionen speichern um sie später wiederherzustellen ----
   image.device <- knitr::opts_chunk$get("dev")
@@ -40,3 +42,9 @@ markdown.in.viewer <- function(markdown_function) {
   options(knitr.duplicate.label = "forbid")
   knitr::opts_chunk$set(dev = image.device)
 }
+
+#' @rdname markdown_in_viewer
+#'
+#' @export
+
+markdown.in.viewer <- markdown_in_viewer

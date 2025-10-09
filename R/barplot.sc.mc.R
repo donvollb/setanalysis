@@ -33,7 +33,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
                fill = color, #Farbe
                width=0.8)+ #Breite der Balken
       ggplot2::geom_col(fill = color, color = "black", linewidth = 0.3) +
-      ggplot2::geom_text(ggplot2::aes(label = paste(.data$perc, "%", sep = "")), #Prozentzahl über die Balken schreiben
+      ggplot2::geom_text(ggplot2::aes(label = paste(sprintf("%.1f", .data$perc), "%")), #Prozentzahl über die Balken schreiben
                 color ="grey30",#Farbe 
                 size = 3.5, #Schriftgröße
                 family = set.analysis.defaults$font.family,
@@ -43,7 +43,7 @@ barplot.sc.mc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit un
             axis.title.y = ggplot2::element_blank(),  #y-Achsen Titel, element_blank() meint kein Text
             axis.title.x = ggplot2::element_text(color = "grey30", size = 14, face = "bold"),  #x Achsen Titel
             axis.text.y = ggplot2::element_text(color = "grey40", #Beschriftung y Achse, element_text() meint schreibe einen Text, col = Farbe
-                                       size = 12, face = "bold"), #Schriftgroesse
+                                       size = 12, face = "bold"), #Schriftgröße
             axis.text.x = ggplot2::element_text(color = "black", size = 11), #Beschriftung x Achse
             axis.ticks.y = ggplot2::element_blank(), #Die kleinen Striche zur Unterteilung an der y Achse
             axis.ticks.x = ggplot2::element_line(color = "grey48"))+ #kleinen Striche zur Unterteilung an der x Achse

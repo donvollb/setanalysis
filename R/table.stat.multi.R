@@ -13,6 +13,10 @@
 #' @param labels Fragetexte, bei "labels" werden die Labels der Variablen genommen
 #'
 #' @returns Tabelle
+#'
+#' @examples
+#' 
+#' table.stat.multi(BspDaten$Tabellen$multi)
 #' 
 #' @export table.stat.multi
 

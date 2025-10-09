@@ -24,7 +24,7 @@
 #' KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
 #' 
 #' # Funktion ausführen:
-#' markdown.in.viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
+#' markdown_in_viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
 #'                    kennung = BspDaten$dataLVE$Kennung))
 #' 
 #' @export merge.multi.sk
@@ -82,43 +82,43 @@ merge.multi.sk <- function(x, # Daten
 
   if (inkl != TRUE) { return(invisible()) } # wenn inkl nicht TRUE, wird Funktion beendet
   
-    if (number == "default") { # zieht sich automatisch die Anzahl der Stufen
-      # Items, falls diese nicht angegeben wurde
+  if (number == "default") { # zieht sich automatisch die Anzahl der Stufen
+    # Items, falls diese nicht angegeben wurde
 
-      StufenListe <- list()
-      if (!is.null(ncol(x))) {
-        for (k in 1:ncol(x)) {
-          StufenListe[k] <- length(attr(x[,k], "labels"))
-        }
-        Stufen <- unique(StufenListe)
-        if (length(Stufen) != 1) { # Fehlermeldung bei unterschiedlicher Anzahl Stufen
-          stop("Die ausgewählten Items haben eine unterschiedliche
-             Anzahl an Stufen.")} else {
-               number <- Stufen[[1]]}
-      } else {number <- length(attr(x, "labels"))}
-    }
-    x <- data.frame(x)
+    StufenListe <- list()
+    if (!is.null(ncol(x))) {
+      for (k in 1:ncol(x)) {
+        StufenListe[k] <- length(attr(x[,k], "labels"))
+      }
+      Stufen <- unique(StufenListe)
+      if (length(Stufen) != 1) { # Fehlermeldung bei unterschiedlicher Anzahl Stufen
+        stop("Die ausgewählten Items haben eine unterschiedliche
+           Anzahl an Stufen.")} else {
+             number <- Stufen[[1]]}
+    } else {number <- length(attr(x, "labels"))}
+  }
+  x <- data.frame(x)
 
-    if (ncol(x) > 1) {
-      labels <- as.character(lapply(x, attr, which = "label"))
-    } else {
-      labels <- attr(x[, 1], "label")
-    }
+  if (ncol(x) > 1) {
+    labels <- as.character(lapply(x, attr, which = "label"))
+  } else {
+    labels <- attr(x[, 1], "label")
+  }
 
 
-    ListeLabels <- list()
-    for (k in 1:length(x)) {
-      ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number]  #nicht Relevante Labels werden abgeschnitten
-    }
+  ListeLabels <- list()
+  for (k in 1:length(x)) {
+    ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number]  #nicht Relevante Labels werden abgeschnitten
+  }
 
-    TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
+  TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
 
-    if (tmin == "default") {
-      LabelLinks <- unique(as.list(TabelleLabels[1,]))
+  if (tmin == "default") {
+    LabelLinks <- unique(as.list(TabelleLabels[1,]))
 
-      if(length(unique(LabelLinks)) != 1) {
-        warning(paste0("Achtung: Die Labels der einzelnen Items auf der linken
-                     Seite sind unterschiedlich: \n", LabelLinks))}
+    if(length(unique(LabelLinks)) != 1) {
+      warning(paste0("Achtung: Die Labels der einzelnen Items auf der linken
+                   Seite sind unterschiedlich: \n", LabelLinks))}
 
       tmin <- LabelLinks[[1]]}
 
@@ -180,8 +180,6 @@ merge.multi.sk <- function(x, # Daten
 
     if (show.table == TRUE) {
       subchunkify(
-        #      subchunkify(
-        #        subchunkify(
         table.stat.multi(
           x,
           col1.name = "Item",
@@ -214,7 +212,7 @@ merge.multi.sk <- function(x, # Daten
       if (fig.height == "default")
       {
         subchunkify(
-          boxplot.aggr.sk(x, labels, labels.skala, length(labels), number),
+          boxplot.aggr.sk(x, labels, labels.skala),
           fig_height = (length(labels) + 1),
           fig_width = 9
         )
@@ -222,7 +220,7 @@ merge.multi.sk <- function(x, # Daten
       else
       {
         subchunkify(
-          boxplot.aggr.sk(x, labels, labels.skala, length(labels), number),
+          boxplot.aggr.sk(x, labels, labels.skala),
           fig_height = fig.height,
           fig_width = 9
         )

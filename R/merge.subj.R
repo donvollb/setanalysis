@@ -10,7 +10,7 @@
 #' @examples
 #' 
 #' merge.subj(BspDaten$dataSHOWUP$fach1_2FB,
-#'            BspDaten$dataSHOWUP$fach2_2FB) |> markdown.in.viewer()
+#'            BspDaten$dataSHOWUP$fach2_2FB) |> markdown_in_viewer()
 #' 
 #' @export merge.subj
 
