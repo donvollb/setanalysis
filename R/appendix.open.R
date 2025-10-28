@@ -10,7 +10,7 @@
 #'
 #' @export appendix.open
 
-appendix.open <- function(freq = FALSE) {
+appendix.open <- function(freq = "auto") {
   
   anchor.nr <- list.open.answers$anchor.nr
   

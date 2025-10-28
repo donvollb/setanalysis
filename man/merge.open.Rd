@@ -10,7 +10,7 @@
   inkl.global = set.analysis.defaults$inkl.open,
   nr = "",
   anchor = FALSE,
-  freq = FALSE
+  freq = "auto"
 )
 }
 \arguments{

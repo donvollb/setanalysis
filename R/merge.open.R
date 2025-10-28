@@ -16,76 +16,74 @@ merge.open <- function(x, # Daten
                        inkl.global = set.analysis.defaults$inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
                        nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                        anchor = FALSE, # Falls über open.answers Anker kreiert wurden hier die Nummer angeben
-                       freq = FALSE) # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
+                       freq = "auto") # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
 {
-
 
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
   }
 
-  if (inkl == TRUE && inkl.global == TRUE) {
+  if (inkl != TRUE | inkl.global != TRUE) {return(invisible())} # wenn inkl nicht TRUE, wird Funktion beendet
 
-    if (anchor != FALSE)
-    {
-      cat("###", nr, attr(x, "label"), paste0("{#sec-", anchor, ".bottom}"),  "\n \n")
-      cat(paste0("[zurück nach oben](#sec-", anchor, ".top) \n\n"))
-      
-    } else {cat("###", nr, attr(x, "label"), "\n \n")}
+  if (anchor != FALSE)
+  {
+    cat("###", nr, attr(x, "label"), paste0("{#sec-", anchor, ".bottom}"),  "\n \n")
+    cat(paste0("[zurück nach oben](#sec-", anchor, ".top) \n\n"))
+    
+  } else {cat("###", nr, attr(x, "label"), "\n \n")}
 
-    if(length(na.omit(x)) > 0) { # wenn mind. 1 offene Antwort
+  if(length(na.omit(x)) == 0) { # Falls es keine offenen Antworten gibt
+    
+    cat("*Keine offenen Antworten zu dieser Frage.*\n\n\n")
+    return(invisible())
+  } 
 
-      # Leerzeichen vorne und hinten entfernen
-      x <- trimws(x)
+  # Leerzeichen vorne und hinten entfernen
+  x <- trimws(x)
+  
+  # Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
+  if(freq == "auto") {
+    
+    freq <- ifelse(length(unique(tolower(x))) == length(x), FALSE, TRUE)
+  }
+  
+  # Alphabetisch sortieren und in Dataframe umwandeln
+  x <- x[order(x)]
+  x <- as.data.frame(x[!is.na(x)])
 
-      # Alphabetisch sortieren und in Dataframe umwandeln
-      x <- x[order(x)]
-      x <- as.data.frame(x[!is.na(x)])
 
-
-      if(freq == TRUE) {
+  if(freq == TRUE) {
         
-        # Wieder in Vektor umwandeln
-        x <- unlist(x, use.names = FALSE)
+    # Wieder in Vektor umwandeln
+    x <- unlist(x, use.names = FALSE)
         
-        # Gruppen nach Kleinbuchstaben bilden
-        Gruppen <- split(x, tolower(x))
+    # Gruppen nach Kleinbuchstaben bilden
+    Gruppen <- split(x, tolower(x))
         
-        # für jede Gruppe: die häufigste Schreibweise auswählen
-        most_used <- function(x) {x |> table() |> which.max() |> names() |> first()}
-        Hauptschreibweisen <- sapply(Gruppen, most_used)
+    # für jede Gruppe: die häufigste Schreibweise auswählen
+    most_used <- function(x) {x |> table() |> which.max() |> names() |> first()}
+    Hauptschreibweisen <- sapply(Gruppen, most_used)
         
-        # Häufigkeiten (aller Varianten) zählen
-        Häufigkeiten <- lengths(Gruppen)
+    # Häufigkeiten (aller Varianten) zählen
+    Häufigkeiten <- lengths(Gruppen)
         
-        # Tabelle mit den Repräsentanten und den Häufigkeiten
-        Tabelle <- data.frame(Antwort = Hauptschreibweisen,
-                           Häufigkeit = Häufigkeiten,
+    # Tabelle mit den Repräsentanten und den Häufigkeiten
+    Tabelle <- data.frame(Antwort = Hauptschreibweisen,
+                            Häufigkeit = Häufigkeiten,
                             row.names = NULL)
         
-        # Nach Häufigkeit sortieren
-        Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
+    # Nach Häufigkeit sortieren
+    Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
         
-        # Formatierung der Tabelle
-        subchunkify(lv.kable(Tabelle, col.width = c(137, 18),
-                             striped = FALSE, escape = TRUE))
-
-
-      } else {
-
-        colnames(x) <- "Antwort"
-        subchunkify(lv.kable(x, col.width = 159, striped = FALSE, escape = TRUE))
-      }
-
-
+    # Formatierung der Tabelle
+    subchunkify(lv.kable(Tabelle, col.width = c(137, 18),
+                         striped = FALSE, escape = TRUE))
+    
     } else {
-
-      cat("*Keine offenen Antworten zu dieser Frage.*\n")
-
-    }
-
-    cat("  \n  \n")
-
+      
+    colnames(x) <- "Antwort"
+    subchunkify(lv.kable(x, col.width = 159, striped = FALSE, escape = TRUE))
   }
+  cat(" \n\n")
 }
 
