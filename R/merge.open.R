@@ -38,18 +38,18 @@ merge.open <- function(x, # Daten
     return(invisible())
   } 
 
-  # Leerzeichen vorne und hinten entfernen
-  x <- trimws(x)
+  # Leerzeichen vorne und hinten entfernen, NAs entfernen
+  x <- trimws(x[!is.na(x)])
   
   # Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
   if(freq == "auto") {
     
-    freq <- ifelse(length(unique(tolower(x))) == length(x), FALSE, TRUE)
+    freq <- length(unique(tolower(x))) < length(x)
   }
   
   # Alphabetisch sortieren und in Dataframe umwandeln
   x <- x[order(x)]
-  x <- as.data.frame(x[!is.na(x)])
+  x <- as.data.frame(x)
 
 
   if(freq == TRUE) {
