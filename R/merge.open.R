@@ -44,7 +44,7 @@ merge.open <- function(x, # Daten
   # Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
   if(freq == "auto") {
     
-    freq <- ifelse(length(unique(tolower(x))) == length(x), FALSE, TRUE)
+    freq <- ifelse(length(unique(tolower(x))) == length(x), TRUE, FALSE)
   }
   
   # Alphabetisch sortieren und in Dataframe umwandeln
