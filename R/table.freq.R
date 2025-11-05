@@ -66,8 +66,8 @@ table.freq <- function(x, # Daten
     ), ]
   }
 
-  if (col.width[1] == "default" & length(jim) == 4) {col.width <- set.analysis.defaults$col.width4}
-  if (col.width[1] == "default" & length(jim) == 3) {col.width <- set.analysis.defaults$col.width3}
+  if (col.width[1] == "default" & length(jim) == 4) {col.width <- setanalysis_defaults$col.width4}
+  if (col.width[1] == "default" & length(jim) == 3) {col.width <- setanalysis_defaults$col.width3}
 
   lv.kable(jim, caption = caption, col.width = col.width, bold = bold,
            bold.col1 = bold.col1, digits = digits)

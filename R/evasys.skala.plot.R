@@ -19,7 +19,6 @@ evasys.skala.plot <- function(x, # Daten
   x[!(x %in% c(1:number))] <- NA
   x <- x[!is.na(x)]
   
-  
   tmin <- sapply(tmin, \(x) paste(strwrap(x, width = 15), collapse = "\n"))
   tmax <- sapply(tmax, \(x) paste(strwrap(x, width = 15), collapse = "\n"))
 
@@ -33,16 +32,16 @@ evasys.skala.plot <- function(x, # Daten
     subset(select = c("n", "mean", "sd", "min", "max")) |>
     data.frame()
   
-  xtab <- table(c(x, 1:number)) - 1 #damit alle angezeigt werden
+  xtab <- table(c(x, 1:number)) - 1 # damit alle angezeigt werden
   
-  par(mar=c(2, 5.3, 2.1, 5.3))
-  par(fg="gray50") # Farbe Rand
-  par(family = set.analysis.defaults$font.family)
+  par(mar = c(2, 5.3, 2.1, 5.3))
+  par(fg = "gray50") # Farbe Rand
+  par(family = setanalysis_defaults$font.family)
   barplot(rep(NA, number),ylim=c(0,sum(table(x))),axes=FALSE)
   abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80")
   bp <- barplot(xtab, #damit alle angezeigt werden
                 ylim=c(0, sum(table(x))),
-                col = set.analysis.defaults$color.bars,
+                col = setanalysis_defaults$color.bars,
                 axes = FALSE, add = TRUE, axisnames = FALSE)
   box()
   axis(side = 1, at=bp, tick = FALSE, labels = c(1:number),
@@ -53,13 +52,16 @@ evasys.skala.plot <- function(x, # Daten
   par(new=TRUE)
   bxp <- boxplot(as.numeric(x), plot=FALSE)
   bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd)))
-  invisible(ifelse(bxp$stats[5,1]>number, bxp$stats[5,1] <- number, bxp$stats[5,1] <- bxp$stats[5,1]))
-  invisible(ifelse(bxp$stats[1,1]<1, bxp$stats[1,1] <- 1, bxp$stats[1,1] <- bxp$stats[1,1]))
-  bxp(bxp, horizontal = TRUE, ylim=c(0.6,number + 0.4), xlim = c(0.3,1.3), boxcol = rgb(0.55, 0, 0), staplewex = 0.6, staplelwd=2,
-      boxlwd=3,
-      whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE)
-  mtext(tmin, side=1, at = -0.5, line = line.tmin, font = 2, col = "gray30", cex = 0.65)
-  mtext(tmax, side=1, at = number*1.27, line = line.tmax, font = 2, col = "gray30", cex = 0.65)
+  invisible(ifelse(bxp$stats[5,1] > number, bxp$stats[5,1] <- number, bxp$stats[5,1] <- bxp$stats[5,1]))
+  invisible(ifelse(bxp$stats[1,1] < 1, bxp$stats[1,1] <- 1, bxp$stats[1,1] <- bxp$stats[1,1]))
+  bxp(bxp, horizontal = TRUE, ylim=c(0.6, number + 0.4), xlim = c(0.3,1.3), boxcol = "#8C0000",
+      staplewex = 0.6,
+      staplelwd = 2,
+      boxlwd = 3,
+      whisklty = 1, whisklwd = 2, outline = FALSE, axes = FALSE)
+  
+  mtext(tmin, side = 1, at = -0.5, line = line.tmin, font = 2, col = "gray30", cex = 0.65)
+  mtext(tmax, side = 1, at = number*1.27, line = line.tmax, font = 2, col = "gray30", cex = 0.65)
 
   cat("  \n  \n")
 }

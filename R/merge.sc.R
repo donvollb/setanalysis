@@ -22,7 +22,7 @@ merge.sc <- function(x, # Daten
                      already.labels = FALSE, # Wurden die Daten bereits in Label umgewandelt?
                      col2.name = "n", # Name der n-Spalte in Tabelle
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = set.analysis.defaults$show.plot.sc, # Soll der Plot angezeigt werden?
+                     show.plot = setanalysis_defaults$show.plot.sc, # Soll der Plot angezeigt werden?
                      pagebreak = FALSE, # Seitenumbruch dahinter?
                      digits = 1) #Anzahl Nachkommastellen
 {

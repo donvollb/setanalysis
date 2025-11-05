@@ -19,8 +19,8 @@
 boxplot.aggr.sk <- function(x, # Daten
                             item_labels, # Labels/Text/Beschriftungen der Y-Achse
                             skala, # Skala der x-Achse
-                            color = set.analysis.defaults$color.bars,
-                            font_family = set.analysis.defaults$font.family)
+                            color = setanalysis_defaults$color.bars,
+                            font_family = setanalysis_defaults$font.family)
 {
   daten <- cbind(x)
   n_items <- ncol(daten)
@@ -36,7 +36,7 @@ boxplot.aggr.sk <- function(x, # Daten
  
 
   par(family = font_family,
-          fg = "gray80",
+          fg = "gray50",
         lend = "square", # Linienenden eckig
        ljoin = "mitre")  # Linienschnitt eckig
   

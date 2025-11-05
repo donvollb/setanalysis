@@ -40,7 +40,7 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      valid.perc = TRUE, # mit gültigen Prozent?
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                      digits = 1, # Wie viele Nachkommastellen sollen angezeigt werden?
-                     show.plot = set.analysis.defaults$show.plot.mc) # Soll der Plot angezeigt werden?
+                     show.plot = setanalysis_defaults$show.plot.mc) # Soll der Plot angezeigt werden?
 {
   if (inkl == "nr") {
     if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
@@ -118,8 +118,8 @@ merge.mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
       }
     }
 
-    if(ncol(results) == 4) {col.width <- set.analysis.defaults$col.width4
-                    } else {col.width <- set.analysis.defaults$col.width3}
+    if(ncol(results) == 4) {col.width <- setanalysis_defaults$col.width4
+                    } else {col.width <- setanalysis_defaults$col.width3}
 
     if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width,
                                                  digits = digits),

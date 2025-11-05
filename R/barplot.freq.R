@@ -11,7 +11,7 @@
 #' @export barplot.freq
 
 barplot.freq <- function(x, # Daten
-                         color = set.analysis.defaults$color.bars, # Farbe Balken
+                         color = setanalysis_defaults$color.bars, # Farbe Balken
                          xlab = "", # Beschriftung x-Achse
                          main = "", # Titel der Abbildung
                          cutoff = FALSE) # cutoff, bei z.B. 12 werden alle Werte über 12 als "12+" abgebildet
@@ -26,8 +26,8 @@ barplot.freq <- function(x, # Daten
   }
 
   bp <- plot(descr::freq(x, plot = FALSE),
-             col = set.analysis.defaults$color.bars,
-             family = set.analysis.defaults$font.family,
+             col = setanalysis_defaults$color.bars,
+             family = setanalysis_defaults$font.family,
              ylim = c(0, 5/4*max(table(x))),
              xlab = xlab,
              main = main,
@@ -42,5 +42,5 @@ barplot.freq <- function(x, # Daten
     if (max(x, na.rm = TRUE) == cutoff){ axis(1,
                                               at = bp[, 1],
                                               labels = labs, tick = FALSE,
-                                              family = set.analysis.defaults$font.family)}}
+                                              family = setanalysis_defaults$font.family)}}
 }

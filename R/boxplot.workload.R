@@ -27,7 +27,7 @@ boxplot.workload <- function(x, # Daten
   # Grafikparameter für den Plot einstellen -------------------------------
   
   par(fg = "gray80",  # Farbe des Grid (die Hilfslinen) festlegen
-      family = set.analysis.defaults$font.family, # Schriftart festlegen
+      family = setanalysis_defaults$font.family, # Schriftart festlegen
       mar=c(7, 4.1, 2, 4.2), # Seitenränder festlegen
       lend = "square", # Linienenden eckig
       ljoin = "mitre") # Linienschnitt eckig
@@ -53,8 +53,8 @@ boxplot.workload <- function(x, # Daten
   boxplot(x, ylab = NULL, xlab = NULL, horizontal = TRUE, ylim=c(1:n_skala),
           xaxt = "n", yaxt = "n", #boxwex = 0.8,
           border="black",
-          pars =list(outcol = set.analysis.defaults$color.bars, outpch = 20),
-          col = set.analysis.defaults$color.bars, add = TRUE)
+          pars =list(outcol = setanalysis_defaults$color.bars, outpch = 20),
+          col = setanalysis_defaults$color.bars, add = TRUE)
   
   # Achsenmarkierungen und Beschriftungen einfügen ------------------------
   
