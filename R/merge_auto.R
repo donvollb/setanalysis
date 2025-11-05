@@ -54,7 +54,7 @@ if (type == "open/num") {
 Funktionsliste <- list(
       sc = merge.sc,
       sk = merge.evasys.sk,
-    open = open.answers,
+    open = merge_open,
      num = merge.num,
 multi.mc = merge.mc,
 multi.sk = merge.multi.sk
