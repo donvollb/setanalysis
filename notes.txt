@@ -1,7 +1,6 @@
 #### Funktionen ####
 
 ## generell
-- Paketstruktur erstellen
 - Alternative für minipage in Quarto (latexunabhängig)
 - verschachtelte if-else Bedingungen ein wenig auflösen und entschärfen (z.B. mit else if oder return/stop)
 - wenn nicht schon geschehen: Alles nicht direkt offensichtliche auskommentieren
@@ -20,12 +19,6 @@
 - prüfen, ob Alternativen
 - quarto-Syntax einarbeiten
 
-# auto.newline
-- brauchen wir das? Falls ja: schlanker programmieren und mit newline2 mergen
-
-# auto.newline2
-- durchschauen
-
 # get.label
 - übertragen
 
@@ -37,12 +30,6 @@
 # aggr.data
 - vielleicht eleganter, aber kann man so lassen
 
-# open.answers
-- Latex-code rausschmeißen, quarto Syntax benutzen
-
-# label.test
-- sjlabelled verbannen
-
 # NEU? inkl.checks für wrapper Funktionen?
 - vielleicht, erstmal nicht wichtig
 
@@ -53,19 +40,36 @@
 - Latex-Zeug entfernen
 - vielleicht besser die colwidths regeln
 
-# Barplots: nur barplot.freq mitnehmen
-
-
-# Boxplots
-- generell alle durchschauen
-- Gesamtnote und ECTS: evtl. zusammenfassen, auf jeden Fall aber die Aufteilung nach ECTS in der Workloadabbildung rausnehmen
-- boxplot.vert: Erstmal nicht mitnehmen
 
 # evasys.sk.plot
 - einfach mal drüberschauen
 
-# merge-Funktionen:
-- alle bis auf whiskers mitnehmen
-- generell: Kürzen, was geht; Latex-Code raus
+# Bisherige Unzulänglichkeiten merge_many
 
+- merge.multi.sk funktioniert theoretisch, aber praktisch bisher nutzlos, weil manuelle Eingabe der Überschriften nicht richtig möglich
+- merge.multi.subj lässt sich nicht anhand des Fragentyps erkennen, funktioniert bisher nicht
+- merge.wl wird bisher auch nicht erkannt
+- merge.num funktioniert zwar grundsätzlich, aber da eigentlich eine Angabe des Labels für den Plot notwendig ist, ist es nicht so toll, außerdem wird da hier die Labelsetzung und -beschriftung allerdings bisher manuell erfolgt ist es nicht richtig nützlich
 
+# Ideale Umbennennung der Funktionen (Vorschlag Simon)
+
+  merge_num	    <- merge.num & merge.fachsem
+✓ merge_open	<- merge.open & open.answers
+  merge_mc	    <- merge.mc
+  merge_subj	<- merge.subj
+  merge_wl	    <- merge.wl
+✓ merge_grade	<- grade
+  merge_rueck	<- boxplot.ruecklauf
+ ¿merge_multi?  <- merge.multi.sk
+  merge_evasys  <- merge.evasys.sk
+
+barplot_num 	<- barplot.freq
+barplot_choice	<- barplot.sc.mc
+barplot_evasys  <- evasys.skala.plot
+boxplot_grade	<- boxplot.gesnote
+¿boxplot_multi	<- boxplot.aggr.sk?
+boxplot_wl		<- boxplot.workload
+boxplot_rueck	<- Teile von boxplot.ruecklauf
+
+aggr_data <- aggr.data
+text.alternative: löschen und durch etwas Code im ShowUp-Bericht ersetzen (dafür ist keine Funktion nötig)
