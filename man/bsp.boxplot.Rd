@@ -4,25 +4,18 @@
 \alias{bsp.boxplot}
 \title{Beispiel-Boxplot mit Beschriftung}
 \usage{
-bsp.boxplot(
-  x = "default",
-  boxcolor = set.analysis.defaults$color.bars,
-  textfamily = set.analysis.defaults$font.family,
-  textcolor = set.analysis.defaults$color.font
-)
+bsp.boxplot(x = "default")
 }
 \arguments{
 \item{x}{Daten, bei "default" wird ein Beispieldatensatz genutzt}
-
-\item{boxcolor}{Farbe des Boxplots}
-
-\item{textfamily}{Schriftart}
-
-\item{textcolor}{Farbe des Textes (Y-Achsenbeschriftungen?)}
 }
 \value{
 Beispiel-Boxplot
 }
 \description{
 Beispiel-Boxplot mit Beschriftung
+}
+\examples{
+bsp.boxplot() |> markdown_in_viewer()
+
 }

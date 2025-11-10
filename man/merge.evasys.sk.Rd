@@ -16,8 +16,7 @@
   alt2.num = 7,
   lime = FALSE,
   lime.brackets = FALSE,
-  show.plot = set.analysis.defaults$show.plot.sk,
-  no.pagebreak = FALSE
+  show.plot = setanalysis_defaults$show.plot.sk
 )
 }
 \arguments{
@@ -44,8 +43,6 @@
 \item{lime.brackets}{Müssen eckige Klammern um den Fragetext herum entfernt werden?}
 
 \item{show.plot}{Zeige Plot?}
-
-\item{no.pagebreak}{Sollen Seitenumbrüche verhindert werden?}
 }
 \description{
 Funktion für Abbildungen analog zu alten EvaSys-Skalen

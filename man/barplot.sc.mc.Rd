@@ -4,7 +4,7 @@
 \alias{barplot.sc.mc}
 \title{Barplot zur Abbildung von von SC/MC-Fragen}
 \usage{
-\method{barplot}{sc.mc}(x, color = set.analysis.defaults$color.bars, xlab = "")
+\method{barplot}{sc.mc}(x, color = setanalysis_defaults$color.bars, xlab = "")
 }
 \arguments{
 \item{x}{Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)}

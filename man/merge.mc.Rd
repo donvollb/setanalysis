@@ -18,7 +18,7 @@
   valid.perc = TRUE,
   order.table = FALSE,
   digits = 1,
-  show.plot = set.analysis.defaults$show.plot.mc
+  show.plot = setanalysis_defaults$show.plot.mc
 )
 }
 \arguments{

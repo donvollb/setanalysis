@@ -6,7 +6,7 @@
 \usage{
 \method{barplot}{freq}(
   x,
-  color = set.analysis.defaults$color.bars,
+  color = setanalysis_defaults$color.bars,
   xlab = "",
   main = "",
   cutoff = FALSE

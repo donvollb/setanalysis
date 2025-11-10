@@ -43,8 +43,7 @@ markdown_in_viewer <- function(markdown_function) {
   knitr::opts_chunk$set(dev = image.device)
 }
 
-#' @rdname markdown_in_viewer
-#'
+#' @noRd
 #' @export
 
 markdown.in.viewer <- markdown_in_viewer

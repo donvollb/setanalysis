@@ -4,13 +4,7 @@
 \alias{boxplot.aggr.sk}
 \title{Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden}
 \usage{
-\method{boxplot}{aggr.sk}(
-  x,
-  item_labels,
-  skala,
-  color = set.analysis.defaults$color.bars,
-  font_family = set.analysis.defaults$font.family
-)
+\method{boxplot}{aggr.sk}(x, item_labels, skala)
 }
 \arguments{
 \item{x}{Daten}
@@ -18,10 +12,6 @@
 \item{item_labels}{Labels/Text/Beschriftungen der Y-Achse}
 
 \item{skala}{Skala der x-Achse}
-
-\item{color}{Farbe der Boxen}
-
-\item{font_family}{Schriftart}
 }
 \value{
 Boxplot
