@@ -6,11 +6,11 @@
 .common_par <- function(...) {
   
   par(fg = "gray15", # Farbe Rand
-     las = 1, # Schriftrotierung (keine Rotierung)
+     las = 1,        # Schriftrotierung (keine Rotierung)
     lend = "square", # Linienenden eckig
-   ljoin = "mitre", # Linienschnitt eckig
-  family = setanalysis_defaults$font.family,
-     ...) # Schriftart
+   ljoin = "mitre",  # Linienschnitt eckig
+  family = setanalysis_defaults$font.family, # Schriftart
+     ...)            # sonstige Parameter, z. B. mar
 }
 
 #' @noRd
@@ -43,6 +43,9 @@
       outline = TRUE,
    horizontal = TRUE,
          ...)
+  
+  box(lwd = 1.5) # Etwas dicker Rand des Plots
+
 }
  
 #' @noRd
