@@ -1,4 +1,6 @@
 #' merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
+#' `merge.wl()` ist eine veraltete Schreibweise der gleichen Funktion
+
 #'
 #' @param WL WL der Daten
 #' @param kennung Kennung/Fallnummer zum Aggregieren
@@ -6,12 +8,12 @@
 #'
 #' @examples
 
-#' merge.wl(BspDaten$dataLVE$WL,
-#' BspDaten$dataLVE$Kennung, already.aggr = FALSE) |> markdown_in_viewer()
+#' merge_wl(BspDaten$dataLVE$WL, already.aggr = FALSE
+#'          BspDaten$dataLVE$Kennung) |> markdown_in_viewer()
 #' 
-#' @export merge.wl
+#' @export merge_wl
 
-merge.wl <- function(WL, # WL der Daten
+merge_wl <- function(WL, # WL der Daten
                      kennung, # Kennung/Fallnummer zum Aggregieren
                      already.aggr = FALSE) # Sind die Daten bereits aggregiert?
 {
@@ -39,6 +41,11 @@ merge.wl <- function(WL, # WL der Daten
   
   # Boxplot erstellen -----------------------------------------------------
 
-  subchunkify(boxplot.workload(WL), fig_width = 9, fig_height = 4)
+  subchunkify(boxplot_wl(WL), fig_width = 9, fig_height = 4)
 
 }
+
+#' @noRd
+#' @export
+
+merge.wl <- merge_wl
