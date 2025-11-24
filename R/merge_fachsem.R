@@ -1,4 +1,5 @@
 #' merge-Funktion für Fachsemester
+#' `merge.wl()` ist eine veraltete Schreibweise der gleichen Funktion
 #'
 #' @param x Daten
 #' @param fig.height Höhe des Plots im Dokument 
@@ -7,11 +8,11 @@
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 #'
-#' @examples merge.fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()
+#' @examples merge_fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()
 #'
-#' @export merge.fachsem
+#' @export merge_fachsem
 
-merge.fachsem <- function(x, # Daten
+merge_fachsem <- function(x, # Daten
                           fig.height = 5, # Höhe des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
                           cutoff = 12, # cutoff-Wert, alle Werte >= cutoff werden zusammengefasst
                           group = "a", # Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
@@ -41,14 +42,12 @@ merge.fachsem <- function(x, # Daten
 
 
     x[x >= cutoff] <- cutoff
-
+    x <- factor(x)
+    levels(x)[cutoff] <- paste0(cutoff, "+")
 
     cat(paste0("## Fachsemester ", caps, "  \n  \n"))
     cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehört: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
 
-    # kein print bei Flextable
-    #print(table.freq(x, col1.name = xl, cutoff = cutoff)) # main ist die Überschrift
-    #table.freq(x, col1.name = xl, cutoff = cutoff)
 
     subchunkify( # Ausgabe der Flextable
       table.freq(x, col1.name = xl, cutoff = cutoff) |>
@@ -56,11 +55,8 @@ merge.fachsem <- function(x, # Daten
     )
 
 
-
     cat("  \n  \n")
-
-    subchunkify(barplot.freq(x, xlab = xl, cutoff = cutoff), fig_height = 5, fig_width = 10) # xlab ist Label x-Achse
-
+    subchunkify(barplot_freq(x, xlab = "Fachsemester"), fig_height = 5, fig_width = 10) # xlab ist Label x-Achse
     cat("  \n  \n")
 
   }
