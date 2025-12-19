@@ -11,11 +11,11 @@
 #' @param pagebreak Seitenumbrüche mittendrin verhindern?
 #' @param digits Anzahl der Nachkommastellen in der Tabelle
 #'
-#' @examples markdown_in_viewer(merge.sc(BspDaten$dataLVE$V3_D, inkl = TRUE, nr = 1))
+#' @examples merge_sc(BspDaten$dataLVE$V3_D) |> markdown_in_viewer()
 #'
-#' @export merge.sc
+#' @export merge_sc
 
-merge.sc <- function(x, # Daten
+merge_sc <- function(x, # Daten
                      inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                      nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                      fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen*0.75 +1
@@ -48,7 +48,8 @@ merge.sc <- function(x, # Daten
   freq.tab <- descr::freq(x, plot = FALSE)
   results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
     
-    # automatische Zeilenumbrüche bei langen Labels ---------------------
+  # automatische Zeilenumbrüche bei langen Labels -------------------------
+  
   results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, width = 40), collapse = "\n"))
     
   results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
@@ -56,10 +57,10 @@ merge.sc <- function(x, # Daten
 
   if (show.plot == TRUE) {
     if (fig.height == "default") {
-      subchunkify(barplot.sc.mc(results, xlab = "Häufigkeit"),
-                  fig_height = (1 + 0.75*nrow(results)), fig_width = 9)
+      subchunkify(barplot_scmc(results, xlab = "Häufigkeit"),
+                  fig_height = (1 + 1.25 * nrow(results)), fig_width = 9)
     } else {
-      subchunkify(barplot.sc.mc(x = results, xlab = "Häufigkeit"),
+      subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
                   fig_height = fig.height, fig_width = 9)}
     }
     
@@ -68,5 +69,9 @@ merge.sc <- function(x, # Daten
     }
   
   cat("\n \n")
-
 }
+
+#' @noRd
+#' @export merge.sc
+
+merge.sc <- merge_sc
