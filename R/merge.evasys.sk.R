@@ -93,7 +93,7 @@ merge.evasys.sk <- function(x, # Daten
 
     if(show.plot == TRUE) {
       
-      subchunkify(evasys.skala.plot(x, tmin, tmax, number = number), fig_height = 1.4, fig_width = 6)
+      subchunkify(barplot_evasys(x, tmin, tmax, number = number), fig_height = 1.4, fig_width = 6)
     }
   }
 }

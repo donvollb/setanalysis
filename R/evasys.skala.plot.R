@@ -8,13 +8,18 @@
 #' @param tmax Beschriftung rechts
 #' @param number Skala (6 für Sechserskala etc.)
 #'
+#' @examples
+#' barplot_evasys(BspDaten$dataSHOWUP$info_ausr_studgang,
+#'                tmin = "stimme gar nicht zu", tmax = "stimme voll zu")
+#' 
+#'
 #' @returns Barplot-Boxplot-Hybrid
 #' @export
 
-evasys.skala.plot <- function(x, # Daten
-                              tmin, # Beschriftung links
-                              tmax, # Beschriftung rechts
-                              number = 6) # Skala (6 für Sechserskala etc.)
+barplot_evasys <- function(x, # Daten
+                           tmin, # Beschriftung links
+                           tmax, # Beschriftung rechts
+                           number = 6) # Skala (6 für Sechserskala etc.)
 {
   x[!(x %in% c(1:number))] <- NA
   x <- x[!is.na(x)]
@@ -32,36 +37,42 @@ evasys.skala.plot <- function(x, # Daten
     subset(select = c("n", "mean", "sd", "min", "max")) |>
     data.frame()
   
-  xtab <- table(c(x, 1:number)) - 1 # damit alle angezeigt werden
+  xtab <- table(c(x, 1:number)) #- 1 # damit alle angezeigt werden
   
-  par(mar = c(2, 5.3, 2.1, 5.3))
-  par(fg = "gray50") # Farbe Rand
-  par(family = setanalysis_defaults$font.family)
-  barplot(rep(NA, number),ylim=c(0,sum(table(x))),axes=FALSE)
-  abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80")
-  bp <- barplot(xtab, #damit alle angezeigt werden
-                ylim=c(0, sum(table(x))),
-                col = setanalysis_defaults$color.bars,
-                axes = FALSE, add = TRUE, axisnames = FALSE)
-  box()
-  axis(side = 1, at=bp, tick = FALSE, labels = c(1:number),
-       cex.axis = 0.65, line = -0.7)
+  .common_par(mar = c(2, 5.3, 2.1, 5.3))
+  
+  .empty_plot(xlim = c(0.2, number * 1.2), ylim = c(0, sum(table(x))))
+  
+  #barplot(rep(NA, number),ylim=c(0,sum(table(x))),axes=FALSE)
+  abline(v = seq(0.7, -0.5 + 1.2 * number, by = 1.2), col = "grey80")
+  
+  .costum_barplot(xtab)
+  # .costum_boxplot(- 0.5 + 1.2 * x, at = length(x) * 0.75, boxwex = 0, median = FALSE, mean = TRUE,
+  #                 staplewex = 0.6, staplelwd = 2,
+  #                 boxlwd = 3, whisklty = 1, whisklwd = 2)
+  
+  .text_bottom(1:number, at = seq(0.7, -0.5 + 1.2 * number, by = 1.2))  
+  .text_top(paste(sprintf("%.1f", 100 * prop.table(xtab)), "%"),
+            at = seq(0.7, -0.5 + 1.2 * number, by = 1.2))
 
-  axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(xtab),1), " %", sep=""),
-       cex.axis = 0.65, line = -0.5)
-  par(new=TRUE)
+  
+  par(new = TRUE)
+  
+  boxplot(c(mean(x) - sd(x), rep(mean(x), 3), mean(x) + sd(x)),
+          medcol = setanalysis_defaults$color.bars,
+          horizontal = TRUE, range = 0, ylim = c(0.6, number + 0.4), medlwd = 4,
+          boxlwd = 0, xlim = c(0.3,1.3), whisklty = 1)
+          
+          # boxcol = "#8C0000", staplewex = 0.6, staplelwd = 2,
+          # boxlwd = 3, boxwex = 0, outline = FALSE,
+          # whisklty = 1, whisklwd = 2, axes = FALSE)
+  
   bxp <- boxplot(as.numeric(x), plot=FALSE)
   bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd)))
   invisible(ifelse(bxp$stats[5,1] > number, bxp$stats[5,1] <- number, bxp$stats[5,1] <- bxp$stats[5,1]))
   invisible(ifelse(bxp$stats[1,1] < 1, bxp$stats[1,1] <- 1, bxp$stats[1,1] <- bxp$stats[1,1]))
-  bxp(bxp, horizontal = TRUE, ylim=c(0.6, number + 0.4), xlim = c(0.3,1.3), boxcol = "#8C0000",
-      staplewex = 0.6,
-      staplelwd = 2,
-      boxlwd = 3,
-      whisklty = 1, whisklwd = 2, outline = FALSE, axes = FALSE)
-  
-  mtext(tmin, side = 1, at = -0.5, line = line.tmin, font = 2, col = "gray30", cex = 0.65)
-  mtext(tmax, side = 1, at = number*1.27, line = line.tmax, font = 2, col = "gray30", cex = 0.65)
+  .text_left(tmin)
+  .text_right(tmax)
 
   cat("  \n  \n")
 }

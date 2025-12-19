@@ -69,9 +69,18 @@
   
   mtext(side = 2,        # links platzieren
         line = 1,        # Abstand zum Plot
-        las = 1,        # Textausrichtung (horizontal, nicht gedreht)
-        col = "gray15", # Textfarbe
-        ...)            # z. B. Position und Text 
+         las = 1,        # Textausrichtung (horizontal, nicht gedreht)
+         col = "gray15", # Textfarbe
+         ...)            # z. B. Position und Text 
+}
+
+.text_right <- function(...) {
+  
+  mtext(side = 4,        # rechts platzieren
+        line = 1,        # Abstand zum Plot
+         las = 1,        # Textausrichtung (horizontal, nicht gedreht)
+         col = "gray15", # Textfarbe
+         ...)            # z. B. Position und Text 
 }
 
 #' @noRd
@@ -89,6 +98,15 @@
 .text_bottom_2 <- function(...) {
   
   mtext(side = 1,        # unten platzieren
+        font = 1,        # fette Schrift
+        col = "gray15", # Textfarbe
+        ...)            # z. B. Position und Text
+}
+
+.text_top <- function(...) {
+  
+  mtext(side = 3,        # oben platzieren
+        line = 1,        # Abstand zum Plot
         font = 1,        # fette Schrift
         col = "gray15", # Textfarbe
         ...)            # z. B. Position und Text
