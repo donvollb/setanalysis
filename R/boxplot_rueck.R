@@ -16,7 +16,7 @@ boxplot_rueck <- function(x) # Daten
   
   # Grafikparameter anpassen ----------------------------------------------
 
-  .common_par(mar = c(2.1, 5 , 0.1, 2.5))
+  .common_par(mar = c(2.1, 5, 0.1, 2.5))
   
   # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
   

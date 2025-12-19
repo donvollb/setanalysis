@@ -78,5 +78,5 @@ merge_num <- function(x, # Daten
 }
 
 #' @noRd
-#' @export
+#' @export merge.num
 merge.num <- merge_num

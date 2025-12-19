@@ -57,6 +57,6 @@ merge_grade <- function(x, # Daten
 
 
 #' @noRd
-#' @export
+#' @export grade
 
 grade <- merge_grade

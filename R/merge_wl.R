@@ -46,6 +46,6 @@ merge_wl <- function(WL, # WL der Daten
 }
 
 #' @noRd
-#' @export
+#' @export merge.wl
 
 merge.wl <- merge_wl

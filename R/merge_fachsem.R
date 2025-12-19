@@ -1,5 +1,5 @@
 #' merge-Funktion für Fachsemester
-#' `merge.wl()` ist eine veraltete Schreibweise der gleichen Funktion
+#' `merge.fachsem()` ist eine veraltete Schreibweise der gleichen Funktion
 #'
 #' @param x Daten
 #' @param fig.height Höhe des Plots im Dokument 
@@ -61,3 +61,7 @@ merge_fachsem <- function(x, # Daten
 
   }
 }
+
+#' @noRd
+#' @export merge.fachsem
+merge.fachsem <- merge_fachsem

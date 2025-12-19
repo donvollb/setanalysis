@@ -43,6 +43,6 @@ merge_rueck <- function(x, # Objekt mit Teilnehmendenzahlen
 }
 
 #' @noRd
-#' @export
+#' @export boxplot.ruecklauf
 
 boxplot.ruecklauf <- merge_rueck

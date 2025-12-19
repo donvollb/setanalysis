@@ -144,8 +144,6 @@ merge_open <- function(x, # Daten
 merge.open <- merge_open
 
 #' @noRd
-#' @export
+#' @export open.answers
 
-open.answers <- function(appendix = TRUE, is_appendix = FALSE) {
-  merge.open(appendix = appendix, is_appendix = is_appendix)
-}
+open.answers <- function(...) merge.open(..., appendix = TRUE, is_appendix = FALSE)
