@@ -3,13 +3,13 @@
 \name{merge_num}
 \alias{merge_num}
 \title{Funktion für die Abbildung numerischer (quasi metrisch, wie Alter, Abschlussnote, etc.)
-Kann auch für Balkendiagramme bei ordinalen Skalen genutzt werden}
+Kann auch für Balkendiagramme bei ordinalen Skalen genutzt werden
+\code{merge.num()} ist eine veraltete Schreibweise der gleichen Funktion}
 \usage{
 merge_num(
   x,
   inkl = "nr",
   nr = "",
-  main = "",
   xlab = "",
   cut.breaks = "",
   cut.labels = "",
@@ -25,8 +25,6 @@ merge_num(
 
 \item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
 
-\item{main}{Überschrift für Plot}
-
 \item{xlab}{Beschriftung x-Achse}
 
 \item{cut.breaks}{Soll es cuts geben? Wo sollen die "breaks" sein, siehe cut()}
@@ -38,10 +36,13 @@ merge_num(
 \item{fig.height}{Höhe der Abbildung}
 
 \item{cutoff}{Soll es einen cutoff geben? Alle Werte >= cutoff werden zusammengefasst; Ist nicht mit cuts möglich!}
+
+\item{main}{Überschrift für Plot}
 }
 \description{
 Funktion für die Abbildung numerischer (quasi metrisch, wie Alter, Abschlussnote, etc.)
 Kann auch für Balkendiagramme bei ordinalen Skalen genutzt werden
+\code{merge.num()} ist eine veraltete Schreibweise der gleichen Funktion
 }
 \examples{
 

@@ -2,7 +2,8 @@
 % Please edit documentation in R/merge_fachsem.R
 \name{merge_fachsem}
 \alias{merge_fachsem}
-\title{merge-Funktion für Fachsemester}
+\title{merge-Funktion für Fachsemester
+\code{merge.fachsem()} ist eine veraltete Schreibweise der gleichen Funktion}
 \usage{
 merge_fachsem(
   x,
@@ -28,6 +29,7 @@ merge_fachsem(
 }
 \description{
 merge-Funktion für Fachsemester
+\code{merge.fachsem()} ist eine veraltete Schreibweise der gleichen Funktion
 }
 \examples{
 merge_fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()

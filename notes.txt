@@ -60,14 +60,14 @@
   merge_wl	    <- merge.wl
 ✓ merge_grade	<- grade
   merge_rueck	<- boxplot.ruecklauf
- ¿merge_multi?  <- merge.multi.sk
+  merge_aggr  <- merge.multi.sk
   merge_evasys  <- merge.evasys.sk
 
 barplot_num 	<- barplot.freq
 barplot_choice	<- barplot.sc.mc
 barplot_evasys  <- evasys.skala.plot
 boxplot_grade	<- boxplot.gesnote
-¿boxplot_multi	<- boxplot.aggr.sk?
+boxplot_aggr	<- boxplot.aggr.sk?
 boxplot_wl		<- boxplot.workload
 boxplot_rueck	<- Teile von boxplot.ruecklauf
 
