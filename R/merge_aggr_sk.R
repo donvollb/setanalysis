@@ -1,6 +1,9 @@
 #' merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
 #'
-#' @param x Itemdaten (Dataframe mit mehreren Spalten)
+#' `merge.multi.sk()` ist eine veraltete Schreibweise der gleichen Funktion
+
+#' 
+#' @param x Itemdaten (Dataframe mit einer oder mehreren Spalten)
 #' @param kennung Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt) 
 #' @param number Anzahl Antwortoptionen der Items (OHNE AUSWEICHOPTIONEN!), wird bei "default" automatisch gezogen
 #' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
@@ -24,13 +27,13 @@
 #' KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
 #' 
 #' # Funktion ausführen:
-#' markdown_in_viewer(merge.multi.sk(KF_123, number = 6, aggr = TRUE,
+#' markdown_in_viewer(merge_aggr_sk(KF_123, number = 6, aggr = TRUE,
 #'                    kennung = BspDaten$dataLVE$Kennung))
 #' 
-#' @export merge.multi.sk
+#' @export merge_aggr_sk
 
 
-merge.multi.sk <- function(x, # Daten
+merge_aggr_sk <- function(x, # Daten
                            kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
                            number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
                            alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
@@ -144,15 +147,15 @@ merge.multi.sk <- function(x, # Daten
 
 
     if (aggr == TRUE) {
-      x <- aggr.data(vars = x, kennung = kennung)
+      x <- aggr_data(vars = x, kennung = kennung)
     }
 
     if (number %% 2 == 0 | tmid == "") { #bei gerader Anzahl Stufen oder keinem Mittellabel
-      text.skala <- paste0("(1) ", tmin, " - (", number, ") ", tmax)
+      text.skala <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
       labels.skala <- c(tmin, rep("", number-2), tmax)
     } else { #bei ungerader Anzahl Stufen
-      text.skala <- paste0("(1) ", tmin, " - (", (number+1)/2, ") ", tmid,
-                           " - (", number, ") ", tmax)
+      text.skala <- paste0("(1)~", tmin, " - (", (number+1)/2, ")~", tmid,
+                           " - (", number, ")~", tmax)
       labels.skala <- c(tmin, rep("", (number-3)/2), tmid,
                         rep("", (number-3)/2), tmax)}
 
@@ -182,22 +185,14 @@ merge.multi.sk <- function(x, # Daten
       subchunkify(
         table.stat.multi(
           x,
-          col1.name = "Item",
+          col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, ']_'),
           col2.name = col2.name,
-          bold.col1 = FALSE,
+          bold.corner = FALSE,
           alt1 = alt1,
           alt2 = alt2,
           alt1.list = alt1.list,
           alt2.list = alt2.list
-        ) |>
-          flextable::bold(i=1, j=1, part="header", bold=FALSE) |>
-          flextable::mk_par(
-            i=1, j=1, part="header",
-            flextable::as_paragraph(
-              flextable::as_b("Item"),
-              flextable::colorize(flextable::as_i(paste0(" [Skala: ", text.skala, "]")), color="gray20")
-            )
-          )
+        )
       )
     }
 
@@ -212,21 +207,23 @@ merge.multi.sk <- function(x, # Daten
       if (fig.height == "default")
       {
         subchunkify(
-          boxplot.aggr.sk(x, labels, labels.skala),
+          boxplot_aggr_sk(x, labels, labels.skala),
           fig_height = (length(labels) + 1),
           fig_width = 9
         )
-      }
-      else
-      {
+      } else {
         subchunkify(
-          boxplot.aggr.sk(x, labels, labels.skala),
+          boxplot_aggr_sk(x, labels, labels.skala),
           fig_height = fig.height,
           fig_width = 9
         )
       }
-
     }
 
     cat("  \n  \n")
 }
+
+#' @noRd
+#' @export merge.multi.sk
+
+merge.multi.sk <- merge_aggr_sk
