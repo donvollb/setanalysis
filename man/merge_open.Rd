@@ -15,7 +15,7 @@ merge_open(
   inkl_global = setanalysis_defaults$inkl.open,
   nr = "",
   freq = "auto",
-  appendix = setanalysis_defaults$open.apendix,
+  appendix = setanalysis_defaults$open.appendix,
   is_appendix = FALSE,
   anchor = FALSE
 )

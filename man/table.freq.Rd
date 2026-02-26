@@ -6,7 +6,6 @@
 \usage{
 table.freq(
   x,
-  caption = NULL,
   cutoff = FALSE,
   show.all = TRUE,
   col1.name = "",
@@ -14,14 +13,11 @@ table.freq(
   col.width = "default",
   order.table = FALSE,
   bold = TRUE,
-  bold.col1 = TRUE,
   digits = 1
 )
 }
 \arguments{
 \item{x}{Daten}
-
-\item{caption}{Überschrift der Tabelle (siehe lv.kable)}
 
 \item{cutoff}{Soll es einen "cutoff" geben? z.B. werden bei 12 alle Werte >= 12 in "12 oder höher" dargestellt}
 
@@ -31,13 +27,11 @@ table.freq(
 
 \item{col2.name}{Name der zweiten Zelle der Kopfzeile (standardmäßig N)}
 
-\item{col.width}{Spaltenbreite (siehe lv.kable)}
+\item{col.width}{Spaltenbreiten (siehe lv_table)}
 
 \item{order.table}{Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren}
 
-\item{bold}{Soll die Kopfzeile fett sein? (siehe lv.kable)}
-
-\item{bold.col1}{Soll die erste Zelle der Kopfzeile fett sein? (siehe lv.kable)}
+\item{bold}{Soll die Kopfzeile fett sein? (siehe lv_table)}
 }
 \value{
 Tabelle

@@ -25,5 +25,5 @@ barplot_freq(BspDaten$Plots$num, xlab = "Durchschnittsnote für Hochschulzugangs
 
 # Beispiel für Verwendung in merge_fsem ---------------------------------
 
-barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle", cutoff = 12)
+barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle")
 }

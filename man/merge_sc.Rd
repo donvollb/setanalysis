@@ -2,7 +2,8 @@
 % Please edit documentation in R/merge_sc.R
 \name{merge_sc}
 \alias{merge_sc}
-\title{merge-Funktion für single-choice Fragen}
+\title{merge-Funktion für single-choice Fragen
+\code{merge.sc()} ist eine veraltete Schreibweise der gleichen Funktion}
 \usage{
 merge_sc(
   x,
@@ -40,6 +41,7 @@ merge_sc(
 }
 \description{
 merge-Funktion für single-choice Fragen
+\code{merge.sc()} ist eine veraltete Schreibweise der gleichen Funktion
 }
 \examples{
 merge_sc(BspDaten$dataLVE$V3_D) |> markdown_in_viewer()

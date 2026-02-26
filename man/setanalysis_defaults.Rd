@@ -5,7 +5,7 @@
 \alias{setanalysis_defaults}
 \title{Globale Umgebung für die Paketkonfiguration}
 \format{
-An object of class \code{environment} of length 14.
+An object of class \code{environment} of length 13.
 }
 \usage{
 setanalysis_defaults

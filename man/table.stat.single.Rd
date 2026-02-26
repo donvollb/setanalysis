@@ -4,30 +4,16 @@
 \alias{table.stat.single}
 \title{Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle}
 \usage{
-table.stat.single(
-  x,
-  caption = NULL,
-  md = FALSE,
-  col1.name = "N_votes",
-  col1.width = setanalysis_defaults$col1.width.tss,
-  bold = TRUE,
-  bold.col1 = TRUE
-)
+table.stat.single(x, md = FALSE, col1.name = "N_votes", bold = TRUE)
 }
 \arguments{
 \item{x}{Daten}
-
-\item{caption}{Überschrift der Tabelle}
 
 \item{md}{Mit Median?}
 
 \item{col1.name}{Name der ersten Zelle der Kopfzeile}
 
-\item{col1.width}{Breite der Kopfzeile}
-
 \item{bold}{Fettdruck der Kopfzeile}
-
-\item{bold.col1}{Fettdruck der ersten Zelle der Kopfzeile}
 }
 \value{
 Tabelle
