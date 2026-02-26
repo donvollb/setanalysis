@@ -13,7 +13,7 @@
 #'
 #' # Beispiel für Verwendung in merge_fsem ---------------------------------
 #'
-#' barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle", cutoff = 12)
+#' barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle")
 
 #' @export barplot_freq
 
@@ -22,7 +22,7 @@ barplot_freq <- function(x, # Daten
 {
   
   opar <- par(no.readonly = TRUE)
-  .common_par()
+  .common_par(mar = c(4, 3, 0.5, 0.5))
   
   x_max <- max(table(x))
   
