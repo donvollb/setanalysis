@@ -30,8 +30,14 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
   }
   
   opar <- par(no.readonly = TRUE)
-  .common_par(mar = c(2, 12.5, 0.5, 0.5)) # mehr Platz links für lange Labels
+
+  # Maximale Anzahl Zeichen in den Labels ermitteln, ----------------------
+  # um linken Rand entsprechend anzupassen --------------------------------
+  maxAnzahlZeichen <- max(nchar(unlist(strsplit(x$label, "\n"))))
   
+  .common_par(mar = c(2, 4 + maxAnzahlZeichen * 0.35, 0.5, 0.5)) 
+
+
   .empty_plot(ylim = c(0.05 * nrow(x), 0.2 + nrow(x) * 1.15),
               xlim = c(0, max(x$freq) * 7/6))
   
