@@ -29,7 +29,7 @@ merge_grade <- function(x, # Daten
   label <- attr(x, "label")
     
   if(already.aggr == FALSE) {
-    x <- aggr.data(x, kennung)}
+    x <- aggr_data(x, kennung)}
     
   if(length(x) == 0){cat("**Tabelle wurde wegen fehlender Daten nicht erstellt.** \n\n")
     return(invisible())} 
@@ -38,18 +38,9 @@ merge_grade <- function(x, # Daten
     subchunkify(
       table.stat.multi(x,
                        labels = label,
-                       col1.name = "Item [Skala: Schulnoten]",
-                       col2.name = "N",
-                       bold.col1 = FALSE) |>
-        flextable::append_chunks(flextable::as_sub("courses"), i=1, j=2, part="header") |> # courses tiefergestellt
-        flextable::bold(i=1, j=1, part="header", bold=FALSE) |>
-        flextable::mk_par(
-          i=1, j=1, part="header",
-          flextable::as_paragraph(
-            flextable::as_b("Item "),
-            flextable::colorize(flextable::as_i("[Skala: Schulnoten]"), color="gray20")
-          )
-        )
+                       col1.name = 'Item #text(style: "italic", weight: "regular")[Skala: Schulnoten]',
+                       col2.name = "N#sub[Courses]",
+                       bold.col1 = FALSE)        
     )
   }
   subchunkify(boxplot_grade(x), fig_height = 2, fig_width = 9)
