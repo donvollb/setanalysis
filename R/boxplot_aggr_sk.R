@@ -8,13 +8,13 @@
 #' 
 #' @examples
 #' 
-#' boxplot.aggr.sk(BspDaten$Plots$aggr.data,
+#' boxplot_aggr_sk(BspDaten$Plots$aggr.data,
 #'                 BspDaten$Plots$aggr.labels,
 #'                 BspDaten$Plots$aggr.skala)
 #' 
-#' @export boxplot.aggr.sk
+#' @export boxplot_aggr_sk
 
-boxplot.aggr.sk <- function(x,           # Daten
+boxplot_aggr_sk <- function(x,           # Daten
                             item_labels, # Labels/Text/Beschriftungen der Y-Achse
                             skala)       # Skala der x-Achse
 {

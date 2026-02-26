@@ -1,4 +1,6 @@
 #' merge-Funktion für MC-Fragen
+#' 
+#' `merge.mc()` ist eine veraltete Schreibweise der gleichen Funktion
 #'
 #' @param x Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, dass Labels enthalten sind
 #' @param head Fragetext, bei "default" wird dieser automatisch aus den Labels gezogen
@@ -25,7 +27,7 @@
 #' 
 #' merge_mc(Abschlüsse) |> markdown_in_viewer()
 #'
-#' @export merge.mc
+#' @export merge_mc
 
 merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, das Labels enthalten sind
                      head = "default", # Fragetext, bei "default wird dieser automatisch aus den Lables gezogen
@@ -118,7 +120,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
   if(ncol(results) == 4) {col.width <- setanalysis_defaults$col.width4
                   } else {col.width <- setanalysis_defaults$col.width3}
 
-  if(show.table == TRUE) {subchunkify(lv.kable(results, col.width = col.width,
+  if(show.table == TRUE) {subchunkify(lv_table(results, col.width = col.width,
                                                digits = digits),
                                       fig_height = 7, fig_width = 9)}
 
@@ -144,3 +146,8 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
   cat("  \n  \n")
 }
+
+#' @noRd
+#' @export merge.mc
+
+merge.mc <- merge_mc

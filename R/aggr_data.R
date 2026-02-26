@@ -3,10 +3,10 @@
 #' @param vars Variablen (oder eine Variable), die aggregiert werden sollen
 #' @param kennung Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen
 #' 
-#' @export aggr.data
+#' @export aggr_data
 
 # Funktion zum Aggregieren von Daten anhand einer Kennung/Fallnummer
-aggr.data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
+aggr_data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
                       kennung) # kennung können z.B. die LV-Kennungen oder die Fallnummern sein
 {
   labels <- as.character(lapply(data.frame(vars), attr, which = "label"))
