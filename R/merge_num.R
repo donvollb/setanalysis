@@ -49,6 +49,11 @@ merge_num <- function(x, # Daten
   if (!(sum(!is.na(x)) > 0)) {return(invisible())} # Falls es nur NA-Werte gibt,
                                                    # wird die Funktion auch beendet 
 
+  # Seitenumbrüche zwischen Überschrift, Tabelle und Diagramm verhindern
+  cat("::: {.block breakable=false}\n\n")
+  
+  
+  # Fragetext mit Nummer und Label der Variable ausgeben
   cat("### ", nr, " ", attr(x, "label"), "\n \n")
 
   x <- as.numeric(gsub(",", ".", x)) # falls mit Komma
@@ -74,7 +79,7 @@ merge_num <- function(x, # Daten
   subchunkify(barplot_freq(x, xlab = xlab),
               fig_width = 9, fig_height = fig.height)
 
-  cat("  \n  \n")
+  cat("\n\n:::\n\n")
 }
 
 #' @noRd
