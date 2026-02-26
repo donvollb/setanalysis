@@ -6,7 +6,7 @@
 #' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
-#' @importFrom flextable flextable
+#' @importFrom tinytable tt style_tt tt_format
 #' @importFrom dplyr first
 
 NULL
@@ -24,11 +24,10 @@ setanalysis_defaults$font.family <- "Red Hat Text"
 setanalysis_defaults$col.width3 <- c(108, 18, 11)
 setanalysis_defaults$col.width4 <- c(86, 18, 11, 18)
 setanalysis_defaults$col.width.sm <- c(64, 11, 9, 9, 9, 9, 9)
-setanalysis_defaults$col.width.sm.alt1 <- c(59, 8, 8, 8, 8, 8, 8, 9)
-setanalysis_defaults$col.width.sm.alt2 <- c(54, 7, 6, 6, 6, 6, 6, 6, 9)
+setanalysis_defaults$col.width.sm.alt1 <- c(59, 8, 8, 8, 8, 8, 8, 15)
+setanalysis_defaults$col.width.sm.alt2 <- c(52, 7, 7, 7, 5, 6, 6, 12, 12)
 setanalysis_defaults$col1.width.tss <- 12
 setanalysis_defaults$color.bars <- rgb(109, 172, 220, maxColorValue = 255)
-setanalysis_defaults$table.color <- "tablecolor"
 setanalysis_defaults$show.plot.sc <- TRUE
 setanalysis_defaults$show.plot.mc <- TRUE
 setanalysis_defaults$show.plot.sk <- TRUE

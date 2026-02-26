@@ -3,6 +3,7 @@
 #' @param x Objekt (üblicherweise Dataframe)
 #' @param col.width Vektor der Spaltenbreiten, bei "default" automatische Spaltenbreiten
 #' @param bold Sollen die Kopfzeile fettgedruckt sein?
+#' @param bold.corner Soll der header fett sein?
 #' @param digits Anzahl der Nachkommastellen
 #' @param striped Soll die Tabelle Streifen (Schattierungen) erhalten
 #'
