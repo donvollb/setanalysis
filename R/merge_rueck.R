@@ -27,15 +27,8 @@ merge_rueck <- function(x, # Objekt mit Teilnehmendenzahlen
   x.new <- as.numeric(all$Freq)/as.numeric(all$x)*100 # Teile die bisherigende Tn-Zahl durch die Zugelassenen (mal hundert)
   x <- x.new
   
-  # Ausgabe der Flextable
-  #  print(table.stat.single(x, col1.name = "N\\textsubscript{courses}")) # kein print() bei Flextable
-  #  table.stat.single(x, col1.name = "N_courses") # klappt nicht
-  #  knitr::knit_print(table.stat.single(x, col1.name = "N_courses")) # klappt nicht
-  #  subchunkify(table.stat.single(x, col1.name = "N_courses")) # für if und for bei Quarto erforderliche Funktion
-  subchunkify( # Ausgabe der Flextable
-    table.stat.single(x, col1.name = "N") |>
-      flextable::append_chunks(flextable::as_sub("courses"), i=1, j=1, part="header") # courses tiefergestellt
-  )
+  # Ausgabe der Tabelle ---------------------------------------------------
+  subchunkify(table.stat.single(x, col1.name = "N#sub[courses]"))
   
   cat("  \n  \n")
   
