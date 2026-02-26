@@ -1,15 +1,13 @@
 #' Einfache Statistiktabelle für mehrere Items mit Fragetexten
 #'
 #' @param x Daten
-#' @param caption Überschrift der Tabelle (siehe lv.kable) 
 #' @param col1.name Name der ersten Zelle der Kopfzeile
 #' @param col2.name Name der zweiten Zelle der Kopfzeile
 #' @param alt1 Text für erste Ausweichoption
 #' @param alt2 Text für zweite Ausweichoption
 #' @param alt1.list Antworthäufigkeiten erste Ausweichoption
 #' @param alt2.list Antworthäufigkeiten zweite Ausweichoption
-#' @param bold Sollen die Kopfzeile fettgedruckt sein? (siehe lv.kable)
-#' @param bold.col1 Soll die erste Zelle der Kopfzeile fettgedruckt sein? (siehe lv.kable)
+#' @param bold Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)
 #' @param labels Fragetexte, bei "labels" werden die Labels der Variablen genommen
 #'
 #' @returns Tabelle
@@ -20,21 +18,21 @@
 #' 
 #' @export table.stat.multi
 
-table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.kable)
+table.stat.multi <- function(x,
                              col1.name = "Item", # Name der ersten Zelle des headers
                              col2.name = "N_votes", # Name der zweiten Zelle des headers
                              alt1 = FALSE, # Text für erste Ausweichoption
                              alt2 = FALSE, # Text für zweite Ausweichoption
                              alt1.list = NULL, # Antworthäufigkeiten erste Ausweichoption
                              alt2.list = NULL, # Antworthäufigkeiten zweite Ausweichoption
-                             bold = TRUE, # fetter header? (siehe lv.kable)
-                             bold.col1 = TRUE, # fette erste Zeile im header? (siehe lv.kable)
+                             bold = TRUE, # fetter header? (siehe lv_table)
+                             bold.corner = TRUE, # fette erste Zeile im header? (siehe lv.kable)
                              labels = "labels") # Fragetexte, bei "labels" werden die labels der Variablen genommen
 {
 
   if(labels == "labels") {labels <- as.character(lapply(x, attr, which = "label"))}
 
-  bob <- as.data.frame(round(psych::describe(x), digits = 2))[c(2:5,8:9)]
+  bob <- as.data.frame(round(psych::describe(x), digits = 1))[c(2:5,8:9)]
   bob <- cbind(labels, bob)
   colnames(bob) <- c(col1.name,
                      col2.name,
@@ -61,8 +59,8 @@ table.stat.multi <- function(x, caption = NULL, # caption der Tabelle (siehe lv.
   }
 
 
-  lv.kable(bob, caption = caption,
+  lv_table(bob,
            col.width = widths,
            bold = bold,
-           bold.col1 = bold.col1)
+           bold.corner = bold.corner)
 }
