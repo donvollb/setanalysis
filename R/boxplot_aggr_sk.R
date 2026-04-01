@@ -31,9 +31,9 @@ boxplot_aggr_sk <- function(x,           # Daten
   .common_par()
   
   if(n_skala == 5) {
-    par(mar = c(4, 21.5, 0.1, 2.1)) # mehr Platz für Hinweistext bei 5er Skala
+    par(mar = c(4, 20, 0.1, 2.1)) # mehr Platz für Hinweistext bei 5er Skala
     } else {
-    par(mar = c(2.1, 21.5, 0.1, 2.1))
+    par(mar = c(2.1, 20, 0.1, 2.1))
   }
 
   # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
@@ -54,12 +54,14 @@ boxplot_aggr_sk <- function(x,           # Daten
   # Achsenbeschriftungen hinzufügen --------------------------------------
   
   .text_left(item_labels, at = 1:n_items)
-  
   .text_bottom(skala, at = 1:n_skala)
   
+  # Hinweistext hinzufügen, wenn 5er Skala --------------------------------
+
   if (n_skala == 5) {
     mtext("Hinweis: andere Skalenlogik (im Vergleich zu den 6er-Skalen)",
           side = 1, line = 3, col = "gray15", font = 3)}
+  
   # Vorher gesicherte Grafikparameter wiederherstellen --------------------
   
   par(opar)

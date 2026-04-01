@@ -1,7 +1,6 @@
 #' Barplot zur Abbildung von von SC/MC-Fragen
 #'
 #' @param x Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)
-#' @param color Farbe Balken
 #' @param xlab Beschriftung x-Achse
 #'
 #' @returns Barplot
@@ -29,14 +28,20 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
     return(invisible()) 
   }
   
-  opar <- par(no.readonly = TRUE)
-
   # Maximale Anzahl Zeichen in den Labels ermitteln, ----------------------
   # um linken Rand entsprechend anzupassen --------------------------------
-  maxAnzahlZeichen <- max(nchar(unlist(strsplit(x$label, "\n"))))
   
-  .common_par(mar = c(2, 4 + maxAnzahlZeichen * 0.35, 0.5, 0.5)) 
+  maxAnzahlZeichen <- max(nchar(unlist(strsplit(x$label, "\n"))))
 
+  # Bisherige Grafikparameter speichern -----------------------------------
+
+  opar <- par(no.readonly = TRUE)
+
+  # Grafikparameter für den Plot einstellen -------------------------------
+
+  .common_par(mar = c(2, 1 + maxAnzahlZeichen * 0.45, 0.5, 0.5)) 
+
+  # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
 
   .empty_plot(ylim = c(0.05 * nrow(x), 0.2 + nrow(x) * 1.15),
               xlim = c(0, max(x$freq) * 7/6))
@@ -49,7 +54,7 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
   
   .costum_barplot(rev(x$freq), horiz = TRUE)
   
-  # Achsenbeschriftungen --------------------------------------------------
+  # Achsenbeschriftungen hinzufügen ---------------------------------------
   
   .text_left(rev(x$label), at = seq(0.7, -0.5 + 1.2 * nrow(x), by = 1.2))
   .text_bottom(pretty(c(0, max(x$freq)), n = 4), at = pretty(c(0, max(x$freq)), n = 4))
@@ -60,4 +65,8 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
             x = rev(x$freq) + max(x$freq) * 0.03,
             y = seq(0.7, -0.5 + 1.2 * nrow(x), by = 1.2),
           adj = 0)
+  
+  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
+
+  par(opar)
 }

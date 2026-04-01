@@ -14,9 +14,9 @@ boxplot_grade <- function(x) # Daten
   
   opar <- par(no.readonly = TRUE)
   
-  # Grafikparameter anpassen ----------------------------------------------
+  # Grafikparameter für den Plot einstellen -------------------------------
   
-  .common_par(mar = c(2.1, 7, 0.1, 2.1))
+  .common_par(mar = c(2.1, 10.1, 0.1, 2.1))
   
   # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
   
@@ -28,18 +28,16 @@ boxplot_grade <- function(x) # Daten
   
   # Eigentlichen Boxplot zeichnen -----------------------------------------
   
-  .costum_boxplot(x, boxwex = 0.5, ylim = c(1,6))
+  .costum_boxplot(x, boxwex = 0.8, ylim = c(1,6))
   
   # Achsenbeschriftungen hinzufügen --------------------------------------
   
-  .text_left("Gesamtnote \nder LV", at = 1)
-  
+  .text_left("Gesamtnote der LV", at = 1)
   .text_bottom(at = c(1, 2, 3, 4, 5, 6),
                c("sehr gut", "gut", "befriedigend",
                  "ausreichend", "mangelhaft", "ungenügend"))
   
-  # Originalparameter widerherstellen -------------------------------------
-  
+  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
+
   par(opar)
-  
 }

@@ -31,7 +31,7 @@ barplot_sk <- function(x, # Daten
   
 
   
-  xtab <- table(c(x, 1:number)) #- 1 # damit alle angezeigt werden
+  xtab <- table(c(x, 1:number)) - 1 # damit alle angezeigt werden
   
   # Bisherige Grafikparameter speichern -----------------------------------
 
@@ -47,7 +47,7 @@ barplot_sk <- function(x, # Daten
   
   # Hilfslinien -----------------------------------------------------------
 
-  abline(v = seq(0.7, -0.5 + 1.2 * number, by = 1.2), col = "grey80")
+  abline(v = seq(0.7, -0.5 + 1.2 * number, by = 1.2), col = "grey70")
   
   # Eigentlichen Barplot zeichnen -----------------------------------------
 
@@ -74,6 +74,7 @@ barplot_sk <- function(x, # Daten
           horizontal = TRUE, range = 0, ylim = c(0.6, number + 0.4), medlwd = 4,
           boxlwd = 0.01, xlim = c(0.3, 1.3), whisklty = 1, outline = FALSE)
           
+  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
+  
   par(opar)
-  cat("  \n  \n")
 }

@@ -15,7 +15,7 @@ boxplot_wl <- function(x, # Daten
 
 {
   
-  # Berechnung der Anzahl der Veranstaltungen und Länge der Skala -------
+  # Berechnung der Anzahl der Veranstaltungen und Länge der Skala ---------
   
   n <- length(x)
   n_skala <- length(skala)
@@ -26,7 +26,7 @@ boxplot_wl <- function(x, # Daten
 
   # Grafikparameter für den Plot einstellen -------------------------------
   
-  .common_par(mar = c(7, 4.1, 2, 4.2))
+  .common_par(mar = c(7, 2, 0.1, 2))
 
   # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
   
@@ -38,19 +38,21 @@ boxplot_wl <- function(x, # Daten
   
   # Plot über die Vertikalen Linien drüber plotten ------------------------
 
-  .costum_boxplot(x, boxwex = 0.5, ylim = c(1:n_skala))
+  .costum_boxplot(x, boxwex = 0.8, ylim = c(1:n_skala))
 
   # Beschriftungen einfügen -----------------------------------------------
   
+  #.text_bottom(skala, at = 1:n_skala)
   mtext(skala, side = 1, line = 0.5, font = 2, at = 1:n_skala,
         las = 1, padj = 1, col = "gray15")
   
-  info1 <- "angegebener Workload der LV"
-  info2 <- paste0("[n = ", n, "]")
+  # info1 <- "angegebener Workload der LV"
+  # info2 <- paste0("[n = ", n, "]")
   
-  mtext(bquote(bold(.(info1)) ~ .(info2)), side = 1, line = 3, col = "gray15")
+  # mtext(bquote(bold(.(info1)) ~ .(info2)), side = 1, line = 3, col = "gray15")
+  .text_bottom_2(paste("angegebener Workload der LV [n =", n, "]"), line = 3)
 
-  # Ursprüngliche Grafikparameter wiederherstellen ------------------------
-  
+  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
+
   par(opar)
 }

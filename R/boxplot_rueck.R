@@ -14,9 +14,9 @@ boxplot_rueck <- function(x) # Daten
   
   opar <- par(no.readonly = TRUE)
   
-  # Grafikparameter anpassen ----------------------------------------------
+  # Grafikparameter für den Plot einstellen -------------------------------
 
-  .common_par(mar = c(2.1, 5, 0.1, 2.5))
+  .common_par(mar = c(2.1, 9, 0.1, 2.5))
   
   # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
   
@@ -28,14 +28,14 @@ boxplot_rueck <- function(x) # Daten
   
   # Eigentlichen Boxplot zeichnen -----------------------------------------
   
-  .costum_boxplot(x, boxwex = 0.5, ylim = c(0, 120))
+  .costum_boxplot(x, boxwex = 0.8, ylim = c(0, 120))
   
   # Achsenbeschriftungen hinzufügen --------------------------------------
   
-  .text_left("Rücklauf \nin Prozent", at = 1)
+  .text_left("Rücklauf in Prozent", at = 1)
   
-  .text_bottom(c("0", "20", "40", "60", "80", "100"),
-               at = c(0, 20, 40, 60, 80, 100))
+  .text_bottom(c("0","20","40","60","80","100"),
+          at = c( 0 , 20,  40,  60,  80,  100 ))
   
   # Vorher gesicherte Grafikparameter wiederherstellen --------------------
   
