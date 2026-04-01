@@ -1,4 +1,5 @@
 #' merge-Funktion für single-choice Fragen
+#' `merge.sc()` ist eine veraltete Schreibweise der gleichen Funktion
 #'
 #' @param x Daten
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
@@ -34,7 +35,6 @@ merge_sc <- function(x, # Daten
   
   if (sum(!is.na(x)) == 0) return(invisible()) # selbiges bei fehlenden Werten
   if(already.labels == FALSE) {
-    #x <- sjlabelled::to_label(x) #bisherige Lösung, jetzt ohne sjlabelled
     a <- attributes(x)
     x <- factor(x, levels = a$labels, labels = names(a$labels))
     attr(x, "label") <- a$label
@@ -58,7 +58,7 @@ merge_sc <- function(x, # Daten
   if (show.plot == TRUE) {
     if (fig.height == "default") {
       subchunkify(barplot_scmc(results, xlab = "Häufigkeit"),
-                  fig_height = (1 + 1.25 * nrow(results)), fig_width = 9)
+                  fig_height = (1 + nrow(results)), fig_width = 9)
     } else {
       subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
                   fig_height = fig.height, fig_width = 9)}
