@@ -14,19 +14,19 @@ bsp.table.stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frag
 {
   if(all == TRUE) {
 
-    jim <- as.data.frame(cbind("Frage", "Häufigkeit", "Mittelwert", "Standard-\nabweichung", "Median", "kleinster beob. Wert", "größter beob. Wert"))
+    jim <- data.frame(cbind("Frage", "Häufigkeit", "Mittelwert",
+                            "Standard-abweichung", "Median",
+                            "kleinster be⁠ob. Wert", "größter be⁠ob. Wert"))
+    
     colnames(jim) <- c("Item", "n", "M", "SD", "MD", "Min", "Max")
-    #    tab <- lv.kable(jim, col.width = c("30pt", "50pt", "50pt", "60pt", "35pt", "60pt", "60pt"))
-    tab <- lv.kable(jim, col.width = c(11, 18, 18, 21, 12, 21, 21))
-
+    
   } else {
 
-    jim <- as.data.frame(cbind("Häufigkeit", "Mittelwert", "Standard-\nabweichung", "kleinster beob. Wert", "größter beob. Wert"))
+    jim <- data.frame(cbind("Häufigkeit", "Mittelwert", "Standard-\nabweichung",
+                            "kleinster\nbeob. Wert", "größter\nbeob. Wert"))
+    
     colnames(jim) <- c("n", "M", "SD", "Min", "Max")
-    #    tab <- lv.kable(jim, col.width = c("50pt", "50pt", "60pt", "60pt", "60pt"))
-    tab <- lv.kable(jim, col.width = c(18, 18, 21, 21, 21))
   }
 
-  return(tab)
-
+  return(lv_table(jim))
 }
