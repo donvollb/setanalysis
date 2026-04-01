@@ -6,7 +6,6 @@
 #' @param x Daten
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
 #' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#' @param main Überschrift für Plot
 #' @param xlab Beschriftung x-Achse
 #' @param cut.breaks Soll es cuts geben? Wo sollen die "breaks" sein, siehe cut()
 #' @param cut.labels Soll es cuts geben? Wo sollen die "labels" sein, siehe cut()

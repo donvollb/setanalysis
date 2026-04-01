@@ -8,7 +8,7 @@
 #'
 #' @examples
 
-#' merge_wl(BspDaten$dataLVE$WL, already.aggr = FALSE
+#' merge_wl(BspDaten$dataLVE$WL, already.aggr = FALSE,
 #'          BspDaten$dataLVE$Kennung) |> markdown_in_viewer()
 #' 
 #' @export merge_wl
