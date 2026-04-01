@@ -1,5 +1,6 @@
-#' merge-Funktion für mehrere Skalenfragen, die auf einmal dargestellt werden sollen
-#'
+#' merge-Funktion für die Darstellung der aggregierten Ergebnisse einer oder
+#' mehrerer Skalenfragen#
+#' 
 #' `merge.multi.sk()` ist eine veraltete Schreibweise der gleichen Funktion
 
 #' 
@@ -100,6 +101,7 @@ merge_aggr_sk <- function(x, # Daten
              number <- Stufen[[1]]}
     } else {number <- length(attr(x, "labels"))}
   }
+  
   x <- data.frame(x)
 
   if (ncol(x) > 1) {
@@ -123,99 +125,108 @@ merge_aggr_sk <- function(x, # Daten
       warning(paste0("Achtung: Die Labels der einzelnen Items auf der linken
                    Seite sind unterschiedlich: \n", LabelLinks))}
 
-      tmin <- LabelLinks[[1]]}
+    tmin <- LabelLinks[[1]]}
 
-    if (tmid == "default" & number %% 2 == 1) { #nur bei ungerader Anzahl Stufen
+  if (tmid == "default" & number %% 2 == 1) { #nur bei ungerader Anzahl Stufen
 
-      LabelMitte <- unique(as.list(TabelleLabels[(number+1)/2,]))
+    LabelMitte <- unique(as.list(TabelleLabels[(number+1)/2,]))
 
-      if(length(unique(LabelMitte)) != 1) {
-        warning(paste0("Achtung: Die Labels der einzelnen Items in der Mitte
-                     sind unterschiedlich: \n", LabelMitte))}
+    if(length(unique(LabelMitte)) != 1) {
+      warning(paste0("Achtung: Die Labels der einzelnen Items in der Mitte
+                      sind unterschiedlich:\n", LabelMitte))}
 
-      tmid <- LabelMitte[[1]]}
+    tmid <- LabelMitte[[1]]}
 
-    if (tmax == "default") {
+  if (tmax == "default") {
 
-      LabelRechts <- unique(as.list(TabelleLabels[number,]))
+    LabelRechts <- unique(as.list(TabelleLabels[number,]))
 
-      if(length(unique(LabelRechts)) != 1) {
-        warning(paste0("Achtung: Die Labels der einzelnen Items auf der rechten
-                     Seite sind unterschiedlich: \n", LabelRechts))}
+  if(length(unique(LabelRechts)) != 1) {
+    warning(paste0("Achtung: Die Labels der einzelnen Items auf der rechten
+                    Seite sind unterschiedlich:\n", LabelRechts))}
 
-      tmax <- LabelRechts[[1]]}
+    tmax <- LabelRechts[[1]]}
 
 
-    if (aggr == TRUE) {
-      x <- aggr_data(vars = x, kennung = kennung)
-    }
+  if (aggr == TRUE) {
+    x <- aggr_data(vars = x, kennung = kennung)
+  }
 
-    if (number %% 2 == 0 | tmid == "") { #bei gerader Anzahl Stufen oder keinem Mittellabel
-      text.skala <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
-      labels.skala <- c(tmin, rep("", number-2), tmax)
+  if (number %% 2 == 0 | tmid == "") { #bei gerader Anzahl Stufen oder keinem Mittellabel
+    
+    text.skala <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
+    labels.skala <- c(tmin, rep("", number-2), tmax)
     } else { #bei ungerader Anzahl Stufen
-      text.skala <- paste0("(1)~", tmin, " - (", (number+1)/2, ")~", tmid,
-                           " - (", number, ")~", tmax)
-      labels.skala <- c(tmin, rep("", (number-3)/2), tmid,
-                        rep("", (number-3)/2), tmax)}
+    text.skala <- paste0("(1)~", tmin, " - (", (number+1)/2, ")~", tmid,
+                         " - (", number, ")~", tmax)
+    labels.skala <- c(tmin, rep("", (number-3)/2), tmid,
+                      rep("", (number-3)/2), tmax)}
 
-    if(message != "") {cat(message)}
+  if(message != "") {cat(message)}
 
 
-    # Alternativantworten in Listen schreiben (für die Tabelle)
-    if (alt1 != FALSE) {
+  # Alternativantworten in Listen schreiben (für die Tabelle) -------------
+  if (alt1 != FALSE) {
 
-      alt1.list <- NULL
-      for (l in 1:ncol(x)) {
+    alt1.list <- NULL
+    
+    for (l in 1:ncol(x)) {
         alt1.list <- c(alt1.list, sum(x[, l] == alt1.num, na.rm = TRUE))
-      }
     }
+  }
 
-    if (alt2 != FALSE) {
+  if (alt2 != FALSE) {
 
-      alt2.list <- NULL
-      for (l in 1:ncol(x)) {
-        alt2.list <- c(alt2.list, sum(x[, l] == alt2.num, na.rm = TRUE))
-      }
+    alt2.list <- NULL
+    for (l in 1:ncol(x)) {
+      alt2.list <- c(alt2.list, sum(x[, l] == alt2.num, na.rm = TRUE))
     }
+  }
 
-    x[x < 1 | x > number] <- NA
+  x[x < 1 | x > number] <- NA
 
-    if (show.table == TRUE) {
-      subchunkify(
-        table.stat.multi(
-          x,
-          col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, ']_'),
-          col2.name = col2.name,
-          bold.corner = FALSE,
-          alt1 = alt1,
-          alt2 = alt2,
-          alt1.list = alt1.list,
-          alt2.list = alt2.list
-        )
+  if (show.table == TRUE) {
+    subchunkify(
+      table.stat.multi(
+        x,
+        col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, ']_'),
+        col2.name = col2.name,
+        bold.corner = FALSE,
+        alt1 = alt1,
+        alt2 = alt2,
+        alt1.list = alt1.list,
+        alt2.list = alt2.list
       )
-    }
+    )
+  }
 
-    if (show.plot == TRUE) {
-      labels <- rev(labels)
-      x <- rev(x)
+  if (show.plot == TRUE) {
+    labels <- rev(labels)
+    x <- rev(x)
 
-      # Automatische Zeilenumbrüche einfügen ----------------------------
-      labels <- sapply(labels, \(x) paste(strwrap(x, width = 47), collapse = "\n")) 
+    # Automatische Zeilenumbrüche einfügen --------------------------------
+    
+    labels <- sapply(labels, \(x) paste(strwrap(x, width = 47), collapse = "\n")) 
 
+    if (fig.height == "default") {
 
-      if (fig.height == "default")
-      {
+      if (number %% 2 != 0) { # bei ungerader Anzahl Stufen mehr Platz für Hinweistext
         subchunkify(
           boxplot_aggr_sk(x, labels, labels.skala),
-          fig_height = (length(labels) + 1),
+          fig_height = (length(labels) + 1.5),
           fig_width = 9
         )
       } else {
         subchunkify(
           boxplot_aggr_sk(x, labels, labels.skala),
-          fig_height = fig.height,
+          fig_height = (length(labels) + 1),
           fig_width = 9
+        ) }
+    } else {
+      subchunkify(
+        boxplot_aggr_sk(x, labels, labels.skala),
+        fig_height = fig.height,
+        fig_width = 9
         )
       }
     }
