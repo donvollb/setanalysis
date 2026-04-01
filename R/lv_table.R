@@ -3,7 +3,7 @@
 #' @param x Objekt (üblicherweise Dataframe)
 #' @param col.width Vektor der Spaltenbreiten, bei "default" automatische Spaltenbreiten
 #' @param bold Sollen die Kopfzeile fettgedruckt sein?
-#' @param bold.corner Soll der header fett sein?
+#' @param bold.corner Soll die Zelle links oben im Eck fettgedruckt sein?
 #' @param digits Anzahl der Nachkommastellen
 #' @param striped Soll die Tabelle Streifen (Schattierungen) erhalten
 #'
@@ -53,8 +53,19 @@ lv_table <- function(x, # Objekt (am besten dataframe)
 
   # Anzahl der Nachkommastellen festlegen ---------------------------------
 
-  Tabelle <- tt_format(Tabelle, digits = digits)
+  Tabelle <- tt_format(Tabelle, num_zero = TRUE, num_fmt = "decimal", digits = digits)
   
+  # Nur eine Zeile: Erste Spalte linksbündig, Rest zentriert --------------
+
+  if (nrow(Tabelle) == 1) {
+    Tabelle <- style_tt(Tabelle, j = 1, align = "l")
+    Tabelle <- style_tt(Tabelle, j = 2:ncol(Tabelle), align = "c")
+
+  # Ansonsten: Erste Spalte linksbündig, Rest rechtsbündig ----------------
+} else {
+    Tabelle <- style_tt(Tabelle, j = 1, align = "l")
+    Tabelle <- style_tt(Tabelle, j = 2:ncol(Tabelle), align = "r")}
+
   # Fertige Tabelle ausgeben ----------------------------------------------
   
   return(Tabelle)
