@@ -8,8 +8,11 @@
 #' @param col.width Spaltenbreiten (siehe lv_table)
 #' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
 #' @param bold Soll die Kopfzeile fett sein? (siehe lv_table)
-#'
+#' @param digits Nachkommastellen
+#' 
 #' @returns Tabelle
+#' 
+#' @examples table.freq(BspDaten$Tabellen$freq)
 #' 
 #' @export table.freq
 
@@ -17,14 +20,14 @@ table.freq <- function(x, # Daten
                        cutoff = FALSE, # Soll es einen "cutoff" geben? z.B. werden bei 12 alle Werte >= 12 in "12 oder höher" dargestellt
                        show.all = TRUE, # Bei TRUE werden auch nicht gewählte Antwortoptionen angezeigt
                        col1.name = "", # Name der ersten Zelle des headers
-                       col2.name = "N", # Name der zweiten Zelle des headers
+                       col2.name = "n", # Name der zweiten Zelle des headers
                        col.width = "default", # Spaltenbreiten (siehe lv_table)
                        order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                        bold = TRUE, # Soll die Kopfzeile fett sein? (siehe lv_table)
-                       digits = 1)
+                       digits = 1) # Anzahl Nachkommastellen
 {
 
-  jim <- data.frame(descr::freq(x, plot=FALSE))
+  jim <- data.frame(descr::freq(x, plot = FALSE))
   jim <- data.frame(rownames(jim), jim)
   rownames(jim) <- NULL
 

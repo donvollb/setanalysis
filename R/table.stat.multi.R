@@ -8,6 +8,7 @@
 #' @param alt1.list Antworthäufigkeiten erste Ausweichoption
 #' @param alt2.list Antworthäufigkeiten zweite Ausweichoption
 #' @param bold Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)
+#' @param bold.corner Soll die Zelle ganz links in der Kopfzeile fettgedruckt sein?
 #' @param labels Fragetexte, bei "labels" werden die Labels der Variablen genommen
 #'
 #' @returns Tabelle
@@ -25,6 +26,7 @@ table.stat.multi <- function(x,
                              alt2 = FALSE, # Text für zweite Ausweichoption
                              alt1.list = NULL, # Antworthäufigkeiten erste Ausweichoption
                              alt2.list = NULL, # Antworthäufigkeiten zweite Ausweichoption
+                             digits = 2, # Anzahl der Nachkommastellen
                              bold = TRUE, # fetter header? (siehe lv_table)
                              bold.corner = TRUE, # fette erste Zeile im header? (siehe lv.kable)
                              labels = "labels") # Fragetexte, bei "labels" werden die labels der Variablen genommen
@@ -32,15 +34,9 @@ table.stat.multi <- function(x,
 
   if(labels == "labels") {labels <- as.character(lapply(x, attr, which = "label"))}
 
-  bob <- as.data.frame(round(psych::describe(x), digits = 1))[c(2:5,8:9)]
+  bob <- as.data.frame(psych::describe(x))[c(2:5,8:9)]
   bob <- cbind(labels, bob)
-  colnames(bob) <- c(col1.name,
-                     col2.name,
-                     "M",
-                     "SD",
-                     "MD",
-                     "Min",
-                     "Max")
+  colnames(bob) <- c(col1.name, col2.name, "M", "SD", "MD", "Min", "Max")
 
   widths <- setanalysis_defaults$col.width.sm
 
@@ -62,5 +58,6 @@ table.stat.multi <- function(x,
   lv_table(bob,
            col.width = widths,
            bold = bold,
+           digits = digits,
            bold.corner = bold.corner)
 }
