@@ -2,7 +2,7 @@
 
 # Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
 
-#' @importFrom grDevices rgb
+#' @importFrom grDevices rgb adjustcolor
 #' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
@@ -53,10 +53,9 @@ list.open.answers$anchor.nr <- 0
   if (!"Red Hat Text" %in% sysfonts::font_families()) {
    
   sysfonts::font_add("Red Hat Text", 
-    regular = system.file("fonts/RHMixed.ttf",            package = "setanalysis"),
-       bold = system.file("fonts/RHMixed Bold.ttf",       package = "setanalysis"),
-     italic = system.file("fonts/RHMixed Italic.ttf",     package = "setanalysis"),
- bolditalic = system.file("fonts/RHMixed BoldItalic.ttf", package = "setanalysis"))
+    regular = system.file("fonts/RHMixed-Regular.ttf", package = "setanalysis"),
+       bold = system.file("fonts/RHMixed-Bold.ttf",    package = "setanalysis"),
+     italic = system.file("fonts/RHMixed-Light.ttf",   package = "setanalysis"))
   
   showtext::showtext_auto()
   }}
