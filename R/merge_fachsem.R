@@ -49,10 +49,10 @@ merge_fachsem <- function(x, # Daten
     cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehört: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
 
 
-    subchunkify( # Ausgabe der Flextable
-      table.freq(x, col1.name = xl, cutoff = cutoff) |>
-        flextable::append_chunks(flextable::as_sub("votes"), i=1, j=2, part="header") # votes tiefergestellt
-    )
+    subchunkify( 
+      table.freq(x, col1.name = xl, col2.name = "n",
+                 cutoff = cutoff)
+                )
 
 
     cat("  \n  \n")

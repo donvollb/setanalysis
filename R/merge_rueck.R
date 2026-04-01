@@ -28,7 +28,7 @@ merge_rueck <- function(x, # Objekt mit Teilnehmendenzahlen
   x <- x.new
   
   # Ausgabe der Tabelle ---------------------------------------------------
-  subchunkify(table.stat.single(x, col1.name = "N#sub[courses]"))
+  subchunkify(table.stat.single(x, col1.name = "n", digits = 1))
   
   cat("  \n  \n")
   

@@ -38,9 +38,9 @@ merge_grade <- function(x, # Daten
     subchunkify(
       table.stat.multi(x,
                        labels = label,
-                       col1.name = 'Item #text(style: "italic", weight: "regular")[Skala: Schulnoten]',
-                       col2.name = "N#sub[Courses]",
-                       bold.col1 = FALSE)        
+                       col1.name = '#text(weight: "bold")[Item] _[Skala: Schulnoten]_',
+                       col2.name = "n",
+                       bold.corner = FALSE)        
     )
   }
   subchunkify(boxplot_grade(x), fig_height = 2, fig_width = 9)
