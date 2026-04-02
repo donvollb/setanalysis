@@ -12,6 +12,7 @@ table.stat.multi(
   alt2 = FALSE,
   alt1.list = NULL,
   alt2.list = NULL,
+  digits = 2,
   bold = TRUE,
   bold.corner = TRUE,
   labels = "labels"
@@ -33,6 +34,8 @@ table.stat.multi(
 \item{alt2.list}{Antworthäufigkeiten zweite Ausweichoption}
 
 \item{bold}{Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)}
+
+\item{bold.corner}{Soll die Zelle ganz links in der Kopfzeile fettgedruckt sein?}
 
 \item{labels}{Fragetexte, bei "labels" werden die Labels der Variablen genommen}
 }

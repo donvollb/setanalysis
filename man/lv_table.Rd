@@ -20,7 +20,7 @@ lv_table(
 
 \item{bold}{Sollen die Kopfzeile fettgedruckt sein?}
 
-\item{bold.corner}{Soll der header fett sein?}
+\item{bold.corner}{Soll die Zelle links oben im Eck fettgedruckt sein?}
 
 \item{digits}{Anzahl der Nachkommastellen}
 

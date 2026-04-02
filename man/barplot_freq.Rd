@@ -9,7 +9,7 @@ barplot_freq(x, xlab = "")
 \arguments{
 \item{x}{Daten}
 
-\item{main}{Titel der Abbildung}
+\item{xlab}{Achsenbeschriftung}
 }
 \value{
 Barplot
@@ -26,4 +26,5 @@ barplot_freq(BspDaten$Plots$num, xlab = "Durchschnittsnote für Hochschulzugangs
 # Beispiel für Verwendung in merge_fsem ---------------------------------
 
 barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle")
+
 }

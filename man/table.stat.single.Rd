@@ -4,7 +4,13 @@
 \alias{table.stat.single}
 \title{Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle}
 \usage{
-table.stat.single(x, md = FALSE, col1.name = "N_votes", bold = TRUE)
+table.stat.single(
+  x,
+  md = FALSE,
+  col1.name = "N_votes",
+  bold = TRUE,
+  digits = 2
+)
 }
 \arguments{
 \item{x}{Daten}
@@ -14,6 +20,8 @@ table.stat.single(x, md = FALSE, col1.name = "N_votes", bold = TRUE)
 \item{col1.name}{Name der ersten Zelle der Kopfzeile}
 
 \item{bold}{Fettdruck der Kopfzeile}
+
+\item{digits}{Anzahl der Nachkommastellen in der Tabelle}
 }
 \value{
 Tabelle

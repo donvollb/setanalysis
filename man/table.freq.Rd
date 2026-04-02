@@ -9,7 +9,7 @@ table.freq(
   cutoff = FALSE,
   show.all = TRUE,
   col1.name = "",
-  col2.name = "N",
+  col2.name = "n",
   col.width = "default",
   order.table = FALSE,
   bold = TRUE,
@@ -32,10 +32,16 @@ table.freq(
 \item{order.table}{Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren}
 
 \item{bold}{Soll die Kopfzeile fett sein? (siehe lv_table)}
+
+\item{digits}{Nachkommastellen}
 }
 \value{
 Tabelle
 }
 \description{
 Einfache Häufigkeitstabelle
+}
+\examples{
+table.freq(BspDaten$Tabellen$freq)
+
 }

@@ -36,8 +36,6 @@ merge_num(
 \item{fig.height}{Höhe der Abbildung}
 
 \item{cutoff}{Soll es einen cutoff geben? Alle Werte >= cutoff werden zusammengefasst; Ist nicht mit cuts möglich!}
-
-\item{main}{Überschrift für Plot}
 }
 \description{
 Funktion für die Abbildung numerischer (quasi metrisch, wie Alter, Abschlussnote, etc.)

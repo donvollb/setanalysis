@@ -10,8 +10,6 @@ barplot_scmc(x, xlab = "")
 \item{x}{Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)}
 
 \item{xlab}{Beschriftung x-Achse}
-
-\item{color}{Farbe Balken}
 }
 \value{
 Barplot

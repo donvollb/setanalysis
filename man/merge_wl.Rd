@@ -19,7 +19,7 @@ merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
 \code{merge.wl()} ist eine veraltete Schreibweise der gleichen Funktion
 }
 \examples{
-merge_wl(BspDaten$dataLVE$WL, already.aggr = FALSE
+merge_wl(BspDaten$dataLVE$WL, already.aggr = FALSE,
          BspDaten$dataLVE$Kennung) |> markdown_in_viewer()
 
 }
