@@ -32,7 +32,7 @@ merge_open <- function(x, # Daten
                        inkl_global = setanalysis_defaults$inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
                        nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
                        freq = "auto", # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
-                       appendix = setanalysis_defaults$open.apendix, # Gibt es einen Extra-Anhang, in dem die offenen Antworten gesammelt werden sollen?
+                       appendix = setanalysis_defaults$open.appendix, # Gibt es einen Extra-Anhang, in dem die offenen Antworten gesammelt werden sollen?
                        is_appendix = FALSE, # Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
                        anchor = FALSE) # Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
 {
@@ -53,10 +53,10 @@ merge_open <- function(x, # Daten
     cat(paste0("### ", nr, " ", attr(x, "label"), " {#sec-", anchor.nr, ".top} \n\n"))
 
       if(length(na.omit(x)) > 0) {
-        cat(paste0("*Die offenen Antworten zu dieser Frage finden sich im ",
-                   "[Anhang](#sec-", anchor.nr, ".bottom).*  \n\n"))
+        cat(paste0("*Die offenen Antworten zu dieser Frage finden sich* ",
+                   "[im Anhang](#sec-", anchor.nr, ".bottom).  \n\n\\\n\n"))
   } else {
-        cat("*Keine offenen Antworten zu dieser Frage.*  \n\n")
+        cat("*Keine offenen Antworten zu dieser Frage.*  \n\n\\\n\n")
   }
    
     assign(paste0("var.", anchor.nr), x, envir = list.open.answers)
@@ -124,13 +124,12 @@ merge_open <- function(x, # Daten
     Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
     
     # Formatierung der Tabelle
-    subchunkify(lv.kable(Tabelle, col.width = c(137, 18),
-                         striped = FALSE, escape = TRUE))
+    subchunkify(lv_table(Tabelle, col.width = c(137, 18), striped = FALSE))
     
   } else {
     
     colnames(x) <- "Antwort"
-    subchunkify(lv.kable(x, col.width = 159, striped = FALSE, escape = TRUE))
+    subchunkify(lv_table(x, col.width = 159, striped = FALSE))
   }
   
   cat(" \n\n")
