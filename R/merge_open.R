@@ -129,6 +129,9 @@ merge_open <- function(x, # Daten
   } else {
     
     colnames(x) <- "Antwort"
+    
+    cat("*Die folgenden Antworten wurden jeweils nur einmal gegeben:*  \n\n")
+    
     subchunkify(lv_table(x, col.width = 159, striped = FALSE))
   }
   
