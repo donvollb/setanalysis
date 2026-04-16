@@ -59,13 +59,19 @@ lv_table <- function(x, # Objekt (am besten dataframe)
 
   if (nrow(Tabelle) == 1) {
     Tabelle <- style_tt(Tabelle, j = 1, align = "l")
-    Tabelle <- style_tt(Tabelle, j = 2:ncol(Tabelle), align = "c")
 
-  # Ansonsten: Erste Spalte linksbündig, Rest rechtsbündig ----------------
-} else {
+  if (ncol(Tabelle) > 2) {
+    Tabelle <- style_tt(Tabelle, j = 2:(ncol(Tabelle)), align = "c")
+  }
+  
+   # Ansonsten: Erste Spalte linksbündig, Rest rechtsbündig ----------------
+  } else {
     Tabelle <- style_tt(Tabelle, j = 1, align = "l")
-    Tabelle <- style_tt(Tabelle, j = 2:ncol(Tabelle), align = "r")}
 
+  if (ncol(Tabelle) > 2) {
+    Tabelle <- style_tt(Tabelle, j = 2:(ncol(Tabelle)), align = "r")
+  }
+}  
   # Fertige Tabelle ausgeben ----------------------------------------------
   
   return(Tabelle)
