@@ -23,8 +23,8 @@ change.analysis.defaults(color.bars = "red", show.plot.sc = FALSE)
 
 #Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
 
-set.analysis.defaults$color.bars
-set.analysis.defaults$show.plot.sc
+setanalysis_defaults$color.bars
+setanalysis_defaults$show.plot.sc
 
 #Diese Änderung ginge nicht, weil die Variable nicht existiert
 #change.analysis.defaults(color.width2 = "turquoise")

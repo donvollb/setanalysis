@@ -1,0 +1,1 @@
+Diese Dateien sind abgewandelte Versionen von Red Hat Text, bei denen die Ziffern standardmäßig alle gleich breit sind (Tabellenziffern).

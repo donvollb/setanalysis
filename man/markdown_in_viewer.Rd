@@ -2,13 +2,10 @@
 % Please edit documentation in R/markdown_in_viewer.R
 \name{markdown_in_viewer}
 \alias{markdown_in_viewer}
-\alias{markdown.in.viewer}
 \title{Funktion um den Markdown-Code, welcher durch eine Funktion erzeugt wurde
 direkt im Viewer anzuzeigen}
 \usage{
 markdown_in_viewer(markdown_function)
-
-markdown.in.viewer(markdown_function)
 }
 \arguments{
 \item{markdown_function}{Funktion, welche Markdown-Code erzeugt}

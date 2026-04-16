@@ -1,34 +1,33 @@
 #' Einfache Häufigkeitstabelle
 #'
 #' @param x Daten
-#' @param caption Überschrift der Tabelle (siehe lv.kable)
 #' @param cutoff Soll es einen "cutoff" geben? z.B. werden bei 12 alle Werte >= 12 in "12 oder höher" dargestellt
 #' @param show.all Sollen auch nicht gewählte Antwortoptionen angezeigt werden?
 #' @param col1.name Name der ersten Zelle der Kopfzeile
 #' @param col2.name Name der zweiten Zelle der Kopfzeile (standardmäßig N)
-#' @param col.width Spaltenbreite (siehe lv.kable)
+#' @param col.width Spaltenbreiten (siehe lv_table)
 #' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-#' @param bold Soll die Kopfzeile fett sein? (siehe lv.kable)
-#' @param bold.col1 Soll die erste Zelle der Kopfzeile fett sein? (siehe lv.kable)
-#'
+#' @param bold Soll die Kopfzeile fett sein? (siehe lv_table)
+#' @param digits Nachkommastellen
+#' 
 #' @returns Tabelle
+#' 
+#' @examples table.freq(BspDaten$Tabellen$freq)
 #' 
 #' @export table.freq
 
 table.freq <- function(x, # Daten
-                       caption = NULL, # caption der Tabelle (siehe lv.kable)
                        cutoff = FALSE, # Soll es einen "cutoff" geben? z.B. werden bei 12 alle Werte >= 12 in "12 oder höher" dargestellt
                        show.all = TRUE, # Bei TRUE werden auch nicht gewählte Antwortoptionen angezeigt
                        col1.name = "", # Name der ersten Zelle des headers
-                       col2.name = "N", # Name der zweiten Zelle des headers
-                       col.width = "default", # Spaltenbreite (siehe lv.kable)
+                       col2.name = "n", # Name der zweiten Zelle des headers
+                       col.width = "default", # Spaltenbreiten (siehe lv_table)
                        order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                       bold = TRUE, # fetter header? (siehe lv.kable)
-                       bold.col1 = TRUE, # fette erste Zelle des headers? (siehe lv.kable)
-                       digits = 1)
+                       bold = TRUE, # Soll die Kopfzeile fett sein? (siehe lv_table)
+                       digits = 1) # Anzahl Nachkommastellen
 {
 
-  jim <- data.frame(descr::freq(x, plot=FALSE))
+  jim <- data.frame(descr::freq(x, plot = FALSE))
   jim <- data.frame(rownames(jim), jim)
   rownames(jim) <- NULL
 
@@ -66,10 +65,9 @@ table.freq <- function(x, # Daten
     ), ]
   }
 
-  if (col.width[1] == "default" & length(jim) == 4) {col.width <- set.analysis.defaults$col.width4}
-  if (col.width[1] == "default" & length(jim) == 3) {col.width <- set.analysis.defaults$col.width3}
+  if (col.width[1] == "default" & length(jim) == 4) {col.width <- setanalysis_defaults$col.width4}
+  if (col.width[1] == "default" & length(jim) == 3) {col.width <- setanalysis_defaults$col.width3}
 
-  lv.kable(jim, caption = caption, col.width = col.width, bold = bold,
-           bold.col1 = bold.col1, digits = digits)
+  lv_table(jim, col.width = col.width, bold = bold, digits = digits)
 
 }

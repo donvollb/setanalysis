@@ -6,22 +6,20 @@
 \usage{
 table.stat.multi(
   x,
-  caption = NULL,
   col1.name = "Item",
   col2.name = "N_votes",
   alt1 = FALSE,
   alt2 = FALSE,
   alt1.list = NULL,
   alt2.list = NULL,
+  digits = 2,
   bold = TRUE,
-  bold.col1 = TRUE,
+  bold.corner = TRUE,
   labels = "labels"
 )
 }
 \arguments{
 \item{x}{Daten}
-
-\item{caption}{Überschrift der Tabelle (siehe lv.kable)}
 
 \item{col1.name}{Name der ersten Zelle der Kopfzeile}
 
@@ -35,9 +33,9 @@ table.stat.multi(
 
 \item{alt2.list}{Antworthäufigkeiten zweite Ausweichoption}
 
-\item{bold}{Sollen die Kopfzeile fettgedruckt sein? (siehe lv.kable)}
+\item{bold}{Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)}
 
-\item{bold.col1}{Soll die erste Zelle der Kopfzeile fettgedruckt sein? (siehe lv.kable)}
+\item{bold.corner}{Soll die Zelle ganz links in der Kopfzeile fettgedruckt sein?}
 
 \item{labels}{Fragetexte, bei "labels" werden die Labels der Variablen genommen}
 }

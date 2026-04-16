@@ -2,11 +2,11 @@
 
 # Häufig verwendete Funktionen laden, dass man sie auch ohne „::“ nutzen kann
 
-#' @importFrom grDevices rgb
+#' @importFrom grDevices rgb adjustcolor
 #' @importFrom graphics abline axis barplot box boxplot mtext par segments text title
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
-#' @importFrom flextable flextable
+#' @importFrom tinytable tt style_tt tt_format
 #' @importFrom dplyr first
 
 NULL
@@ -16,24 +16,23 @@ NULL
 #' Globale Umgebung für die Paketkonfiguration
 #'
 #' Diese Umgebung wird verwendet, um Konfigurationswerte wie Farben zu speichern.
-#' @export set.analysis.defaults
+#' @export setanalysis_defaults
 
-set.analysis.defaults <<- new.env(parent = emptyenv())
+setanalysis_defaults <<- new.env(parent = emptyenv())
 
-set.analysis.defaults$font.family <- "Red Hat Text"
-set.analysis.defaults$col.width3 <- c(108, 18, 11)
-set.analysis.defaults$col.width4 <- c(86, 18, 11, 18)
-set.analysis.defaults$col.width.sm <- c(64, 11, 9, 9, 9, 9, 9)
-set.analysis.defaults$col.width.sm.alt1 <- c(59, 8, 8, 8, 8, 8, 8, 9)
-set.analysis.defaults$col.width.sm.alt2 <- c(54, 7, 6, 6, 6, 6, 6, 6, 9)
-set.analysis.defaults$col1.width.tss <- 12
-set.analysis.defaults$color.bars <- rgb(109, 172, 220, maxColorValue = 255)
-set.analysis.defaults$color.font <- "steelblue"
-set.analysis.defaults$table.color <- "tablecolor"
-set.analysis.defaults$show.plot.sc <- TRUE
-set.analysis.defaults$show.plot.mc <- TRUE
-set.analysis.defaults$show.plot.sk <- TRUE
-set.analysis.defaults$inkl.open <- TRUE
+setanalysis_defaults$font.family <- "Red Hat Text"
+setanalysis_defaults$col.width3 <- c(108, 18, 11)
+setanalysis_defaults$col.width4 <- c(86, 18, 11, 18)
+setanalysis_defaults$col.width.sm <- c(64, 11, 9, 9, 9, 9, 9)
+setanalysis_defaults$col.width.sm.alt1 <- c(59, 8, 8, 8, 8, 8, 8, 15)
+setanalysis_defaults$col.width.sm.alt2 <- c(52, 7, 7, 7, 5, 6, 6, 12, 12)
+setanalysis_defaults$col1.width.tss <- 12
+setanalysis_defaults$color.bars <- rgb(109, 172, 220, maxColorValue = 255)
+setanalysis_defaults$show.plot.sc <- TRUE
+setanalysis_defaults$show.plot.mc <- TRUE
+setanalysis_defaults$show.plot.sk <- TRUE
+setanalysis_defaults$open.appendix <- TRUE
+setanalysis_defaults$inkl.open <- TRUE
 
 #' Umgebung für die offenen Antworten -------------------------------------
 #'
@@ -54,10 +53,9 @@ list.open.answers$anchor.nr <- 0
   if (!"Red Hat Text" %in% sysfonts::font_families()) {
    
   sysfonts::font_add("Red Hat Text", 
-    regular = system.file("fonts/RHMixed.ttf",            package = "setanalysis"),
-       bold = system.file("fonts/RHMixed Bold.ttf",       package = "setanalysis"),
-     italic = system.file("fonts/RHMixed Italic.ttf",     package = "setanalysis"),
- bolditalic = system.file("fonts/RHMixed BoldItalic.ttf", package = "setanalysis"))
+    regular = system.file("fonts/RHMixed-Regular.ttf", package = "setanalysis"),
+       bold = system.file("fonts/RHMixed-Bold.ttf",    package = "setanalysis"),
+     italic = system.file("fonts/RHMixed-Light.ttf",   package = "setanalysis"))
   
   showtext::showtext_auto()
   }}
@@ -83,8 +81,8 @@ list.open.answers$anchor.nr <- 0
 #' 
 #' #Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
 #' 
-#' set.analysis.defaults$color.bars
-#' set.analysis.defaults$show.plot.sc
+#' setanalysis_defaults$color.bars
+#' setanalysis_defaults$show.plot.sc
 #' 
 #' #Diese Änderung ginge nicht, weil die Variable nicht existiert
 #' #change.analysis.defaults(color.width2 = "turquoise")
@@ -94,13 +92,13 @@ change.analysis.defaults <- function(...) {
   
   # Überprüfen, ob die Einstellungsvariablen überhaupt existieren ---------
   for (i in seq_along(changes)) {
-    if (!exists(names(changes)[i], envir = set.analysis.defaults)) {
+    if (!exists(names(changes)[i], envir = setanalysis_defaults)) {
       stop(paste0("Die Einstellungsvariable „", names(changes)[i], "“ existiert nicht."))
     }
   }
   
   # Einstellungen ändern --------------------------------------------------
   for (i in seq_along(changes)) {
-      assign(names(changes)[i], changes[[i]], envir = set.analysis.defaults)
+      assign(names(changes)[i], changes[[i]], envir = setanalysis_defaults)
     }
 }

@@ -1,0 +1,77 @@
+#' merge-Funktion für single-choice Fragen
+#' `merge.sc()` ist eine veraltete Schreibweise der gleichen Funktion
+#'
+#' @param x Daten
+#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @param fig.height Höhe der Abbildung, bei "default" ist es „Anzahl der Fragen“ * 0.75 + 1
+#' @param already.labels Wurden die Daten bereits in Label umgewandelt?
+#' @param col2.name Name der n-Spalte in der Tabelle
+#' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
+#' @param show.plot Soll der Plot angezeigt werden?
+#' @param pagebreak Seitenumbrüche mittendrin verhindern?
+#' @param digits Anzahl der Nachkommastellen in der Tabelle
+#'
+#' @examples merge_sc(BspDaten$dataLVE$V3_D) |> markdown_in_viewer()
+#'
+#' @export merge_sc
+
+merge_sc <- function(x, # Daten
+                     inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+                     nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+                     fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen*0.75 +1
+                     already.labels = FALSE, # Wurden die Daten bereits in Label umgewandelt?
+                     col2.name = "n", # Name der n-Spalte in Tabelle
+                     order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
+                     show.plot = setanalysis_defaults$show.plot.sc, # Soll der Plot angezeigt werden?
+                     pagebreak = FALSE, # Seitenumbruch dahinter?
+                     digits = 1) #Anzahl Nachkommastellen
+{
+  if (inkl == "nr") {
+    if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
+  }
+
+  if (inkl != TRUE) return(invisible()) # wenn inkl nicht TRUE, wird Funktion beendet
+  
+  if (sum(!is.na(x)) == 0) return(invisible()) # selbiges bei fehlenden Werten
+  if(already.labels == FALSE) {
+    a <- attributes(x)
+    x <- factor(x, levels = a$labels, labels = names(a$labels))
+    attr(x, "label") <- a$label
+  }
+
+  cat("###", nr, attr(x, "label"), "\n \n")
+
+  subchunkify(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
+                         order.table = order.table, digits = digits))
+
+  freq.tab <- descr::freq(x, plot = FALSE)
+  results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
+    
+  # automatische Zeilenumbrüche bei langen Labels -------------------------
+  
+  results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, width = 40), collapse = "\n"))
+    
+  results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
+  colnames(results) <- c("label", "freq", "perc")
+
+  if (show.plot == TRUE) {
+    if (fig.height == "default") {
+      subchunkify(barplot_scmc(results, xlab = "Häufigkeit"),
+                  fig_height = (1 + nrow(results)), fig_width = 9)
+    } else {
+      subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
+                  fig_height = fig.height, fig_width = 9)}
+    }
+    
+  if (pagebreak == TRUE) {
+    cat("\n {{< pagebreak >}}")
+    }
+  
+  cat("\n \n")
+}
+
+#' @noRd
+#' @export merge.sc
+
+merge.sc <- merge_sc

@@ -11,56 +11,71 @@
 bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
 {
   if(x[1] == "default") {
-    x <- c(1, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 6)
+    x <- c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+           3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 6, 6)
   }
-
+  
+  number <- 6
+  xtab <- table(c(x, 1:number)) - 1
   tmin <- "linker Pol"
-  tplu <- "rechter Pol"
-  par(family = set.analysis.defaults$font.family)
-
-  bobby <- x |>
-    psych::describe() |>
-    round(2) |>
-    data.frame() |>
-    subset(select = c("n", "mean", "sd", "min", "max")) |>
-    data.frame()
+  tmax <- "rechter Pol"
 
   subchunkify(c(
 
-    par(mar=c(5.1,10,4.1,10)),
-    par(fg="gray50"), # Farbe Rand
-    barplot(rep(NA,length(table(x))),ylim=c(0,sum(table(x))),axes=FALSE),
-    abline(v=c(0.7, 1.9, 3.1, 4.3, 5.5, 6.7), col = "grey80"),
-    bp <- barplot(table(x),
-                  ylim=c(0, sum(table(x))),
-                  col = set.analysis.defaults$color.bars,
-                  axes = FALSE, add = TRUE),
-    box(),
+  # Bisherige Grafikparameter speichern -----------------------------------
 
-    axis(side = 3, at=bp, tick = FALSE, labels = paste(round(100*prop.table(table(x)),1), " %", sep="")),
-    par(new=TRUE),
-    par(family = set.analysis.defaults$font.family),
-    bxp <- boxplot(as.numeric(x), plot=FALSE),
-    bxp$stats <- matrix(c((bobby$mean-bobby$sd), bobby$mean, bobby$mean, bobby$mean, (bobby$mean+bobby$sd))),
-    invisible(ifelse(bxp$stats[5,1]>6, bxp$stats[5,1] <- 6, bxp$stats[5,1] <- bxp$stats[5,1])),
-    invisible(ifelse(bxp$stats[1,1]<1, bxp$stats[1,1] <- 1, bxp$stats[1,1] <- bxp$stats[1,1])),
-    bxp(bxp, horizontal = TRUE, ylim=c(0.6,6.4), xlim = c(0.3,1.3), boxcol = rgb(0.55, 0, 0), staplewex = 0.6, staplelwd=2,
-        boxlwd=3,
-        whisklty = 1, whisklwd=2, outline = FALSE, axes = FALSE),
-    mtext(tmin, side=1, at = -0.1, line = -2.6, font = 2, col = "gray30"),
-    mtext(tplu, side=1, at = 7.2, line = -2.6, font = 2, col = "gray30"),
-    par(xpd=TRUE, family = set.analysis.defaults$font.family),
-    text(x=0, y=2,label="Relative Häufigkeit der Antworten", col = "black"),
-    segments(x0 = 0, y0 = 1.85, x1 = 0.75, y1 = 1.7, col = "gray", lwd = 2),
-    text(x=2, y=2,label="Std.-Abw.", col = "black"),
-    segments(x0 = 2, y0 = 1.85, x1 = 2.35, y1 = 1.2, col = "gray", lwd = 2),
-    text(x=3, y=2,label="Mittelwert", col = "black"),
-    segments(x0 = 3, y0 = 1.85, x1 = 3.5, y1 = 1.2, col = "gray", lwd = 2),
-    text(x=0, y= -0.4,label="Skala", col = "black"),
-    segments(x0 = 0, y0 = -0.25, x1 = 0.9, y1 = -0.1, col = "gray", lwd = 2),
-    text(x=4, y= -0.4,label="Säulendiagramm", col = "black"),
-    segments(x0 = 4, y0 = -0.25, x1 = 3, y1 = 0.4, col = "gray", lwd = 2)),
-    fig_height = 2.7, fig_width = 10, hide = TRUE)
+  opar <- par(no.readonly = TRUE),
 
-  cat("  \n  \n")
+  # Grafikparameter für den Plot einstellen -------------------------------
+
+  .common_par(mar = c(2.5, 6.5, 6.5, 6.5)),
+
+  # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
+
+  .empty_plot(xlim = c(0.2, number * 1.2), ylim = c(0, sum(table(x)))),
+  
+  # Hilfslinien -----------------------------------------------------------
+
+  abline(v = seq(0.7, -0.5 + 1.2 * number, by = 1.2), col = "grey70"),
+  
+  # Eigentlichen Barplot zeichnen -----------------------------------------
+
+  .costum_barplot(xtab),
+  
+  # X-Achsenbeschriftungen und Prozentzahlen hinzufügen -------------------
+ 
+  .text_bottom(1:number, at = seq(0.7, -0.5 + 1.2 * number, by = 1.2)),
+  .text_top(paste(sprintf("%.1f", 100 * prop.table(xtab)), "%"),
+            at = seq(0.7, -0.5 + 1.2 * number, by = 1.2)),
+
+  # Beschriftungen der Pole hinzufügen ------------------------------------
+  
+  .text_left(tmin),
+  .text_right(tmax),
+  
+  # Kleinen Boxplot darüber hinzufügen ------------------------------------
+
+  par(new = TRUE, bty = "n"),
+
+  boxplot(c(mean(x) - sd(x), rep(mean(x), 3), mean(x) + sd(x)),
+          yaxt = "n", xaxt = "n", medcol = "black",
+          horizontal = TRUE, range = 0, ylim = c(0.6, number + 0.4), medlwd = 4,
+          boxlwd = 0.01, xlim = c(0.3, 1.3), whisklty = 1, outline = FALSE),
+  
+  par(xpd = TRUE),
+  
+  # Erklärungen und Linien hinzufügen -------------------------------------
+
+  text(x = 0.95, y = 2.30, col = "gray15", label = "Prozentuale Häufigkeit der Antwort"),
+  text(x = 3.35, y = 2.32, col = "gray15", label = "Mittelwert"),
+  text(x = 4.66, y = 2.30, col = "gray15", label = "Standardabweichung"),
+  segments(x0 = 0.95, y0 = 1.85, x1 = 0.95, y1 = 2.15, col = "gray15"),
+  segments(x0 = 3.38, y0 = 1.26, x1 = 3.38, y1 = 2.15, col = "gray15"),
+  segments(x0 = 4.64, y0 = 1.18, x1 = 4.64, y1 = 2.15, col = "gray15"),
+  
+  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
+
+  par(opar)),
+  
+  fig_width = 9, fig_height = 2.8, hide = TRUE)
 }

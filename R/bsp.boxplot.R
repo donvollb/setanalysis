@@ -1,56 +1,76 @@
 #' Beispiel-Boxplot mit Beschriftung
 #'
 #' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt
-#' @param boxcolor Farbe des Boxplots
-#' @param textfamily Schriftart
-#' @param textcolor Farbe des Textes (Y-Achsenbeschriftungen?)
 #'
 #' @returns Beispiel-Boxplot
+#'
+#' @examples bsp.boxplot() |> markdown_in_viewer()
 #' 
 #' @export bsp.boxplot
 
-bsp.boxplot <- function(x = "default", # Daten, bei "default" wird ein Beispieldatensatz genutzt
-                        boxcolor = set.analysis.defaults$color.bars,  # Farbe des Boxplots
-                      textfamily = set.analysis.defaults$font.family, # Schriftart
-                       textcolor = set.analysis.defaults$color.font)  # Farbe des Textes (Y-Achsenbeschriftungen?)
+bsp.boxplot <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
+
 {
 
   if(x[1] == "default") {
-    x <- c(2.1, 3.9, 3.9, 3.9, 3.9, 4.4, 4.4, 4.5, 4.5, 4.7, 4.7, 5.0,
-           5.0, 5.2, 5.0, 5.5, 5.5, 5.5, 5.5, 5.7, 5.7, 5.7, 5.7, 5.7)
+    x <- c(1.7, 3.5, 3.6, 3.7, 4.0, 4.1, 4.2, 4.2, 4.3, 4.3, 4.4, 4.5,
+           4.5, 4.7, 4.8, 4.9, 5.0, 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7)
   }
+  
 
   subchunkify(c(
+    
+    
+    
+
     opar <- par(no.readonly = TRUE),
-    par(mar = c(4.8, 11, 4.1, 6), #bltr
-         fg = "gray50", # Farbe Rand
-     family = textfamily, # Schriftart
-        las = 1, # Schriftrotierung (keine Rotierung)
-       lend = "square", # Linienenden eckig
-      ljoin = "mitre"), # Linienschnitt eckig),
     
-    boxplot(x, horizontal = TRUE, ylim=c(1,6), col = boxcolor,
-            border="black", xaxt="n", axes = TRUE, pars=list(outcol = boxcolor, outpch=20)),
-    abline(v = c(1,2,3,4,5,6), col = "gray80"),
-    boxplot(x, horizontal = TRUE, ylim=c(1,6), col = boxcolor,
-            border="black", xaxt="n", axes = TRUE, pars=list(outcol = boxcolor, outpch=20), add = TRUE),
-    mtext(c("trifft gar nicht zu", "", "", "", "", "trifft voll zu"),
-          side=1, line=1, at=c(1, 2, 3, 4, 5, 6), col="gray30", cex=1, font = 2),
-    mtext(c("Beispiel-Boxplot"), side = 2, line = 2, at = 1, las = 1, col = c(textcolor), cex=1, font = 2),
-    par(xpd=TRUE),
-    text(x=4.5, y=2,label = "Median", col = "grey30"),
-    segments(x0 = 4.5, y0 = 1.85, x1 = 5, y1 = 1.2, col = "grey30", lwd = 1),
-    text(x=4, y= -0.4,label = "6-stufige Skala", col = c(textcolor)),
-    segments(x0 = 4.8, y0 = -0.35, x1 = 5.5, y1 = -0.05, col = c(textcolor), lwd = 1),
-    segments(x0 = 1.4, y0 = -0.01, x1 = 3.35, y1 = -0.4, col = c(textcolor), lwd = 1),
-    text(x=1.5, y= 2, label = "Ausreisser", col = "grey30"),
-    segments(x0 = 2.1, y0 = 1.05, x1 = 1.5, y1 = 1.85, col = "grey30", lwd = 1),
-    text(x=5.5, y= 2, label = "Max", col = "grey30"),
-    segments(x0 = 5.7, y0 = 1.05, x1 = 5.5, y1 = 1.85, col = "grey30", lwd = 1)),
+
+    # Grafikparameter für den Plot einstellen -----------------------------
+
+    .common_par(mar = c(7, 8, 5, 2.1)),
     
-    fig_height = 2.7, # optimal: 2.7
-    fig_width = 10, # optimal: 10
-    hide = TRUE) # damit nicht Text dazu "ausgespuckt" wird
+    # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) ---------------
+    
+    .empty_plot(xlim = c(1, 6)),
+
+    # Hilfslinien ---------------------------------------------------------
+    
+    abline(v = 1:6, col = "gray70"),
+    
+    # Eigentlicher Plot ---------------------------------------------------
+    
+    .costum_boxplot(x, boxwex = 0.8, ylim = c(1, 6)),
+
+    # Achsenbeschriftungen hinzufügen ------------------------------------
+    
+    .text_left("Beispiel-Boxplot", at = 1),
+    .text_bottom(c("trifft gar nicht zu", "", "", "", "",
+                   "trifft voll zu"), at = 1:6),
+    par(xpd = TRUE),
+    
+    # Beschriftungslinien -------------------------------------------------
+    
+    segments(x0 = 1.7, y0 = 1.08, x1 = 1.7, y1 = 1.66, col = "grey15"),
+    segments(x0 = 4.5, y0 = 1.26, x1 = 4.5, y1 = 1.66, col = "grey15"),
+    segments(x0 = 5.7, y0 = 1.17, x1 = 5.7, y1 = 1.66, col = "grey15"),
+    segments(x0 = 1.1, y0 = 0.25, x1 = 2.8, y1 = 0.00, col = "grey15"),
+    segments(x0 = 5.9, y0 = 0.25, x1 = 4.2, y1 = 0.00, col = "grey15"),
+    
+    # Beschriftungstexte --------------------------------------------------
+    
+    text(x = 1.7, y = 1.8, col = "grey15", label = "Ausreißer"),
+    text(x = 4.5, y = 1.8, col = "grey15", label = "Median"),
+    text(x = 5.7, y = 1.8, col = "grey15", label = "Max"),
+    text(x = 3.5, y = 0.0, col = "grey15", label = "6-stufige Skala"),
+
+    # Vorher gesicherte Grafikparameter wiederherstellen ------------------
+
+    par(opar)),
+   
+    fig_height = 3.8,
+    fig_width  = 9,
+    hide = TRUE)
 
   cat("  \n  \n")
 

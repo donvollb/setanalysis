@@ -6,28 +6,22 @@
 \usage{
 table.stat.single(
   x,
-  caption = NULL,
   md = FALSE,
   col1.name = "N_votes",
-  col1.width = set.analysis.defaults$col1.width.tss,
   bold = TRUE,
-  bold.col1 = TRUE
+  digits = 2
 )
 }
 \arguments{
 \item{x}{Daten}
 
-\item{caption}{Überschrift der Tabelle}
-
 \item{md}{Mit Median?}
 
 \item{col1.name}{Name der ersten Zelle der Kopfzeile}
 
-\item{col1.width}{Breite der Kopfzeile}
-
 \item{bold}{Fettdruck der Kopfzeile}
 
-\item{bold.col1}{Fettdruck der ersten Zelle der Kopfzeile}
+\item{digits}{Anzahl der Nachkommastellen in der Tabelle}
 }
 \value{
 Tabelle
