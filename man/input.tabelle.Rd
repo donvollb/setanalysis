@@ -17,7 +17,3 @@ Die aufbereitete Berichtstabelle als dataframe.
 \description{
 Diese Funktion liest die Excel-Tabellen ein, in denen einmal die zu erstellenden Berichten und die TRUE-FALSE-REgeln stehen
 }
-\examples{
-input.tabelle()
-input.tabelle("path/to/blank/data.xlsx", "path/to/rules/data.xlsx")
-}

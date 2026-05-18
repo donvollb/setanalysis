@@ -23,8 +23,4 @@ Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordi
 
 barplot_freq(BspDaten$Plots$num, xlab = "Durchschnittsnote für Hochschulzugangsberechtigung")
 
-# Beispiel für Verwendung in merge_fsem ---------------------------------
-
-barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle")
-
 }

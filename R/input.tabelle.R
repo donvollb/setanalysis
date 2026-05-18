@@ -5,9 +5,6 @@
 #' @param blank.path Der Dateipfad zur rohen Berichtstabelle (blank-Tabelle) als Excel-Liste. Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.
 #' @param rules.path Der Dateipfad zur zugehörigen Regeltabelle (TRUE-FALSE Tabelle) als Excel-Liste. Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.
 #' @return Die aufbereitete Berichtstabelle als dataframe.
-#' @examples
-#' input.tabelle()
-#' input.tabelle("path/to/blank/data.xlsx", "path/to/rules/data.xlsx")
 #' @export
 
 input.tabelle <- function(blank.path = NULL,
