@@ -8,7 +8,7 @@
 #' @importFrom utils capture.output read.csv2
 #' @importFrom tinytable tt style_tt tt_format
 #' @importFrom dplyr first
-
+#' @importFrom svglite svglite
 NULL
 
 ## Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
