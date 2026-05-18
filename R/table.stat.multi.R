@@ -7,6 +7,7 @@
 #' @param alt2 Text für zweite Ausweichoption
 #' @param alt1.list Antworthäufigkeiten erste Ausweichoption
 #' @param alt2.list Antworthäufigkeiten zweite Ausweichoption
+#' @param digits Anzahl der Nachkommastellend
 #' @param bold Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)
 #' @param bold.corner Soll die Zelle ganz links in der Kopfzeile fettgedruckt sein?
 #' @param labels Fragetexte, bei "labels" werden die Labels der Variablen genommen

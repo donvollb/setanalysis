@@ -33,6 +33,8 @@ table.stat.multi(
 
 \item{alt2.list}{Antworthäufigkeiten zweite Ausweichoption}
 
+\item{digits}{Anzahl der Nachkommastellend}
+
 \item{bold}{Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)}
 
 \item{bold.corner}{Soll die Zelle ganz links in der Kopfzeile fettgedruckt sein?}
