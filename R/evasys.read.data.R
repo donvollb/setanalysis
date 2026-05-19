@@ -5,9 +5,7 @@
 #' @param raw.data.path Der Dateipfad zu den Rohdaten (eine csv-Datei). Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.
 #' @param codebook.path Der Dateipfad zum zugehörigen Codebook aus evasys (eine csv-Datei). Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.
 #' @return Der aufbereitete Datensatz als dataframe.
-#' @examples
-#' evasys.read.data()
-#' evasys.read.data("path/to/raw/data.csv", "path/to/codebook.csv")
+
 #' @export
 
 evasys.read.data <- function(raw.data.path = NULL, codebook.path = NULL) {

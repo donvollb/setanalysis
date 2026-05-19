@@ -17,7 +17,3 @@ Der aufbereitete Datensatz als dataframe.
 \description{
 Diese Funktion liest Rohdaten aus EvaSys ein und bereitet sie auf. Dafür wird der Rohdatensatz als csv-Datei sowie das zugehörige Codebuch als csv-Datei benötigt.
 }
-\examples{
-evasys.read.data()
-evasys.read.data("path/to/raw/data.csv", "path/to/codebook.csv")
-}

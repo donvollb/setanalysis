@@ -1,13 +1,12 @@
 Package: setanalysis
 Title: Dieses Paket enthält die Funktionen, die in den LV-Berichten verwendet werden
-Version: 0.0.0.9900
+Version: 1.0.0.0
 Authors@R: 
     person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.3
 LazyData: true
 Imports:
   knitr,
@@ -24,4 +23,5 @@ Imports:
   graphics,
   markdown
 Depends: 
-    R (>= 4.1.0)
+  R (>= 4.1.0)
+Config/roxygen2/version: 8.0.0

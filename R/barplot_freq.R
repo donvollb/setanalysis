@@ -12,10 +12,6 @@
 #' 
 #' barplot_freq(BspDaten$Plots$num, xlab = "Durchschnittsnote für Hochschulzugangsberechtigung")
 #'
-#' # Beispiel für Verwendung in merge_fsem ---------------------------------
-#'
-#' barplot_freq(BspDaten$dataLVE$FachSemN, xlab = "Fachsemester alle")
-#'
 #' @export barplot_freq
 
 barplot_freq <- function(x, # Daten

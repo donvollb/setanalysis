@@ -206,7 +206,7 @@ merge_aggr_sk <- function(x, # Daten
 
     # Automatische Zeilenumbrüche einfügen --------------------------------
     
-    labels <- sapply(labels, \(x) paste(strwrap(x, width = 47), collapse = "\n")) 
+    labels <- sapply(labels, \(x) paste(strwrap(x, width = 49), collapse = "\n")) 
 
     if (fig.height == "default") {
 
