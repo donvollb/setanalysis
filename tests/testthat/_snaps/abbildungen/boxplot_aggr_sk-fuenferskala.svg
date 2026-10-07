@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='324.00pt' viewBox='0 0 648.00 324.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzMjQuMDA='>
+    <rect x='0.00' y='0.00' width='648.00' height='324.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzMjQuMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpMjg4LjAwfDYxNy43NnwxLjQ0fDI2Ni40MA=='>
+    <rect x='288.00' y='1.44' width='329.76' height='264.96' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMjg4LjAwfDYxNy43NnwxLjQ0fDI2Ni40MA==)'>
+<line x1='300.21' y1='266.40' x2='300.21' y2='1.44' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='376.55' y1='266.40' x2='376.55' y2='1.44' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='452.88' y1='266.40' x2='452.88' y2='1.44' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='529.21' y1='266.40' x2='529.21' y2='1.44' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='605.55' y1='266.40' x2='605.55' y2='1.44' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='503.77,248.41 503.77,182.99 575.01,182.99 575.01,248.41 ' style='stroke-width: 0.75; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<line x1='543.53' y1='248.41' x2='543.53' y2='182.99' style='stroke-width: 2.25; stroke-linecap: butt; stroke-linejoin: miter;' />
+<line x1='401.99' y1='215.70' x2='503.77' y2='215.70' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='605.55' y1='215.70' x2='575.01' y2='215.70' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='401.99' y1='232.05' x2='401.99' y2='199.34' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='605.55' y1='232.05' x2='605.55' y2='199.34' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='503.77,248.41 503.77,182.99 575.01,182.99 575.01,248.41 ' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<circle cx='351.10' cy='215.70' r='1.80' style='stroke-width: 0.75; stroke: #6DACDC; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<polygon points='475.78,166.63 475.78,101.21 580.10,101.21 580.10,166.63 ' style='stroke-width: 0.75; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<line x1='541.94' y1='166.63' x2='541.94' y2='101.21' style='stroke-width: 2.25; stroke-linecap: butt; stroke-linejoin: miter;' />
+<line x1='359.58' y1='133.92' x2='475.78' y2='133.92' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='605.55' y1='133.92' x2='580.10' y2='133.92' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='359.58' y1='150.28' x2='359.58' y2='117.56' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='605.55' y1='150.28' x2='605.55' y2='117.56' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='475.78,166.63 475.78,101.21 580.10,101.21 580.10,166.63 ' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<circle cx='287.49' cy='133.92' r='1.80' style='stroke-width: 0.75; stroke: #6DACDC; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<polygon points='471.96,84.85 471.96,19.43 541.94,19.43 541.94,84.85 ' style='stroke-width: 0.75; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<line x1='510.13' y1='84.85' x2='510.13' y2='19.43' style='stroke-width: 2.25; stroke-linecap: butt; stroke-linejoin: miter;' />
+<line x1='376.55' y1='52.14' x2='471.96' y2='52.14' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='592.82' y1='52.14' x2='541.94' y2='52.14' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='376.55' y1='68.50' x2='376.55' y2='35.79' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='592.82' y1='68.50' x2='592.82' y2='35.79' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='471.96,84.85 471.96,19.43 541.94,19.43 541.94,84.85 ' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+</g>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzMjQuMDA=)'>
+<polygon points='288.00,266.40 617.76,266.40 617.76,1.44 288.00,1.44 ' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='288.00,266.40 617.76,266.40 617.76,1.44 288.00,1.44 ' style='stroke-width: 1.12; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<text x='273.60' y='212.70' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='244.72px' lengthAdjust='spacingAndGlyphs'>Meiner Einschätzung nach wurde die Relevanz</text>
+<text x='273.60' y='227.10' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='175.84px' lengthAdjust='spacingAndGlyphs'>der behandelten Inhalte deutlich.</text>
+<text x='273.60' y='123.72' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='231.08px' lengthAdjust='spacingAndGlyphs'>Aus meiner Sicht wurde ein Bezug zwischen</text>
+<text x='273.60' y='138.12' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='247.61px' lengthAdjust='spacingAndGlyphs'>theoretischem Wissen und dessen Anwendung</text>
+<text x='273.60' y='152.52' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='60.17px' lengthAdjust='spacingAndGlyphs'>hergestellt.</text>
+<text x='273.60' y='34.74' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='166.14px' lengthAdjust='spacingAndGlyphs'>Ich habe mich auf die einzelnen</text>
+<text x='273.60' y='49.14' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='230.59px' lengthAdjust='spacingAndGlyphs'>Veranstaltungstermine oder Themenblöcke</text>
+<text x='273.60' y='63.54' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='181.22px' lengthAdjust='spacingAndGlyphs'>regelmäßig vorbereitet oder diese</text>
+<text x='273.60' y='77.94' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='71.00px' lengthAdjust='spacingAndGlyphs'>nachbereitet.</text>
+<text x='300.21' y='292.32' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='27.70px' lengthAdjust='spacingAndGlyphs'>links</text>
+<text x='452.88' y='292.32' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='32.72px' lengthAdjust='spacingAndGlyphs'>Mitte</text>
+<text x='605.55' y='292.32' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='37.73px' lengthAdjust='spacingAndGlyphs'>rechts</text>
+<text x='452.88' y='321.12' text-anchor='middle' style='font-size: 12.00px; font-style: italic;fill: #262626; font-family: "Red Hat Text";' textLength='319.38px' lengthAdjust='spacingAndGlyphs'>Hinweis: andere Skalenlogik (im Vergleich zu den 6er-Skalen)</text>
+</g>
+<defs>
+  <clipPath id='cpNTkuMDR8NjE3Ljc2fDU5LjA0fDI1MC41Ng=='>
+    <rect x='59.04' y='59.04' width='558.72' height='191.52' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNTkuMDR8NjE3Ljc2fDU5LjA0fDI1MC41Ng==)'>
+</g>
+</g>
+</svg>

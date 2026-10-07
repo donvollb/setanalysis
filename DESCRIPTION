@@ -22,6 +22,10 @@ Imports:
   readxl,
   graphics,
   markdown
-Depends: 
+Suggests:
+  testthat (>= 3.0.0),
+  withr
+Depends:
   R (>= 4.1.0)
 Config/roxygen2/version: 8.0.0
+Config/testthat/edition: 3

@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='273.60pt' viewBox='0 0 648.00 273.60'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwyNzMuNjA='>
+    <rect x='0.00' y='0.00' width='648.00' height='273.60' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwyNzMuNjA=)'>
+</g>
+<defs>
+  <clipPath id='cpMTE1LjIwfDYxNy43Nnw3Mi4wMHwxNzIuODA='>
+    <rect x='115.20' y='72.00' width='502.56' height='100.80' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMTE1LjIwfDYxNy43Nnw3Mi4wMHwxNzIuODA=)'>
+<line x1='133.81' y1='172.80' x2='133.81' y2='72.00' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='226.88' y1='172.80' x2='226.88' y2='72.00' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='319.95' y1='172.80' x2='319.95' y2='72.00' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='413.01' y1='172.80' x2='413.01' y2='72.00' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='506.08' y1='172.80' x2='506.08' y2='72.00' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='599.15' y1='172.80' x2='599.15' y2='72.00' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='426.97,145.73 426.97,99.07 520.04,99.07 520.04,145.73 ' style='stroke-width: 0.75; stroke: none; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<line x1='459.55' y1='145.73' x2='459.55' y2='99.07' style='stroke-width: 2.25; stroke-linecap: butt; stroke-linejoin: miter;' />
+<line x1='366.48' y1='122.40' x2='426.97' y2='122.40' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='571.23' y1='122.40' x2='520.04' y2='122.40' style='stroke-width: 0.75; stroke-dasharray: 4.00,4.00; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='366.48' y1='134.07' x2='366.48' y2='110.73' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='571.23' y1='134.07' x2='571.23' y2='110.73' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='426.97,145.73 426.97,99.07 520.04,99.07 520.04,145.73 ' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter;' />
+<circle cx='198.96' cy='122.40' r='1.80' style='stroke-width: 0.75; stroke: #6DACDC; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+</g>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwyNzMuNjA=)'>
+<polygon points='115.20,172.80 617.76,172.80 617.76,72.00 115.20,72.00 ' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<polygon points='115.20,172.80 617.76,172.80 617.76,72.00 115.20,72.00 ' style='stroke-width: 1.12; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<text x='100.80' y='126.60' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='88.16px' lengthAdjust='spacingAndGlyphs'>Beispiel-Boxplot</text>
+<text x='133.81' y='198.72' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='102.09px' lengthAdjust='spacingAndGlyphs'>trifft gar nicht zu</text>
+<text x='599.15' y='198.72' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='70.73px' lengthAdjust='spacingAndGlyphs'>trifft voll zu</text>
+<line x1='198.96' y1='113.07' x2='198.96' y2='45.40' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='459.55' y1='92.07' x2='459.55' y2='45.40' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='571.23' y1='102.57' x2='571.23' y2='45.40' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='143.12' y1='209.90' x2='301.33' y2='239.07' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='589.84' y1='209.90' x2='431.63' y2='239.07' style='stroke-width: 0.75; stroke: #262626; stroke-linecap: square; stroke-linejoin: miter;' />
+<text x='198.96' y='33.43' text-anchor='middle' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='51.06px' lengthAdjust='spacingAndGlyphs'>Ausreißer</text>
+<text x='459.55' y='33.43' text-anchor='middle' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='39.58px' lengthAdjust='spacingAndGlyphs'>Median</text>
+<text x='571.23' y='33.21' text-anchor='middle' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='22.34px' lengthAdjust='spacingAndGlyphs'>Max</text>
+<text x='366.48' y='242.20' text-anchor='middle' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='81.14px' lengthAdjust='spacingAndGlyphs'>6-stufige Skala</text>
+</g>
+</g>
+</svg>

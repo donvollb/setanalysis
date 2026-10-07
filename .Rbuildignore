@@ -1,0 +1,6 @@
+^notes$
+^notes\.txt$
+^\.quarto$
+^LICENSE\.md$
+^.*\.Rproj$
+^\.Rproj\.user$
