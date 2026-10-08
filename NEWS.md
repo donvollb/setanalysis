@@ -34,6 +34,11 @@ Fehlerbehebung aufgeführt.
 
 ## Paketinfrastruktur
 
+* Weniger Abhängigkeiten: dplyr wird nicht mehr benötigt. htmltools, markdown
+  und svglite sind nur noch optional (für die Vorschau mit
+  `markdown_in_viewer()`); fehlen sie, weist die Funktion darauf hin. Dadurch
+  werden bei der Installation rund 30 Pakete weniger mitinstalliert.
+
 * Automatisierte Tests mit testthat: Snapshot-Tests halten die Ausgabe aller
   Auswertungs-, Tabellen- und Grafikfunktionen fest (Typst-Text und
   SVG-Abbildungen), sodass unbeabsichtigte Änderungen sofort auffallen.

@@ -7,6 +7,4 @@
 #' @importFrom stats median na.omit sd setNames
 #' @importFrom utils capture.output read.csv2
 #' @importFrom tinytable tt style_tt tt_format
-#' @importFrom dplyr first
-#' @importFrom svglite svglite
 NULL

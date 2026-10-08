@@ -110,13 +110,7 @@ merge_open <- function(x, # Daten
       Gruppen <- split(x, tolower(x))
 
       # für jede Gruppe: die häufigste Schreibweise auswählen
-      most_used <- function(x) {
-        x |>
-          table() |>
-          which.max() |>
-          names() |>
-          first()
-      }
+      most_used <- function(x) names(which.max(table(x)))
       Hauptschreibweisen <- sapply(Gruppen, most_used)
 
       # Häufigkeiten (aller Varianten) zählen

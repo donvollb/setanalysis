@@ -19,22 +19,21 @@ Depends:
   R (>= 4.1.0)
 Imports:
   descr,
-  dplyr,
   graphics,
   grDevices,
-  htmltools,
   knitr,
-  markdown,
   psych,
   readxl,
   rstudioapi,
   showtext,
   stats,
-  svglite,
   sysfonts,
   tinytable,
   utils
 Suggests:
+  htmltools,
+  markdown,
+  svglite,
   testthat (>= 3.0.0),
   withr
 Config/roxygen2/version: 8.0.0

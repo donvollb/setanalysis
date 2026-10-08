@@ -75,6 +75,17 @@ true_round <- function(number, digits) {
 #'
 #' @examples markdown_in_viewer(merge.fachsem(BspDaten$dataLVE$FachSemN))
 markdown_in_viewer <- function(markdown_function) {
+  # Zusätzlich benötigte Pakete prüfen (nur für diese Vorschau nötig) -----
+  benoetigt <- c("htmltools", "markdown", "svglite")
+  fehlend <- benoetigt[!vapply(benoetigt, requireNamespace, logical(1), quietly = TRUE)]
+  if (length(fehlend) > 0) {
+    stop("Für markdown_in_viewer() werden zusätzlich folgende Pakete benötigt: ",
+      paste(fehlend, collapse = ", "), "\n",
+      "Installation mit: install.packages(c(\"", paste(fehlend, collapse = "\", \""), "\"))",
+      call. = FALSE
+    )
+  }
+
   # Bisherige Bildoptionen speichern um sie später wiederherzustellen ----
   image.device <- knitr::opts_chunk$get("dev")
 

@@ -57,7 +57,7 @@ merge_mc(
 
 # Gewünschte Items auswählen -------------------------------------------
 
-Abschlüsse <- dplyr::select(BspDaten$dataSHOWUP, abschluss_1:abschluss_8)
+Abschlüsse <- BspDaten$dataSHOWUP[, paste0("abschluss_", 1:8)]
 
 # merge_mc-Funktion ausführen und anzeigen -----------------------------
 
