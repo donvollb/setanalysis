@@ -1,31 +1,45 @@
 Package: setanalysis
-Title: Dieses Paket enthält die Funktionen, die in den LV-Berichten verwendet werden
-Version: 1.0.0.0
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Title: Personalisierte Berichte für Lehrevaluationen
+Version: 1.0.0.9000
+Authors@R: c(
+    person("Dominik", "Vollbracht", , "dominik@vollbracht.email", role = c("aut", "cre")),
+    person("Simon", "Männle", role = "aut")
+  )
+Description: Funktionen zur Erstellung personalisierter Ergebnisberichte für
+    Befragungen, insbesondere für Lehrveranstaltungsevaluationen. Das Paket
+    liest Rohdaten und Codebuch aus 'evasys' ein, wertet Fragen je nach Typ
+    (Single-Choice, Multiple-Choice, Skalen, numerische und offene Fragen) aus
+    und gibt Tabellen und Abbildungen als Bausteine für 'Quarto'-Berichte aus.
+    Über Regeltabellen lassen sich aus einer einzigen Vorlage viele Berichte,
+    z. B. für einzelne Fachbereiche oder Studiengänge, erzeugen.
 License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-LazyData: true
+URL: https://github.com/donvollb/setanalysis
+BugReports: https://github.com/donvollb/setanalysis/issues
+Depends:
+  R (>= 4.1.0)
 Imports:
-  knitr,
-  psych,
   descr,
   dplyr,
-  tinytable,
+  graphics,
+  grDevices,
   htmltools,
+  knitr,
+  markdown,
+  psych,
+  readxl,
   rstudioapi,
+  showtext,
+  stats,
   svglite,
   sysfonts,
-  showtext,
-  readxl,
-  graphics,
-  markdown
+  tinytable,
+  utils
 Suggests:
   testthat (>= 3.0.0),
   withr
-Depends:
-  R (>= 4.1.0)
 Config/roxygen2/version: 8.0.0
 Config/testthat/edition: 3
+Encoding: UTF-8
+Language: de
+LazyData: true
+Roxygen: list(markdown = TRUE)
