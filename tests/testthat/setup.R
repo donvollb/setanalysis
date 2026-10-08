@@ -17,7 +17,6 @@ withr::defer(
   {
     knitr::opts_chunk$restore(opts_chunk_alt)
     knitr::opts_knit$restore(opts_knit_alt)
-    if (exists("sub.nr", envir = globalenv())) rm("sub.nr", envir = globalenv())
   },
   teardown_env()
 )

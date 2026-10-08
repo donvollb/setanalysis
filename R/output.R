@@ -10,44 +10,47 @@
 #' @returns Subchunk
 #'
 #' @export
-
-
-# Erzeugen von Sub-Chunks
 subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt werden)
                         fig_height = 7, # Höhe des Sub-Chunks
                         fig_width = 5, # Breite des Sub-Chunks
                         hide = FALSE) # Soll für die results-Option des Chunks "asis" verwendet werden?
 {
+  # Code in eine Funktion verpacken: `g` wird so erst im Sub-Chunk ausgewertet
+  # und knitr erfasst die dabei entstehenden Abbildungen mit eigener Größe
   g_deparsed <- paste0(deparse(
     function() {
       g
     }
   ), collapse = "")
 
-  if (hide == FALSE) {
-    head.end <- ", echo=FALSE, results = \"asis\", fig.align = \"center\", out.width = \"100%\"}"
+  results_option <- if (hide == FALSE) {
+    'results = "asis"'
   } else {
-    head.end <- ", echo=FALSE, results = \"hide\", fig.keep = \"all\", fig.align = \"center\", out.width = \"100%\"}"
+    'results = "hide", fig.keep = "all"'
   }
 
-  if (!exists("sub.nr")) {
-    assign("sub.nr", 0, envir = globalenv())
-  }
-  assign("sub.nr", sub.nr + 1, envir = globalenv())
+  # Fortlaufende Nummer für eindeutige Chunk-Namen
+  .subchunk_env$counter <- .subchunk_env$counter + 1
 
   sub_chunk <- paste0(
-    "```{r sub_chunk_", sub.nr, ", fig.height=", fig_height, ", fig.width=", fig_width, head.end,
-    "  \npar(family = \"", setanalysis_defaults$font.family, "\")  \n",
-    "  \n",
-    "\n(",
-    "  \n",
-    g_deparsed,
-    ")()",
-    "\n```"
+    "```{r sub_chunk_", .subchunk_env$counter,
+    ", fig.height=", fig_height, ", fig.width=", fig_width,
+    ", echo=FALSE, ", results_option,
+    ', fig.align = "center", out.width = "100%"}\n',
+    'par(family = "', setanalysis_defaults$font.family, '")\n',
+    "(", g_deparsed, ")()\n",
+    "```"
   )
 
+  # Sub-Chunk knitten; knit() wertet ihn in dieser Funktion aus (dort ist `g`
+  # bekannt). Hinweis: knitr::knit_child() ist hier kein gleichwertiger Ersatz,
+  # es gibt Abbildungen außerhalb eines Dokuments anders aus.
   cat(knitr::knit(text = knitr::knit_expand(text = sub_chunk), quiet = TRUE))
 }
+
+# Zähler für die Namen der Sub-Chunks (sub_chunk_1, sub_chunk_2, …)
+.subchunk_env <- new.env(parent = emptyenv())
+.subchunk_env$counter <- 0
 
 # Eigene Funktion zum Runden
 true_round <- function(number, digits) {

@@ -44,6 +44,8 @@ Fehlerbehebung aufgeführt.
   SVG-Abbildungen), sodass unbeabsichtigte Änderungen sofort auffallen.
 * `DESCRIPTION` vervollständigt: Titel, Beschreibung, Autoren, Links zum
   Repository und alle verwendeten Basis-Pakete unter `Imports`.
+* `subchunkify()` legt keine Variable `sub.nr` mehr in der globalen Umgebung
+  an; der Zähler für die Namen der Sub-Chunks liegt jetzt im Paket.
 * `.Rbuildignore` ergänzt; die interne To-do-Liste `notes.txt` wurde entfernt.
 * Quellcode thematisch neu geordnet (z. B. `plots_bar.R`, `tables.R`,
   `settings.R`); die großen `merge_*()`-Funktionen behalten eigene Dateien.

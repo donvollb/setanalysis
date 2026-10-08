@@ -14,7 +14,7 @@ reset_setanalysis_state <- function() {
   list2env(defaults_original, envir = setanalysis_defaults)
   rm(list = ls(list_open_answers, all.names = TRUE), envir = list_open_answers)
   list_open_answers$anchor.nr <- 0
-  assign("sub.nr", 0, envir = globalenv())
+  .subchunk_env$counter <- 0
 }
 
 # Globale inkl.-Variablen für die Dauer eines Tests setzen ----------------
