@@ -21,12 +21,12 @@ Funktion um Einstellungsvariablen anzupassen
 
 change_analysis_defaults(color.bars = "red", show.plot.sc = FALSE)
 
-#Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
+# Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
 
 setanalysis_defaults$color.bars
 setanalysis_defaults$show.plot.sc
 
-#Diese Änderung ginge nicht, weil die Variable nicht existiert
-#change_analysis_defaults(color.width2 = "turquoise")
+# Diese Änderung ginge nicht, weil die Variable nicht existiert
+# change_analysis_defaults(color.width2 = "turquoise")
 
 }

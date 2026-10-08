@@ -55,7 +55,8 @@ expect_report_snapshot <- function(code, name) {
   abbildungen <- sort(list.files(file.path(dir, "figure"), full.names = TRUE))
   for (abb in abbildungen) {
     expect_snapshot_file(abb, paste0(name, "-", basename(abb)),
-                         compare = compare_file_text)
+      compare = compare_file_text
+    )
   }
 }
 

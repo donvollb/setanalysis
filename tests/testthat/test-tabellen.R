@@ -1,19 +1,25 @@
 test_that("lv_table() formatiert Tabellen unverändert", {
   expect_table_snapshot(lv_table(head(mtcars, 5)), "lv_table-standard")
   expect_table_snapshot(
-    lv_table(head(mtcars, 5), col.width = c(30, rep(7, 10)), bold = FALSE,
-             digits = 1, striped = FALSE),
+    lv_table(head(mtcars, 5),
+      col.width = c(30, rep(7, 10)), bold = FALSE,
+      digits = 1, striped = FALSE
+    ),
     "lv_table-optionen"
   )
-  expect_table_snapshot(lv_table(head(mtcars, 1), bold.corner = FALSE),
-                        "lv_table-eine-zeile")
+  expect_table_snapshot(
+    lv_table(head(mtcars, 1), bold.corner = FALSE),
+    "lv_table-eine-zeile"
+  )
 })
 
 test_that("table_freq() erzeugt unveränderte Häufigkeitstabellen", {
   expect_table_snapshot(table_freq(BspDaten$Tabellen$freq), "table_freq-standard")
   expect_table_snapshot(
-    table_freq(BspDaten$Tabellen$freq, col1.name = "Antwort",
-               order.table = "decreasing"),
+    table_freq(BspDaten$Tabellen$freq,
+      col1.name = "Antwort",
+      order.table = "decreasing"
+    ),
     "table_freq-sortiert"
   )
 
@@ -28,17 +34,21 @@ test_that("table_freq() erzeugt unveränderte Häufigkeitstabellen", {
 test_that("table_stat_single() erzeugt unveränderte Statistiktabellen", {
   x <- BspDaten$dataLVE$KF_01
   expect_table_snapshot(table_stat_single(x), "table_stat_single-standard")
-  expect_table_snapshot(table_stat_single(x, md = TRUE, col1.name = "n", digits = 1),
-                        "table_stat_single-median")
+  expect_table_snapshot(
+    table_stat_single(x, md = TRUE, col1.name = "n", digits = 1),
+    "table_stat_single-median"
+  )
 })
 
 test_that("table_stat_multi() erzeugt unveränderte Statistiktabellen", {
   multi <- BspDaten$Tabellen$multi
   expect_table_snapshot(table_stat_multi(multi), "table_stat_multi-standard")
   expect_table_snapshot(
-    table_stat_multi(multi[, 1:3], col2.name = "n", bold.corner = FALSE,
-                     alt1 = "weiß nicht", alt1.list = c(1, 2, 3),
-                     alt2 = "trifft nicht zu", alt2.list = c(4, 5, 6)),
+    table_stat_multi(multi[, 1:3],
+      col2.name = "n", bold.corner = FALSE,
+      alt1 = "weiß nicht", alt1.list = c(1, 2, 3),
+      alt2 = "trifft nicht zu", alt2.list = c(4, 5, 6)
+    ),
     "table_stat_multi-ausweichoptionen"
   )
   expect_error(

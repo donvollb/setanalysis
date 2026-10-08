@@ -1,5 +1,5 @@
 #' merge-Funktion für MC-Fragen
-#' 
+#'
 #' `merge.mc()` ist eine veraltete Schreibweise der gleichen Funktion
 #'
 #' @param x Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, dass Labels enthalten sind
@@ -18,13 +18,13 @@
 #' @param digits Wie viele Nachkommastellen sollen angezeigt werden?
 #'
 #' @examples
-#' 
+#'
 #' # Gewünschte Items auswählen -------------------------------------------
-#' 
+#'
 #' Abschlüsse <- dplyr::select(BspDaten$dataSHOWUP, abschluss_1:abschluss_8)
-#' 
+#'
 #' # merge_mc-Funktion ausführen und anzeigen -----------------------------
-#' 
+#'
 #' merge_mc(Abschlüsse) |> markdown_in_viewer()
 #'
 #' @export merge_mc
@@ -45,17 +45,21 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      show.plot = setanalysis_defaults$show.plot.mc) # Soll der Plot angezeigt werden?
 {
   if (inkl == "nr") {
-    if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
+    if (nr == "") {
+      inkl <- TRUE
+    } else {
+      inkl <- eval(parse(text = paste0("inkl.", nr)))
+    }
   }
 
-  if (inkl != TRUE) return(invisible()) # wenn inkl nicht TRUE, wird Funktion beendet
-  
-  if (lime == TRUE) {
+  if (inkl != TRUE) {
+    return(invisible())
+  } # wenn inkl nicht TRUE, wird Funktion beendet
 
+  if (lime == TRUE) {
     copy <- x
 
     for (l in 1:ncol(x)) {
-
       label <- attr(x[, l], "label")
       answer <- sub("\\].*", "", label)
       answer <- sub("\\[", "", answer)
@@ -75,41 +79,41 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     }
   }
 
-  if (head == "default") {head <- sub(":.*", "", attr(x[, 1], "label"))}
-  
+  if (head == "default") {
+    head <- sub(":.*", "", attr(x[, 1], "label"))
+  }
+
   cat("### ", nr, head, "\n \n")
 
-  val.labels <- sub('.*: ', '', as.character(lapply(x, attr, which = "label")))
+  val.labels <- sub(".*: ", "", as.character(lapply(x, attr, which = "label")))
 
 
   if (valid.perc == TRUE) {
-
     results <- data.frame(matrix(nrow = length(x), ncol = 4))
     colnames(results) <- c(col1.name, col2.name, "%", "gültige %")
     results[, 1] <- val.labels
-  
+
     for (n in 1:length(x)) {
       results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
       results[n, 3] <- results[n, 2] / nrow(x) * 100
-      results[n, 4] <- results[n, 2] / nrow(x[!is.na(x[, 1]),]) * 100
+      results[n, 4] <- results[n, 2] / nrow(x[!is.na(x[, 1]), ]) * 100
     }
 
     if (order.table != FALSE) {
-
       decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
       results <- results[order(results[, 2], decreasing = decreasing), ]
     }
 
-    results[nrow(results) + 1, ] <- list("NAs", nrow(x[is.na(x[, 1]),]),
-                                    nrow(x[is.na(x[, 1]),]) / nrow(x) * 100, NA)
-    
-    results[nrow(results) + 1, ] <- list("Total", nrow(x), NA, NA)
+    results[nrow(results) + 1, ] <- list(
+      "NAs", nrow(x[is.na(x[, 1]), ]),
+      nrow(x[is.na(x[, 1]), ]) / nrow(x) * 100, NA
+    )
 
+    results[nrow(results) + 1, ] <- list("Total", nrow(x), NA, NA)
   } else {
-    
     results <- data.frame(matrix(nrow = length(x), ncol = 3))
-    
-    colnames(results) <-  c(col1.name, "N_votes", "\\%")
+
+    colnames(results) <- c(col1.name, "N_votes", "\\%")
     results[, 1] <- val.labels
     for (n in 1:length(x)) {
       results[n, 2] <- as.numeric(sum(x[, n] != 0, na.rm = TRUE))
@@ -117,12 +121,21 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     }
   }
 
-  if(ncol(results) == 4) {col.width <- setanalysis_defaults$col.width4
-                  } else {col.width <- setanalysis_defaults$col.width3}
+  if (ncol(results) == 4) {
+    col.width <- setanalysis_defaults$col.width4
+  } else {
+    col.width <- setanalysis_defaults$col.width3
+  }
 
-  if(show.table == TRUE) {subchunkify(lv_table(results, col.width = col.width,
-                                               digits = digits),
-                                      fig_height = 7, fig_width = 9)}
+  if (show.table == TRUE) {
+    subchunkify(
+      lv_table(results,
+        col.width = col.width,
+        digits = digits
+      ),
+      fig_height = 7, fig_width = 9
+    )
+  }
 
   # Für die Abbildung nur die Antwortoptionen verwenden -------------------
   # (die Zeilen "NAs" und "Total" stehen nur in der Tabelle)
@@ -130,24 +143,26 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
   results <- results[seq_len(length(x)), ]
 
   colnames(results) <- c("label", "freq", "perc")
-    
+
   # Automatische Zeilenumbrüche einfügen ----------------------------------
-  
+
   results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, 40), collapse = "\n"))
-    
+
   # freq-Spale in numerische Daten umwandeln (bisher character) ---------
-  
+
   results$freq <- as.numeric(results$freq)
 
-  if(show.plot == TRUE) {
-      
-  # Automatisch die Höhe der Abbildung festlegen ----------------------
-  
-    if(fig.height == "default") {fig.height <- (1 + 0.75 * nrow(results))}
-      
-    subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
-                   fig_height = fig.height, fig_width = 9)
+  if (show.plot == TRUE) {
+    # Automatisch die Höhe der Abbildung festlegen ----------------------
+
+    if (fig.height == "default") {
+      fig.height <- (1 + 0.75 * nrow(results))
     }
+
+    subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
+      fig_height = fig.height, fig_width = 9
+    )
+  }
 
   cat("  \n  \n")
 }

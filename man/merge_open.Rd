@@ -49,12 +49,12 @@ Die Funktion war ehemals auf zwei (jetzt veraltete) Funktionen aufgeteilt:
 \examples{
 
 # Beispiel für Bericht mit Anhang – Häufigkeiten werden angezeigt
-{merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE) 
-appendix.open()} |> markdown_in_viewer()
+{
+  merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
+  appendix.open()
+} |> markdown_in_viewer()
 
 # Ergebnis für Bericht ohne Anhang – Ohne Häufigkeiten, weil jeder Eintrag nur einmal
 merge_open(BspDaten$dataSHOWUP$offen, appendix = FALSE) |> markdown_in_viewer()
-
-
 
 }

@@ -2,10 +2,10 @@
 #'
 #' Dieses Objekt enthält mehrere Beispieldaten, die in den Beispielen der
 #' Dokumentation genutzt werden. Die Daten entstamme der LVE 2024 und der SHOWUP 2024/25.
-#' 
+#'
 #' @format ## `BspDaten`
 #' Eine Liste mit fünf Elementen
-#' 
+#'
 #' \describe{
 #'   \item{dataLVE}{Daten der LVE 2024}
 #'   \item{dataSHOWUP}{Daten der SHOWUP 2024/25}
@@ -13,8 +13,7 @@
 #'   \item{Tabellen}{Daten für die Testung der Tabellenfunktionen}
 #'   \item{pInfo}{Exemplarische personalised-Info-Tabelle}
 #' }
-#' 
+#'
 #' @examples
 #' BspDaten$dataLVE$FachSemN |> hist()
-
 "BspDaten"

@@ -13,8 +13,11 @@ opts_knit_alt <- knitr::opts_knit$get()
 knitr::opts_chunk$set(dev = "svglite")
 knitr::opts_knit$set(rmarkdown.pandoc.to = "typst")
 
-withr::defer({
-  knitr::opts_chunk$restore(opts_chunk_alt)
-  knitr::opts_knit$restore(opts_knit_alt)
-  if (exists("sub.nr", envir = globalenv())) rm("sub.nr", envir = globalenv())
-}, teardown_env())
+withr::defer(
+  {
+    knitr::opts_chunk$restore(opts_chunk_alt)
+    knitr::opts_knit$restore(opts_knit_alt)
+    if (exists("sub.nr", envir = globalenv())) rm("sub.nr", envir = globalenv())
+  },
+  teardown_env()
+)

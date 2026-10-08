@@ -51,32 +51,32 @@ list.open.answers <- list_open_answers
 #' @export change_analysis_defaults
 #'
 #' @examples
-#' 
+#'
 #' # Hier wird die Farbe der Balken auf rot geändert und eingestellt,
 #' # dass keine SC-Plots gezeigt werden sollen
-#' 
+#'
 #' change_analysis_defaults(color.bars = "red", show.plot.sc = FALSE)
-#' 
-#' #Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
-#' 
+#'
+#' # Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
+#'
 #' setanalysis_defaults$color.bars
 #' setanalysis_defaults$show.plot.sc
-#' 
-#' #Diese Änderung ginge nicht, weil die Variable nicht existiert
-#' #change_analysis_defaults(color.width2 = "turquoise")
-#' 
+#'
+#' # Diese Änderung ginge nicht, weil die Variable nicht existiert
+#' # change_analysis_defaults(color.width2 = "turquoise")
+#'
 change_analysis_defaults <- function(...) {
   changes <- list(...)
-  
+
   # Überprüfen, ob die Einstellungsvariablen überhaupt existieren ---------
   for (i in seq_along(changes)) {
     if (!exists(names(changes)[i], envir = setanalysis_defaults)) {
       stop(paste0("Die Einstellungsvariable „", names(changes)[i], "“ existiert nicht."))
     }
   }
-  
+
   # Einstellungen ändern --------------------------------------------------
   for (i in seq_along(changes)) {
-      assign(names(changes)[i], changes[[i]], envir = setanalysis_defaults)
-    }
+    assign(names(changes)[i], changes[[i]], envir = setanalysis_defaults)
+  }
 }

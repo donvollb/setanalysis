@@ -2,7 +2,7 @@
 #' `merge.fachsem()` ist eine veraltete Schreibweise der gleichen Funktion
 #'
 #' @param x Daten
-#' @param fig.height Höhe des Plots im Dokument 
+#' @param fig.height Höhe des Plots im Dokument
 #' @param cutoff cutoff-Wert, alle Werte >= cutGoff werden zusammengefasst
 #' @param group Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
 #' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
@@ -20,22 +20,25 @@ merge_fachsem <- function(x, # Daten
                           nr = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 {
   if (inkl == "nr") {
-    if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
+    if (nr == "") {
+      inkl <- TRUE
+    } else {
+      inkl <- eval(parse(text = paste0("inkl.", nr)))
+    }
   }
 
   if (inkl == TRUE) {
-
-    if(group == "a"){
+    if (group == "a") {
       caps <- "(alle)"
       xl <- "Fachsemester alle"
     }
 
-    if(group == "b"){
+    if (group == "b") {
       caps <- "(nur Bachelor)"
       xl <- "Fachsemester Bachelor"
     }
 
-    if(group == "m"){
+    if (group == "m") {
       caps <- "(nur Master)"
       xl <- "Fachsemester Master"
     }
@@ -49,15 +52,16 @@ merge_fachsem <- function(x, # Daten
     cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehört: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
 
 
-    subchunkify( 
-      table_freq(x, col1.name = xl, col2.name = "n",
-                 cutoff = cutoff)
-                )
+    subchunkify(
+      table_freq(x,
+        col1.name = xl, col2.name = "n",
+        cutoff = cutoff
+      )
+    )
 
 
     cat("  \n  \n")
     subchunkify(barplot_freq(x, xlab = "Fachsemester"), fig_height = 5, fig_width = 10) # xlab ist Label x-Achse
     cat("  \n  \n")
-
   }
 }

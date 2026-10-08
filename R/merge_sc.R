@@ -25,16 +25,24 @@ merge_sc <- function(x, # Daten
                      order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
                      show.plot = setanalysis_defaults$show.plot.sc, # Soll der Plot angezeigt werden?
                      pagebreak = FALSE, # Seitenumbruch dahinter?
-                     digits = 1) #Anzahl Nachkommastellen
+                     digits = 1) # Anzahl Nachkommastellen
 {
   if (inkl == "nr") {
-    if (nr == "") {inkl <- TRUE} else {inkl <- eval(parse(text = paste0("inkl.", nr)))}
+    if (nr == "") {
+      inkl <- TRUE
+    } else {
+      inkl <- eval(parse(text = paste0("inkl.", nr)))
+    }
   }
 
-  if (inkl != TRUE) return(invisible()) # wenn inkl nicht TRUE, wird Funktion beendet
-  
-  if (sum(!is.na(x)) == 0) return(invisible()) # selbiges bei fehlenden Werten
-  if(already.labels == FALSE) {
+  if (inkl != TRUE) {
+    return(invisible())
+  } # wenn inkl nicht TRUE, wird Funktion beendet
+
+  if (sum(!is.na(x)) == 0) {
+    return(invisible())
+  } # selbiges bei fehlenden Werten
+  if (already.labels == FALSE) {
     a <- attributes(x)
     x <- factor(x, levels = a$labels, labels = names(a$labels))
     attr(x, "label") <- a$label
@@ -42,31 +50,36 @@ merge_sc <- function(x, # Daten
 
   cat("###", nr, attr(x, "label"), "\n \n")
 
-  subchunkify(table_freq(x, col1.name = "Antwortoption", col2.name = col2.name,
-                         order.table = order.table, digits = digits))
+  subchunkify(table_freq(x,
+    col1.name = "Antwortoption", col2.name = col2.name,
+    order.table = order.table, digits = digits
+  ))
 
   freq.tab <- descr::freq(x, plot = FALSE)
   results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
-    
+
   # automatische Zeilenumbrüche bei langen Labels -------------------------
-  
+
   results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, width = 40), collapse = "\n"))
-    
+
   results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
   colnames(results) <- c("label", "freq", "perc")
 
   if (show.plot == TRUE) {
     if (fig.height == "default") {
       subchunkify(barplot_scmc(results, xlab = "Häufigkeit"),
-                  fig_height = (1 + nrow(results)), fig_width = 9)
+        fig_height = (1 + nrow(results)), fig_width = 9
+      )
     } else {
       subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
-                  fig_height = fig.height, fig_width = 9)}
+        fig_height = fig.height, fig_width = 9
+      )
     }
-    
+  }
+
   if (pagebreak == TRUE) {
     cat("\n {{< pagebreak >}}")
-    }
-  
+  }
+
   cat("\n \n")
 }

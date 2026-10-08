@@ -45,10 +45,12 @@ Kann auch für Balkendiagramme bei ordinalen Skalen genutzt werden
 \examples{
 
 merge_num(BspDaten$dataSHOWUP$zugang_note,
-          xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
-          cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
-          cut.labels = c("1,0 bis 1,4","1,5 bis 1,9","2,0 bis 2,4","2,5 bis 2,9",
-                         "3,0 bis 3,4","3,5 bis 4,0")) |> markdown_in_viewer()
-
+  xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
+  cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
+  cut.labels = c(
+    "1,0 bis 1,4", "1,5 bis 1,9", "2,0 bis 2,4", "2,5 bis 2,9",
+    "3,0 bis 3,4", "3,5 bis 4,0"
+  )
+) |> markdown_in_viewer()
 
 }

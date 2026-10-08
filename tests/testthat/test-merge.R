@@ -10,21 +10,29 @@ kf_123 <- lve[, c("KF_01", "KF_02", "KF_03")]
 test_that("merge_sc() gibt SC-Fragen unverändert aus", {
   expect_report_snapshot(merge_sc(lve$V3_D), "merge_sc-standard")
   expect_report_snapshot(
-    merge_sc(lve$FachSemN, order.table = "decreasing", col2.name = "Anzahl",
-             digits = 2, fig.height = 8),
+    merge_sc(lve$FachSemN,
+      order.table = "decreasing", col2.name = "Anzahl",
+      digits = 2, fig.height = 8
+    ),
     "merge_sc-optionen"
   )
-  expect_report_snapshot(merge_sc(lve$V3_D, show.plot = FALSE, pagebreak = TRUE),
-                         "merge_sc-ohne-plot-mit-umbruch")
-  expect_report_snapshot(merge_sc(BspDaten$Tabellen$freq, already.labels = TRUE),
-                         "merge_sc-bereits-labels")
+  expect_report_snapshot(
+    merge_sc(lve$V3_D, show.plot = FALSE, pagebreak = TRUE),
+    "merge_sc-ohne-plot-mit-umbruch"
+  )
+  expect_report_snapshot(
+    merge_sc(BspDaten$Tabellen$freq, already.labels = TRUE),
+    "merge_sc-bereits-labels"
+  )
 })
 
 test_that("merge_sc() und merge_mc() brechen lange Antwortoptionen unverändert um", {
-  lang <- c("Eine sehr lange Antwortoption, die in der Abbildung umbrochen werden muss",
-            "kurz",
-            # erste Zeile genau 39 Zeichen -> prüft die exakte Umbruchbreite
-            "Antwortoption mit genau neununddreißig! Zeichen in der ersten Zeile")
+  lang <- c(
+    "Eine sehr lange Antwortoption, die in der Abbildung umbrochen werden muss",
+    "kurz",
+    # erste Zeile genau 39 Zeichen -> prüft die exakte Umbruchbreite
+    "Antwortoption mit genau neununddreißig! Zeichen in der ersten Zeile"
+  )
   sc <- factor(lang[c(1, 1, 2, 3, 3, 3, NA)], levels = lang)
   attr(sc, "label") <- "Frage mit langen Antwortoptionen"
   expect_report_snapshot(merge_sc(sc, already.labels = TRUE), "merge_sc-lange-labels")
@@ -47,12 +55,16 @@ test_that("merge_sc() gibt ohne gültige Werte nichts aus", {
 test_that("merge_mc() gibt MC-Fragen unverändert aus", {
   expect_report_snapshot(merge_mc(abschluesse), "merge_mc-standard")
   expect_report_snapshot(
-    merge_mc(abschluesse, head = "Abschluss", col1.name = "Abschluss",
-             order.table = "decreasing", digits = 0, fig.height = 6),
+    merge_mc(abschluesse,
+      head = "Abschluss", col1.name = "Abschluss",
+      order.table = "decreasing", digits = 0, fig.height = 6
+    ),
     "merge_mc-optionen"
   )
-  expect_report_snapshot(merge_mc(abschluesse, valid.perc = FALSE, show.plot = FALSE),
-                         "merge_mc-ohne-gueltige-prozent")
+  expect_report_snapshot(
+    merge_mc(abschluesse, valid.perc = FALSE, show.plot = FALSE),
+    "merge_mc-ohne-gueltige-prozent"
+  )
 })
 
 test_that("merge_mc() verarbeitet LimeSurvey-Daten unverändert", {
@@ -61,8 +73,10 @@ test_that("merge_mc() verarbeitet LimeSurvey-Daten unverändert", {
   for (k in seq_along(optionen)) {
     attr(lime[, k], "label") <- paste0("[", optionen[k], "] Welchen Abschluss streben Sie an?")
   }
-  expect_report_snapshot(merge_mc(lime, lime = TRUE, filter = "FILTER_1"),
-                         "merge_mc-limesurvey")
+  expect_report_snapshot(
+    merge_mc(lime, lime = TRUE, filter = "FILTER_1"),
+    "merge_mc-limesurvey"
+  )
 })
 
 # merge_sk() --------------------------------------------------------------
@@ -78,11 +92,15 @@ test_that("merge_sk() gibt Skalenfragen unverändert aus", {
 })
 
 test_that("merge_sk() verarbeitet LimeSurvey-Daten unverändert", {
-  x <- factor(lve$KF_01[1:60], levels = 1:6,
-              labels = c("trifft gar nicht zu", "2", "3", "4", "5", "trifft voll zu"))
+  x <- factor(lve$KF_01[1:60],
+    levels = 1:6,
+    labels = c("trifft gar nicht zu", "2", "3", "4", "5", "trifft voll zu")
+  )
   attr(x, "label") <- "[Die Veranstaltung war gut strukturiert.] Zusatztext"
-  expect_report_snapshot(merge_sk(x, lime = TRUE, lime.brackets = TRUE),
-                         "merge_sk-limesurvey")
+  expect_report_snapshot(
+    merge_sk(x, lime = TRUE, lime.brackets = TRUE),
+    "merge_sk-limesurvey"
+  )
 })
 
 test_that("merge_sk() gibt ohne gültige Werte nichts aus", {
@@ -99,16 +117,20 @@ test_that("merge_aggr_sk() gibt mehrere Skalenfragen unverändert aus", {
     "merge_aggr_sk-aggregiert"
   )
   expect_report_snapshot(
-    merge_aggr_sk(kf_123, alt1 = "weiß nicht", alt1.num = 0, col2.name = "N",
-                  message = "Hinweistext  \n\n", fig.height = 5),
+    merge_aggr_sk(kf_123,
+      alt1 = "weiß nicht", alt1.num = 0, col2.name = "N",
+      message = "Hinweistext  \n\n", fig.height = 5
+    ),
     "merge_aggr_sk-optionen"
   )
   expect_report_snapshot(
     merge_aggr_sk(kf_123, tmin = "links", tmax = "rechts", show.table = FALSE),
     "merge_aggr_sk-eigene-pole"
   )
-  expect_report_snapshot(merge_aggr_sk(kf_123, show.plot = FALSE),
-                         "merge_aggr_sk-ohne-plot")
+  expect_report_snapshot(
+    merge_aggr_sk(kf_123, show.plot = FALSE),
+    "merge_aggr_sk-ohne-plot"
+  )
 })
 
 test_that("merge_aggr_sk() bricht bei unterschiedlicher Stufenanzahl ab", {
@@ -121,22 +143,29 @@ test_that("merge_aggr_sk() bricht bei unterschiedlicher Stufenanzahl ab", {
 test_that("merge_num() gibt numerische Fragen unverändert aus", {
   expect_report_snapshot(
     merge_num(showup$zugang_note,
-              xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
-              cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
-              cut.labels = c("1,0 bis 1,4", "1,5 bis 1,9", "2,0 bis 2,4",
-                             "2,5 bis 2,9", "3,0 bis 3,4", "3,5 bis 4,0")),
+      xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
+      cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
+      cut.labels = c(
+        "1,0 bis 1,4", "1,5 bis 1,9", "2,0 bis 2,4",
+        "2,5 bis 2,9", "3,0 bis 3,4", "3,5 bis 4,0"
+      )
+    ),
     "merge_num-cuts"
   )
   expect_report_snapshot(
-    merge_num(lve$FachSemN, xlab = "Fachsemester", cutoff = 12, show.table = FALSE,
-              fig.height = 4),
+    merge_num(lve$FachSemN,
+      xlab = "Fachsemester", cutoff = 12, show.table = FALSE,
+      fig.height = 4
+    ),
     "merge_num-cutoff"
   )
 })
 
 test_that("merge_num() prüft Argumente und leere Daten", {
-  expect_error(merge_num(lve$FachSemN, cut.breaks = c(0, 5, 99), cutoff = 12),
-               "cut.breaks")
+  expect_error(
+    merge_num(lve$FachSemN, cut.breaks = c(0, 5, 99), cutoff = 12),
+    "cut.breaks"
+  )
   x <- showup$zugang_note
   x[] <- NA
   expect_length(capture.output(merge_num(x)), 0)
@@ -144,17 +173,23 @@ test_that("merge_num() prüft Argumente und leere Daten", {
 
 test_that("merge_fachsem() gibt Fachsemester unverändert aus", {
   expect_report_snapshot(merge_fachsem(lve$FachSemN), "merge_fachsem-alle")
-  expect_report_snapshot(merge_fachsem(lve$FachSemN, group = "b", cutoff = 8),
-                         "merge_fachsem-bachelor")
-  expect_report_snapshot(merge_fachsem(lve$FachSemN, group = "m"),
-                         "merge_fachsem-master")
+  expect_report_snapshot(
+    merge_fachsem(lve$FachSemN, group = "b", cutoff = 8),
+    "merge_fachsem-bachelor"
+  )
+  expect_report_snapshot(
+    merge_fachsem(lve$FachSemN, group = "m"),
+    "merge_fachsem-master"
+  )
 })
 
 # merge_grade(), merge_rueck(), merge_wl() --------------------------------
 
 test_that("merge_grade() gibt Gesamtnoten unverändert aus", {
-  expect_report_snapshot(merge_grade(lve$Note, kennung = lve$Kennung),
-                         "merge_grade-standard")
+  expect_report_snapshot(
+    merge_grade(lve$Note, kennung = lve$Kennung),
+    "merge_grade-standard"
+  )
   expect_report_snapshot(
     merge_grade(BspDaten$Plots$grade, already.aggr = TRUE, show.table = FALSE),
     "merge_grade-bereits-aggregiert"
@@ -167,28 +202,36 @@ test_that("merge_rueck() gibt den Rücklauf unverändert aus", {
 
 test_that("merge_wl() gibt den Workload unverändert aus", {
   expect_report_snapshot(merge_wl(lve$WL, lve$Kennung), "merge_wl-standard")
-  expect_report_snapshot(merge_wl(BspDaten$Plots$WL, already.aggr = TRUE),
-                         "merge_wl-bereits-aggregiert")
+  expect_report_snapshot(
+    merge_wl(BspDaten$Plots$WL, already.aggr = TRUE),
+    "merge_wl-bereits-aggregiert"
+  )
 })
 
 # merge_subj() ------------------------------------------------------------
 
 test_that("merge_subj() fasst 1. und 2. Fach unverändert zusammen", {
-  expect_report_snapshot(merge_subj(showup$fach1_2FB, showup$fach2_2FB),
-                         "merge_subj")
+  expect_report_snapshot(
+    merge_subj(showup$fach1_2FB, showup$fach2_2FB),
+    "merge_subj"
+  )
 })
 
 # merge_open() und appendix_open() ----------------------------------------
 
 test_that("merge_open() gibt offene Antworten ohne Anhang unverändert aus", {
-  expect_report_snapshot(merge_open(showup$offen, appendix = FALSE),
-                         "merge_open-ohne-anhang")
+  expect_report_snapshot(
+    merge_open(showup$offen, appendix = FALSE),
+    "merge_open-ohne-anhang"
+  )
 
   doppelt <- c("Mehr Infos", "mehr infos", "Mehr Infos", "Klips-Hilfe", NA, " Videos ")
   attr(doppelt, "label") <- "Was hat gefehlt?"
   expect_report_snapshot(merge_open(doppelt, appendix = FALSE), "merge_open-haeufigkeiten")
-  expect_report_snapshot(merge_open(doppelt, appendix = FALSE, freq = FALSE),
-                         "merge_open-ohne-haeufigkeiten")
+  expect_report_snapshot(
+    merge_open(doppelt, appendix = FALSE, freq = FALSE),
+    "merge_open-ohne-haeufigkeiten"
+  )
 
   leer <- c(NA_character_, NA_character_)
   attr(leer, "label") <- "Leere Frage"
@@ -239,13 +282,17 @@ test_that("merge_auto() unterscheidet offene und numerische Textantworten", {
   zahlen_als_text <- c("1,7", "2,3", NA, "3,0")
   attr(zahlen_als_text, "label") <- "Note als Text"
   attr(zahlen_als_text, "type") <- "open/num"
-  expect_report_snapshot(merge_auto(zahlen_als_text, nr_auto = FALSE),
-                         "merge_auto-zahlen-als-text")
+  expect_report_snapshot(
+    merge_auto(zahlen_als_text, nr_auto = FALSE),
+    "merge_auto-zahlen-als-text"
+  )
 })
 
 test_that("merge_many() wertet mehrere Fragen unverändert aus", {
-  expect_report_snapshot(merge_many(showup[, 1:12], nr_auto = FALSE),
-                         "merge_many-showup")
+  expect_report_snapshot(
+    merge_many(showup[, 1:12], nr_auto = FALSE),
+    "merge_many-showup"
+  )
   expect_report_snapshot(
     merge_many(lve[, c("KF_01", "KF_02", "KF_03", "V3_D")], nr_auto = FALSE),
     "merge_many-mehrere-skalen"
@@ -254,8 +301,10 @@ test_that("merge_many() wertet mehrere Fragen unverändert aus", {
     merge_many(lve[, c("KF_01", "V3_D")], multi.sk = FALSE, nr_auto = FALSE),
     "merge_many-einzelne-skalen"
   )
-  expect_report_snapshot(merge_many(lve$V3_D, nr_auto = FALSE),
-                         "merge_many-einzelne-spalte")
+  expect_report_snapshot(
+    merge_many(lve$V3_D, nr_auto = FALSE),
+    "merge_many-einzelne-spalte"
+  )
 })
 
 test_that("merge_many() meldet nicht unterstützte Typen", {

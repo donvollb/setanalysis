@@ -21,8 +21,10 @@ Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber ü
 }
 \examples{
 
-boxplot_aggr_sk(BspDaten$Plots$aggr.data,
-                BspDaten$Plots$aggr.labels,
-                BspDaten$Plots$aggr.skala)
+boxplot_aggr_sk(
+  BspDaten$Plots$aggr.data,
+  BspDaten$Plots$aggr.labels,
+  BspDaten$Plots$aggr.skala
+)
 
 }

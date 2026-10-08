@@ -24,7 +24,7 @@ Die optimale Chunk-Einstellung hierfür ist: fig.width = 6, fig.height = 1.4
 }
 \examples{
 barplot_sk(BspDaten$dataSHOWUP$info_ausr_studgang,
-           tmin = "stimme gar nicht zu", tmax = "stimme voll zu")
-
+  tmin = "stimme gar nicht zu", tmax = "stimme voll zu"
+)
 
 }

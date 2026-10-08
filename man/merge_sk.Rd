@@ -52,5 +52,4 @@ Funktion für Likert-Skalen
 \examples{
 merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown_in_viewer()
 
-
 }

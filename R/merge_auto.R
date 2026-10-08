@@ -15,50 +15,57 @@ merge_auto <- function(x,
                        ...) { # Argumente zum „weitergeben“ in die Funktion
 
 
-if (typeof(x) != "list") {
-  type <- attr(x, "type")
-} else {
-  type <- paste0("multi.", attr(x[, 1], "type"))
-}
+  if (typeof(x) != "list") {
+    type <- attr(x, "type")
+  } else {
+    type <- paste0("multi.", attr(x[, 1], "type"))
+  }
 
-if (isTRUE(nr_auto & nr == "" & inkl == "nr")) {
-  if (type %in% c("multi.mc", "multi.sk")) {nr <- attr(x[, 1], "nr")
-  } else {nr <- attr(x, "nr")}}
-  
-  
-# Erkennung, ob es sich um offene oder numerische Fragen handelt
-## Zuerst prüfen, ob es überhaupt Buchstaben gibt
+  if (isTRUE(nr_auto & nr == "" & inkl == "nr")) {
+    if (type %in% c("multi.mc", "multi.sk")) {
+      nr <- attr(x[, 1], "nr")
+    } else {
+      nr <- attr(x, "nr")
+    }
+  }
 
-if (type == "open/num" & typeof(x) != "character") {
-  type <- "num"
-}  
 
-# Falls es Buchstaben gibt: Schätzung anhand des Anteils der Ziffern
-if (type == "open/num") {
-  
-  # NA-Werte entfernen, Vektor in eine lange Zeichenkette umwandeln
-  long <- paste(na.omit(x), collapse = "") 
-  
-  # Anzahl der Ziffern in der Zeichenkette zählen
-  anzahl_ziffern <- length(gregexpr("[0-9]", long)[[1]])
-  
-  # Gesamtlänge der Zeichenkette speichern 
-  gesamtlänge <- nchar(long)
+  # Erkennung, ob es sich um offene oder numerische Fragen handelt
+  ## Zuerst prüfen, ob es überhaupt Buchstaben gibt
 
-  # Anteil berechnen
-  anteil <- anzahl_ziffern / gesamtlänge
-  
-  if (anteil > 0.5) {type <- "num"} else {type <- "open"}
-}
+  if (type == "open/num" & typeof(x) != "character") {
+    type <- "num"
+  }
 
-Funktionsliste <- list(
-      sc = merge_sc,
-      sk = merge_sk,
+  # Falls es Buchstaben gibt: Schätzung anhand des Anteils der Ziffern
+  if (type == "open/num") {
+    # NA-Werte entfernen, Vektor in eine lange Zeichenkette umwandeln
+    long <- paste(na.omit(x), collapse = "")
+
+    # Anzahl der Ziffern in der Zeichenkette zählen
+    anzahl_ziffern <- length(gregexpr("[0-9]", long)[[1]])
+
+    # Gesamtlänge der Zeichenkette speichern
+    gesamtlänge <- nchar(long)
+
+    # Anteil berechnen
+    anteil <- anzahl_ziffern / gesamtlänge
+
+    if (anteil > 0.5) {
+      type <- "num"
+    } else {
+      type <- "open"
+    }
+  }
+
+  Funktionsliste <- list(
+    sc = merge_sc,
+    sk = merge_sk,
     open = merge_open,
-     num = merge_num,
-multi.mc = merge_mc,
-multi.sk = merge_aggr_sk
-)
+    num = merge_num,
+    multi.mc = merge_mc,
+    multi.sk = merge_aggr_sk
+  )
 
-Funktionsliste[[type]](x, nr = nr, inkl = inkl, ...)
+  Funktionsliste[[type]](x, nr = nr, inkl = inkl, ...)
 }

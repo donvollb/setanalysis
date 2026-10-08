@@ -1,11 +1,11 @@
 #' merge-Funktion für die Darstellung der aggregierten Ergebnisse einer oder
 #' mehrerer Skalenfragen#
-#' 
+#'
 #' `merge.multi.sk()` ist eine veraltete Schreibweise der gleichen Funktion
 
-#' 
+#'
 #' @param x Itemdaten (Dataframe mit einer oder mehreren Spalten)
-#' @param kennung Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt) 
+#' @param kennung Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt)
 #' @param number Anzahl Antwortoptionen der Items (OHNE AUSWEICHOPTIONEN!), wird bei "default" automatisch gezogen
 #' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
 #' @param alt2 Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
@@ -26,38 +26,39 @@
 #' @examples
 #' # Objekt erstellen, dass mehrere Fragen enthält:
 #' KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
-#' 
+#'
 #' # Funktion ausführen:
-#' markdown_in_viewer(merge_aggr_sk(KF_123, number = 6, aggr = TRUE,
-#'                    kennung = BspDaten$dataLVE$Kennung))
-#' 
+#' markdown_in_viewer(merge_aggr_sk(KF_123,
+#'   number = 6, aggr = TRUE,
+#'   kennung = BspDaten$dataLVE$Kennung
+#' ))
+#'
 #' @export merge_aggr_sk
 
 
 merge_aggr_sk <- function(x, # Daten
-                           kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
-                           number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
-                           alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
-                           alt2 = FALSE, # Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
-                           alt1.num = 0, # Welche Zahl entspricht alt1
-                           alt2.num = 7, # Welche Zahl entspricht alt2
-                           nr = "", # Nummer der ersten Frage
-                           inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                           tmin = "default", # linker Pol, bei "default" wird das Label automatisch gezogen
-                           tmid = "default", # mittlerer Pol (für 5er Skalen), bei "default" automatisch
-                           tmax = "default",  # rechter Pol, "default" wie oben
-                           show.table = TRUE, # Soll Tabelle angezeigt werden?
-                           show.plot = TRUE, # Sollen Boxplots dazu angezeigt werden?
-                           fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
-                           col2.name = "n", # Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern
-                           message = "", # Soll ein Hinweistext am Anfang erfolgen?
-                           aggr = FALSE) # Sollen Daten aggregiert werden?
+                          kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
+                          number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
+                          alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
+                          alt2 = FALSE, # Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
+                          alt1.num = 0, # Welche Zahl entspricht alt1
+                          alt2.num = 7, # Welche Zahl entspricht alt2
+                          nr = "", # Nummer der ersten Frage
+                          inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+                          tmin = "default", # linker Pol, bei "default" wird das Label automatisch gezogen
+                          tmid = "default", # mittlerer Pol (für 5er Skalen), bei "default" automatisch
+                          tmax = "default", # rechter Pol, "default" wie oben
+                          show.table = TRUE, # Soll Tabelle angezeigt werden?
+                          show.plot = TRUE, # Sollen Boxplots dazu angezeigt werden?
+                          fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
+                          col2.name = "n", # Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern
+                          message = "", # Soll ein Hinweistext am Anfang erfolgen?
+                          aggr = FALSE) # Sollen Daten aggregiert werden?
 {
-
   if (inkl == "nr") {
-
-    if (nr == "") {inkl <- TRUE} else {
-
+    if (nr == "") {
+      inkl <- TRUE
+    } else {
       header <- sub("\\..*$", "", nr)
       nr1 <- as.numeric(sub("^.*\\.", "", nr))
       nr.end <- nr1 + ncol(x) - 1
@@ -65,13 +66,14 @@ merge_aggr_sk <- function(x, # Daten
       nrs <- paste0(header, ".", nrs.ends)
 
       inkls <- NULL
-      for (k in 1:length(nrs)) {inkls[k] <- eval(parse(text = paste0("inkl.", nrs[k])))}
+      for (k in 1:length(nrs)) {
+        inkls[k] <- eval(parse(text = paste0("inkl.", nrs[k])))
+      }
 
       x <- x[, inkls] # Variablen entfernen, die nicht vorkommen sollen
       nrs <- nrs[inkls] # Nummern entfernen, die nicht vorkommen sollen
 
       if (length(nrs > 0)) {
-
         for (k in 1:length(nrs)) {
           attr(x[, k], "label") <- paste(nrs[k], attr(x[, k], "label"))
         }
@@ -80,28 +82,33 @@ merge_aggr_sk <- function(x, # Daten
       inkl <- ifelse(any(inkls == TRUE), TRUE, FALSE)
 
       rm(header, nr1, nr.end, nrs.ends, nrs, inkls)
-
     }
   }
 
-  if (inkl != TRUE) { return(invisible()) } # wenn inkl nicht TRUE, wird Funktion beendet
-  
+  if (inkl != TRUE) {
+    return(invisible())
+  } # wenn inkl nicht TRUE, wird Funktion beendet
+
   if (number == "default") { # zieht sich automatisch die Anzahl der Stufen
     # Items, falls diese nicht angegeben wurde
 
     StufenListe <- list()
     if (!is.null(ncol(x))) {
       for (k in 1:ncol(x)) {
-        StufenListe[k] <- length(attr(x[,k], "labels"))
+        StufenListe[k] <- length(attr(x[, k], "labels"))
       }
       Stufen <- unique(StufenListe)
       if (length(Stufen) != 1) { # Fehlermeldung bei unterschiedlicher Anzahl Stufen
         stop("Die ausgewählten Items haben eine unterschiedliche
-           Anzahl an Stufen.")} else {
-             number <- Stufen[[1]]}
-    } else {number <- length(attr(x, "labels"))}
+           Anzahl an Stufen.")
+      } else {
+        number <- Stufen[[1]]
+      }
+    } else {
+      number <- length(attr(x, "labels"))
+    }
   }
-  
+
   x <- data.frame(x)
 
   if (ncol(x) > 1) {
@@ -113,70 +120,80 @@ merge_aggr_sk <- function(x, # Daten
 
   ListeLabels <- list()
   for (k in 1:length(x)) {
-    ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number]  #nicht Relevante Labels werden abgeschnitten
+    ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number] # nicht Relevante Labels werden abgeschnitten
   }
 
   TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
 
   if (tmin == "default") {
-    LabelLinks <- unique(as.list(TabelleLabels[1,]))
+    LabelLinks <- unique(as.list(TabelleLabels[1, ]))
 
-    if(length(unique(LabelLinks)) != 1) {
+    if (length(unique(LabelLinks)) != 1) {
       warning(paste0("Achtung: Die Labels der einzelnen Items auf der linken
-                   Seite sind unterschiedlich: \n", LabelLinks))}
+                   Seite sind unterschiedlich: \n", LabelLinks))
+    }
 
-    tmin <- LabelLinks[[1]]}
+    tmin <- LabelLinks[[1]]
+  }
 
-  if (tmid == "default" & number %% 2 == 1) { #nur bei ungerader Anzahl Stufen
+  if (tmid == "default" & number %% 2 == 1) { # nur bei ungerader Anzahl Stufen
 
-    LabelMitte <- unique(as.list(TabelleLabels[(number+1)/2,]))
+    LabelMitte <- unique(as.list(TabelleLabels[(number + 1) / 2, ]))
 
-    if(length(unique(LabelMitte)) != 1) {
+    if (length(unique(LabelMitte)) != 1) {
       warning(paste0("Achtung: Die Labels der einzelnen Items in der Mitte
-                      sind unterschiedlich:\n", LabelMitte))}
+                      sind unterschiedlich:\n", LabelMitte))
+    }
 
-    tmid <- LabelMitte[[1]]}
+    tmid <- LabelMitte[[1]]
+  }
 
   if (tmax == "default") {
+    LabelRechts <- unique(as.list(TabelleLabels[number, ]))
 
-    LabelRechts <- unique(as.list(TabelleLabels[number,]))
+    if (length(unique(LabelRechts)) != 1) {
+      warning(paste0("Achtung: Die Labels der einzelnen Items auf der rechten
+                    Seite sind unterschiedlich:\n", LabelRechts))
+    }
 
-  if(length(unique(LabelRechts)) != 1) {
-    warning(paste0("Achtung: Die Labels der einzelnen Items auf der rechten
-                    Seite sind unterschiedlich:\n", LabelRechts))}
-
-    tmax <- LabelRechts[[1]]}
+    tmax <- LabelRechts[[1]]
+  }
 
 
   if (aggr == TRUE) {
     x <- aggr_data(vars = x, kennung = kennung)
   }
 
-  if (number %% 2 == 0 | tmid == "") { #bei gerader Anzahl Stufen oder keinem Mittellabel
-    
-    text.skala <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
-    labels.skala <- c(tmin, rep("", number-2), tmax)
-    } else { #bei ungerader Anzahl Stufen
-    text.skala <- paste0("(1)~", tmin, " - (", (number+1)/2, ")~", tmid,
-                         " - (", number, ")~", tmax)
-    labels.skala <- c(tmin, rep("", (number-3)/2), tmid,
-                      rep("", (number-3)/2), tmax)}
+  if (number %% 2 == 0 | tmid == "") { # bei gerader Anzahl Stufen oder keinem Mittellabel
 
-  if(message != "") {cat(message)}
+    text.skala <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
+    labels.skala <- c(tmin, rep("", number - 2), tmax)
+  } else { # bei ungerader Anzahl Stufen
+    text.skala <- paste0(
+      "(1)~", tmin, " - (", (number + 1) / 2, ")~", tmid,
+      " - (", number, ")~", tmax
+    )
+    labels.skala <- c(
+      tmin, rep("", (number - 3) / 2), tmid,
+      rep("", (number - 3) / 2), tmax
+    )
+  }
+
+  if (message != "") {
+    cat(message)
+  }
 
 
   # Alternativantworten in Listen schreiben (für die Tabelle) -------------
   if (alt1 != FALSE) {
-
     alt1.list <- NULL
-    
+
     for (l in 1:ncol(x)) {
-        alt1.list <- c(alt1.list, sum(x[, l] == alt1.num, na.rm = TRUE))
+      alt1.list <- c(alt1.list, sum(x[, l] == alt1.num, na.rm = TRUE))
     }
   }
 
   if (alt2 != FALSE) {
-
     alt2.list <- NULL
     for (l in 1:ncol(x)) {
       alt2.list <- c(alt2.list, sum(x[, l] == alt2.num, na.rm = TRUE))
@@ -189,7 +206,7 @@ merge_aggr_sk <- function(x, # Daten
     subchunkify(
       table_stat_multi(
         x,
-        col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, ']_'),
+        col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, "]_"),
         col2.name = col2.name,
         bold.corner = FALSE,
         alt1 = alt1,
@@ -205,11 +222,10 @@ merge_aggr_sk <- function(x, # Daten
     x <- rev(x)
 
     # Automatische Zeilenumbrüche einfügen --------------------------------
-    
-    labels <- sapply(labels, \(x) paste(strwrap(x, width = 49), collapse = "\n")) 
+
+    labels <- sapply(labels, \(x) paste(strwrap(x, width = 49), collapse = "\n"))
 
     if (fig.height == "default") {
-
       if (number %% 2 != 0) { # bei ungerader Anzahl Stufen mehr Platz für Hinweistext
         subchunkify(
           boxplot_aggr_sk(x, labels, labels.skala),
@@ -221,15 +237,16 @@ merge_aggr_sk <- function(x, # Daten
           boxplot_aggr_sk(x, labels, labels.skala),
           fig_height = (length(labels) + 1),
           fig_width = 9
-        ) }
+        )
+      }
     } else {
       subchunkify(
         boxplot_aggr_sk(x, labels, labels.skala),
         fig_height = fig.height,
         fig_width = 9
-        )
-      }
+      )
     }
+  }
 
-    cat("  \n  \n")
+  cat("  \n  \n")
 }

@@ -33,5 +33,6 @@ merge-Funktion für Schulnoten
 }
 \examples{
 merge_grade(BspDaten$dataLVE$Note,
-            kennung = BspDaten$dataLVE$Kennung) |> markdown_in_viewer()
+  kennung = BspDaten$dataLVE$Kennung
+) |> markdown_in_viewer()
 }

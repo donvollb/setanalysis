@@ -71,7 +71,9 @@ merge_aggr_sk(
 KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
 
 # Funktion ausführen:
-markdown_in_viewer(merge_aggr_sk(KF_123, number = 6, aggr = TRUE,
-                   kennung = BspDaten$dataLVE$Kennung))
+markdown_in_viewer(merge_aggr_sk(KF_123,
+  number = 6, aggr = TRUE,
+  kennung = BspDaten$dataLVE$Kennung
+))
 
 }

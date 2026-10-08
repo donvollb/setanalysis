@@ -6,8 +6,10 @@ lve <- BspDaten$dataLVE
 showup <- BspDaten$dataSHOWUP
 
 test_that("inkl = FALSE oder inkl.<nr> = FALSE unterdrückt die Ausgabe", {
-  local_inkl(`1.3` = FALSE, `1.19` = FALSE, `1.30` = FALSE, `1.34` = FALSE,
-             `1.27` = FALSE, `1.1` = FALSE, `2.1` = FALSE)
+  local_inkl(
+    `1.3` = FALSE, `1.19` = FALSE, `1.30` = FALSE, `1.34` = FALSE,
+    `1.27` = FALSE, `1.1` = FALSE, `2.1` = FALSE
+  )
 
   reset_setanalysis_state()
   expect_length(capture.output(merge_sc(lve$V3_D, nr = "1.3")), 0)
@@ -17,17 +19,20 @@ test_that("inkl = FALSE oder inkl.<nr> = FALSE unterdrückt die Ausgabe", {
   expect_length(capture.output(merge_open(showup$offen, nr = "1.34")), 0)
   expect_length(capture.output(merge_num(showup$zugang_note, nr = "1.27")), 0)
   expect_length(capture.output(
-    merge_mc(showup[, paste0("abschluss_", 1:8)], nr = "1.1")), 0)
+    merge_mc(showup[, paste0("abschluss_", 1:8)], nr = "1.1")
+  ), 0)
   expect_length(capture.output(merge_grade(lve$Note, lve$Kennung, nr = "2.1")), 0)
   expect_length(capture.output(
-    merge_aggr_sk(lve[, c("KF_01", "KF_02")], nr = "2.1", inkl = FALSE)), 0)
+    merge_aggr_sk(lve[, c("KF_01", "KF_02")], nr = "2.1", inkl = FALSE)
+  ), 0)
 })
 
 test_that("merge_subj() braucht beide inkl.-Variablen", {
   local_inkl(`1.20` = TRUE, `1.21` = FALSE)
   reset_setanalysis_state()
   expect_length(capture.output(
-    merge_subj(showup$fach1_2FB, showup$fach2_2FB, nr1 = "1.20", nr2 = "1.21")), 0)
+    merge_subj(showup$fach1_2FB, showup$fach2_2FB, nr1 = "1.20", nr2 = "1.21")
+  ), 0)
 })
 
 test_that("inkl.<nr> = TRUE gibt die Frage mit Nummer aus", {

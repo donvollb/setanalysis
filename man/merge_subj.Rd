@@ -24,7 +24,9 @@ merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fa
 }
 \examples{
 
-merge_subj(BspDaten$dataSHOWUP$fach1_2FB,
-           BspDaten$dataSHOWUP$fach2_2FB) |> markdown_in_viewer()
+merge_subj(
+  BspDaten$dataSHOWUP$fach1_2FB,
+  BspDaten$dataSHOWUP$fach2_2FB
+) |> markdown_in_viewer()
 
 }

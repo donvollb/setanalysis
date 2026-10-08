@@ -18,7 +18,9 @@ Boxplot der Rückläufe
 Boxplot für Rücklaufsabbildung (LVE)
 }
 \examples{
-merge_rueck(BspDaten$dataLVE$Teilnehmer,
-            BspDaten$dataLVE$Kennung) |> markdown_in_viewer()
+merge_rueck(
+  BspDaten$dataLVE$Teilnehmer,
+  BspDaten$dataLVE$Kennung
+) |> markdown_in_viewer()
 
 }
