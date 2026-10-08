@@ -5,3 +5,7 @@ notes/
 /doc/
 /Meta/
 docs
+
+# RStudio-Projektdateien (lokal)
+*.Rproj
+.Rproj.user/

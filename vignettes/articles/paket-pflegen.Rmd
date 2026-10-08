@@ -13,28 +13,47 @@ tun und wie ein Release entsteht.
 
 Das ursprüngliche Repository <https://github.com/donvollb/setanalysis> wird
 nicht weiter gepflegt. Wer das Paket weiterentwickelt, legt deshalb zuerst
-eine eigene Kopie an, z. B. im Konto der Einrichtung, und arbeitet nur noch
-dort.
+eine eigene Kopie in einem beliebigen GitHub-Konto an (persönlich oder als
+Organisation) und arbeitet nur noch dort. In den Beispielen unten steht
+`<konto>` für den Namen dieses Kontos.
 
-### Kopie mit der ganzen Geschichte anlegen
+### Eine Kopie mit der gesamten History anlegen
 
-1. Auf GitHub ein neues, **leeres** Repository anlegen (ohne README, Lizenz
-   oder `.gitignore`), z. B. `meine-einrichtung/setanalysis`.
-2. Das alte Repository klonen und in das neue übertragen, mit allen Branches
-   und Tags:
+Die Kopie soll die gesamte History enthalten, also alle Commits, Branches und
+Tags. Dafür gibt es zwei Wege.
 
-   ```bash
-   git clone https://github.com/donvollb/setanalysis.git
-   cd setanalysis
-   git remote set-url origin https://github.com/meine-einrichtung/setanalysis.git
-   git push -u origin --all
-   git push origin --tags
-   ```
+**Auf der GitHub-Website (ohne Installation):**
 
-Alternativ lässt sich das Repository auf GitHub **forken**. Ein Fork bleibt
-sichtbar mit dem Original verbunden; bei Forks sind Issues und GitHub Actions
-zunächst ausgeschaltet und müssen in den Einstellungen eingeschaltet werden.
-Für eine dauerhafte Übernahme ist die eigenständige Kopie übersichtlicher.
+1. Oben rechts auf **+** → *Import repository* klicken.
+2. Als Quelle `https://github.com/donvollb/setanalysis` eintragen, darunter
+   Konto und Namen für das neue Repository wählen (z. B. `setanalysis`),
+   Sichtbarkeit *Public* → *Begin import*.
+3. Nach wenigen Minuten ist die Kopie fertig. Danach das neue Repository auf
+   den eigenen Rechner holen, z. B. in RStudio über *File → New Project →
+   Version Control → Git* mit der Adresse des neuen Repositorys.
+
+**Im Terminal (mit Git):** Dafür muss [Git](https://git-scm.com) installiert
+sein. Die Befehle laufen in jedem Terminal, z. B. im Reiter *Terminal* von
+RStudio oder Positron. Vorher auf GitHub ein neues, **leeres** Repository
+anlegen (ohne README, Lizenz oder `.gitignore`):
+
+```bash
+git clone https://github.com/donvollb/setanalysis.git
+cd setanalysis
+git remote set-url origin https://github.com/<konto>/setanalysis.git
+git push -u origin --all
+git push origin --tags
+```
+
+Die erste Zeile lädt das alte Repository herunter, die dritte stellt die
+Zieladresse auf das neue Repository um, die letzten beiden übertragen alle
+Branches und Tags dorthin.
+
+Alternativ lässt sich das Repository auf GitHub **forken** (Schaltfläche
+*Fork*). Ein Fork bleibt sichtbar mit dem Original verbunden; Issues und
+GitHub Actions sind dort zunächst ausgeschaltet und müssen in den
+Einstellungen eingeschaltet werden. Für eine dauerhafte Übernahme ist die
+eigenständige Kopie übersichtlicher.
 
 ### Verweise auf das alte Repository ersetzen
 
@@ -56,6 +75,16 @@ bleiben mit der Rolle `"aut"` stehen.
 
 ### GitHub Actions und GitHub Pages einschalten
 
+**GitHub Actions** prüft bei jeder Änderung automatisch das Paket und baut die
+Website (Abschnitt 5). **GitHub Pages** stellt die Website
+(`https://<konto>.github.io/setanalysis/`) ins Netz. Pages ist nur für die
+Website nötig: Ohne Pages lässt sich das Paket genauso installieren und
+nutzen. Die Hilfeseiten gibt es dann nur in R (`?setanalysis`), die Anleitung
+als Datei `vignettes/bericht-erstellen.Rmd` im Repository (bei der
+Installation von GitHub wird sie meist nicht mitgebaut).
+Wer auf die Website verzichtet, löscht `.github/workflows/pkgdown.yaml` und
+die Links zur Website in README und `DESCRIPTION`.
+
 1. **Actions:** *Settings → Actions → General* → „Allow all actions and
    reusable workflows“. Ab dann läuft bei jedem Push die Prüfung (siehe
    Abschnitt 5).
@@ -67,17 +96,18 @@ bleiben mit der Rolle `"aut"` stehen.
    ist die Website unter `https://<konto>.github.io/setanalysis/` erreichbar.
    Diese Adresse in `_pkgdown.yml` und `DESCRIPTION` eintragen.
 
-Mit der [GitHub-CLI](https://cli.github.com) geht Schritt 3 auch im
-Terminal:
+Alle drei Schritte gehen über die Website, weitere Programme sind nicht nötig.
+Wer lieber im Terminal arbeitet, kann die [GitHub-CLI](https://cli.github.com)
+(Befehl `gh`) installieren und sich mit `gh auth login` anmelden; Schritt 3
+lautet dann:
 
 ```bash
 gh api -X POST repos/<konto>/setanalysis/pages -f "source[branch]=gh-pages" -f "source[path]=/"
 ```
 
-
 ## 2. Arbeitsumgebung
 
-* R (aktuelle Version) und RStudio oder Positron,
+* R (aktuelle Version) und eine Entwicklungsumgebung (siehe unten),
 * die Entwicklungswerkzeuge:
 
   ```r
@@ -88,8 +118,26 @@ gh api -X POST repos/<konto>/setanalysis/pages -f "source[branch]=gh-pages" -f "
   rendern lassen und der Typst-Test läuft,
 * Git und ein GitHub-Konto mit Schreibrechten auf das Repository.
 
-Das Repository in RStudio als Projekt öffnen (*File → Open Project*), damit
-das Arbeitsverzeichnis stimmt.
+### Welche Entwicklungsumgebung?
+
+* **RStudio** – die Empfehlung für den Einstieg: Paketentwicklung,
+  Git und Terminal sind eingebaut, die Tastenkürzel in Abschnitt 4 gelten
+  hier. Beim ersten Mal den Ordner des Repositorys als Projekt anlegen (*File →
+  New Project → Existing Directory*), danach über *File → Open Project*
+  öffnen. So stimmt das Arbeitsverzeichnis. Die dabei entstehende Datei
+  `setanalysis.Rproj` wird nicht ins Repository übernommen.
+* **Positron** – die neuere Umgebung der RStudio-Entwickler (Posit), aufgebaut
+  wie VS Code und mit eingebauter R-Unterstützung. Gut geeignet, wer auch mit
+  anderen Sprachen arbeitet oder VS Code kennt. Den Ordner des Repositorys
+  öffnen (*File → Open Folder*). Die `devtools`-Befehle laufen in der
+  R-Konsole wie überall; RStudio-Tastenkürzel lassen sich in den
+  Einstellungen einschalten.
+* **VS Code** – möglich mit der Erweiterung *R* (REditorSupport) und dem
+  R-Paket `languageserver`, braucht aber mehr Einrichtung. Wer VS Code mag,
+  ist mit Positron meist besser bedient.
+
+Die Befehle in diesem Artikel funktionieren in allen drei Umgebungen; wo
+Tastenkürzel genannt sind, sind es die von RStudio.
 
 
 ## 3. Aufbau des Repositorys
