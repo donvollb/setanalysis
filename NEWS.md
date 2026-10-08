@@ -16,6 +16,13 @@ Fehlerbehebung aufgeführt.
 
 ## Fehlerbehebungen
 
+* Sonderzeichen in Tabellen werden für Typst maskiert. Bisher brach das
+  Erstellen des PDFs ab, wenn eine offene Antwort, eine Antwortoption oder ein
+  Item-Text z. B. ` // `, `$`, `#`, `_`, `*`, `<…>` oder `@…` enthielt
+  („unclosed delimiter“), und ein einzelner Backslash verschwand. Betroffen
+  waren alle Tabellen aus `lv_table()` sowie die Skalenbeschriftung im
+  Tabellenkopf von `merge_aggr_sk()`. Die Kopfzeilen der Tabellen werden
+  weiterhin nicht maskiert, damit sie Typst-Code enthalten können.
 * `merge_mc()` zeichnet die Zeilen „NAs“ und „Total“ nicht mehr als Balken ins
   Diagramm; sie stehen weiterhin in der Tabelle. Dadurch wird die Abbildung bei
   `fig.height = "default"` entsprechend niedriger. Die Beispieldaten
@@ -32,6 +39,10 @@ Fehlerbehebung aufgeführt.
   Werden mehrere Berichte in derselben R-Sitzung erstellt (z. B. mit
   `rmarkdown::render()` in einer Schleife), enthält der Anhang eines Berichts
   damit nicht mehr die offenen Antworten der vorherigen Berichte.
+* `appendix_open()` bricht nicht mehr ab, wenn eine offene Frage mit `nr` und
+  `inkl = TRUE` gesammelt wurde (bisher: „object 'inkl.x.y' not found“, wenn es
+  keine passende inkl.-Variable gab). Der Anhang übernimmt jetzt die beim
+  Sammeln getroffene Entscheidung, statt die inkl.-Variable erneut abzufragen.
 * `merge_fachsem()` berücksichtigt das Argument `fig.height` (bisher war die
   Höhe der Abbildung immer 5; der Standardwert bleibt 5).
 * `merge_fachsem()` bricht bei einer ungültigen `group` jetzt mit einer

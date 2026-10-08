@@ -81,7 +81,7 @@ block[ // start block
 [Master of Science (M.Sc.)], [55], [23], [23],
 [Master of Education (M.Ed.)], [23], [10], [10],
 [Bachelor of Arts (B.A.)], [17], [7], [7],
-[2-Fach-Bachelor (B.A., B.Sc.)], [12], [5], [5],
+[2\-Fach\-Bachelor (B.A., B.Sc.)], [12], [5], [5],
 [Master of Arts (M.A.)], [12], [5], [5],
 [lehramtsbezogener Zertifikatsstudiengang], [0], [0], [0],
 [NAs], [0], [0], [NA],

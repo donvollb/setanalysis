@@ -78,9 +78,9 @@ block[ // start block
     // tinytable cell content after
 [Allgemeine Erziehungswissenschaft], [3], [0.6], [12.5],
 [Anglistik], [1], [0.2], [4.2],
-[Betriebspädagogik/ Personalentwicklung], [4], [0.8], [16.7],
+[Betriebspädagogik\/ Personalentwicklung], [4], [0.8], [16.7],
 [Evangelische Theologie], [0], [0.0], [0.0],
-[Frankreich-Studien], [0], [0.0], [0.0],
+[Frankreich\-Studien], [0], [0.0], [0.0],
 [Geographie: Landnutzungskonflikte], [4], [0.8], [16.7],
 [Germanistik], [1], [0.2], [4.2],
 [Katholische Theologie], [0], [0.0], [0.0],

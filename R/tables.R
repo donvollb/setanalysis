@@ -10,6 +10,11 @@
 #' (bei nur einer Zeile zentriert). Spalten mit ganzen Zahlen werden ohne
 #' Nachkommastellen gezeigt.
 #'
+#' Sonderzeichen in den Zellen (z. B. `$`, `#`, `_` oder `//` in offenen
+#' Antworten) werden maskiert und erscheinen im Bericht als normaler Text.
+#' Die Kopfzeile wird nicht maskiert, sie darf also Typst-Code enthalten
+#' (z. B. `'#text(weight: "bold")[Item]'`).
+#'
 #' Alle anderen Tabellenfunktionen des Pakets nutzen `lv_table()`.
 #'
 #' @param x Data Frame mit dem Tabelleninhalt.
@@ -83,6 +88,14 @@ lv_table <- function(x,
 
   tab <- tt_format(tab, num_zero = TRUE, num_fmt = "decimal", digits = digits)
 
+  # Sonderzeichen in den Zellen maskieren ---------------------------------
+  # Antworten und Labels (z. B. mit $, #, _ oder //) erscheinen so als Text.
+  # Die Kopfzeile bleibt unverändert, weil sie Typst-Code enthalten kann.
+
+  if (nrow(tab) > 0) {
+    tab <- tt_format(tab, i = seq_len(nrow(tab)), escape = TRUE)
+  }
+
   # Nur eine Zeile: Erste Spalte linksbündig, Rest zentriert --------------
 
   if (nrow(tab) == 1) {
@@ -103,6 +116,13 @@ lv_table <- function(x,
   # Fertige Tabelle ausgeben ----------------------------------------------
 
   return(tab)
+}
+
+# Text für Typst-Markup maskieren (für Daten, die in selbst geschriebenen
+# Typst-Code eingesetzt werden, z. B. Skalenlabels in Tabellenköpfen).
+# Gleiche Zeichen wie tinytable bei format_tt(escape = TRUE).
+.escape_typst <- function(x) {
+  gsub("([][\\\\#$*_<>@`~=+/\"-])", "\\\\\\1", x)
 }
 
 #' Häufigkeitstabelle erstellen

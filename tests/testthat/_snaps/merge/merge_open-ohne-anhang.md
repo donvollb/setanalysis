@@ -74,11 +74,11 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-['-],
-['- Keine Infos über Prozedere der Modulwahl (Module können nicht frei gewählt werden, sondern werden nach Priorisierung zugeteilt) - Genauere Infos über Module erfolgte erst nach Modulwahl, danach ist jedoch kaum noch eine Änderung möglich],
-['-Welche Vorkenntnisse und wissen benötigt wird.  -],
+['\-],
+['\- Keine Infos über Prozedere der Modulwahl (Module können nicht frei gewählt werden, sondern werden nach Priorisierung zugeteilt) \- Genauere Infos über Module erfolgte erst nach Modulwahl, danach ist jedoch kaum noch eine Änderung möglich],
+['\-Welche Vorkenntnisse und wissen benötigt wird.  \-],
 [Anerkennung Vorstudien Leistungen, Wahlpflichtleistungen,],
-[Anstelle der ganzen QR-Codes in der Infobroschüre mehr Fließtext zum Lesen.],
+[Anstelle der ganzen QR\-Codes in der Infobroschüre mehr Fließtext zum Lesen.],
 [Dass es überhaupt einen 2 F B gibt und was das ist],
 [Die Studienverlaufspläne waren nicht gut zu finden. Der Studiengang wird von zwei Fakultäten parallel organisiert, was sich negativ auf die Inhalte auswirkt. Der Wert des Abschlusses war so nicht ersichtlich.],
 [Einzelne Vorlesungen],
@@ -91,7 +91,7 @@ block[ // start block
 [Klips Hilfe],
 [Man muss erstmal wissen, was wichtig zu wissen ist. Vieles zieht an einem vorbei. Wenn man frisch an eine Uni kommt, hat man ja null Plan.],
 [Mehr Informationen am Infotag von der Fachschaft],
-[Mehr Informationen durch Studierende/aus der Perspektive von Studierenden.],
+[Mehr Informationen durch Studierende\/aus der Perspektive von Studierenden.],
 [Mögliche Vorlesungen, ERKLÄRUNG DES STUNDENPLANS (WÄHLEN)],
 [Nachvollziehbare Übersicht über die Inhalte des Studiums.],
 [Studienverlaufsplan in Philosophie],

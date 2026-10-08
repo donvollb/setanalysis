@@ -74,7 +74,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Klips-Hilfe],
+[Klips\-Hilfe],
 [Mehr Infos],
 [Mehr Infos],
 [Videos],

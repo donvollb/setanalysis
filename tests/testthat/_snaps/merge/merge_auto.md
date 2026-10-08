@@ -375,7 +375,7 @@ block[ // start block
 [Bachelor of Arts (B.A.)], [17], [7.0], [7.0],
 [Bachelor of Education (B.Ed.)], [70], [28.9], [28.9],
 [Bachelor of Science (B.Sc.)], [59], [24.4], [24.4],
-[2-Fach-Bachelor (B.A., B.Sc.)], [12], [5.0], [5.0],
+[2\-Fach\-Bachelor (B.A., B.Sc.)], [12], [5.0], [5.0],
 [Master of Arts (M.A.)], [12], [5.0], [5.0],
 [Master of Education (M.Ed.)], [23], [9.5], [9.5],
 [Master of Science (M.Sc.)], [55], [22.7], [22.7],

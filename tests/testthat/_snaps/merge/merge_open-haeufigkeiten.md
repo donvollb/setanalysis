@@ -74,7 +74,7 @@ block[ // start block
 
     // tinytable cell content after
 [Mehr Infos], [3],
-[Klips-Hilfe], [1],
+[Klips\-Hilfe], [1],
 [Videos], [1],
 
     // tinytable footer after

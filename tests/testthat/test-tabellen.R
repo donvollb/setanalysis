@@ -13,6 +13,82 @@ test_that("lv_table() formatiert Tabellen unverändert", {
   )
 })
 
+# Sonderzeichen, die in Typst-Markup eine Bedeutung haben
+sonderzeichen <- c(
+  "a // b", "kostet $5", "#wort", "ein _ x", "x*y", "<label>", "@verweis",
+  "back\\slash", "[Klammer]", "- Strich", "+ plus", "= Titel", "~ tilde",
+  "`code`", "\"Zitat\""
+)
+
+typst_zeilen <- function(tabelle) {
+  strsplit(tinytable::save_tt(tabelle, output = "typst"), "\n")[[1]]
+}
+
+test_that("lv_table() maskiert Sonderzeichen in den Zellen, nicht im Kopf", {
+  kopf <- '#text(weight: "bold")[Item] _[Skala: a]_'
+  daten <- data.frame(sonderzeichen, seq_along(sonderzeichen))
+  names(daten) <- c(kopf, "n")
+  zeilen <- typst_zeilen(lv_table(daten))
+
+  # Kopfzeile bleibt Typst-Code
+  expect_true(any(grepl(kopf, zeilen, fixed = TRUE)))
+  # Zellen: jede Antwort steht maskiert in der Tabelle
+  maskiert <- c(
+    "a \\/\\/ b", "kostet \\$5", "\\#wort", "ein \\_ x", "x\\*y",
+    "\\<label\\>", "\\@verweis", "back\\\\slash", "\\[Klammer\\]",
+    "\\- Strich", "\\+ plus", "\\= Titel", "\\~ tilde", "\\`code\\`",
+    "\\\"Zitat\\\""
+  )
+  for (k in seq_along(maskiert)) {
+    expect_true(any(grepl(paste0("[", maskiert[k], "]"), zeilen, fixed = TRUE)),
+      label = sonderzeichen[k]
+    )
+  }
+})
+
+test_that(".escape_typst() maskiert wie tinytable", {
+  tab <- lv_table(data.frame(Antwort = sonderzeichen))
+  zeilen <- typst_zeilen(tab)
+  for (zeichen in sonderzeichen) {
+    expect_true(
+      any(grepl(paste0("[", .escape_typst(zeichen), "]"), zeilen, fixed = TRUE)),
+      label = zeichen
+    )
+  }
+  expect_identical(.escape_typst("trifft gar nicht zu"), "trifft gar nicht zu")
+})
+
+test_that("merge_aggr_sk() maskiert Skalenlabels im Tabellenkopf", {
+  withr::local_dir(withr::local_tempdir())
+  items <- BspDaten$dataLVE[, c("KF_01", "KF_02")]
+  ausgabe <- capture.output(
+    merge_aggr_sk(items, tmin = "nie_selten", tmax = "*immer*", show.plot = FALSE)
+  )
+  expect_true(any(grepl(
+    "_[Skala: (1)~nie\\_selten - (6)~\\*immer\\*]_", ausgabe,
+    fixed = TRUE
+  )))
+})
+
+test_that("Tabellen mit Sonderzeichen lassen sich mit Typst kompilieren", {
+  skip_on_cran()
+  quarto <- Sys.which("quarto")
+  skip_if(!nzchar(quarto), "Quarto ist nicht installiert")
+
+  daten <- data.frame(sonderzeichen, seq_along(sonderzeichen))
+  names(daten) <- c('#text(weight: "bold")[Item] _[Skala: (1)~a - (5)~b]_', "n")
+  dir <- withr::local_tempdir()
+  typ <- file.path(dir, "tabelle.typ")
+  writeLines(tinytable::save_tt(lv_table(daten, bold.corner = FALSE), output = "typst"), typ)
+
+  ergebnis <- suppressWarnings(system2(
+    quarto, c("typst", "compile", shQuote(typ), shQuote(file.path(dir, "tabelle.pdf"))),
+    stdout = TRUE, stderr = TRUE
+  ))
+  expect_null(attr(ergebnis, "status"), label = paste(ergebnis, collapse = "\n"))
+  expect_true(file.exists(file.path(dir, "tabelle.pdf")))
+})
+
 test_that("table_freq() erzeugt unveränderte Häufigkeitstabellen", {
   expect_table_snapshot(table_freq(BspDaten$Tabellen$freq), "table_freq-standard")
   expect_table_snapshot(

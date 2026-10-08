@@ -70,7 +70,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Frage], [Häufigkeit], [Mittelwert], [Standard-abweichung], [Median], [kleinster be⁠ob. Wert], [größter be⁠ob. Wert],
+[Frage], [Häufigkeit], [Mittelwert], [Standard\-abweichung], [Median], [kleinster be⁠ob. Wert], [größter be⁠ob. Wert],
 
     // tinytable footer after
 

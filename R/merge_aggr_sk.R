@@ -195,12 +195,14 @@ merge_aggr_sk <- function(x,
 
   if (number %% 2 == 0 || tmid == "") { # bei gerader Anzahl Stufen oder keinem Mittellabel
 
-    scale_text <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
+    scale_text <- paste0(
+      "(1)~", .escape_typst(tmin), " - (", number, ")~", .escape_typst(tmax)
+    )
     scale_labels <- c(tmin, rep("", number - 2), tmax)
   } else { # bei ungerader Anzahl Stufen
     scale_text <- paste0(
-      "(1)~", tmin, " - (", (number + 1) / 2, ")~", tmid,
-      " - (", number, ")~", tmax
+      "(1)~", .escape_typst(tmin), " - (", (number + 1) / 2, ")~", .escape_typst(tmid),
+      " - (", number, ")~", .escape_typst(tmax)
     )
     scale_labels <- c(
       tmin, rep("", (number - 3) / 2), tmid,

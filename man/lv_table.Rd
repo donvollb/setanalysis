@@ -41,6 +41,11 @@ mit 10 \% Deckkraft), erste Spalte linksbündig, übrige Spalten rechtsbündig
 (bei nur einer Zeile zentriert). Spalten mit ganzen Zahlen werden ohne
 Nachkommastellen gezeigt.
 
+Sonderzeichen in den Zellen (z. B. \code{$}, \verb{#}, \verb{_} oder \verb{//} in offenen
+Antworten) werden maskiert und erscheinen im Bericht als normaler Text.
+Die Kopfzeile wird nicht maskiert, sie darf also Typst-Code enthalten
+(z. B. \code{'#text(weight: "bold")[Item]'}).
+
 Alle anderen Tabellenfunktionen des Pakets nutzen \code{lv_table()}.
 }
 \examples{
