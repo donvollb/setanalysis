@@ -4,6 +4,8 @@ format:
     keep-typ: true
     mainfont: "Red Hat Text"
     fontsize: 10pt
+filters:
+  - readme_vorschau.lua
 execute:
   echo: false
   warning: false
@@ -13,6 +15,9 @@ execute:
 
 ```{=typst}
 #set page(width: 16cm, height: auto, margin: 0.8cm, numbering: none, footer: none)
+// Tabellen zentrieren wie in set-template
+#show table: it => align(center, it)
+#show figure.where(kind: table): it => it.body
 ```
 
 ```{r}
