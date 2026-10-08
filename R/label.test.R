@@ -7,15 +7,15 @@
 #' @examples
 #' # In diesem Fall wird die Variable "FB.text" aus der Info mit der Variable
 #' # "Teilbereich" aus dem Datensatz verglichen und alles stimmt
-#' label.test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
+#' label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
 #' 
 #' # So sieht es aus, wenn die Labels nicht komplett übereinstimmen:
-#' label.test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
+#' label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
 #' 
-#' @export label.test
+#' @export label_test
 
 # Testen, ob Labels aus personalized.info so im Datensatz vorkommen
-label.test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
+label_test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
                        var, # Variable aus Datensatz, die der Spalte entspricht
                        exception = "alle") { # Ausnahmen, die nicht überprüft werden sollen
   

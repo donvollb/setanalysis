@@ -42,7 +42,7 @@ merge_sc <- function(x, # Daten
 
   cat("###", nr, attr(x, "label"), "\n \n")
 
-  subchunkify(table.freq(x, col1.name = "Antwortoption", col2.name = col2.name,
+  subchunkify(table_freq(x, col1.name = "Antwortoption", col2.name = col2.name,
                          order.table = order.table, digits = digits))
 
   freq.tab <- descr::freq(x, plot = FALSE)

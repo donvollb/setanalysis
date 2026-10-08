@@ -3,9 +3,9 @@
 # Die folgenden Namen stammen aus früheren Versionen des Pakets. Sie bleiben
 # erhalten, damit bestehende Berichtsvorlagen unverändert weiter funktionieren.
 #
-# Hinweis: Diese Datei muss nach den Dateien der aktuellen Funktionen geladen
-# werden (alphabetische Reihenfolge), weil einige Namen direkt auf diese
-# Funktionen verweisen.
+# Alle Namen leiten den Aufruf an die aktuelle Funktion weiter. Die aktuelle
+# Funktion wird dabei erst beim Aufruf nachgeschlagen, deshalb spielt die
+# Reihenfolge, in der die Dateien geladen werden, keine Rolle.
 
 #' Veraltete Funktionsnamen
 #'
@@ -15,30 +15,46 @@
 #' bereitgestellt, damit bestehende Berichtsvorlagen weiter funktionieren. In
 #' neuem Code sollten die aktuellen Namen verwendet werden.
 #'
-#' | Veralteter Name        | Aktuelle Funktion          |
-#' |------------------------|----------------------------|
-#' | `appendix.open()`      | [appendix_open()]          |
-#' | `boxplot.ruecklauf()`  | [merge_rueck()]            |
-#' | `grade()`              | [merge_grade()]            |
-#' | `markdown.in.viewer()` | [markdown_in_viewer()]     |
-#' | `merge.evasys.sk()`    | [merge_sk()]               |
-#' | `merge.fachsem()`      | [merge_fachsem()]          |
-#' | `merge.mc()`           | [merge_mc()]               |
-#' | `merge.multi.sk()`     | [merge_aggr_sk()]          |
-#' | `merge.num()`          | [merge_num()]              |
-#' | `merge.open()`         | [merge_open()]             |
-#' | `merge.sc()`           | [merge_sc()]               |
-#' | `merge.subj()`         | [merge_subj()]             |
-#' | `merge.wl()`           | [merge_wl()]               |
-#' | `open.answers()`       | [merge_open()] mit `appendix = TRUE` |
+#' | Veralteter Name              | Aktueller Name                       |
+#' |------------------------------|--------------------------------------|
+#' | `appendix.open()`            | [appendix_open()]                    |
+#' | `boxplot.ruecklauf()`        | [merge_rueck()]                      |
+#' | `bsp.boxplot()`              | [bsp_boxplot()]                      |
+#' | `bsp.evasys.sk6()`           | [bsp_evasys_sk6()]                   |
+#' | `bsp.table.stat()`           | [bsp_table_stat()]                   |
+#' | `change.analysis.defaults()` | [change_analysis_defaults()]         |
+#' | `evasys.read.data()`         | [evasys_read_data()]                 |
+#' | `grade()`                    | [merge_grade()]                      |
+#' | `input.tabelle()`            | [input_tabelle()]                    |
+#' | `label.test()`               | [label_test()]                       |
+#' | `list.open.answers`          | [list_open_answers]                  |
+#' | `markdown.in.viewer()`       | [markdown_in_viewer()]               |
+#' | `merge.evasys.sk()`          | [merge_sk()]                         |
+#' | `merge.fachsem()`            | [merge_fachsem()]                    |
+#' | `merge.mc()`                 | [merge_mc()]                         |
+#' | `merge.multi.sk()`           | [merge_aggr_sk()]                    |
+#' | `merge.num()`                | [merge_num()]                        |
+#' | `merge.open()`               | [merge_open()]                       |
+#' | `merge.sc()`                 | [merge_sc()]                         |
+#' | `merge.subj()`               | [merge_subj()]                       |
+#' | `merge.wl()`                 | [merge_wl()]                         |
+#' | `open.answers()`             | [merge_open()] mit `appendix = TRUE` |
+#' | `table.freq()`               | [table_freq()]                       |
+#' | `table.stat.multi()`         | [table_stat_multi()]                 |
+#' | `table.stat.single()`        | [table_stat_single()]                |
 #'
 #' @details
-#' Namen wie `merge.sc()` oder `boxplot.ruecklauf()` sehen für R wie
-#' S3-Methoden der generischen Funktionen [merge()] bzw. [boxplot()] aus. Damit
-#' sie nicht als solche behandelt werden, haben sie die Argumente der
-#' generischen Funktion und leiten den Aufruf unverändert an die aktuelle
+#' Die veralteten Namen leiten jeden Aufruf unverändert an die aktuelle
 #' Funktion weiter. Argumente werden dabei genau so zugeordnet wie bei einem
 #' direkten Aufruf der aktuellen Funktion.
+#'
+#' Namen wie `merge.sc()` oder `boxplot.ruecklauf()` sehen für R wie
+#' S3-Methoden der generischen Funktionen [merge()] bzw. [boxplot()] aus. Sie
+#' haben deshalb die Argumente der generischen Funktion, damit sie nicht als
+#' fehlerhafte Methoden gelten.
+#'
+#' `list.open.answers` ist ein zweiter Name für dieselbe Umgebung wie
+#' [list_open_answers].
 #'
 #' @returns Siehe die jeweils aktuelle Funktion.
 #'
@@ -57,29 +73,80 @@ NULL
   eval(aufruf, parent.frame(2))
 }
 
-# Einfache Aliase ---------------------------------------------------------
+# Weiterleitungen ---------------------------------------------------------
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-appendix.open <- appendix_open
+appendix.open <- function(...) .weiterleiten(appendix_open)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-grade <- merge_grade
+bsp.boxplot <- function(...) .weiterleiten(bsp_boxplot)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-markdown.in.viewer <- markdown_in_viewer
+bsp.evasys.sk6 <- function(...) .weiterleiten(bsp_evasys_sk6)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+bsp.table.stat <- function(...) .weiterleiten(bsp_table_stat)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+change.analysis.defaults <- function(...) .weiterleiten(change_analysis_defaults)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+evasys.read.data <- function(...) .weiterleiten(evasys_read_data)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+grade <- function(...) .weiterleiten(merge_grade)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+input.tabelle <- function(...) .weiterleiten(input_tabelle)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+label.test <- function(...) .weiterleiten(label_test)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export
+markdown.in.viewer <- function(...) .weiterleiten(markdown_in_viewer)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export open.answers
 open.answers <- function(...) merge_open(..., appendix = TRUE, is_appendix = FALSE)
 
-# Weiterleitungen (Namen, die wie S3-Methoden aussehen) -------------------
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export table.freq
+table.freq <- function(...) .weiterleiten(table_freq)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export table.stat.multi
+table.stat.multi <- function(...) .weiterleiten(table_stat_multi)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @export table.stat.single
+table.stat.single <- function(...) .weiterleiten(table_stat_single)
+
+# Weiterleitungen für Namen, die wie S3-Methoden aussehen -----------------
+# (mit den Argumenten der generischen Funktion merge() bzw. boxplot())
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
@@ -130,3 +197,10 @@ merge.subj <- function(x, y, ...) .weiterleiten(merge_subj)
 #' @usage NULL
 #' @export merge.wl
 merge.wl <- function(x, y, ...) .weiterleiten(merge_wl)
+
+# Interne Plot-Hilfsfunktion mit Tippfehler im alten Namen ----------------
+# (war exportiert und wird ggf. in Berichtsvorlagen verwendet)
+
+#' @noRd
+#' @export
+.costum_boxplot <- function(...) .weiterleiten(.custom_boxplot)

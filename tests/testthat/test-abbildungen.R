@@ -54,6 +54,6 @@ test_that("boxplot_grade(), boxplot_rueck() und boxplot_wl() zeichnen unverände
 })
 
 test_that("Legenden-Abbildungen (bsp.*) bleiben unverändert", {
-  expect_report_snapshot(bsp.boxplot(), "bsp.boxplot")
-  expect_report_snapshot(bsp.evasys.sk6(), "bsp.evasys.sk6")
+  expect_report_snapshot(bsp_boxplot(), "bsp_boxplot")
+  expect_report_snapshot(bsp_evasys_sk6(), "bsp_evasys_sk6")
 })

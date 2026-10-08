@@ -41,7 +41,7 @@ barplot_freq <- function(x, # Daten
 
   # Eigentlichen Barplot zeichnen -----------------------------------------
   
-  .costum_barplot(table(x))
+  .custom_barplot(table(x))
 
   # Achsenbeschriftungen hinzufügen ---------------------------------------
 

@@ -1,5 +1,5 @@
 # Die inkl.-Logik: Über das Argument `nr` wird eine globale Variable
-# `inkl.<nr>` abgefragt (wie sie input.tabelle() pro Bericht erzeugt).
+# `inkl.<nr>` abgefragt (wie sie input_tabelle() pro Bericht erzeugt).
 # Ist sie FALSE, gibt die Funktion nichts aus.
 
 lve <- BspDaten$dataLVE

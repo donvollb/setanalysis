@@ -47,7 +47,7 @@ boxplot_aggr_sk <- function(x,           # Daten
   
   # Eigentlichen Boxplot zeichnen -----------------------------------------
   
-  .costum_boxplot(x, boxwex = 0.8,
+  .custom_boxplot(x, boxwex = 0.8,
                   ylim = c(0.5, n_items + 0.5),
                   xlim = c(1, n_skala))
   

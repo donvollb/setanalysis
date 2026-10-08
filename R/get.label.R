@@ -6,7 +6,7 @@
 
 
 # Labels für MC-Fragen aus dem Fragetext ziehen:
-get.label <- function(x, # Objekt
+get_label <- function(x, # Objekt
                       match = ": ") # String, der Label von Frage trennt
 {
   sub(paste0(".*", match), '', attr(x, "label"))

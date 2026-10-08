@@ -38,7 +38,7 @@ boxplot_wl <- function(x, # Daten
   
   # Plot über die Vertikalen Linien drüber plotten ------------------------
 
-  .costum_boxplot(x, boxwex = 0.8, ylim = c(1:n_skala))
+  .custom_boxplot(x, boxwex = 0.8, ylim = c(1:n_skala))
 
   # Beschriftungen einfügen -----------------------------------------------
   

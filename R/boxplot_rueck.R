@@ -28,7 +28,7 @@ boxplot_rueck <- function(x) # Daten
   
   # Eigentlichen Boxplot zeichnen -----------------------------------------
   
-  .costum_boxplot(x, boxwex = 0.8, ylim = c(0, 120))
+  .custom_boxplot(x, boxwex = 0.8, ylim = c(0, 120))
   
   # Achsenbeschriftungen hinzufügen --------------------------------------
   

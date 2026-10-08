@@ -8,7 +8,7 @@
 
 #' @export
 
-evasys.read.data <- function(raw.data.path = NULL, codebook.path = NULL) {
+evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
   
   ##########################
   # SETUP + DATEN EINLESEN # 

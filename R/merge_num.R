@@ -58,7 +58,7 @@ merge_num <- function(x, # Daten
   x <- as.numeric(gsub(",", ".", x)) # falls mit Komma
 
   if (show.table == TRUE) {
-    subchunkify(table.stat.single(as.numeric(x, na.rm = TRUE),
+    subchunkify(table_stat_single(as.numeric(x, na.rm = TRUE),
                                   col1.name = "n", md = TRUE))
     cat("  \n  \n")
   }

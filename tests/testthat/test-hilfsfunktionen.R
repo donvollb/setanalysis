@@ -11,32 +11,32 @@ test_that("aggr_data() aggregiert unverändert", {
   expect_snapshot_value(aggr_data(note, lve$Kennung[zeilen]), style = "deparse")
 })
 
-test_that("label.test() meldet Übereinstimmungen und Abweichungen", {
+test_that("label_test() meldet Übereinstimmungen und Abweichungen", {
   expect_snapshot({
-    label.test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
-    label.test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
-    label.test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
+    label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
+    label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
+    label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
                exception = "Psüchologie - SoSe24")
-    label.test(c("ja", "nein"), BspDaten$Tabellen$freq)
+    label_test(c("ja", "nein"), BspDaten$Tabellen$freq)
   })
 })
 
-test_that("get.label() zieht das Label der Antwortoption", {
-  expect_identical(get.label(BspDaten$dataSHOWUP$abschluss_1),
+test_that("get_label() zieht das Label der Antwortoption", {
+  expect_identical(get_label(BspDaten$dataSHOWUP$abschluss_1),
                    "Bachelor of Arts (B.A.)")
-  expect_identical(get.label(BspDaten$dataSHOWUP$abschluss_1, match = "\\("),
+  expect_identical(get_label(BspDaten$dataSHOWUP$abschluss_1, match = "\\("),
                    "B.A.)")
 })
 
-test_that("change.analysis.defaults() ändert Einstellungen", {
+test_that("change_analysis_defaults() ändert Einstellungen", {
   reset_setanalysis_state()
   withr::defer(reset_setanalysis_state())
 
-  change.analysis.defaults(color.bars = "red", show.plot.sc = FALSE)
+  change_analysis_defaults(color.bars = "red", show.plot.sc = FALSE)
   expect_identical(setanalysis_defaults$color.bars, "red")
   expect_false(setanalysis_defaults$show.plot.sc)
 
-  expect_error(change.analysis.defaults(color.width2 = "turquoise"),
+  expect_error(change_analysis_defaults(color.width2 = "turquoise"),
                "existiert nicht")
 })
 
@@ -49,7 +49,7 @@ test_that("Einstellungen wirken sich auf die Ausgabe aus", {
   local({
     reset_setanalysis_state()
     withr::defer(reset_setanalysis_state())
-    change.analysis.defaults(show.plot.sc = FALSE)
+    change_analysis_defaults(show.plot.sc = FALSE)
     ausgabe <- capture.output(merge_sc(BspDaten$dataLVE$V3_D))
     expect_false(any(grepl("<img", ausgabe)))
   })
@@ -69,10 +69,32 @@ test_that("markdown_in_viewer() übergibt eine HTML-Datei an den Viewer", {
   expect_match(html, "Pflichtveranstaltungen", fixed = TRUE)
 })
 
-test_that("Einfache veraltete Namen sind dieselben Funktionen", {
-  expect_identical(appendix.open, appendix_open)
-  expect_identical(grade, merge_grade)
-  expect_identical(markdown.in.viewer, markdown_in_viewer)
+test_that("Veraltete Namen von Tabellen- und Hilfsfunktionen liefern dasselbe Ergebnis", {
+  lve <- BspDaten$dataLVE
+  typst <- function(tabelle) tinytable::save_tt(tabelle, output = "typst")
+  beispiel <- function(datei) system.file("extdata", datei, package = "setanalysis")
+
+  expect_identical(typst(table.freq(BspDaten$Tabellen$freq, col1.name = "x")),
+                   typst(table_freq(BspDaten$Tabellen$freq, col1.name = "x")))
+  expect_identical(typst(table.stat.single(lve$KF_01, TRUE)),
+                   typst(table_stat_single(lve$KF_01, TRUE)))
+  expect_identical(typst(table.stat.multi(BspDaten$Tabellen$multi)),
+                   typst(table_stat_multi(BspDaten$Tabellen$multi)))
+  expect_identical(typst(bsp.table.stat(FALSE)), typst(bsp_table_stat(FALSE)))
+  expect_identical(
+    capture.output(label.test(BspDaten$pInfo$FB.txt.falsch, lve$Teilbereich)),
+    capture.output(label_test(BspDaten$pInfo$FB.txt.falsch, lve$Teilbereich))
+  )
+  expect_identical(
+    input.tabelle(beispiel("beispiel_berichte.xlsx"), beispiel("beispiel_regeln.xlsx")),
+    input_tabelle(beispiel("beispiel_berichte.xlsx"), beispiel("beispiel_regeln.xlsx"))
+  )
+  expect_identical(list.open.answers, list_open_answers)
+
+  reset_setanalysis_state()
+  withr::defer(reset_setanalysis_state())
+  change.analysis.defaults(color.bars = "green")
+  expect_identical(setanalysis_defaults$color.bars, "green")
 })
 
 test_that("Veraltete Namen erzeugen dieselbe Ausgabe wie die aktuellen Funktionen", {
@@ -110,19 +132,31 @@ test_that("Veraltete Namen erzeugen dieselbe Ausgabe wie die aktuellen Funktione
   expect_gleiche_ausgabe(merge.wl(lve$WL, lve$Kennung), merge_wl(lve$WL, lve$Kennung))
   expect_gleiche_ausgabe(boxplot.ruecklauf(lve$Teilnehmer, lve$Kennung),
                          merge_rueck(lve$Teilnehmer, lve$Kennung))
+  expect_gleiche_ausgabe(grade(lve$Note, lve$Kennung), merge_grade(lve$Note, lve$Kennung))
+  expect_gleiche_ausgabe(bsp.boxplot(), bsp_boxplot())
+  expect_gleiche_ausgabe(bsp.evasys.sk6(), bsp_evasys_sk6())
+  expect_gleiche_ausgabe({merge_open(showup$offen, appendix = TRUE, inkl = TRUE); appendix.open()},
+                         {merge_open(showup$offen, appendix = TRUE, inkl = TRUE); appendix_open()})
 
   # Aufruf aus einer anderen Funktion heraus über `...`
   umschlag <- function(...) merge.sc(...)
   expect_gleiche_ausgabe(umschlag(lve$V3_D, show.plot = FALSE),
                          merge_sc(lve$V3_D, show.plot = FALSE))
+
+  # Aufruf über lapply()
+  expect_gleiche_ausgabe(lapply(list(lve$V3_D), merge.sc, show.plot = FALSE),
+                         lapply(list(lve$V3_D), merge_sc, show.plot = FALSE))
 })
 
 test_that("Alle veralteten Namen werden exportiert", {
   namespace <- readLines(system.file("NAMESPACE", package = "setanalysis"))
-  alt <- c("appendix.open", "boxplot.ruecklauf", "grade", "markdown.in.viewer",
-           "merge.evasys.sk", "merge.fachsem", "merge.mc", "merge.multi.sk",
-           "merge.num", "merge.open", "merge.sc", "merge.subj", "merge.wl",
-           "open.answers")
+  alt <- c("appendix.open", "boxplot.ruecklauf", "bsp.boxplot", "bsp.evasys.sk6",
+           "bsp.table.stat", "change.analysis.defaults", "evasys.read.data",
+           "grade", "input.tabelle", "label.test", "list.open.answers",
+           "markdown.in.viewer", "merge.evasys.sk", "merge.fachsem", "merge.mc",
+           "merge.multi.sk", "merge.num", "merge.open", "merge.sc", "merge.subj",
+           "merge.wl", "open.answers", "table.freq", "table.stat.multi",
+           "table.stat.single", ".costum_boxplot")
   expect_true(all(paste0("export(", alt, ")") %in% namespace))
   expect_false(any(grepl("^S3method", namespace)))
 })

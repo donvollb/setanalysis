@@ -7,9 +7,9 @@
 #' @param digits Anzahl der Nachkommastellen in der Tabelle
 #'
 #' @returns Tabelle
-#' @export table.stat.single
+#' @export table_stat_single
 
-table.stat.single <- function(x, # Daten
+table_stat_single <- function(x, # Daten
                               md = FALSE, # Mit Median?
                               col1.name = "N_votes", # Name der ersten Zelle des headers
                               bold = TRUE, # Fette Kopfzeile?

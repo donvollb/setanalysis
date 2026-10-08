@@ -51,7 +51,7 @@ barplot_sk <- function(x, # Daten
   
   # Eigentlichen Barplot zeichnen -----------------------------------------
 
-  .costum_barplot(xtab)
+  .custom_barplot(xtab)
   
   # X-Achsenbeschriftungen und Prozentzahlen hinzufügen -------------------
  

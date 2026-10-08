@@ -50,7 +50,7 @@ merge_fachsem <- function(x, # Daten
 
 
     subchunkify( 
-      table.freq(x, col1.name = xl, col2.name = "n",
+      table_freq(x, col1.name = xl, col2.name = "n",
                  cutoff = cutoff)
                 )
 

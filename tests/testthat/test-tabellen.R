@@ -9,45 +9,45 @@ test_that("lv_table() formatiert Tabellen unverändert", {
                         "lv_table-eine-zeile")
 })
 
-test_that("table.freq() erzeugt unveränderte Häufigkeitstabellen", {
-  expect_table_snapshot(table.freq(BspDaten$Tabellen$freq), "table.freq-standard")
+test_that("table_freq() erzeugt unveränderte Häufigkeitstabellen", {
+  expect_table_snapshot(table_freq(BspDaten$Tabellen$freq), "table_freq-standard")
   expect_table_snapshot(
-    table.freq(BspDaten$Tabellen$freq, col1.name = "Antwort",
+    table_freq(BspDaten$Tabellen$freq, col1.name = "Antwort",
                order.table = "decreasing"),
-    "table.freq-sortiert"
+    "table_freq-sortiert"
   )
 
   fachsem <- BspDaten$dataLVE$FachSemN
   fachsem[fachsem >= 12] <- 12
   expect_table_snapshot(
-    table.freq(fachsem, cutoff = 12, show.all = FALSE, col1.name = "Fachsemester"),
-    "table.freq-cutoff"
+    table_freq(fachsem, cutoff = 12, show.all = FALSE, col1.name = "Fachsemester"),
+    "table_freq-cutoff"
   )
 })
 
-test_that("table.stat.single() erzeugt unveränderte Statistiktabellen", {
+test_that("table_stat_single() erzeugt unveränderte Statistiktabellen", {
   x <- BspDaten$dataLVE$KF_01
-  expect_table_snapshot(table.stat.single(x), "table.stat.single-standard")
-  expect_table_snapshot(table.stat.single(x, md = TRUE, col1.name = "n", digits = 1),
-                        "table.stat.single-median")
+  expect_table_snapshot(table_stat_single(x), "table_stat_single-standard")
+  expect_table_snapshot(table_stat_single(x, md = TRUE, col1.name = "n", digits = 1),
+                        "table_stat_single-median")
 })
 
-test_that("table.stat.multi() erzeugt unveränderte Statistiktabellen", {
+test_that("table_stat_multi() erzeugt unveränderte Statistiktabellen", {
   multi <- BspDaten$Tabellen$multi
-  expect_table_snapshot(table.stat.multi(multi), "table.stat.multi-standard")
+  expect_table_snapshot(table_stat_multi(multi), "table_stat_multi-standard")
   expect_table_snapshot(
-    table.stat.multi(multi[, 1:3], col2.name = "n", bold.corner = FALSE,
+    table_stat_multi(multi[, 1:3], col2.name = "n", bold.corner = FALSE,
                      alt1 = "weiß nicht", alt1.list = c(1, 2, 3),
                      alt2 = "trifft nicht zu", alt2.list = c(4, 5, 6)),
-    "table.stat.multi-ausweichoptionen"
+    "table_stat_multi-ausweichoptionen"
   )
   expect_error(
-    table.stat.multi(multi, alt2 = "trifft nicht zu", alt2.list = 1:15),
+    table_stat_multi(multi, alt2 = "trifft nicht zu", alt2.list = 1:15),
     "alt1 ist FALSE"
   )
 })
 
-test_that("bsp.table.stat() erzeugt die Legenden-Tabellen unverändert", {
-  expect_table_snapshot(bsp.table.stat(), "bsp.table.stat-alle")
-  expect_table_snapshot(bsp.table.stat(all = FALSE), "bsp.table.stat-kurz")
+test_that("bsp_table_stat() erzeugt die Legenden-Tabellen unverändert", {
+  expect_table_snapshot(bsp_table_stat(), "bsp_table_stat-alle")
+  expect_table_snapshot(bsp_table_stat(all = FALSE), "bsp_table_stat-kurz")
 })

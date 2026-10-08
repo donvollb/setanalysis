@@ -16,11 +16,11 @@
 #'
 #' @examples
 #' 
-#' table.stat.multi(BspDaten$Tabellen$multi)
+#' table_stat_multi(BspDaten$Tabellen$multi)
 #' 
-#' @export table.stat.multi
+#' @export table_stat_multi
 
-table.stat.multi <- function(x,
+table_stat_multi <- function(x,
                              col1.name = "Item", # Name der ersten Zelle des headers
                              col2.name = "N_votes", # Name der zweiten Zelle des headers
                              alt1 = FALSE, # Text für erste Ausweichoption

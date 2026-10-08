@@ -37,11 +37,19 @@ setanalysis_defaults$inkl.open <- TRUE
 #' Umgebung für die offenen Antworten -------------------------------------
 #'
 #' Diese Umgebung wird verwendet, um die offenen Antworten für die verschiedenen Fragen zu speichern.
+#' @export list_open_answers
+
+list_open_answers <<- new.env(parent = emptyenv())
+
+list_open_answers$anchor.nr <- 0
+
+# Veralteter Name (zeigt auf dieselbe Umgebung, siehe ?setanalysis-deprecated)
+
+#' @rdname setanalysis-deprecated
+#' @usage NULL
+#' @format NULL
 #' @export list.open.answers
-
-list.open.answers <<- new.env(parent = emptyenv())
-
-list.open.answers$anchor.nr <- 0
+list.open.answers <- list_open_answers
 
 
 ## Bei Start des Pakets Schriftart laden ----------------------------------
@@ -70,14 +78,14 @@ list.open.answers$anchor.nr <- 0
 #' `color.bars = "red"` oder `show.plot.sc = FALSE`.
 #' Die Namen der Argumente müssen mit den Namen der Einstellungsvariablen übereinstimmen.
 #'
-#' @export change.analysis.defaults
+#' @export change_analysis_defaults
 #'
 #' @examples
 #' 
 #' # Hier wird die Farbe der Balken auf rot geändert und eingestellt,
 #' # dass keine SC-Plots gezeigt werden sollen
 #' 
-#' change.analysis.defaults(color.bars = "red", show.plot.sc = FALSE)
+#' change_analysis_defaults(color.bars = "red", show.plot.sc = FALSE)
 #' 
 #' #Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
 #' 
@@ -85,9 +93,9 @@ list.open.answers$anchor.nr <- 0
 #' setanalysis_defaults$show.plot.sc
 #' 
 #' #Diese Änderung ginge nicht, weil die Variable nicht existiert
-#' #change.analysis.defaults(color.width2 = "turquoise")
+#' #change_analysis_defaults(color.width2 = "turquoise")
 #' 
-change.analysis.defaults <- function(...) {
+change_analysis_defaults <- function(...) {
   changes <- list(...)
   
   # Überprüfen, ob die Einstellungsvariablen überhaupt existieren ---------

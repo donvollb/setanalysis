@@ -52,7 +52,7 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
   
   # Eigentlicher Plot -----------------------------------------------------
   
-  .costum_barplot(rev(x$freq), horiz = TRUE)
+  .custom_barplot(rev(x$freq), horiz = TRUE)
   
   # Achsenbeschriftungen hinzufügen ---------------------------------------
   

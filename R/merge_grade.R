@@ -36,7 +36,7 @@ merge_grade <- function(x, # Daten
     
   if(show.table == TRUE) {
     subchunkify(
-      table.stat.multi(x,
+      table_stat_multi(x,
                        labels = label,
                        col1.name = '#text(weight: "bold")[Item] _[Skala: Schulnoten]_',
                        col2.name = "n",

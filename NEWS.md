@@ -4,6 +4,16 @@
 Funktionen bleibt unverändert, sofern unten nicht ausdrücklich als
 Fehlerbehebung aufgeführt.
 
+## Einheitliche Funktionsnamen
+
+* Alle Funktionen heißen jetzt einheitlich in snake_case:
+  `table_freq()`, `table_stat_single()`, `table_stat_multi()`,
+  `evasys_read_data()`, `input_tabelle()`, `label_test()`,
+  `change_analysis_defaults()`, `bsp_boxplot()`, `bsp_evasys_sk6()`,
+  `bsp_table_stat()` sowie die Umgebung `list_open_answers`.
+* Die bisherigen Namen funktionieren weiterhin unverändert und sind in
+  `?setanalysis-deprecated` aufgeführt. Argumentnamen bleiben gleich.
+
 ## Fehlerbehebungen
 
 * `merge_mc()` zeichnet die Zeilen „NAs“ und „Total“ nicht mehr als Balken ins

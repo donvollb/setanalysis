@@ -6,11 +6,11 @@
 #' Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
 #' "Median", "kleinster beob. Wert", "größter beob. Wert"
 #'
-#' @examples bsp.table.stat()
+#' @examples bsp_table_stat()
 #'
-#' @export bsp.table.stat
+#' @export bsp_table_stat
 
-bsp.table.stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
+bsp_table_stat <- function(all = TRUE)  # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
 {
   if(all == TRUE) {
 

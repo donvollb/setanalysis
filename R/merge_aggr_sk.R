@@ -187,7 +187,7 @@ merge_aggr_sk <- function(x, # Daten
 
   if (show.table == TRUE) {
     subchunkify(
-      table.stat.multi(
+      table_stat_multi(
         x,
         col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, ']_'),
         col2.name = col2.name,

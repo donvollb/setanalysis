@@ -48,8 +48,8 @@ merge_open <- function(x, # Daten
   
   if (appendix == TRUE & is_appendix == FALSE) {
     
-    list.open.answers$anchor.nr <- list.open.answers$anchor.nr + 1
-    anchor.nr <- list.open.answers$anchor.nr
+    list_open_answers$anchor.nr <- list_open_answers$anchor.nr + 1
+    anchor.nr <- list_open_answers$anchor.nr
     cat(paste0("### ", nr, " ", attr(x, "label"), " {#sec-", anchor.nr, ".top} \n\n"))
 
       if(length(na.omit(x)) > 0) {
@@ -59,8 +59,8 @@ merge_open <- function(x, # Daten
         cat("*Keine offenen Antworten zu dieser Frage.*  \n\n\\\n\n")
   }
    
-    assign(paste0("var.", anchor.nr), x, envir = list.open.answers)
-    assign(paste0("nr.", anchor.nr), nr, envir = list.open.answers)
+    assign(paste0("var.", anchor.nr), x, envir = list_open_answers)
+    assign(paste0("nr.", anchor.nr), nr, envir = list_open_answers)
     return(invisible())
   }
     

@@ -1,4 +1,4 @@
-# input.tabelle() erzeugt die inkl.- und header-Spalten unverändert
+# input_tabelle() erzeugt die inkl.- und header-Spalten unverändert
 
     Code
       print(as.data.frame(berichte))

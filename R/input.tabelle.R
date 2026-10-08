@@ -7,7 +7,7 @@
 #' @return Die aufbereitete Berichtstabelle als dataframe.
 #' @export
 
-input.tabelle <- function(blank.path = NULL,
+input_tabelle <- function(blank.path = NULL,
                           rules.path = NULL) {
   
   

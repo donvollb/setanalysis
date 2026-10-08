@@ -12,23 +12,23 @@
     1.5, 1.25, 1.5, 1.57142857142857), label = "Welche Gesamtnote (Schulnote) geben Sie der Veranstaltung insgesamt?")), row.names = c(NA, 
     5L), class = "data.frame")
 
-# label.test() meldet Übereinstimmungen und Abweichungen
+# label_test() meldet Übereinstimmungen und Abweichungen
 
     Code
-      label.test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
+      label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
     Output
       [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
     Code
-      label.test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
+      label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
     Output
       [1] "Das Label \"Psüchologie - SoSe24\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor."
     Code
-      label.test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
+      label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
       exception = "Psüchologie - SoSe24")
     Output
       [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
     Code
-      label.test(c("ja", "nein"), BspDaten$Tabellen$freq)
+      label_test(c("ja", "nein"), BspDaten$Tabellen$freq)
     Output
       [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
 

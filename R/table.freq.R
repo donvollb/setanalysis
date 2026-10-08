@@ -12,11 +12,11 @@
 #' 
 #' @returns Tabelle
 #' 
-#' @examples table.freq(BspDaten$Tabellen$freq)
+#' @examples table_freq(BspDaten$Tabellen$freq)
 #' 
-#' @export table.freq
+#' @export table_freq
 
-table.freq <- function(x, # Daten
+table_freq <- function(x, # Daten
                        cutoff = FALSE, # Soll es einen "cutoff" geben? z.B. werden bei 12 alle Werte >= 12 in "12 oder höher" dargestellt
                        show.all = TRUE, # Bei TRUE werden auch nicht gewählte Antwortoptionen angezeigt
                        col1.name = "", # Name der ersten Zelle des headers

@@ -13,15 +13,15 @@
 
 appendix_open <- function(freq = "auto") {
   
-  anchor.nr <- list.open.answers$anchor.nr
+  anchor.nr <- list_open_answers$anchor.nr
   
   if (anchor.nr == 0)  {return(invisible())} # stoppen, wenn keine offenen Fragen aufgerufen wurden
   
   cat("# Anhang: Fragen mit offenem Antwortformat  \n  \n")
   
   for (k in seq_len(anchor.nr)) {
-    x <- eval(parse(text = paste0("list.open.answers$var.", k)))
-    q.nr <- eval(parse(text = paste0("list.open.answers$nr.", k)))
+    x <- eval(parse(text = paste0("list_open_answers$var.", k)))
+    q.nr <- eval(parse(text = paste0("list_open_answers$nr.", k)))
     merge_open(x, nr = q.nr, anchor = k, freq = freq,
                appendix = TRUE, is_appendix = TRUE)}
 }

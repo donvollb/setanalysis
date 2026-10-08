@@ -31,7 +31,7 @@
 #' @noRd
 #' @export
 
-.costum_boxplot <- function(...) {
+.custom_boxplot <- function(...) {
   
   boxplot(col = setanalysis_defaults$color.bars,
           add = TRUE,
@@ -48,7 +48,7 @@
   
 }
 
-.costum_barplot <- function(...) {
+.custom_barplot <- function(...) {
   
   barplot(col = setanalysis_defaults$color.bars,
           add = TRUE,

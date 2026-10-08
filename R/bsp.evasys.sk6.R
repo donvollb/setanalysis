@@ -4,11 +4,11 @@
 #'
 #' @returns Grafik
 #' 
-#' @examples bsp.evasys.sk6() |> markdown_in_viewer()
+#' @examples bsp_evasys_sk6() |> markdown_in_viewer()
 #' 
-#' @export bsp.evasys.sk6
+#' @export bsp_evasys_sk6
 
-bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
+bsp_evasys_sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
 {
   if(x[1] == "default") {
     x <- c(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -40,7 +40,7 @@ bsp.evasys.sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
   
   # Eigentlichen Barplot zeichnen -----------------------------------------
 
-  .costum_barplot(xtab),
+  .custom_barplot(xtab),
   
   # X-Achsenbeschriftungen und Prozentzahlen hinzufügen -------------------
  

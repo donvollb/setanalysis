@@ -4,11 +4,11 @@
 #'
 #' @returns Beispiel-Boxplot
 #'
-#' @examples bsp.boxplot() |> markdown_in_viewer()
+#' @examples bsp_boxplot() |> markdown_in_viewer()
 #' 
-#' @export bsp.boxplot
+#' @export bsp_boxplot
 
-bsp.boxplot <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
+bsp_boxplot <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
 
 {
 
@@ -40,7 +40,7 @@ bsp.boxplot <- function(x = "default") # Daten, bei "default" wird ein Beispield
     
     # Eigentlicher Plot ---------------------------------------------------
     
-    .costum_boxplot(x, boxwex = 0.8, ylim = c(1, 6)),
+    .custom_boxplot(x, boxwex = 0.8, ylim = c(1, 6)),
 
     # Achsenbeschriftungen hinzufügen ------------------------------------
     

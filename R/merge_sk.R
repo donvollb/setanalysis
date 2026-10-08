@@ -69,7 +69,7 @@ merge_sk <- function(x, # Daten
   xtab <- x
   xtab <- xtab[xtab %in% c(1:number)]
   
-  subchunkify(table.stat.single(xtab, col1.name = "n", md = TRUE))
+  subchunkify(table_stat_single(xtab, col1.name = "n", md = TRUE))
 
   cat("  \n  \n")
 
