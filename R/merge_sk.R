@@ -46,7 +46,7 @@ merge_sk <- function(x, # Daten
     label <- attr(x, "label")
     x_levels <- levels(x)
     x <- as.numeric(x, na.rm = TRUE)
-    attr(x, "labels") <- setNames(1:length(x_levels), x_levels)
+    attr(x, "labels") <- setNames(seq_along(x_levels), x_levels)
 
     if (lime.brackets == TRUE) {
       label <- sub("^\\[", "", label)

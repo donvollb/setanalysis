@@ -15,13 +15,13 @@ merge_auto <- function(x,
                        ...) { # Argumente zum „weitergeben“ in die Funktion
 
 
-  if (typeof(x) != "list") {
+  if (!is.list(x)) {
     type <- attr(x, "type")
   } else {
     type <- paste0("multi.", attr(x[, 1], "type"))
   }
 
-  if (isTRUE(nr_auto & nr == "" & inkl == "nr")) {
+  if (isTRUE(nr_auto && nr == "" && inkl == "nr")) {
     if (type %in% c("multi.mc", "multi.sk")) {
       nr <- attr(x[, 1], "nr")
     } else {
@@ -33,7 +33,7 @@ merge_auto <- function(x,
   # Erkennung, ob es sich um offene oder numerische Fragen handelt
   # Zuerst prüfen, ob es überhaupt Buchstaben gibt
 
-  if (type == "open/num" & typeof(x) != "character") {
+  if (type == "open/num" && typeof(x) != "character") {
     type <- "num"
   }
 

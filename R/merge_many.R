@@ -14,7 +14,7 @@ merge_many <- function(x, # Ausschnitt aus dem Datensatz
                        nr = "", #
                        inkl = "nr") {
   # Prüfung, ob es überhaupt mehr als eine Spalte ist
-  if (typeof(x) != "list") {
+  if (!is.list(x)) {
     return(merge_auto(x, nr_auto = nr_auto, nr = nr, inkl = inkl))
   }
 

@@ -29,7 +29,7 @@ merge_subj <- function(x1, # Daten von Fach 1
 
   inkl2 <- .resolve_inkl(inkl2, nr2, marker = "nr2")
 
-  if (inkl1 != TRUE | inkl2 != TRUE) {
+  if (inkl1 != TRUE || inkl2 != TRUE) {
     return(invisible())
   } # wenn nicht beide inkl TRUE sind, wird Funktion beendet
 

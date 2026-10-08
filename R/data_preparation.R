@@ -20,7 +20,7 @@ aggr_data <- function(vars, # Variablen (oder eine Variable), die aggregiert wer
       apply(2, mean, na.rm = TRUE)
   }
 
-  for (k in 1:ncol(x)) {
+  for (k in seq_len(ncol(x))) {
     attr(x[, k], "label") <- labels[k]
   }
 
@@ -51,7 +51,7 @@ label_test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
   labels_col <- unique(col)
 
   if (length(exception != 0)) {
-    for (k in 1:length(exception)) {
+    for (k in seq_along(exception)) {
       labels_col <- labels_col[labels_col != exception[k]]
     }
   }

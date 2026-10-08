@@ -38,14 +38,14 @@ merge_open <- function(x, # Daten
 {
   inkl <- .resolve_inkl(inkl, nr)
 
-  if (inkl != TRUE | inkl_global != TRUE) {
+  if (inkl != TRUE || inkl_global != TRUE) {
     return(invisible())
   } # wenn nicht beide inkl-Arugmente TRUE sind, wird Funktion beendet
 
   # Erzeugung des Outputs für den Hauptteil der Berichte, falls ----------
   # es einen Extra Anhang für die offenen Antworten gibt -----------------
 
-  if (appendix == TRUE & is_appendix == FALSE) {
+  if (appendix == TRUE && is_appendix == FALSE) {
     list_open_answers$anchor.nr <- list_open_answers$anchor.nr + 1
     anchor.nr <- list_open_answers$anchor.nr
     cat(paste0("### ", nr, " ", attr(x, "label"), " {#sec-", anchor.nr, ".top} \n\n"))

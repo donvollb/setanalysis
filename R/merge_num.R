@@ -42,7 +42,7 @@ merge_num <- function(x, # Daten
     return(invisible())
   } # wenn inkl nicht TRUE ist, wird die Funktion beendet
 
-  if (cut.breaks[1] != "" & cutoff != FALSE) {
+  if (cut.breaks[1] != "" && cutoff != FALSE) {
     stop('Es können nicht "cut.breaks" und "cutoff" != FALSE sein.')
   }
 

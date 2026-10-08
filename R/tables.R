@@ -139,14 +139,14 @@ table_freq <- function(x, # Daten
   }
 
   if (is.numeric(x) == TRUE) {
-    if (cutoff != FALSE & max(x, na.rm = TRUE) == cutoff) {
+    if (cutoff != FALSE && max(x, na.rm = TRUE) == cutoff) {
       freq_table[nrow(freq_table) - 2, 1] <- paste0(cutoff, " oder höher")
     }
   }
 
 
   if (order.table != FALSE) {
-    decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
+    decreasing <- order.table == "decreasing"
     freq_table <- freq_table[c(
       order(freq_table[1:(nrow(freq_table) - ncol(freq_table) + 2), 2],
         decreasing = decreasing
@@ -155,10 +155,10 @@ table_freq <- function(x, # Daten
     ), ]
   }
 
-  if (col.width[1] == "default" & length(freq_table) == 4) {
+  if (col.width[1] == "default" && length(freq_table) == 4) {
     col.width <- setanalysis_defaults$col.width4
   }
-  if (col.width[1] == "default" & length(freq_table) == 3) {
+  if (col.width[1] == "default" && length(freq_table) == 3) {
     col.width <- setanalysis_defaults$col.width3
   }
 

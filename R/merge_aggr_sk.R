@@ -77,7 +77,7 @@ merge_aggr_sk <- function(x, # Daten
         }
       }
 
-      inkl <- ifelse(any(item_inkl == TRUE), TRUE, FALSE)
+      inkl <- any(item_inkl == TRUE)
     }
   }
 
@@ -128,7 +128,7 @@ merge_aggr_sk <- function(x, # Daten
     tmin <- labels_left[[1]]
   }
 
-  if (tmid == "default" & number %% 2 == 1) { # nur bei ungerader Anzahl Stufen
+  if (tmid == "default" && number %% 2 == 1) { # nur bei ungerader Anzahl Stufen
 
     labels_mid <- unique(as.list(level_label_table[(number + 1) / 2, ]))
 
@@ -156,7 +156,7 @@ merge_aggr_sk <- function(x, # Daten
     x <- aggr_data(vars = x, kennung = kennung)
   }
 
-  if (number %% 2 == 0 | tmid == "") { # bei gerader Anzahl Stufen oder keinem Mittellabel
+  if (number %% 2 == 0 || tmid == "") { # bei gerader Anzahl Stufen oder keinem Mittellabel
 
     scale_text <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
     scale_labels <- c(tmin, rep("", number - 2), tmax)

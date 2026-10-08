@@ -51,7 +51,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
   } # wenn inkl nicht TRUE, wird Funktion beendet
 
   if (lime == TRUE) {
-    for (l in 1:ncol(x)) {
+    for (l in seq_len(ncol(x))) {
       label <- attr(x[, l], "label")
       answer <- sub("\\].*", "", label)
       answer <- sub("\\[", "", answer)
@@ -92,7 +92,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     results[, 4] <- counts / nrow(x[!is.na(x[, 1]), ]) * 100
 
     if (order.table != FALSE) {
-      decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
+      decreasing <- order.table == "decreasing"
       results <- results[order(results[, 2], decreasing = decreasing), ]
     }
 
