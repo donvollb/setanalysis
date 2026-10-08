@@ -9,7 +9,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/donvollb/setanalysis/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/donvollb/setanalysis/blob/v1.1.0/DESCRIPTION)
 
 Vollbracht D, Männle S (2026). *setanalysis: Personalisierte Berichte
 für Lehrevaluationen*. R package version 1.1.0,
