@@ -51,8 +51,6 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
   } # wenn inkl nicht TRUE, wird Funktion beendet
 
   if (lime == TRUE) {
-    copy <- x
-
     for (l in 1:ncol(x)) {
       label <- attr(x[, l], "label")
       answer <- sub("\\].*", "", label)
@@ -79,7 +77,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
   cat("### ", nr, head, "\n \n")
 
-  val.labels <- sub(".*: ", "", as.character(lapply(x, attr, which = "label")))
+  option_labels <- sub(".*: ", "", as.character(lapply(x, attr, which = "label")))
 
 
   # Wie oft wurde jede Antwortoption gewählt (Wert ungleich 0)?
@@ -88,7 +86,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
   if (valid.perc == TRUE) {
     results <- data.frame(matrix(nrow = length(x), ncol = 4))
     colnames(results) <- c(col1.name, col2.name, "%", "gültige %")
-    results[, 1] <- val.labels
+    results[, 1] <- option_labels
     results[, 2] <- counts
     results[, 3] <- counts / nrow(x) * 100
     results[, 4] <- counts / nrow(x[!is.na(x[, 1]), ]) * 100
@@ -108,7 +106,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
     results <- data.frame(matrix(nrow = length(x), ncol = 3))
 
     colnames(results) <- c(col1.name, "N_votes", "\\%")
-    results[, 1] <- val.labels
+    results[, 1] <- option_labels
     results[, 2] <- as.numeric(counts)
     results[, 3] <- counts / nrow(x) * 100
   }

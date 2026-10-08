@@ -88,7 +88,7 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
   # Maximale Anzahl Zeichen in den Labels ermitteln, ----------------------
   # um linken Rand entsprechend anzupassen --------------------------------
 
-  maxAnzahlZeichen <- max(nchar(unlist(strsplit(x$label, "\n"))))
+  max_chars <- max(nchar(unlist(strsplit(x$label, "\n"))))
 
   # Grafikparameter speichern; sie werden beim Verlassen der Funktion
   # (auch bei einem Fehler) wiederhergestellt
@@ -98,7 +98,7 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
-  .common_par(mar = c(2, 1 + maxAnzahlZeichen * 0.45, 0.5, 0.5))
+  .common_par(mar = c(2, 1 + max_chars * 0.45, 0.5, 0.5))
 
   # Leeren Plot zeichnen (um Hilfslinien drüber zu legen) -----------------
 

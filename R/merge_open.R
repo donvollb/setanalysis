@@ -42,8 +42,8 @@ merge_open <- function(x, # Daten
     return(invisible())
   } # wenn nicht beide inkl-Arugmente TRUE sind, wird Funktion beendet
 
-  ## Erzeugung des Outputs für den Hauptteil der Berichte, falls ----------
-  ## es einen Extra Anhang für die offenen Antworten gibt -----------------
+  # Erzeugung des Outputs für den Hauptteil der Berichte, falls ----------
+  # es einen Extra Anhang für die offenen Antworten gibt -----------------
 
   if (appendix == TRUE & is_appendix == FALSE) {
     list_open_answers$anchor.nr <- list_open_answers$anchor.nr + 1
@@ -64,8 +64,8 @@ merge_open <- function(x, # Daten
     return(invisible())
   }
 
-  ## Erzeugung des eigentlichen Outputs mit den offenen Antworten ---------
-  ## (ohne Anhang oder im Anhang selbst)
+  # Erzeugung des eigentlichen Outputs mit den offenen Antworten ---------
+  # (ohne Anhang oder im Anhang selbst)
 
   if (anchor != FALSE) {
     cat("###", nr, attr(x, "label"), paste0("{#sec-", anchor, ".bottom}"), "\n \n")
@@ -79,42 +79,42 @@ merge_open <- function(x, # Daten
     return(invisible())
   }
 
-  ### NAs entfernen, Leerzeichen vorne und hinten entfernen, sortieren -----
+  # NAs entfernen, Leerzeichen vorne und hinten entfernen, sortieren -----
 
   x <- trimws(x[!is.na(x)])
   x <- x[order(x)]
 
-  ### Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
+  # Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
 
   if (freq == "auto") {
     freq <- length(unique(tolower(x))) < length(x)
   }
 
-  ### Tabelle mit oder ohne Häufigkeiten erzeugen -------------------------
+  # Tabelle mit oder ohne Häufigkeiten erzeugen -------------------------
 
   if (freq == TRUE) {
     # Gruppen nach Kleinbuchstaben bilden
-    Gruppen <- split(x, tolower(x))
+    groups <- split(x, tolower(x))
 
     # für jede Gruppe: die häufigste Schreibweise auswählen
     most_used <- function(x) names(which.max(table(x)))
-    Hauptschreibweisen <- sapply(Gruppen, most_used)
+    main_spellings <- sapply(groups, most_used)
 
     # Häufigkeiten (aller Varianten) zählen
-    Häufigkeiten <- lengths(Gruppen)
+    counts <- lengths(groups)
 
     # Tabelle mit den Repräsentanten und den Häufigkeiten
-    Tabelle <- data.frame(
-      Antwort = Hauptschreibweisen,
-      Häufigkeit = Häufigkeiten,
+    freq_table <- data.frame(
+      Antwort = main_spellings,
+      "Häufigkeit" = counts,
       row.names = NULL
     )
 
     # Nach Häufigkeit sortieren
-    Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
+    freq_table <- freq_table[order(-freq_table[["Häufigkeit"]], freq_table$Antwort), ]
 
     # Formatierung der Tabelle
-    subchunkify(lv_table(Tabelle, col.width = c(137, 18), striped = FALSE))
+    subchunkify(lv_table(freq_table, col.width = c(137, 18), striped = FALSE))
   } else {
     cat("*Die folgenden Antworten wurden jeweils nur einmal gegeben:*  \n\n")
 
@@ -148,9 +148,9 @@ appendix_open <- function(freq = "auto") {
 
   for (k in seq_len(anchor.nr)) {
     x <- list_open_answers[[paste0("var.", k)]]
-    q.nr <- list_open_answers[[paste0("nr.", k)]]
+    question_nr <- list_open_answers[[paste0("nr.", k)]]
     merge_open(x,
-      nr = q.nr, anchor = k, freq = freq,
+      nr = question_nr, anchor = k, freq = freq,
       appendix = TRUE, is_appendix = TRUE
     )
   }

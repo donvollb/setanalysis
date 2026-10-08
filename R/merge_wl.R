@@ -19,8 +19,8 @@ merge_wl <- function(WL, # WL der Daten
 {
   # Label aus den Daten ziehen und als Überschrift drucken ----------------
 
-  wl.label <- attr(WL, "label")
-  cat(paste("###", wl.label, "\n\n\n\n"))
+  label <- attr(WL, "label")
+  cat(paste("###", label, "\n\n\n\n"))
 
   # Noch nicht aggregierte Daten aggregieren ------------------------------
 

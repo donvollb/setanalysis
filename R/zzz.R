@@ -1,6 +1,6 @@
 # Code, der beim Laden des Pakets ausgeführt wird -----------------------
 
-## Bei Start des Pakets Schriftart laden ----------------------------------
+# Bei Start des Pakets Schriftart laden ----------------------------------
 
 .onAttach <- function(libname, pkgname) {
   try(silent = TRUE, { # Fehlermeldungen ignorieren (ist für Installation nötig)

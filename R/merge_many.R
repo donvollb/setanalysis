@@ -76,6 +76,3 @@ merge_many <- function(x, # Ausschnitt aus dem Datensatz
     }
   }
 }
-
-
-### Idee: Automatische Seitenumbrüche -------------------------------------

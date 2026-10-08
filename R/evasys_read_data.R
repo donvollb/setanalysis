@@ -9,9 +9,7 @@
 #' @export
 
 evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
-  ##########################
-  # SETUP + DATEN EINLESEN #
-  ##########################
+  # Rohdaten und Codebuch einlesen --------------------------------------------
 
   # Direkt den csv-Export von EvaSys einlesen
   if (is.null(raw.data.path)) {
@@ -35,15 +33,13 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
   codebook[, 2] <- gsub("'", "", codebook[, 2])
 
   # Alle Variablennamen aus dem Codebuch extrahieren
-  var.names.raw <- unique(codebook[codebook$var == "Variable:", 2])
+  var_names_raw <- unique(codebook[codebook$var == "Variable:", 2])
 
   # Einige Variablennamen bekommen bei Evasys wegen der Filter "X.Filter.." am Anfang, das muss korrigiert werden
   colnames(data) <- gsub("^X\\.FILTER\\.\\.", "", colnames(data))
 
 
-  ###################
-  ### MAIN LOOP 1 ###
-  ###################
+  # Schleife 1: MC-Variablen im Codebuch durchnummerieren ---------------------
 
   # Multiple-Choice-Frage bestehen im Datensatz aus mehreren Variablen (eine pro Antwortoption)
   # Im Datensatz sind diese mit Nummern unterschiedlich benannt (z.B. Variablenname_1, Variablenname_2, Variablenname_3, etc.)
@@ -51,43 +47,41 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
 
 
   # Bilde eine Schleife mit allen Variablennamen
-  for (i in seq_along(var.names.raw)) {
-    var.name.tmp <-
-      var.names.raw[i] # Speichere den Variablennamen temporär ab
+  for (i in seq_along(var_names_raw)) {
+    var_name <-
+      var_names_raw[i] # Speichere den Variablennamen temporär ab
 
 
     # Wenn ein Variablenname nicht direkt im Datensatz vorkommt (das ist bei den MC-Fragen dann ja der Fall)
-    if (!(var.name.tmp %in% colnames(data))) {
-      vec.tmp <-
-        which(codebook[, 2] == var.name.tmp) # Prüfe nach, in welchen Zeilen der Variablenname im Codebuch steht
+    if (!(var_name %in% colnames(data))) {
+      positions <-
+        which(codebook[, 2] == var_name) # Prüfe nach, in welchen Zeilen der Variablenname im Codebuch steht
 
 
       # Wichtig: Im Codebuch gibt es für jede MC-Frage "1+Anzahl Antwortoptionen"-Abschnitte, der erste muss nicht geändert werden, der Rest wird durchnummeriert
 
 
       # Bilde eine Schleife mit allen Positionen, wo der Variablenname steht (es geht bei "2" los, da der erste Abschnitt ja nicht geändert werden muss)
-      for (n in 2:length(vec.tmp)) {
-        codebook[vec.tmp[n], 2] <-
-          paste0(codebook[vec.tmp[n], 2], "_", n - 1) # Schreibe hinten die Nummer an den Variablennamen
+      for (n in 2:length(positions)) {
+        codebook[positions[n], 2] <-
+          paste0(codebook[positions[n], 2], "_", n - 1) # Schreibe hinten die Nummer an den Variablennamen
       }
     }
   }
 
 
   # Speichere nun erneut alle Variablennamen aus dem Codebuch (jetzt wurden ja einige hinten nummeriert)
-  var.names <- unique(codebook[codebook$var == "Variable:", 2])
+  var_names <- unique(codebook[codebook$var == "Variable:", 2])
 
-  ###################
-  ### MAIN LOOP 2 ###
-  ###################
+  # Schleife 2: Label, Nummer, Typ und Value Labels übernehmen ----------------
 
   # In der nächsten Schleife ziehen wir dann die wichtigen Infos (Labels, etc.) aus dem Codebuch und schreiben sie mit in den Datensatz
 
   # Bilde eine Schleife mit allen Variablennamen
-  for (i in seq_along(var.names)) {
-    var.name.tmp <- var.names[i] # Speichere den aktuellen Variablennamen ab
+  for (i in seq_along(var_names)) {
+    var_name <- var_names[i] # Speichere den aktuellen Variablennamen ab
 
-    if (var.name.tmp %in% colnames(data)) { # Wenn der Variablenname im Datensatz als Spalte vorkommt
+    if (var_name %in% colnames(data)) { # Wenn der Variablenname im Datensatz als Spalte vorkommt
 
       # Hier wird es ein wenig tricky: Die einzelnen Abschnitte im Codebuch sind durch "------" getrennt, dann kommt die nächste Variable
       # Wir wollen nun den Abschnitt aus dem Codebuch extrahieren, in em die Infos zur aktuellen Variable stehen
@@ -97,46 +91,44 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
       # Wenn wir uns bei der letzten Variable befinden, geht das ja nicht mehr, da nehmen wir dann einfach die drittletzte Zeile als Ende
 
       # Falls es sich nicht um die letzte Variable handelt
-      if (i != length(var.names)) {
-        attrs <- codebook[which(codebook$code == var.name.tmp):(which(codebook$code == var.names[i + 1])[1] - 2), ] # Extrahiere die relevanten Zeilen aus dem Codebuch
+      if (i != length(var_names)) {
+        section <- codebook[which(codebook$code == var_name):(which(codebook$code == var_names[i + 1])[1] - 2), ] # Extrahiere die relevanten Zeilen aus dem Codebuch
       } else {
-        attrs <- codebook[which(codebook$code == var.name.tmp):(nrow(codebook) - 2), ] # Falls es die letzte ist, nimm als Ende die vorletzte Zeile
+        section <- codebook[which(codebook$code == var_name):(nrow(codebook) - 2), ] # Falls es die letzte ist, nimm als Ende die vorletzte Zeile
       }
 
-      # Nun haben wir im Objekt attrs den Abschnitt im Codebuch gespeichert, der die Informationen zu aktuelle Variable enthält
+      # Nun haben wir im Objekt section den Abschnitt im Codebuch gespeichert, der die Informationen zu aktuelle Variable enthält
       # Daraus ziehen wir jetzt folgende Infos:
 
-      attr(data[, var.name.tmp], "label") <- sub("^.*? ", "", attrs[attrs$var == "Fragetext:", 2]) # Den Fragetext als "label"
-      attr(data[, var.name.tmp], "nr") <- sub("? .*$", "", attrs[attrs$var == "Fragetext:", 2]) # Die Nummer der Frage im Fragebogen als "nr"
+      attr(data[, var_name], "label") <- sub("^.*? ", "", section[section$var == "Fragetext:", 2]) # Den Fragetext als "label"
+      attr(data[, var_name], "nr") <- sub("? .*$", "", section[section$var == "Fragetext:", 2]) # Die Nummer der Frage im Fragebogen als "nr"
       # Den Fragetyp als "type", dabei die evasys-Bezeichnung in die Kurzform
       # des Pakets übersetzen (aus "1 aus n" wird z.B. "sc")
-      evasys_type <- attrs[attrs$var == "Fragetyp:", 2]
+      evasys_type <- section[section$var == "Fragetyp:", 2]
       type_names <- c(
         "1 aus n" = "sc", "n aus m" = "mc", "Skalafrage" = "sk", "Offene Frage" = "open/num"
       )
-      attr(data[, var.name.tmp], "type") <-
+      attr(data[, var_name], "type") <-
         if (evasys_type %in% names(type_names)) type_names[[evasys_type]] else evasys_type
 
 
       # Nun fehlen nur noch die Value Labels, also was z.B. die Antwortoption "1" bei der Frage nach dem Abschluss bedeutet
 
       # Da dass nur bei Skalen- oder SC-Fragen nötig ist, prüfen wir mit einer if-Klausel, ob es sich um eine solche Frage handelt
-      if (attrs[attrs$var == "Fragetyp:", 2] %in% c("1 aus n", "Skalafrage")) {
+      if (section[section$var == "Fragetyp:", 2] %in% c("1 aus n", "Skalafrage")) {
         # Die Antwortoptionen stehen in den Zeilen nach "Wert:" bzw. "Werte:",
         # jeweils in der Form "1: trifft gar nicht zu"
-        value_rows <- attrs[(which(attrs$var %in% c("Wert:", "Werte:")) + 1):nrow(attrs), 2]
-        nums <- as.numeric(sub(": .*?$", "", value_rows)) # Die Nummern der Antwortoptionen (z.B. 1 bis 6)
-        nams <- sub("^.*?: ", "", value_rows) # Was die Nummern bedeuten (z.B. "trifft gar nicht zu")
+        value_rows <- section[(which(section$var %in% c("Wert:", "Werte:")) + 1):nrow(section), 2]
+        values <- as.numeric(sub(": .*?$", "", value_rows)) # Die Nummern der Antwortoptionen (z.B. 1 bis 6)
+        value_labels <- sub("^.*?: ", "", value_rows) # Was die Nummern bedeuten (z.B. "trifft gar nicht zu")
 
         # Hier werden dann die Antwortoptionen als "labels" der variable hinzugefügt
-        attr(data[, var.name.tmp], "labels") <- setNames(nums, nams)
+        attr(data[, var_name], "labels") <- setNames(values, value_labels)
       }
     }
   }
 
-  ###################
-  ### FEINSCHLIFF ###
-  ###################
+  # Platzhalter in offenen Antworten durch NA ersetzen ------------------------
 
   # Jeweils bestimmte Antworten durch NA ersetzen (wirkt sich nur auf die offenen Fragen aus)
   data[data == ""] <- NA
@@ -147,8 +139,5 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
   data[data == "[Freitextfeld]"] <- NA # durch die csv in die Daten gelangt
 
 
-  ################
-  #### RETURN ####
-  ################
   return(data)
 }

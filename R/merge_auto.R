@@ -31,7 +31,7 @@ merge_auto <- function(x,
 
 
   # Erkennung, ob es sich um offene oder numerische Fragen handelt
-  ## Zuerst prüfen, ob es überhaupt Buchstaben gibt
+  # Zuerst prüfen, ob es überhaupt Buchstaben gibt
 
   if (type == "open/num" & typeof(x) != "character") {
     type <- "num"
@@ -40,25 +40,25 @@ merge_auto <- function(x,
   # Falls es Buchstaben gibt: Schätzung anhand des Anteils der Ziffern
   if (type == "open/num") {
     # NA-Werte entfernen, Vektor in eine lange Zeichenkette umwandeln
-    long <- paste(na.omit(x), collapse = "")
+    all_text <- paste(na.omit(x), collapse = "")
 
     # Anzahl der Ziffern in der Zeichenkette zählen
-    anzahl_ziffern <- length(gregexpr("[0-9]", long)[[1]])
+    n_digits <- length(gregexpr("[0-9]", all_text)[[1]])
 
     # Gesamtlänge der Zeichenkette speichern
-    gesamtlänge <- nchar(long)
+    n_chars <- nchar(all_text)
 
     # Anteil berechnen
-    anteil <- anzahl_ziffern / gesamtlänge
+    digit_share <- n_digits / n_chars
 
-    if (anteil > 0.5) {
+    if (digit_share > 0.5) {
       type <- "num"
     } else {
       type <- "open"
     }
   }
 
-  Funktionsliste <- list(
+  merge_functions <- list(
     sc = merge_sc,
     sk = merge_sk,
     open = merge_open,
@@ -67,5 +67,5 @@ merge_auto <- function(x,
     multi.sk = merge_aggr_sk
   )
 
-  Funktionsliste[[type]](x, nr = nr, inkl = inkl, ...)
+  merge_functions[[type]](x, nr = nr, inkl = inkl, ...)
 }

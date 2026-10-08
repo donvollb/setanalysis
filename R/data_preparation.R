@@ -14,8 +14,8 @@ aggr_data <- function(vars, # Variablen (oder eine Variable), die aggregiert wer
   labels <- as.character(lapply(data.frame(vars), attr, which = "label"))
   x <- data.frame(data.frame(vars)[0, ])
   for (n in unique(kennung)) {
-    vars.sub <- data.frame(data.frame(vars)[kennung == n, ])
-    x[nrow(x) + 1, ] <- vars.sub |>
+    group_vars <- data.frame(data.frame(vars)[kennung == n, ])
+    x[nrow(x) + 1, ] <- group_vars |>
       apply(2, as.numeric) |>
       apply(2, mean, na.rm = TRUE)
   }
@@ -48,39 +48,25 @@ label_test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
                        var, # Variable aus Datensatz, die der Spalte entspricht
                        exception = "alle") { # Ausnahmen, die nicht überprüft werden sollen
 
-  labels.col <- unique(col)
+  labels_col <- unique(col)
 
   if (length(exception != 0)) {
     for (k in 1:length(exception)) {
-      labels.col <- labels.col[labels.col != exception[k]]
+      labels_col <- labels_col[labels_col != exception[k]]
     }
   }
 
   if (!is.null(attr(var, "levels"))) {
-    labels.var <- attr(var, "levels")
+    labels_var <- attr(var, "levels")
   } else {
-    labels.var <- unique(var)
+    labels_var <- unique(var)
   }
 
-  if (all(labels.col %in% labels.var)) {
+  if (all(labels_col %in% labels_var)) {
     output <- "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
   } else {
-    false.labels <- labels.col[which(!(labels.col %in% labels.var))]
-    output <- paste0("Das Label \"", false.labels, "\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor.")
+    false_labels <- labels_col[which(!(labels_col %in% labels_var))]
+    output <- paste0("Das Label \"", false_labels, "\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor.")
   }
   return(print(output))
-}
-
-#' Extrahiert bei MC-Fragen das Label der Antwortoption
-#'
-#' @param x Eine Spalte.
-#' @param match Die Zeichen, die direkt vor der Antwortoption stehen (üblicherweise ´: ´)
-#' @returns Eine Zeichenkette (das Label).
-
-
-# Labels für MC-Fragen aus dem Fragetext ziehen:
-get_label <- function(x, # Objekt
-                      match = ": ") # String, der Label von Frage trennt
-{
-  sub(paste0(".*", match), "", attr(x, "label"))
 }

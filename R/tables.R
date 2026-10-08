@@ -22,28 +22,28 @@ lv_table <- function(x, # Objekt (am besten dataframe)
 {
   # Erkennen von ganzzahligen Werten und Umwandlung in Integer ------------
 
-  for (Spalte in names(x)) {
-    if (is.numeric(x[[Spalte]])) {
-      if (all(is.na(x[[Spalte]]) | x[[Spalte]] == round(x[[Spalte]]))) {
-        x[[Spalte]] <- as.integer(x[[Spalte]])
+  for (column in names(x)) {
+    if (is.numeric(x[[column]])) {
+      if (all(is.na(x[[column]]) | x[[column]] == round(x[[column]]))) {
+        x[[column]] <- as.integer(x[[column]])
       }
     }
   }
 
   # Erstellen der Tabelle mit tinytable -----------------------------------
 
-  Tabelle <- tinytable::tt(x, width = col.width)
+  tab <- tinytable::tt(x, width = col.width)
 
   # Kopfzeile fett --------------------------------------------------------
 
   if (bold == TRUE) {
-    Tabelle <- style_tt(Tabelle, i = 0, bold = TRUE)
+    tab <- style_tt(tab, i = 0, bold = TRUE)
   }
 
   # Eckzelle nicht fett ---------------------------------------------------
 
   if (bold.corner == FALSE) {
-    Tabelle <- style_tt(Tabelle,
+    tab <- style_tt(tab,
       i = 0, j = 1,
       bold = FALSE
     )
@@ -52,8 +52,8 @@ lv_table <- function(x, # Objekt (am besten dataframe)
   # Streifenmuster hinzufügen (Akzentfarbe mit 90% Transparenz) -----------
 
   if (striped == TRUE) {
-    Tabelle <- style_tt(Tabelle,
-      i = seq(0, nrow(Tabelle), by = 2),
+    tab <- style_tt(tab,
+      i = seq(0, nrow(tab), by = 2),
       background = adjustcolor(setanalysis_defaults$color.bars,
         alpha.f = 0.1
       )
@@ -62,28 +62,28 @@ lv_table <- function(x, # Objekt (am besten dataframe)
 
   # Anzahl der Nachkommastellen festlegen ---------------------------------
 
-  Tabelle <- tt_format(Tabelle, num_zero = TRUE, num_fmt = "decimal", digits = digits)
+  tab <- tt_format(tab, num_zero = TRUE, num_fmt = "decimal", digits = digits)
 
   # Nur eine Zeile: Erste Spalte linksbündig, Rest zentriert --------------
 
-  if (nrow(Tabelle) == 1) {
-    Tabelle <- style_tt(Tabelle, j = 1, align = "l")
+  if (nrow(tab) == 1) {
+    tab <- style_tt(tab, j = 1, align = "l")
 
-    if (ncol(Tabelle) > 2) {
-      Tabelle <- style_tt(Tabelle, j = 2:(ncol(Tabelle)), align = "c")
+    if (ncol(tab) > 2) {
+      tab <- style_tt(tab, j = 2:(ncol(tab)), align = "c")
     }
 
     # Ansonsten: Erste Spalte linksbündig, Rest rechtsbündig ----------------
   } else {
-    Tabelle <- style_tt(Tabelle, j = 1, align = "l")
+    tab <- style_tt(tab, j = 1, align = "l")
 
-    if (ncol(Tabelle) > 2) {
-      Tabelle <- style_tt(Tabelle, j = 2:(ncol(Tabelle)), align = "r")
+    if (ncol(tab) > 2) {
+      tab <- style_tt(tab, j = 2:(ncol(tab)), align = "r")
     }
   }
   # Fertige Tabelle ausgeben ----------------------------------------------
 
-  return(Tabelle)
+  return(tab)
 }
 
 #' Einfache Häufigkeitstabelle
@@ -114,55 +114,55 @@ table_freq <- function(x, # Daten
                        bold = TRUE, # Soll die Kopfzeile fett sein? (siehe lv_table)
                        digits = 1) # Anzahl Nachkommastellen
 {
-  jim <- data.frame(descr::freq(x, plot = FALSE))
-  jim <- data.frame(rownames(jim), jim)
-  rownames(jim) <- NULL
+  freq_table <- data.frame(descr::freq(x, plot = FALSE))
+  freq_table <- data.frame(rownames(freq_table), freq_table)
+  rownames(freq_table) <- NULL
 
-  jim[jim == "NA's"] <- "NAs"
+  freq_table[freq_table == "NA's"] <- "NAs"
 
 
   if (show.all == FALSE) {
-    jim <- jim[jim[, 2] != 0 & jim[, 2] != "0", ] # Falls nur gewählte Optionen angezeigt werden sollen
+    freq_table <- freq_table[freq_table[, 2] != 0 & freq_table[, 2] != "0", ] # Falls nur gewählte Optionen angezeigt werden sollen
   }
 
-  names.jim <- c(
+  header <- c(
     col1.name,
     col2.name,
     "%",
     "gültige %"
   )
 
-  if (length(jim) == 4) {
-    colnames(jim) <- names.jim
+  if (length(freq_table) == 4) {
+    colnames(freq_table) <- header
   } else {
-    colnames(jim) <- names.jim[1:3]
+    colnames(freq_table) <- header[1:3]
   }
 
   if (is.numeric(x) == TRUE) {
     if (cutoff != FALSE & max(x, na.rm = TRUE) == cutoff) {
-      jim[nrow(jim) - 2, 1] <- paste0(cutoff, " oder höher")
+      freq_table[nrow(freq_table) - 2, 1] <- paste0(cutoff, " oder höher")
     }
   }
 
 
   if (order.table != FALSE) {
     decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
-    jim <- jim[c(
-      order(jim[1:(nrow(jim) - ncol(jim) + 2), 2],
+    freq_table <- freq_table[c(
+      order(freq_table[1:(nrow(freq_table) - ncol(freq_table) + 2), 2],
         decreasing = decreasing
       ),
-      (nrow(jim) - ncol(jim) + 3):nrow(jim)
+      (nrow(freq_table) - ncol(freq_table) + 3):nrow(freq_table)
     ), ]
   }
 
-  if (col.width[1] == "default" & length(jim) == 4) {
+  if (col.width[1] == "default" & length(freq_table) == 4) {
     col.width <- setanalysis_defaults$col.width4
   }
-  if (col.width[1] == "default" & length(jim) == 3) {
+  if (col.width[1] == "default" & length(freq_table) == 3) {
     col.width <- setanalysis_defaults$col.width3
   }
 
-  lv_table(jim, col.width = col.width, bold = bold, digits = digits)
+  lv_table(freq_table, col.width = col.width, bold = bold, digits = digits)
 }
 
 #' Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle
@@ -183,14 +183,14 @@ table_stat_single <- function(x, # Daten
                               digits = 2) # Anzahl der Nachkommastellen in der Tabelle
 {
   if (md == FALSE) {
-    bob <- data.frame(round(psych::describe(x), 2))[c(2:4, 8:9)]
-    colnames(bob) <- c(col1.name, "M", "SD", "Min", "Max")
+    stats_table <- data.frame(round(psych::describe(x), 2))[c(2:4, 8:9)]
+    colnames(stats_table) <- c(col1.name, "M", "SD", "Min", "Max")
   } else {
-    bob <- data.frame(round(psych::describe(x), 2))[c(2:5, 8:9)]
-    colnames(bob) <- c(col1.name, "M", "SD", "MD", "Min", "Max")
+    stats_table <- data.frame(round(psych::describe(x), 2))[c(2:5, 8:9)]
+    colnames(stats_table) <- c(col1.name, "M", "SD", "MD", "Min", "Max")
   }
 
-  lv_table(bob, col.width = 0.5, bold = bold, digits = digits)
+  lv_table(stats_table, col.width = 0.5, bold = bold, digits = digits)
 }
 
 #' Einfache Statistiktabelle für mehrere Items mit Fragetexten
@@ -231,15 +231,15 @@ table_stat_multi <- function(x,
     labels <- as.character(lapply(x, attr, which = "label"))
   }
 
-  bob <- as.data.frame(psych::describe(x))[c(2:5, 8:9)]
-  bob <- cbind(labels, bob)
-  colnames(bob) <- c(col1.name, col2.name, "M", "SD", "MD", "Min", "Max")
+  stats_table <- as.data.frame(psych::describe(x))[c(2:5, 8:9)]
+  stats_table <- cbind(labels, stats_table)
+  colnames(stats_table) <- c(col1.name, col2.name, "M", "SD", "MD", "Min", "Max")
 
   widths <- setanalysis_defaults$col.width.sm
 
   if (alt1 != FALSE) {
-    bob <- cbind(bob, alt1.list)
-    colnames(bob)[length(colnames(bob))] <- alt1
+    stats_table <- cbind(stats_table, alt1.list)
+    colnames(stats_table)[length(colnames(stats_table))] <- alt1
     widths <- setanalysis_defaults$col.width.sm.alt1
   }
 
@@ -247,13 +247,13 @@ table_stat_multi <- function(x,
     if (alt1 == FALSE) {
       stop("alt1 ist FALSE, alt2 aber nicht. Bitte bei nur einer Ausweichoption alt1 verwenden.")
     }
-    bob <- cbind(bob, alt2.list)
-    colnames(bob)[length(colnames(bob))] <- alt2
+    stats_table <- cbind(stats_table, alt2.list)
+    colnames(stats_table)[length(colnames(stats_table))] <- alt2
     widths <- setanalysis_defaults$col.width.sm.alt2
   }
 
 
-  lv_table(bob,
+  lv_table(stats_table,
     col.width = widths,
     bold = bold,
     digits = digits,

@@ -37,9 +37,9 @@ merge_sc <- function(x, # Daten
     return(invisible())
   } # selbiges bei fehlenden Werten
   if (already.labels == FALSE) {
-    a <- attributes(x)
-    x <- factor(x, levels = a$labels, labels = names(a$labels))
-    attr(x, "label") <- a$label
+    x_attributes <- attributes(x)
+    x <- factor(x, levels = x_attributes$labels, labels = names(x_attributes$labels))
+    attr(x, "label") <- x_attributes$label
   }
 
   cat("###", nr, attr(x, "label"), "\n \n")
@@ -49,8 +49,8 @@ merge_sc <- function(x, # Daten
     order.table = order.table, digits = digits
   ))
 
-  freq.tab <- descr::freq(x, plot = FALSE)
-  results <- data.frame(rownames(freq.tab), round(freq.tab[, 1:2], digits = 2))
+  freq_table <- descr::freq(x, plot = FALSE)
+  results <- data.frame(rownames(freq_table), round(freq_table[, 1:2], digits = 2))
 
   # automatische Zeilenumbrüche bei langen Labels -------------------------
 

@@ -59,27 +59,25 @@ merge_aggr_sk <- function(x, # Daten
     if (nr == "") {
       inkl <- TRUE
     } else {
-      header <- sub("\\..*$", "", nr)
-      nr1 <- as.numeric(sub("^.*\\.", "", nr))
-      nr.end <- nr1 + ncol(x) - 1
-      nrs.ends <- nr1:nr.end
-      nrs <- paste0(header, ".", nrs.ends)
+      section <- sub("\\..*$", "", nr)
+      first_item <- as.numeric(sub("^.*\\.", "", nr))
+      last_item <- first_item + ncol(x) - 1
+      item_numbers <- first_item:last_item
+      item_nrs <- paste0(section, ".", item_numbers)
 
       # inkl.-Variable für jedes Item nachschlagen
-      inkls <- sapply(nrs, .inkl_value, env = environment(), USE.NAMES = FALSE)
+      item_inkl <- sapply(item_nrs, .inkl_value, env = environment(), USE.NAMES = FALSE)
 
-      x <- x[, inkls] # Variablen entfernen, die nicht vorkommen sollen
-      nrs <- nrs[inkls] # Nummern entfernen, die nicht vorkommen sollen
+      x <- x[, item_inkl] # Variablen entfernen, die nicht vorkommen sollen
+      item_nrs <- item_nrs[item_inkl] # Nummern entfernen, die nicht vorkommen sollen
 
-      if (length(nrs) > 0) {
-        for (k in seq_along(nrs)) {
-          attr(x[, k], "label") <- paste(nrs[k], attr(x[, k], "label"))
+      if (length(item_nrs) > 0) {
+        for (k in seq_along(item_nrs)) {
+          attr(x[, k], "label") <- paste(item_nrs[k], attr(x[, k], "label"))
         }
       }
 
-      inkl <- ifelse(any(inkls == TRUE), TRUE, FALSE)
-
-      rm(header, nr1, nr.end, nrs.ends, nrs, inkls)
+      inkl <- ifelse(any(item_inkl == TRUE), TRUE, FALSE)
     }
   }
 
@@ -91,14 +89,14 @@ merge_aggr_sk <- function(x, # Daten
     # Items, falls diese nicht angegeben wurde
 
     if (!is.null(ncol(x))) {
-      Stufen <- unique(vapply(
+      n_levels <- unique(vapply(
         seq_len(ncol(x)), \(k) length(attr(x[, k], "labels")), integer(1)
       ))
-      if (length(Stufen) != 1) { # Fehlermeldung bei unterschiedlicher Anzahl Stufen
+      if (length(n_levels) != 1) { # Fehlermeldung bei unterschiedlicher Anzahl Stufen
         stop("Die ausgewählten Items haben eine unterschiedliche
            Anzahl an Stufen.")
       } else {
-        number <- Stufen[[1]]
+        number <- n_levels[[1]]
       }
     } else {
       number <- length(attr(x, "labels"))
@@ -115,42 +113,42 @@ merge_aggr_sk <- function(x, # Daten
 
 
   # Antwortlabels je Item (nicht relevante Labels werden abgeschnitten)
-  ListeLabels <- lapply(seq_len(ncol(x)), \(k) names(attr(x[, k], "labels"))[1:number])
+  level_labels <- lapply(seq_len(ncol(x)), \(k) names(attr(x[, k], "labels"))[1:number])
 
-  TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
+  level_label_table <- as.data.frame(level_labels, col.names = 1:ncol(x))
 
   if (tmin == "default") {
-    LabelLinks <- unique(as.list(TabelleLabels[1, ]))
+    labels_left <- unique(as.list(level_label_table[1, ]))
 
-    if (length(unique(LabelLinks)) != 1) {
+    if (length(unique(labels_left)) != 1) {
       warning(paste0("Achtung: Die Labels der einzelnen Items auf der linken
-                   Seite sind unterschiedlich: \n", LabelLinks))
+                   Seite sind unterschiedlich: \n", labels_left))
     }
 
-    tmin <- LabelLinks[[1]]
+    tmin <- labels_left[[1]]
   }
 
   if (tmid == "default" & number %% 2 == 1) { # nur bei ungerader Anzahl Stufen
 
-    LabelMitte <- unique(as.list(TabelleLabels[(number + 1) / 2, ]))
+    labels_mid <- unique(as.list(level_label_table[(number + 1) / 2, ]))
 
-    if (length(unique(LabelMitte)) != 1) {
+    if (length(unique(labels_mid)) != 1) {
       warning(paste0("Achtung: Die Labels der einzelnen Items in der Mitte
-                      sind unterschiedlich:\n", LabelMitte))
+                      sind unterschiedlich:\n", labels_mid))
     }
 
-    tmid <- LabelMitte[[1]]
+    tmid <- labels_mid[[1]]
   }
 
   if (tmax == "default") {
-    LabelRechts <- unique(as.list(TabelleLabels[number, ]))
+    labels_right <- unique(as.list(level_label_table[number, ]))
 
-    if (length(unique(LabelRechts)) != 1) {
+    if (length(unique(labels_right)) != 1) {
       warning(paste0("Achtung: Die Labels der einzelnen Items auf der rechten
-                    Seite sind unterschiedlich:\n", LabelRechts))
+                    Seite sind unterschiedlich:\n", labels_right))
     }
 
-    tmax <- LabelRechts[[1]]
+    tmax <- labels_right[[1]]
   }
 
 
@@ -160,14 +158,14 @@ merge_aggr_sk <- function(x, # Daten
 
   if (number %% 2 == 0 | tmid == "") { # bei gerader Anzahl Stufen oder keinem Mittellabel
 
-    text.skala <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
-    labels.skala <- c(tmin, rep("", number - 2), tmax)
+    scale_text <- paste0("(1)~", tmin, " - (", number, ")~", tmax)
+    scale_labels <- c(tmin, rep("", number - 2), tmax)
   } else { # bei ungerader Anzahl Stufen
-    text.skala <- paste0(
+    scale_text <- paste0(
       "(1)~", tmin, " - (", (number + 1) / 2, ")~", tmid,
       " - (", number, ")~", tmax
     )
-    labels.skala <- c(
+    scale_labels <- c(
       tmin, rep("", (number - 3) / 2), tmid,
       rep("", (number - 3) / 2), tmax
     )
@@ -197,7 +195,7 @@ merge_aggr_sk <- function(x, # Daten
     subchunkify(
       table_stat_multi(
         x,
-        col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', text.skala, "]_"),
+        col1.name = paste0('#text(weight: "bold")[Item] _[Skala: ', scale_text, "]_"),
         col2.name = col2.name,
         bold.corner = FALSE,
         alt1 = alt1,
@@ -223,7 +221,7 @@ merge_aggr_sk <- function(x, # Daten
     }
 
     subchunkify(
-      boxplot_aggr_sk(x, labels, labels.skala),
+      boxplot_aggr_sk(x, labels, scale_labels),
       fig_height = fig.height,
       fig_width = 9
     )

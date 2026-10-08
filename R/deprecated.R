@@ -67,10 +67,10 @@ NULL
 # Ruft `fun` mit genau dem Aufruf auf, mit dem die aufrufende (veraltete)
 # Funktion aufgerufen wurde, und wertet ihn dort aus, wo er entstanden ist.
 # Dadurch werden Argumente so zugeordnet wie bei einem direkten Aufruf.
-.weiterleiten <- function(fun) {
-  aufruf <- sys.call(-1)
-  aufruf[[1]] <- fun
-  eval(aufruf, parent.frame(2))
+.forward_to <- function(fun) {
+  original_call <- sys.call(-1)
+  original_call[[1]] <- fun
+  eval(original_call, parent.frame(2))
 }
 
 # Weiterleitungen ---------------------------------------------------------
@@ -78,52 +78,52 @@ NULL
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-appendix.open <- function(...) .weiterleiten(appendix_open)
+appendix.open <- function(...) .forward_to(appendix_open)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-bsp.boxplot <- function(...) .weiterleiten(bsp_boxplot)
+bsp.boxplot <- function(...) .forward_to(bsp_boxplot)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-bsp.evasys.sk6 <- function(...) .weiterleiten(bsp_evasys_sk6)
+bsp.evasys.sk6 <- function(...) .forward_to(bsp_evasys_sk6)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-bsp.table.stat <- function(...) .weiterleiten(bsp_table_stat)
+bsp.table.stat <- function(...) .forward_to(bsp_table_stat)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-change.analysis.defaults <- function(...) .weiterleiten(change_analysis_defaults)
+change.analysis.defaults <- function(...) .forward_to(change_analysis_defaults)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-evasys.read.data <- function(...) .weiterleiten(evasys_read_data)
+evasys.read.data <- function(...) .forward_to(evasys_read_data)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-grade <- function(...) .weiterleiten(merge_grade)
+grade <- function(...) .forward_to(merge_grade)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-input.tabelle <- function(...) .weiterleiten(input_tabelle)
+input.tabelle <- function(...) .forward_to(input_tabelle)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-label.test <- function(...) .weiterleiten(label_test)
+label.test <- function(...) .forward_to(label_test)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export
-markdown.in.viewer <- function(...) .weiterleiten(markdown_in_viewer)
+markdown.in.viewer <- function(...) .forward_to(markdown_in_viewer)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
@@ -133,17 +133,17 @@ open.answers <- function(...) merge_open(..., appendix = TRUE, is_appendix = FAL
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export table.freq
-table.freq <- function(...) .weiterleiten(table_freq)
+table.freq <- function(...) .forward_to(table_freq)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export table.stat.multi
-table.stat.multi <- function(...) .weiterleiten(table_stat_multi)
+table.stat.multi <- function(...) .forward_to(table_stat_multi)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export table.stat.single
-table.stat.single <- function(...) .weiterleiten(table_stat_single)
+table.stat.single <- function(...) .forward_to(table_stat_single)
 
 # Weiterleitungen für Namen, die wie S3-Methoden aussehen -----------------
 # (mit den Argumenten der generischen Funktion merge() bzw. boxplot())
@@ -151,56 +151,56 @@ table.stat.single <- function(...) .weiterleiten(table_stat_single)
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export boxplot.ruecklauf
-boxplot.ruecklauf <- function(x, ...) .weiterleiten(merge_rueck)
+boxplot.ruecklauf <- function(x, ...) .forward_to(merge_rueck)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.evasys.sk
-merge.evasys.sk <- function(x, y, ...) .weiterleiten(merge_sk)
+merge.evasys.sk <- function(x, y, ...) .forward_to(merge_sk)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.fachsem
-merge.fachsem <- function(x, y, ...) .weiterleiten(merge_fachsem)
+merge.fachsem <- function(x, y, ...) .forward_to(merge_fachsem)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.mc
-merge.mc <- function(x, y, ...) .weiterleiten(merge_mc)
+merge.mc <- function(x, y, ...) .forward_to(merge_mc)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.multi.sk
-merge.multi.sk <- function(x, y, ...) .weiterleiten(merge_aggr_sk)
+merge.multi.sk <- function(x, y, ...) .forward_to(merge_aggr_sk)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.num
-merge.num <- function(x, y, ...) .weiterleiten(merge_num)
+merge.num <- function(x, y, ...) .forward_to(merge_num)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.open
-merge.open <- function(x, y, ...) .weiterleiten(merge_open)
+merge.open <- function(x, y, ...) .forward_to(merge_open)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.sc
-merge.sc <- function(x, y, ...) .weiterleiten(merge_sc)
+merge.sc <- function(x, y, ...) .forward_to(merge_sc)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.subj
-merge.subj <- function(x, y, ...) .weiterleiten(merge_subj)
+merge.subj <- function(x, y, ...) .forward_to(merge_subj)
 
 #' @rdname setanalysis-deprecated
 #' @usage NULL
 #' @export merge.wl
-merge.wl <- function(x, y, ...) .weiterleiten(merge_wl)
+merge.wl <- function(x, y, ...) .forward_to(merge_wl)
 
 # Interne Plot-Hilfsfunktion mit Tippfehler im alten Namen ----------------
 # (war exportiert und wird ggf. in Berichtsvorlagen verwendet)
 
 #' @noRd
 #' @export
-.costum_boxplot <- function(...) .weiterleiten(.custom_boxplot)
+.costum_boxplot <- function(...) .forward_to(.custom_boxplot)

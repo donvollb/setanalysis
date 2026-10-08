@@ -177,21 +177,21 @@ bsp_evasys_sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
 bsp_table_stat <- function(all = TRUE) # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
 {
   if (all == TRUE) {
-    jim <- data.frame(cbind(
+    legend_table <- data.frame(cbind(
       "Frage", "Häufigkeit", "Mittelwert",
       "Standard-abweichung", "Median",
       "kleinster be⁠ob. Wert", "größter be⁠ob. Wert"
     ))
 
-    colnames(jim) <- c("Item", "n", "M", "SD", "MD", "Min", "Max")
+    colnames(legend_table) <- c("Item", "n", "M", "SD", "MD", "Min", "Max")
   } else {
-    jim <- data.frame(cbind(
+    legend_table <- data.frame(cbind(
       "Häufigkeit", "Mittelwert", "Standard-\nabweichung",
       "kleinster\nbeob. Wert", "größter\nbeob. Wert"
     ))
 
-    colnames(jim) <- c("n", "M", "SD", "Min", "Max")
+    colnames(legend_table) <- c("n", "M", "SD", "Min", "Max")
   }
 
-  return(lv_table(jim))
+  return(lv_table(legend_table))
 }

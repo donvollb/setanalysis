@@ -43,17 +43,17 @@ merge_sk <- function(x, # Daten
   } # nur ausführen, wenn inkl TRUE ist
 
   if (lime == TRUE) {
-    temp <- attr(x, "label")
-    levs <- levels(x)
+    label <- attr(x, "label")
+    x_levels <- levels(x)
     x <- as.numeric(x, na.rm = TRUE)
-    attr(x, "labels") <- setNames(1:length(levs), levs)
+    attr(x, "labels") <- setNames(1:length(x_levels), x_levels)
 
     if (lime.brackets == TRUE) {
-      temp <- sub("^\\[", "", temp)
-      temp <- sub("].*$", "", temp)
+      label <- sub("^\\[", "", label)
+      label <- sub("].*$", "", label)
     }
 
-    attr(x, "label") <- temp
+    attr(x, "label") <- label
   }
 
   # Seitenumbrüche innerhalb verhindern -----------------------------------

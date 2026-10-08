@@ -22,17 +22,6 @@ test_that("label_test() meldet Übereinstimmungen und Abweichungen", {
   })
 })
 
-test_that("get_label() zieht das Label der Antwortoption", {
-  expect_identical(
-    get_label(BspDaten$dataSHOWUP$abschluss_1),
-    "Bachelor of Arts (B.A.)"
-  )
-  expect_identical(
-    get_label(BspDaten$dataSHOWUP$abschluss_1, match = "\\("),
-    "B.A.)"
-  )
-})
-
 test_that("change_analysis_defaults() ändert Einstellungen", {
   reset_setanalysis_state()
   withr::defer(reset_setanalysis_state())

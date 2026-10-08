@@ -52,16 +52,6 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
 .subchunk_env <- new.env(parent = emptyenv())
 .subchunk_env$counter <- 0
 
-# Eigene Funktion zum Runden
-true_round <- function(number, digits) {
-  posneg <- sign(number)
-  number <- abs(number) * 10^digits
-  number <- number + 0.5 + sqrt(.Machine$double.eps)
-  number <- trunc(number)
-  number <- number / 10^digits
-  number * posneg
-}
-
 #' Funktion um den Markdown-Code, welcher durch eine Funktion erzeugt wurde
 #' direkt im Viewer anzuzeigen
 #'
@@ -79,39 +69,39 @@ true_round <- function(number, digits) {
 #' @examples markdown_in_viewer(merge.fachsem(BspDaten$dataLVE$FachSemN))
 markdown_in_viewer <- function(markdown_function) {
   # Zusätzlich benötigte Pakete prüfen (nur für diese Vorschau nötig) -----
-  benoetigt <- c("htmltools", "markdown", "svglite")
-  fehlend <- benoetigt[!vapply(benoetigt, requireNamespace, logical(1), quietly = TRUE)]
-  if (length(fehlend) > 0) {
+  required <- c("htmltools", "markdown", "svglite")
+  missing_pkgs <- required[!vapply(required, requireNamespace, logical(1), quietly = TRUE)]
+  if (length(missing_pkgs) > 0) {
     stop("Für markdown_in_viewer() werden zusätzlich folgende Pakete benötigt: ",
-      paste(fehlend, collapse = ", "), "\n",
-      "Installation mit: install.packages(c(\"", paste(fehlend, collapse = "\", \""), "\"))",
+      paste(missing_pkgs, collapse = ", "), "\n",
+      "Installation mit: install.packages(c(\"", paste(missing_pkgs, collapse = "\", \""), "\"))",
       call. = FALSE
     )
   }
 
   # Bisherige Bildoptionen speichern um sie später wiederherzustellen ----
-  image.device <- knitr::opts_chunk$get("dev")
+  old_dev <- knitr::opts_chunk$get("dev")
 
   # Einstellungsänderungen ------------------------------------------------
   options(knitr.duplicate.label = "allow") # vermeidet Fehlermeldungen
   knitr::opts_chunk$set(dev = "svglite") # sorgt für richtige Plot-Darstellung
 
   # HTML Code für richtige Schriftart und Seitenbreite --------------------
-  font.code <- "<style> body {font-family: 'Red Hat Text'</style> \n\n"
+  font_css <- "<style> body {font-family: 'Red Hat Text'</style> \n\n"
 
   # Ergebnis, das normalerweise in die Konsole gedruckt wird, „abfangen“ --
-  code.result <- capture.output(markdown_function)
-  code.result <- paste(code.result, collapse = "\n")
+  output_md <- capture.output(markdown_function)
+  output_md <- paste(output_md, collapse = "\n")
 
   # Beides zusammenfügen --------------------------------------------------
-  merge <- paste(font.code, code.result)
+  html_md <- paste(font_css, output_md)
 
   # Markdown im Viewer anzeigen --------------------------------------------
-  markdown::mark_html(text = merge, template = FALSE) |>
+  markdown::mark_html(text = html_md, template = FALSE) |>
     htmltools::HTML() |>
     htmltools::html_print()
 
   # Einstellungen zurücksetzen --------------------------------------------
   options(knitr.duplicate.label = "forbid")
-  knitr::opts_chunk$set(dev = image.device)
+  knitr::opts_chunk$set(dev = old_dev)
 }

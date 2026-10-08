@@ -1,6 +1,6 @@
 # Paketeinstellungen und Speicher für offene Antworten ------------------
 
-## Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
+# Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
 
 #' Globale Umgebung für die Paketkonfiguration
 #'

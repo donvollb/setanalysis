@@ -22,8 +22,8 @@ boxplot_aggr_sk <- function(x, # Daten
                             item_labels, # Labels/Text/Beschriftungen der Y-Achse
                             skala) # Skala der x-Achse
 {
-  daten <- cbind(x)
-  n_items <- ncol(daten)
+  data_matrix <- cbind(x)
+  n_items <- ncol(data_matrix)
   n_skala <- length(skala)
 
   # Grafikparameter speichern; sie werden beim Verlassen der Funktion
@@ -210,15 +210,10 @@ boxplot_wl <- function(x, # Daten
 
   # Beschriftungen einfügen -----------------------------------------------
 
-  # .text_bottom(skala, at = 1:n_skala)
   mtext(skala,
     side = 1, line = 0.5, font = 2, at = 1:n_skala,
     las = 1, padj = 1, col = "gray15"
   )
 
-  # info1 <- "angegebener Workload der LV"
-  # info2 <- paste0("[n = ", n, "]")
-
-  # mtext(bquote(bold(.(info1)) ~ .(info2)), side = 1, line = 3, col = "gray15")
   .text_bottom_2(paste("angegebener Workload der LV [n =", n, "]"), line = 3)
 }
