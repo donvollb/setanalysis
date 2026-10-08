@@ -297,6 +297,34 @@ test_that("appendix_open() übernimmt keine Antworten aus einem vorherigen Beric
   expect_false(any(grepl("Welche weiteren Informationen", bericht2)))
 })
 
+test_that("appendix_open() übernimmt inkl = TRUE aus merge_open()", {
+  withr::local_dir(withr::local_tempdir())
+
+  bericht <- function(inkl) {
+    reset_setanalysis_state()
+    capture.output({
+      merge_open(showup$offen, nr = "9.9", inkl = inkl, appendix = TRUE)
+      appendix_open()
+    })
+  }
+
+  # Referenz: Frage über die inkl.-Variable eingeschlossen
+  ueber_inkl_variable <- local({
+    local_inkl(`9.9` = TRUE)
+    bericht(inkl = "nr")
+  })
+
+  # Ohne inkl.-Variable, Frage direkt mit inkl = TRUE eingeschlossen
+  expect_false(exists("inkl.9.9"))
+  expect_identical(bericht(inkl = TRUE), ueber_inkl_variable)
+
+  # inkl = TRUE gilt auch dann, wenn die inkl.-Variable FALSE ist
+  local({
+    local_inkl(`9.9` = FALSE)
+    expect_identical(bericht(inkl = TRUE), ueber_inkl_variable)
+  })
+})
+
 test_that("appendix_open() gibt ohne vorherige offene Fragen nichts aus", {
   reset_setanalysis_state()
   expect_length(capture.output(appendix_open()), 0)

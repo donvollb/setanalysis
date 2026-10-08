@@ -187,7 +187,9 @@ appendix_open <- function(freq = "auto") {
   for (k in seq_len(anchor.nr)) {
     x <- list_open_answers[[paste0("var.", k)]]
     question_nr <- list_open_answers[[paste0("nr.", k)]]
+    # inkl wurde schon beim Sammeln geprüft, deshalb hier nicht erneut abfragen
     merge_open(x,
+      inkl = TRUE, inkl_global = TRUE,
       nr = question_nr, anchor = k, freq = freq,
       appendix = TRUE, is_appendix = TRUE
     )
