@@ -42,8 +42,3 @@ markdown_in_viewer <- function(markdown_function) {
   options(knitr.duplicate.label = "forbid")
   knitr::opts_chunk$set(dev = image.device)
 }
-
-#' @noRd
-#' @export
-
-markdown.in.viewer <- markdown_in_viewer

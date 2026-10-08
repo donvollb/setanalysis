@@ -100,8 +100,3 @@ merge_sk <- function(x, # Daten
   }
   cat("\n\n:::\n\n")
 }
-
-#' @noRd
-#' @export merge.evasys.sk
-
-merge.evasys.sk <- merge_sk

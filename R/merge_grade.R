@@ -45,9 +45,3 @@ merge_grade <- function(x, # Daten
   }
   subchunkify(boxplot_grade(x), fig_height = 2, fig_width = 9)
 }
-
-
-#' @noRd
-#' @export grade
-
-grade <- merge_grade

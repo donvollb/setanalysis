@@ -233,8 +233,3 @@ merge_aggr_sk <- function(x, # Daten
 
     cat("  \n  \n")
 }
-
-#' @noRd
-#' @export merge.multi.sk
-
-merge.multi.sk <- merge_aggr_sk

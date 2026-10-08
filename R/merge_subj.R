@@ -56,9 +56,3 @@ merge_subj <- function(x1, # Daten von Fach 1
             "Daraus ergibt sich in dieser Darstellung eine Verdopplung des",
             "Stichprobenumfangs (siehe „Total“).*  \n  \n"))
 }
-
-
-#' @noRd
-#' @export merge.subj
-
-merge.subj <- merge_subj

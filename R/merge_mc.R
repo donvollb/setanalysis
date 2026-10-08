@@ -151,8 +151,3 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
   cat("  \n  \n")
 }
-
-#' @noRd
-#' @export merge.mc
-
-merge.mc <- merge_mc

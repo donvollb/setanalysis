@@ -139,13 +139,3 @@ merge_open <- function(x, # Daten
 
   }
 }
-                      
-#' @noRd
-#' @export
-
-merge.open <- merge_open
-
-#' @noRd
-#' @export open.answers
-
-open.answers <- function(...) merge.open(..., appendix = TRUE, is_appendix = FALSE)

@@ -80,7 +80,3 @@ merge_num <- function(x, # Daten
 
   cat("\n\n:::\n\n")
 }
-
-#' @noRd
-#' @export merge.num
-merge.num <- merge_num

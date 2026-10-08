@@ -10,6 +10,17 @@ Fehlerbehebung aufgeführt.
   Diagramm; sie stehen weiterhin in der Tabelle. Dadurch wird die Abbildung bei
   `fig.height = "default"` entsprechend niedriger. Die Beispieldaten
   `BspDaten$Plots$mc` wurden passend dazu bereinigt.
+* `merge.open()` ist wieder von außen aufrufbar. roxygen hatte die Funktion
+  fälschlich als S3-Methode von `merge()` registriert statt sie zu exportieren.
+
+## Dokumentation
+
+* Alle veralteten Funktionsnamen (z. B. `merge.sc()`, `grade()`,
+  `open.answers()`) sind in einer gemeinsamen Hilfeseite
+  `?setanalysis-deprecated` mit ihrer jeweils aktuellen Entsprechung
+  dokumentiert. Die alten `merge.*()`-Namen und `boxplot.ruecklauf()` leiten
+  Aufrufe unverändert an die aktuellen Funktionen weiter; dadurch entfallen die
+  S3-Warnungen von `R CMD check`.
 
 ## Paketinfrastruktur
 

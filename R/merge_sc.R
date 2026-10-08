@@ -70,8 +70,3 @@ merge_sc <- function(x, # Daten
   
   cat("\n \n")
 }
-
-#' @noRd
-#' @export merge.sc
-
-merge.sc <- merge_sc

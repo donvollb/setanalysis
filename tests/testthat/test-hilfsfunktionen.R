@@ -69,20 +69,62 @@ test_that("markdown_in_viewer() übergibt eine HTML-Datei an den Viewer", {
   expect_match(html, "Pflichtveranstaltungen", fixed = TRUE)
 })
 
-test_that("Veraltete Funktionsnamen verweisen auf die aktuellen Funktionen", {
+test_that("Einfache veraltete Namen sind dieselben Funktionen", {
   expect_identical(appendix.open, appendix_open)
-  expect_identical(boxplot.ruecklauf, merge_rueck)
   expect_identical(grade, merge_grade)
   expect_identical(markdown.in.viewer, markdown_in_viewer)
-  expect_identical(merge.evasys.sk, merge_sk)
-  expect_identical(merge.fachsem, merge_fachsem)
-  expect_identical(merge.mc, merge_mc)
-  expect_identical(merge.multi.sk, merge_aggr_sk)
-  expect_identical(merge.num, merge_num)
-  expect_identical(merge.open, merge_open)
-  expect_identical(merge.sc, merge_sc)
-  expect_identical(merge.subj, merge_subj)
-  expect_identical(merge.wl, merge_wl)
+})
+
+test_that("Veraltete Namen erzeugen dieselbe Ausgabe wie die aktuellen Funktionen", {
+  lve <- BspDaten$dataLVE
+  showup <- BspDaten$dataSHOWUP
+
+  # Ausgabe in einem frischen Zustand und Temp-Ordner erzeugen
+  ausgabe <- function(code) {
+    reset_setanalysis_state()
+    withr::local_dir(withr::local_tempdir())
+    capture.output(code)
+  }
+  expect_gleiche_ausgabe <- function(alt, neu) {
+    expect_identical(ausgabe(alt), ausgabe(neu))
+  }
+
+  expect_gleiche_ausgabe(merge.sc(lve$V3_D), merge_sc(lve$V3_D))
+  # Argumente ohne Namen werden wie beim direkten Aufruf zugeordnet
+  expect_gleiche_ausgabe(merge.sc(lve$V3_D, TRUE, "", 3),
+                         merge_sc(lve$V3_D, TRUE, "", 3))
+  expect_gleiche_ausgabe(merge.sc(lve$V3_D, FALSE), merge_sc(lve$V3_D, FALSE))
+  expect_gleiche_ausgabe(merge.mc(showup[, paste0("abschluss_", 1:8)], "Abschluss"),
+                         merge_mc(showup[, paste0("abschluss_", 1:8)], "Abschluss"))
+  expect_gleiche_ausgabe(merge.evasys.sk(lve$KF_01, show.plot = FALSE),
+                         merge_sk(lve$KF_01, show.plot = FALSE))
+  expect_gleiche_ausgabe(merge.multi.sk(lve[, c("KF_01", "KF_02")], lve$Kennung, 6),
+                         merge_aggr_sk(lve[, c("KF_01", "KF_02")], lve$Kennung, 6))
+  expect_gleiche_ausgabe(merge.num(showup$zugang_note), merge_num(showup$zugang_note))
+  expect_gleiche_ausgabe(merge.fachsem(lve$FachSemN, 5, 10),
+                         merge_fachsem(lve$FachSemN, 5, 10))
+  expect_gleiche_ausgabe(merge.open(showup$offen, appendix = FALSE),
+                         merge_open(showup$offen, appendix = FALSE))
+  expect_gleiche_ausgabe(merge.subj(showup$fach1_2FB, showup$fach2_2FB),
+                         merge_subj(showup$fach1_2FB, showup$fach2_2FB))
+  expect_gleiche_ausgabe(merge.wl(lve$WL, lve$Kennung), merge_wl(lve$WL, lve$Kennung))
+  expect_gleiche_ausgabe(boxplot.ruecklauf(lve$Teilnehmer, lve$Kennung),
+                         merge_rueck(lve$Teilnehmer, lve$Kennung))
+
+  # Aufruf aus einer anderen Funktion heraus über `...`
+  umschlag <- function(...) merge.sc(...)
+  expect_gleiche_ausgabe(umschlag(lve$V3_D, show.plot = FALSE),
+                         merge_sc(lve$V3_D, show.plot = FALSE))
+})
+
+test_that("Alle veralteten Namen werden exportiert", {
+  namespace <- readLines(system.file("NAMESPACE", package = "setanalysis"))
+  alt <- c("appendix.open", "boxplot.ruecklauf", "grade", "markdown.in.viewer",
+           "merge.evasys.sk", "merge.fachsem", "merge.mc", "merge.multi.sk",
+           "merge.num", "merge.open", "merge.sc", "merge.subj", "merge.wl",
+           "open.answers")
+  expect_true(all(paste0("export(", alt, ")") %in% namespace))
+  expect_false(any(grepl("^S3method", namespace)))
 })
 
 test_that("open.answers() erzeugt den Verweis auf den Anhang", {

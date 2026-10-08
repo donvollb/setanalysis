@@ -44,8 +44,3 @@ merge_wl <- function(WL, # WL der Daten
   subchunkify(boxplot_wl(WL), fig_width = 9, fig_height = 4)
 
 }
-
-#' @noRd
-#' @export merge.wl
-
-merge.wl <- merge_wl

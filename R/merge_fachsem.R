@@ -61,7 +61,3 @@ merge_fachsem <- function(x, # Daten
 
   }
 }
-
-#' @noRd
-#' @export merge.fachsem
-merge.fachsem <- merge_fachsem

@@ -34,8 +34,3 @@ merge_rueck <- function(x, # Objekt mit Teilnehmendenzahlen
   
   subchunkify(boxplot_rueck(x), fig_height = 2, fig_width = 9)
 }
-
-#' @noRd
-#' @export boxplot.ruecklauf
-
-boxplot.ruecklauf <- merge_rueck

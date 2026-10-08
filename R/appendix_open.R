@@ -25,8 +25,3 @@ appendix_open <- function(freq = "auto") {
     merge_open(x, nr = q.nr, anchor = k, freq = freq,
                appendix = TRUE, is_appendix = TRUE)}
 }
-
-#' @noRd
-#' @export
-
-appendix.open <- appendix_open

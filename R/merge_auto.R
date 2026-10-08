@@ -52,12 +52,12 @@ if (type == "open/num") {
 }
 
 Funktionsliste <- list(
-      sc = merge.sc,
-      sk = merge.evasys.sk,
+      sc = merge_sc,
+      sk = merge_sk,
     open = merge_open,
-     num = merge.num,
-multi.mc = merge.mc,
-multi.sk = merge.multi.sk
+     num = merge_num,
+multi.mc = merge_mc,
+multi.sk = merge_aggr_sk
 )
 
 Funktionsliste[[type]](x, nr = nr, inkl = inkl, ...)
