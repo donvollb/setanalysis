@@ -13,7 +13,7 @@
 berichte <- data.frame(
   Code = c(
     "MASTER", "Gesamtbericht", "B.Sc._Musterwissenschaft",
-    "M.Sc._Musterwissenschaft", "B.A._Beispielkunde", "Studienberatung"
+    "M.Sc._Musterwissenschaft", "B.A._Beispielkunde", "Sonderauswertung"
   ),
   Art = c(
     "alles.master", "alles", "Studiengang", "Studiengang", "Studiengang",
@@ -32,7 +32,7 @@ berichte <- data.frame(
     "Befragung 2024: B.Sc. Musterwissenschaft",
     "Befragung 2024: M.Sc. Musterwissenschaft",
     "Befragung 2024: B.A. Beispielkunde",
-    "Befragung 2024: Studienberatung"
+    "Befragung 2024: Sonderauswertung"
   )
 )
 

@@ -1,6 +1,6 @@
 ::: {.block breakable=false}
 
-###  Vor Beginn meines Studiums an der RPTU Kaiserslautern-Landau war ich ausreichend über den Studiengang informiert. 
+###  Vor Beginn meines Studiums war ich ausreichend über den Studiengang informiert. 
  
   
   
@@ -78,7 +78,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[237], [4.46], [1.25], [5], [1], [6],
+[239], [4.37], [1.32], [5], [1], [6],
 
     // tinytable footer after
 

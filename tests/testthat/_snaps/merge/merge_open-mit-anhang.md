@@ -16,8 +16,6 @@
  
 [zurück nach oben](#sec-1.top) 
 
-*Die folgenden Antworten wurden jeweils nur einmal gegeben:*  
-
 
 ```{=typst}
 #show figure: set block(breakable: false)
@@ -29,12 +27,13 @@ block[ // start block
 
   #let style-dict = (
     // tinytable style-dict after
-    "1_0": 0, "2_0": 0, "3_0": 0, "4_0": 0, "5_0": 0, "6_0": 0, "7_0": 0, "8_0": 0, "9_0": 0, "10_0": 0, "11_0": 0, "12_0": 0, "13_0": 0, "14_0": 0, "15_0": 0, "16_0": 0, "17_0": 0, "18_0": 0, "19_0": 0, "20_0": 0, "21_0": 0, "22_0": 0, "23_0": 0, "24_0": 0, "25_0": 0, "26_0": 0, "0_0": 1
+    "1_0": 0, "2_0": 0, "3_0": 0, "4_0": 0, "5_0": 0, "6_0": 0, "7_0": 0, "8_0": 0, "9_0": 0, "10_0": 0, "11_0": 0, "12_0": 0, "13_0": 0, "14_0": 0, "15_0": 0, "16_0": 0, "17_0": 0, "18_0": 0, "19_0": 0, "20_0": 0, "21_0": 0, "22_0": 0, "0_1": 1, "0_0": 2
   )
 
   #let style-array = ( 
     // tinytable cell style after
     (align: left,),
+    (bold: true,),
     (bold: true, align: left,),
   )
 
@@ -66,7 +65,7 @@ block[ // start block
   // tinytable align-figure before
 
   #table( // tinytable table start
-    columns: (100.00%),
+    columns: (88.00%, 12.00%),
     stroke: none,
     rows: auto,
     align: (x, y) => {
@@ -77,45 +76,41 @@ block[ // start block
       let style = get-style(x, y)
       if style != none and "background" in style { style.background }
     },
- table.hline(y: 1, start: 0, end: 1, stroke: 0.05em),
- table.hline(y: 27, start: 0, end: 1, stroke: 0.08em),
- table.hline(y: 0, start: 0, end: 1, stroke: 0.08em),
+ table.hline(y: 1, start: 0, end: 2, stroke: 0.05em),
+ table.hline(y: 23, start: 0, end: 2, stroke: 0.08em),
+ table.hline(y: 0, start: 0, end: 2, stroke: 0.08em),
     // tinytable lines before
 
     // tinytable header start
     table.header(
       repeat: true,
-[Antwort],
+[Antwort], [Häufigkeit],
     ),
     // tinytable header end
 
     // tinytable cell content after
-['\-],
-['\- Keine Infos über Prozedere der Modulwahl (Module können nicht frei gewählt werden, sondern werden nach Priorisierung zugeteilt) \- Genauere Infos über Module erfolgte erst nach Modulwahl, danach ist jedoch kaum noch eine Änderung möglich],
-['\-Welche Vorkenntnisse und wissen benötigt wird.  \-],
-[Anerkennung Vorstudien Leistungen, Wahlpflichtleistungen,],
-[Anstelle der ganzen QR\-Codes in der Infobroschüre mehr Fließtext zum Lesen.],
-[Dass es überhaupt einen 2 F B gibt und was das ist],
-[Die Studienverlaufspläne waren nicht gut zu finden. Der Studiengang wird von zwei Fakultäten parallel organisiert, was sich negativ auf die Inhalte auswirkt. Der Wert des Abschlusses war so nicht ersichtlich.],
-[Einzelne Vorlesungen],
-[Exakte Prüfungsformen],
-[Genauere Informationen zum Ablauf des ersten Semesters],
-[Ich fand das Informationen für die erste Woche etwas spät kam],
-[Ich hätte mir mehr Details zum Ablauf des Studium gewünscht],
-[Inhalte, Anforderungen],
-[Keine angabe],
-[Klips Hilfe],
-[Man muss erstmal wissen, was wichtig zu wissen ist. Vieles zieht an einem vorbei. Wenn man frisch an eine Uni kommt, hat man ja null Plan.],
-[Mehr Informationen am Infotag von der Fachschaft],
-[Mehr Informationen durch Studierende\/aus der Perspektive von Studierenden.],
-[Mögliche Vorlesungen, ERKLÄRUNG DES STUNDENPLANS (WÄHLEN)],
-[Nachvollziehbare Übersicht über die Inhalte des Studiums.],
-[Studienverlaufsplan in Philosophie],
-[Videos von Dozenten und Studierenden, die über den Studiengang berichten, um einen realistischen Eindruck zu erhalten anseits von Modulhandbüchern etc.],
-[Zugang zu Studienverlaufspläne erläutern],
-[alle],
-[genauere Angabe über Berufsfelder und Anforderungen in den Naturwissenschaften (v.a. in Chemie und Biologie)],
-[Übersichtlicheres Modulhandbuch],
+[Lorem ipsum dolor sit amet.], [4],
+[Sed do eiusmod tempor.], [2],
+[Aliqua laborum anim cillum esse non consectetur nostrud. Fugiat nostrud anim laborum excepteur elit laborum.], [1],
+[Cillum elit ullamco reprehenderit aliqua voluptate consequat officia enim eiusmod sed aliquip.], [1],
+[Ea nulla non esse consequat ullamco elit aute magna.], [1],
+[Elit consequat aute dolore. Velit reprehenderit enim culpa sint qui ullamco ullamco esse eiusmod ut excepteur et.], [1],
+[Elit lorem labore eiusmod ea nostrud culpa. Non sint occaecat aute sint.], [1],
+[Exercitation id excepteur non.], [1],
+[In cupidatat dolore eiusmod nostrud ut elit aliqua.], [1],
+[Incididunt quis sed sunt in. Quis voluptate officia sed dolore aliquip culpa deserunt. Pariatur occaecat nisi incididunt fugiat cupidatat minim incididunt consectetur excepteur occaecat et ipsum laborum.], [1],
+[Laboris id sunt cillum excepteur.], [1],
+[Laborum ipsum adipiscing ea aute ad incididunt cillum enim nostrud aliqua ut velit labore. Nostrud sint officia nostrud id sit irure commodo sint fugiat. Consequat irure elit enim minim veniam eiusmod enim reprehenderit labore cillum.], [1],
+[Mollit lorem et tempor. Duis nulla reprehenderit sit veniam esse ex. Reprehenderit irure cillum sunt ullamco.], [1],
+[Nisi aliqua ea culpa dolore sint. Laborum nisi non sed officia nisi voluptate duis consequat nostrud. Qui consequat minim lorem dolor.], [1],
+[Non adipiscing in dolore ad proident ad est veniam mollit enim quis.], [1],
+[Nostrud ipsum cillum exercitation mollit labore ad aute. Excepteur proident ullamco dolore esse mollit excepteur sunt do. Reprehenderit in reprehenderit sint culpa elit et.], [1],
+[Nulla elit culpa anim irure aute culpa do fugiat fugiat laborum excepteur dolore tempor. Nulla lorem commodo pariatur fugiat velit amet velit proident nisi exercitation consequat qui minim.], [1],
+[Proident in do in. Elit sit minim ut ex enim aute ex ullamco fugiat consectetur quis elit culpa.], [1],
+[Quis et minim qui commodo lorem sed sint sit exercitation id officia aliqua mollit. Aute mollit esse consectetur do officia aliqua qui in ad minim officia sit.], [1],
+[Sed id consequat velit lorem sit id duis.], [1],
+[Sint officia laborum exercitation exercitation in sed est dolor nulla proident culpa.], [1],
+[Sit ex in sunt deserunt sunt.], [1],
 
     // tinytable footer after
 

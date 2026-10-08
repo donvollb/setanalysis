@@ -72,7 +72,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Welche Gesamtnote (Schulnote) geben Sie der Veranstaltung insgesamt?], [448], [1.83], [0.61], [1.73], [1], [5],
+[Welche Gesamtnote (Schulnote) geben Sie der Veranstaltung insgesamt?], [449], [2.09], [0.50], [2], [1], [3.78],
 
     // tinytable footer after
 

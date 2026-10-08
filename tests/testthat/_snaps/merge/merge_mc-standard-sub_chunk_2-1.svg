@@ -34,20 +34,20 @@
 </defs>
 <g clip-path='url(#cpMjAyLjMyfDY0MC44MHw3LjIwfDQ3NS4yMA==)'>
 <line x1='218.56' y1='475.20' x2='218.56' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='317.99' y1='475.20' x2='317.99' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='417.42' y1='475.20' x2='417.42' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='516.85' y1='475.20' x2='516.85' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='616.27' y1='475.20' x2='616.27' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='316.59' y1='475.20' x2='316.59' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='414.62' y1='475.20' x2='414.62' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='512.64' y1='475.20' x2='512.64' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='610.67' y1='475.20' x2='610.67' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
 </g>
 <g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHw1MDQuMDA=)'>
 <rect x='218.56' y='419.35' width='0.00' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='218.56' y='361.57' width='273.43' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='218.56' y='303.79' width='114.34' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='218.56' y='246.01' width='59.66' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='218.56' y='188.24' width='59.66' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='218.56' y='130.46' width='293.31' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='218.56' y='361.57' width='205.86' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='218.56' y='303.79' width='127.44' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='218.56' y='246.01' width='88.23' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='218.56' y='188.24' width='58.82' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='218.56' y='130.46' width='254.87' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
 <rect x='218.56' y='72.68' width='348.00' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='218.56' y='14.90' width='84.51' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='218.56' y='14.90' width='102.93' height='48.15' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
 <polygon points='202.32,475.20 640.80,475.20 640.80,7.20 202.32,7.20 ' style='stroke-width: 1.12; stroke-linecap: square; stroke-linejoin: miter;' />
 <text x='187.92' y='440.42' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='103.48px' lengthAdjust='spacingAndGlyphs'>lehramtsbezogener</text>
 <text x='187.92' y='454.82' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='120.44px' lengthAdjust='spacingAndGlyphs'>Zertifikatsstudiengang</text>
@@ -59,20 +59,20 @@
 <text x='187.92' y='100.96' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='158.06px' lengthAdjust='spacingAndGlyphs'>Bachelor of Education (B.Ed.)</text>
 <text x='187.92' y='43.18' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='120.48px' lengthAdjust='spacingAndGlyphs'>Bachelor of Arts (B.A.)</text>
 <text x='218.56' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='8.28px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='317.99' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='15.48px' lengthAdjust='spacingAndGlyphs'>20</text>
-<text x='417.42' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='16.61px' lengthAdjust='spacingAndGlyphs'>40</text>
-<text x='516.85' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='15.48px' lengthAdjust='spacingAndGlyphs'>60</text>
-<text x='616.27' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='15.48px' lengthAdjust='spacingAndGlyphs'>80</text>
+<text x='316.59' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='15.48px' lengthAdjust='spacingAndGlyphs'>20</text>
+<text x='414.62' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='16.61px' lengthAdjust='spacingAndGlyphs'>40</text>
+<text x='512.64' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='15.48px' lengthAdjust='spacingAndGlyphs'>60</text>
+<text x='610.67' y='501.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='15.48px' lengthAdjust='spacingAndGlyphs'>80</text>
 </g>
 <g clip-path='url(#cpMjAyLjMyfDY0MC44MHw3LjIwfDQ3NS4yMA==)'>
 <text x='229.00' y='447.63' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='29.92px' lengthAdjust='spacingAndGlyphs'>0.0 %</text>
-<text x='502.43' y='389.87' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='35.80px' lengthAdjust='spacingAndGlyphs'>22.7 %</text>
-<text x='343.34' y='332.07' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='28.88px' lengthAdjust='spacingAndGlyphs'>9.5 %</text>
-<text x='288.66' y='274.29' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='29.27px' lengthAdjust='spacingAndGlyphs'>5.0 %</text>
-<text x='288.66' y='216.52' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='29.27px' lengthAdjust='spacingAndGlyphs'>5.0 %</text>
-<text x='522.31' y='158.76' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='36.12px' lengthAdjust='spacingAndGlyphs'>24.4 %</text>
-<text x='577.00' y='100.96' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='35.84px' lengthAdjust='spacingAndGlyphs'>28.9 %</text>
-<text x='313.51' y='43.18' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='28.06px' lengthAdjust='spacingAndGlyphs'>7.0 %</text>
+<text x='434.86' y='389.83' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='31.31px' lengthAdjust='spacingAndGlyphs'>17.4 %</text>
+<text x='356.44' y='332.07' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='32.70px' lengthAdjust='spacingAndGlyphs'>10.7 %</text>
+<text x='317.23' y='274.28' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='27.62px' lengthAdjust='spacingAndGlyphs'>7.4 %</text>
+<text x='287.82' y='216.52' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='29.27px' lengthAdjust='spacingAndGlyphs'>5.0 %</text>
+<text x='483.87' y='158.74' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='32.64px' lengthAdjust='spacingAndGlyphs'>21.5 %</text>
+<text x='577.00' y='100.96' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='36.08px' lengthAdjust='spacingAndGlyphs'>29.3 %</text>
+<text x='331.93' y='43.18' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='28.36px' lengthAdjust='spacingAndGlyphs'>8.7 %</text>
 </g>
 <defs>
   <clipPath id='cpNTkuMDR8NjE3Ljc2fDU5LjA0fDQzMC41Ng=='>

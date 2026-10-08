@@ -76,13 +76,13 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Bachelor of Arts (B.A.)], [17], [7.0], [7.0],
-[Bachelor of Education (B.Ed.)], [70], [28.9], [28.9],
-[Bachelor of Science (B.Sc.)], [59], [24.4], [24.4],
+[Bachelor of Arts (B.A.)], [21], [8.7], [8.7],
+[Bachelor of Education (B.Ed.)], [71], [29.3], [29.3],
+[Bachelor of Science (B.Sc.)], [52], [21.5], [21.5],
 [2\-Fach\-Bachelor (B.A., B.Sc.)], [12], [5.0], [5.0],
-[Master of Arts (M.A.)], [12], [5.0], [5.0],
-[Master of Education (M.Ed.)], [23], [9.5], [9.5],
-[Master of Science (M.Sc.)], [55], [22.7], [22.7],
+[Master of Arts (M.A.)], [18], [7.4], [7.4],
+[Master of Education (M.Ed.)], [26], [10.7], [10.7],
+[Master of Science (M.Sc.)], [42], [17.4], [17.4],
 [lehramtsbezogener Zertifikatsstudiengang], [0], [0.0], [0.0],
 [NAs], [0], [0.0], [NA],
 [Total], [242], [NA], [NA],
@@ -175,20 +175,20 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Allgemeine Erziehungswissenschaft], [0], [0.0], [0.0],
-[Anglistik], [0], [0.0], [0.0],
-[Betriebspädagogik\/ Personalentwicklung], [4], [1.7], [33.3],
-[Evangelische Theologie], [0], [0.0], [0.0],
-[Frankreich\-Studien], [0], [0.0], [0.0],
-[Geographie: Landnutzungskonflikte], [4], [1.7], [33.3],
-[Germanistik], [0], [0.0], [0.0],
-[Katholische Theologie], [0], [0.0], [0.0],
-[Kunstwissenschaft und Bildende Kunst], [1], [0.4], [8.3],
+[Allgemeine Musterwissenschaft], [0], [0.0], [0.0],
+[Beispielkunde], [0], [0.0], [0.0],
+[Platzhalterlehre\/ Vorlagenkunde], [3], [1.2], [25.0],
+[Angewandte Fiktion], [0], [0.0], [0.0],
+[Fantasie\-Studien], [0], [0.0], [0.0],
+[Geographie: Musterlandschaften], [3], [1.2], [25.0],
+[Testologie], [0], [0.0], [0.0],
+[Theorie der Beispiele], [0], [0.0], [0.0],
+[Kunst und Platzhalter], [4], [1.7], [33.3],
 [Mathematik], [0], [0.0], [0.0],
 [Ökologie], [0], [0.0], [0.0],
 [Philosophie], [1], [0.4], [8.3],
 [Physik], [0], [0.0], [0.0],
-[Politikwissenschaft], [2], [0.8], [16.7],
+[Politikwissenschaft], [1], [0.4], [8.3],
 [Soziologie], [0], [0.0], [0.0],
 [Sportwissenschaft], [0], [0.0], [0.0],
 [Umweltchemie], [0], [0.0], [0.0],
@@ -290,7 +290,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[155], [2.11], [0.63], [2], [1], [3.70],
+[147], [2.19], [0.56], [2.10], [1], [3.80],
 
     // tinytable footer after
 

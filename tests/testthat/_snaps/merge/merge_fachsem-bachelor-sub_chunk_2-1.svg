@@ -34,26 +34,26 @@
 </defs>
 <g clip-path='url(#cpNDMuMjB8NzEyLjgwfDcuMjB8MzAyLjQw)'>
 <line x1='43.20' y1='291.47' x2='712.80' y2='291.47' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='43.20' y1='219.95' x2='712.80' y2='219.95' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='43.20' y1='148.44' x2='712.80' y2='148.44' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='43.20' y1='76.92' x2='712.80' y2='76.92' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='43.20' y1='5.40' x2='712.80' y2='5.40' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='43.20' y1='218.21' x2='712.80' y2='218.21' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='43.20' y1='144.95' x2='712.80' y2='144.95' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='43.20' y1='71.69' x2='712.80' y2='71.69' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='43.20' y1='-1.57' x2='712.80' y2='-1.57' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
 </g>
 <g clip-path='url(#cpMC4wMHw3MjAuMDB8MC4wMHwzNjAuMDA=)'>
-<rect x='68.00' y='235.83' width='65.96' height='55.64' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='68.00' y='233.01' width='65.96' height='58.46' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
 <rect x='147.15' y='57.18' width='65.96' height='234.29' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='226.30' y='251.56' width='65.96' height='39.91' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='305.45' y='123.40' width='65.96' height='168.06' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='384.60' y='273.73' width='65.96' height='17.74' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='463.74' y='232.11' width='65.96' height='59.36' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='226.30' y='253.08' width='65.96' height='38.39' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='305.45' y='125.90' width='65.96' height='165.57' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='384.60' y='271.98' width='65.96' height='19.49' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='463.74' y='233.59' width='65.96' height='57.88' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
 <rect x='542.89' y='279.60' width='65.96' height='11.87' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='622.04' y='238.54' width='65.96' height='52.92' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='622.04' y='237.25' width='65.96' height='54.21' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
 <polygon points='43.20,302.40 712.80,302.40 712.80,7.20 43.20,7.20 ' style='stroke-width: 1.12; stroke-linecap: square; stroke-linejoin: miter;' />
 <text x='28.80' y='295.67' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='7.92px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='28.80' y='224.15' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='23.05px' lengthAdjust='spacingAndGlyphs'>500</text>
-<text x='28.80' y='152.64' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='27.45px' lengthAdjust='spacingAndGlyphs'>1000</text>
-<text x='28.80' y='81.12' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='26.73px' lengthAdjust='spacingAndGlyphs'>1500</text>
-<text x='28.80' y='9.60' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='30.97px' lengthAdjust='spacingAndGlyphs'>2000</text>
+<text x='28.80' y='222.41' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='23.05px' lengthAdjust='spacingAndGlyphs'>500</text>
+<text x='28.80' y='149.15' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='27.45px' lengthAdjust='spacingAndGlyphs'>1000</text>
+<text x='28.80' y='75.89' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='26.73px' lengthAdjust='spacingAndGlyphs'>1500</text>
+<text x='28.80' y='2.63' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='30.97px' lengthAdjust='spacingAndGlyphs'>2000</text>
 <text x='100.98' y='328.32' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='4.62px' lengthAdjust='spacingAndGlyphs'>1</text>
 <text x='180.13' y='328.32' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>2</text>
 <text x='259.28' y='328.32' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>3</text>

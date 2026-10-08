@@ -16,7 +16,7 @@ test_that("label_test() meldet Übereinstimmungen und Abweichungen", {
     label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
     label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
     label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
-      exception = "Psüchologie - SoSe24"
+      exception = "Angewandte Fktion - SoSe24"
     )
     label_test(c("ja", "nein"), BspDaten$Tabellen$freq)
   })

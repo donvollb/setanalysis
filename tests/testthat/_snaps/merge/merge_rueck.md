@@ -72,7 +72,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[449], [42.9], [47.4], [3.9], [750],
+[449], [33.9], [44.3], [3.1], [600],
 
     // tinytable footer after
 

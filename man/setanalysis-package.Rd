@@ -51,9 +51,9 @@ werden) stehen in \link{setanalysis_defaults} und lassen sich mit
 
 \section{Beispieldaten}{
 
-\link{BspDaten} enthält anonymisierte Daten einer Lehrveranstaltungsevaluation
-und einer Studieneingangsbefragung, mit denen sich alle Funktionen
-ausprobieren lassen.
+\link{BspDaten} enthält fiktive, zufällig erzeugte Daten einer
+Lehrveranstaltungsevaluation und einer Studieneingangsbefragung, mit denen
+sich alle Funktionen ausprobieren lassen.
 }
 
 \seealso{

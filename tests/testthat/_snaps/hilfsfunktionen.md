@@ -1,16 +1,16 @@
 # aggr_data() aggregiert unverändert
 
-    structure(list(KF_01 = structure(c(5.42857142857143, 5.5, 4.5, 
-    5.25, 4.42857142857143), label = "Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich."), 
-        KF_02 = structure(c(5.71428571428571, 5.66666666666667, 5.5, 
-        5.25, 4.71428571428571), label = "Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.")), row.names = c(NA, 
-    5L), class = "data.frame")
+    structure(list(KF_01 = structure(c(5.83333333333333, 5.1, 4.72727272727273, 
+    4.75), label = "Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich."), 
+        KF_02 = structure(c(5.66666666666667, 5.5, 5.27272727272727, 
+        4.92307692307692), label = "Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.")), row.names = c(NA, 
+    4L), class = "data.frame")
 
 ---
 
-    structure(list(data.frame.vars..0... = structure(c(1.57142857142857, 
-    1.5, 1.25, 1.5, 1.57142857142857), label = "Welche Gesamtnote (Schulnote) geben Sie der Veranstaltung insgesamt?")), row.names = c(NA, 
-    5L), class = "data.frame")
+    structure(list(data.frame.vars..0... = structure(c(2, 1.7, 2.36363636363636, 
+    2.15384615384615), label = "Welche Gesamtnote (Schulnote) geben Sie der Veranstaltung insgesamt?")), row.names = c(NA, 
+    4L), class = "data.frame")
 
 # label_test() meldet Übereinstimmungen und Abweichungen
 
@@ -21,10 +21,10 @@
     Code
       label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
     Output
-      [1] "Das Label \"Psüchologie - SoSe24\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor."
+      [1] "Das Label \"Angewandte Fktion - SoSe24\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor."
     Code
       label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
-      exception = "Psüchologie - SoSe24")
+      exception = "Angewandte Fktion - SoSe24")
     Output
       [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
     Code

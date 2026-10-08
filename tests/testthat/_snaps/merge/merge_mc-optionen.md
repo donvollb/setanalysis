@@ -76,13 +76,13 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Bachelor of Education (B.Ed.)], [70], [29], [29],
-[Bachelor of Science (B.Sc.)], [59], [24], [24],
-[Master of Science (M.Sc.)], [55], [23], [23],
-[Master of Education (M.Ed.)], [23], [10], [10],
-[Bachelor of Arts (B.A.)], [17], [7], [7],
+[Bachelor of Education (B.Ed.)], [71], [29], [29],
+[Bachelor of Science (B.Sc.)], [52], [21], [21],
+[Master of Science (M.Sc.)], [42], [17], [17],
+[Master of Education (M.Ed.)], [26], [11], [11],
+[Bachelor of Arts (B.A.)], [21], [9], [9],
+[Master of Arts (M.A.)], [18], [7], [7],
 [2\-Fach\-Bachelor (B.A., B.Sc.)], [12], [5], [5],
-[Master of Arts (M.A.)], [12], [5], [5],
 [lehramtsbezogener Zertifikatsstudiengang], [0], [0], [0],
 [NAs], [0], [0], [NA],
 [Total], [242], [NA], [NA],

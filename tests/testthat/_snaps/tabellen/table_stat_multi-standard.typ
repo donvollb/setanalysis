@@ -72,21 +72,21 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich.], [109], [4.93], [0.78], [5.17], [2.50], [6.00],
-[Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.], [109], [5.21], [0.67], [5.33], [2.25], [6.00],
-[Die Veranstaltung war meiner Ansicht nach gut organisiert (z.B. Bereitstellung von Materialien, Informationsfluss).], [109], [5.19], [0.75], [5.38], [2.40], [6.00],
-[Der\/Die Lehrende erklärte meiner Ansicht nach schwierige Sachverhalte verständlich.], [109], [5.26], [0.72], [5.42], [2.00], [6.00],
-[Lernziele waren für mich transparent.], [109], [5.03], [0.77], [5.20], [2.60], [6.00],
-[Ich finde, Leistungs\- und Prüfungsanforderungen wurden transparent gemacht.], [109], [5.00], [0.68], [5.11], [2.80], [6.00],
-[Die Veranstaltung regte mich zur Auseinandersetzung mit den Inhalten an.], [109], [5.00], [0.71], [5.00], [2.80], [6.00],
-[Der\/Die Lehrende verstand es mein Interesse am Thema zu wecken.], [109], [4.96], [0.76], [5.11], [2.00], [6.00],
-[Der\/Die Lehrende wirkte aus meiner Sicht im Umgang mit den Studierenden freundlich und aufgeschlossen.], [109], [5.65], [0.48], [5.75], [3.75], [6.00],
-[Der\/Die Lehrende ging in für mich angemessenem Umfang auf Fragen ein.], [109], [5.52], [0.62], [5.67], [2.00], [6.00],
-[Die Interaktion mit der Lehrperson (z.B. Klären von Rückfragen, Erreichbarkeit) verlief problemlos.], [109], [5.51], [0.60], [5.71], [3.25], [6.00],
-[Ich empfinde den von mir in dieser Veranstaltung zu erbringenden Arbeitsaufwand als angemessen.], [109], [5.08], [0.80], [5.23], [2.00], [6.00],
-[Ich habe mich auf die einzelnen Veranstaltungstermine oder Themenblöcke regelmäßig vorbereitet oder diese nachbereitet.], [109], [4.69], [0.64], [4.75], [3.00], [5.83],
-[Aus meiner Sicht wurde ein Bezug zwischen theoretischem Wissen und dessen Anwendung hergestellt.], [109], [4.95], [0.90], [5.17], [1.83], [6.00],
-[Meiner Einschätzung nach wurde die Relevanz der behandelten Inhalte deutlich.], [109], [5.04], [0.69], [5.19], [2.67], [6.00],
+[Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich.], [109], [5.02], [0.54], [5.14], [3.00], [6.00],
+[Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.], [109], [5.12], [0.52], [5.25], [4.00], [6.00],
+[Die Veranstaltung war meiner Ansicht nach gut organisiert (z.B. Bereitstellung von Materialien, Informationsfluss).], [109], [5.04], [0.56], [5.08], [3.33], [6.00],
+[Der\/Die Lehrende erklärte meiner Ansicht nach schwierige Sachverhalte verständlich.], [109], [4.99], [0.53], [5.00], [3.33], [6.00],
+[Lernziele waren für mich transparent.], [109], [4.95], [0.55], [5.00], [3.33], [6.00],
+[Ich finde, Leistungs\- und Prüfungsanforderungen wurden transparent gemacht.], [109], [4.75], [0.49], [4.75], [3.20], [6.00],
+[Die Veranstaltung regte mich zur Auseinandersetzung mit den Inhalten an.], [109], [4.79], [0.55], [4.80], [3.00], [5.75],
+[Der\/Die Lehrende verstand es mein Interesse am Thema zu wecken.], [109], [4.72], [0.54], [4.71], [3.43], [6.00],
+[Der\/Die Lehrende wirkte aus meiner Sicht im Umgang mit den Studierenden freundlich und aufgeschlossen.], [109], [5.28], [0.47], [5.36], [3.56], [6.00],
+[Der\/Die Lehrende ging in für mich angemessenem Umfang auf Fragen ein.], [109], [5.13], [0.48], [5.20], [3.33], [5.88],
+[Die Interaktion mit der Lehrperson (z.B. Klären von Rückfragen, Erreichbarkeit) verlief problemlos.], [109], [5.06], [0.51], [5.14], [3.33], [6.00],
+[Ich empfinde den von mir in dieser Veranstaltung zu erbringenden Arbeitsaufwand als angemessen.], [109], [4.63], [0.51], [4.67], [3.20], [5.80],
+[Ich habe mich auf die einzelnen Veranstaltungstermine oder Themenblöcke regelmäßig vorbereitet oder diese nachbereitet.], [109], [4.05], [0.58], [4.08], [1.60], [5.33],
+[Aus meiner Sicht wurde ein Bezug zwischen theoretischem Wissen und dessen Anwendung hergestellt.], [109], [4.87], [0.50], [5.00], [3.67], [5.75],
+[Meiner Einschätzung nach wurde die Relevanz der behandelten Inhalte deutlich.], [109], [5.05], [0.51], [5.00], [3.40], [5.86],
 
     // tinytable footer after
 

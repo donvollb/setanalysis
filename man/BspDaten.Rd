@@ -7,9 +7,9 @@
 \format{
 Eine Liste mit fünf Elementen:
 \describe{
-\item{\code{dataLVE}}{Data Frame mit 4559 Antworten aus 449
-Lehrveranstaltungen, u. a. \code{Teilbereich} (Fachbereich), \code{Kennung}
-(pseudonymisierte Kennung der Lehrveranstaltung), \code{Teilnehmer}
+\item{\code{dataLVE}}{Data Frame mit 4461 Antworten aus 449
+Lehrveranstaltungen in vier Fachbereichen, u. a. \code{Teilbereich}
+(Fachbereich), \code{Kennung} (Kennung der Lehrveranstaltung), \code{Teilnehmer}
 (angemeldete Teilnehmende), \code{FachSemN} (Fachsemester), \code{KF_01} bis
 \code{KF_03} (Kernfragen, 6-stufige Skala), \code{Note} (Gesamtnote 1–6), \code{V3_D}
 (Single Choice ja/nein) und \code{WL} (Workload in Stunden pro Woche).}
@@ -21,9 +21,13 @@ Lehrveranstaltungen, u. a. \code{Teilbereich} (Fachbereich), \code{Kennung}
 \item{\code{pInfo}}{Beispiel einer Berichtstabelle mit vier Berichten (je
 Fachbereich). Die Spalte \code{FB.txt.falsch} enthält absichtlich einen
 Tippfehler zum Ausprobieren von \code{\link[=label_test]{label_test()}}.}
-\item{\code{Plots}}{Vorbereitete Eingaben für die Grafikfunktionen, z. B.
-\code{aggr.data} (Mittelwerte je Lehrveranstaltung), \code{grade}, \code{rueck}, \code{WL},
-\code{num}, \code{fsem}, \code{sc} und \code{mc}.}
+\item{\code{Plots}}{Vorbereitete Eingaben für die Grafikfunktionen, aus
+\code{dataLVE} und \code{dataSHOWUP} berechnet wie in den Auswertungsfunktionen:
+\code{aggr.data} (Mittelwerte von 15 Items je Lehrveranstaltung) mit
+\code{aggr.labels} und \code{aggr.skala}, \code{grade} (Gesamtnote), \code{rueck}
+(Rücklauf in Prozent) und \code{WL} (Workload) je Lehrveranstaltung, \code{num}
+(Durchschnittsnote in Klassen), \code{fsem} (Fachsemester), \code{sc} und \code{mc}
+(Häufigkeitstabellen).}
 \item{\code{Tabellen}}{Vorbereitete Eingaben für die Tabellenfunktionen:
 \code{multi} (Mittelwerte von 15 Items je Lehrveranstaltung) und \code{freq}
 (Faktor ja/nein).}
@@ -33,12 +37,15 @@ Tippfehler zum Ausprobieren von \code{\link[=label_test]{label_test()}}.}
 BspDaten
 }
 \description{
-Anonymisierte Daten aus einer Lehrveranstaltungsevaluation (LVE,
-Sommersemester 2024) und einer Studieneingangsbefragung (SHOWUP 2024/25),
-aufbereitet wie mit \code{\link[=evasys_read_data]{evasys_read_data()}}: Jede Frage trägt die Attribute
-\code{label} (Fragetext), \code{nr} (Fragenummer), \code{type} (Fragetyp) und ggf.
-\code{labels} (Antwortcodes). Die Daten werden in den Beispielen und Tests des
-Pakets verwendet.
+Fiktive Daten einer Lehrveranstaltungsevaluation (LVE) und einer
+Studieneingangsbefragung (SHOWUP), aufbereitet wie mit
+\code{\link[=evasys_read_data]{evasys_read_data()}}: Jede Frage trägt die Attribute \code{label} (Fragetext),
+\code{nr} (Fragenummer), \code{type} (Fragetyp) und ggf. \code{labels} (Antwortcodes).
+Die Daten werden in den Beispielen und Tests des Pakets verwendet.
+
+Alle Antworten sind zufällig erzeugt, Fachbereiche und Fächer sind
+erfunden und offene Antworten bestehen aus Lorem ipsum. Das Skript dazu
+liegt im Quell-Repository unter \code{data-raw/BspDaten.R}.
 }
 \examples{
 str(BspDaten, max.level = 1)

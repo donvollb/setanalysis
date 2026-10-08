@@ -14,6 +14,16 @@ Fehlerbehebung aufgeführt.
 * Die bisherigen Namen funktionieren weiterhin unverändert und sind in
   `?setanalysis-deprecated` aufgeführt. Argumentnamen bleiben gleich.
 
+## Beispieldaten
+
+* `BspDaten` enthält jetzt vollständig fiktive, zufällig erzeugte Daten
+  (erfundene Fachbereiche und Fächer, offene Antworten aus Lorem ipsum) statt
+  anonymisierter Befragungsdaten. Aufbau, Spaltennamen und Attribute bleiben
+  gleich; die leere Spalte `dataLVE$ECTS` entfällt. Die Daten werden mit
+  `data-raw/BspDaten.R` reproduzierbar erzeugt.
+* In der Beispiel-Berichtstabelle (`inst/extdata/beispiel_berichte.xlsx`)
+  heißt der spezielle Bericht jetzt „Sonderauswertung“.
+
 ## Fehlerbehebungen
 
 * Sonderzeichen in Tabellen werden für Typst maskiert. Bisher brach das

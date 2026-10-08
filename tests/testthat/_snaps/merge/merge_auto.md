@@ -76,10 +76,10 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[ja], [229], [5.0], [5.1],
-[nein], [4295], [94.2], [94.9],
-[NAs], [35], [0.8], [NA],
-[Total], [4559], [100.0], [100.0],
+[ja], [230], [5.2], [5.2],
+[nein], [4192], [94.0], [94.8],
+[NAs], [39], [0.9], [NA],
+[Total], [4461], [100.0], [100.0],
 
     // tinytable footer after
 
@@ -171,7 +171,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[4521], [4.91], [1.22], [5], [1], [6],
+[4420], [4.85], [1.10], [5], [1], [6],
 
     // tinytable footer after
 
@@ -273,7 +273,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[155], [2.11], [0.63], [2], [1], [3.70],
+[147], [2.19], [0.56], [2.10], [1], [3.80],
 
     // tinytable footer after
 
@@ -372,13 +372,13 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Bachelor of Arts (B.A.)], [17], [7.0], [7.0],
-[Bachelor of Education (B.Ed.)], [70], [28.9], [28.9],
-[Bachelor of Science (B.Sc.)], [59], [24.4], [24.4],
+[Bachelor of Arts (B.A.)], [21], [8.7], [8.7],
+[Bachelor of Education (B.Ed.)], [71], [29.3], [29.3],
+[Bachelor of Science (B.Sc.)], [52], [21.5], [21.5],
 [2\-Fach\-Bachelor (B.A., B.Sc.)], [12], [5.0], [5.0],
-[Master of Arts (M.A.)], [12], [5.0], [5.0],
-[Master of Education (M.Ed.)], [23], [9.5], [9.5],
-[Master of Science (M.Sc.)], [55], [22.7], [22.7],
+[Master of Arts (M.A.)], [18], [7.4], [7.4],
+[Master of Education (M.Ed.)], [26], [10.7], [10.7],
+[Master of Science (M.Sc.)], [42], [17.4], [17.4],
 [lehramtsbezogener Zertifikatsstudiengang], [0], [0.0], [0.0],
 [NAs], [0], [0.0], [NA],
 [Total], [242], [NA], [NA],
@@ -468,9 +468,9 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich.], [4521], [4.91], [1.22], [5], [1], [6],
-[Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.], [4519], [5.21], [1.10], [6], [1], [6],
-[Die Veranstaltung war meiner Ansicht nach gut organisiert (z.B. Bereitstellung von Materialien, Informationsfluss).], [4518], [5.08], [1.22], [5], [1], [6],
+[Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich.], [4420], [4.85], [1.10], [5], [1], [6],
+[Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.], [4420], [5.01], [1.05], [5], [1], [6],
+[Die Veranstaltung war meiner Ansicht nach gut organisiert (z.B. Bereitstellung von Materialien, Informationsfluss).], [4412], [4.93], [1.07], [5], [1], [6],
 
     // tinytable footer after
 

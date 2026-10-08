@@ -71,9 +71,9 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich.], [109], [4.93], [0.78], [5.17], [2.50], [6], [1], [4],
-[Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.], [109], [5.21], [0.67], [5.33], [2.25], [6], [2], [5],
-[Die Veranstaltung war meiner Ansicht nach gut organisiert (z.B. Bereitstellung von Materialien, Informationsfluss).], [109], [5.19], [0.75], [5.38], [2.40], [6], [3], [6],
+[Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich.], [109], [5.02], [0.54], [5.14], [3.00], [6], [1], [4],
+[Die Veranstaltung folgte aus meiner Sicht einer klaren Struktur.], [109], [5.12], [0.52], [5.25], [4.00], [6], [2], [5],
+[Die Veranstaltung war meiner Ansicht nach gut organisiert (z.B. Bereitstellung von Materialien, Informationsfluss).], [109], [5.04], [0.56], [5.08], [3.33], [6], [3], [6],
 
     // tinytable footer after
 

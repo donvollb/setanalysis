@@ -78,7 +78,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[4521], [4.91], [1.22], [5], [1], [6],
+[4420], [4.85], [1.10], [5], [1], [6],
 
     // tinytable footer after
 
@@ -174,10 +174,10 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[ja], [229], [5.0], [5.1],
-[nein], [4295], [94.2], [94.9],
-[NAs], [35], [0.8], [NA],
-[Total], [4559], [100.0], [100.0],
+[ja], [230], [5.2], [5.2],
+[nein], [4192], [94.0], [94.8],
+[NAs], [39], [0.9], [NA],
+[Total], [4461], [100.0], [100.0],
 
     // tinytable footer after
 

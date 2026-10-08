@@ -37,9 +37,9 @@
 #' [change_analysis_defaults()] für einen Bericht anpassen.
 #'
 #' @section Beispieldaten:
-#' [BspDaten] enthält anonymisierte Daten einer Lehrveranstaltungsevaluation
-#' und einer Studieneingangsbefragung, mit denen sich alle Funktionen
-#' ausprobieren lassen.
+#' [BspDaten] enthält fiktive, zufällig erzeugte Daten einer
+#' Lehrveranstaltungsevaluation und einer Studieneingangsbefragung, mit denen
+#' sich alle Funktionen ausprobieren lassen.
 #'
 #' @keywords internal
 "_PACKAGE"

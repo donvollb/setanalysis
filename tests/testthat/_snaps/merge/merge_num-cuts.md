@@ -76,7 +76,7 @@ block[ // start block
     // tinytable header end
 
     // tinytable cell content after
-[155], [2.11], [0.63], [2], [1], [3.70],
+[147], [2.19], [0.56], [2.10], [1], [3.80],
 
     // tinytable footer after
 
