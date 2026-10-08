@@ -1,3 +1,33 @@
+# Aufbereitung und Prüfung von Daten -------------------------------------
+
+#' Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
+#'
+#' @param vars Variablen (oder eine Variable), die aggregiert werden sollen
+#' @param kennung Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen
+#' 
+#' @export aggr_data
+
+# Funktion zum Aggregieren von Daten anhand einer Kennung/Fallnummer
+aggr_data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
+                      kennung) # kennung können z.B. die LV-Kennungen oder die Fallnummern sein
+{
+  labels <- as.character(lapply(data.frame(vars), attr, which = "label"))
+  x <- data.frame(data.frame(vars)[0, ])
+  for (n in unique(kennung)) {
+    vars.sub <- data.frame(data.frame(vars)[kennung == n, ])
+    x[nrow(x)+1, ] <- vars.sub |>
+      apply(2, as.numeric) |>
+      apply(2, mean, na.rm = TRUE)
+  }
+
+  for (k in 1:ncol(x)) {
+    attr(x[, k], "label") <- labels[k]
+  }
+
+  return(x)
+
+}
+
 #' Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
 #'
 #' @param col Spalte aus der Info-Tabelle, z.B. info$Fb.text
@@ -41,4 +71,18 @@ label_test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
     
   }
   return(print(output))
+}
+
+#' Extrahiert bei MC-Fragen das Label der Antwortoption
+#'
+#' @param x Eine Spalte.
+#' @param match Die Zeichen, die direkt vor der Antwortoption stehen (üblicherweise ´: ´)
+#' @returns Eine Zeichenkette (das Label).
+
+
+# Labels für MC-Fragen aus dem Fragetext ziehen:
+get_label <- function(x, # Objekt
+                      match = ": ") # String, der Label von Frage trennt
+{
+  sub(paste0(".*", match), '', attr(x, "label"))
 }

@@ -40,6 +40,8 @@ Fehlerbehebung aufgeführt.
 * `DESCRIPTION` vervollständigt: Titel, Beschreibung, Autoren, Links zum
   Repository und alle verwendeten Basis-Pakete unter `Imports`.
 * `.Rbuildignore` ergänzt; die interne To-do-Liste `notes.txt` wurde entfernt.
+* Quellcode thematisch neu geordnet (z. B. `plots_bar.R`, `tables.R`,
+  `settings.R`); die großen `merge_*()`-Funktionen behalten eigene Dateien.
 
 # setanalysis 1.0.0
 
