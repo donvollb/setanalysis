@@ -12,7 +12,7 @@ test_that("barplot_scmc() zeichnet unverändert", {
   expect_plot_snapshot(barplot_scmc(BspDaten$Plots$sc, xlab = "Häufigkeit"),
                        "barplot_scmc-sc", height = 3)
   expect_plot_snapshot(barplot_scmc(BspDaten$Plots$mc, xlab = "Häufigkeit"),
-                       "barplot_scmc-mc", height = 8.5)
+                       "barplot_scmc-mc", height = 7)
 })
 
 test_that("barplot_scmc() meldet fehlende Daten", {

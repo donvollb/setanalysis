@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='342.00pt' viewBox='0 0 648.00 342.00'>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='234.00pt' viewBox='0 0 648.00 234.00'>
 <g class='svglite'>
 <defs>
   <style type='text/css'><![CDATA[
@@ -21,57 +21,49 @@
 </defs>
 <rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
 <defs>
-  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwzNDIuMDA='>
-    <rect x='0.00' y='0.00' width='648.00' height='342.00' />
+  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwyMzQuMDA='>
+    <rect x='0.00' y='0.00' width='648.00' height='234.00' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNDIuMDA=)'>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwyMzQuMDA=)'>
 </g>
 <defs>
-  <clipPath id='cpMjY3LjEyfDY0MC44MHw3LjIwfDMxMy4yMA=='>
-    <rect x='267.12' y='7.20' width='373.68' height='306.00' />
+  <clipPath id='cpMjY3LjEyfDY0MC44MHw3LjIwfDIwNS4yMA=='>
+    <rect x='267.12' y='7.20' width='373.68' height='198.00' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpMjY3LjEyfDY0MC44MHw3LjIwfDMxMy4yMA==)'>
-<line x1='280.96' y1='313.20' x2='280.96' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='355.10' y1='313.20' x2='355.10' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='429.25' y1='313.20' x2='429.25' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='503.39' y1='313.20' x2='503.39' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
-<line x1='577.53' y1='313.20' x2='577.53' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<g clip-path='url(#cpMjY3LjEyfDY0MC44MHw3LjIwfDIwNS4yMA==)'>
+<line x1='280.96' y1='205.20' x2='280.96' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='379.82' y1='205.20' x2='379.82' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='478.67' y1='205.20' x2='478.67' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='577.53' y1='205.20' x2='577.53' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
 </g>
-<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwzNDIuMDA=)'>
-<rect x='280.96' y='254.64' width='296.57' height='49.71' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='280.96' y='195.00' width='0.00' height='49.71' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='280.96' y='135.35' width='148.29' height='49.71' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='280.96' y='75.70' width='148.29' height='49.71' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<rect x='280.96' y='16.05' width='222.43' height='49.71' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
-<polygon points='267.12,313.20 640.80,313.20 640.80,7.20 267.12,7.20 ' style='stroke-width: 1.12; stroke-linecap: square; stroke-linejoin: miter;' />
-<text x='252.72' y='283.70' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='26.31px' lengthAdjust='spacingAndGlyphs'>Total</text>
-<text x='252.72' y='224.05' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='22.41px' lengthAdjust='spacingAndGlyphs'>NAs</text>
-<text x='252.72' y='157.20' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='222.42px' lengthAdjust='spacingAndGlyphs'>Antwortoption mit genau neununddreißig!</text>
-<text x='252.72' y='171.60' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='140.38px' lengthAdjust='spacingAndGlyphs'>Zeichen in der ersten Zeile</text>
-<text x='252.72' y='104.75' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='22.05px' lengthAdjust='spacingAndGlyphs'>kurz</text>
-<text x='252.72' y='37.90' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='195.48px' lengthAdjust='spacingAndGlyphs'>Eine sehr lange Antwortoption, die in</text>
-<text x='252.72' y='52.30' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='210.81px' lengthAdjust='spacingAndGlyphs'>der Abbildung umbrochen werden muss</text>
-<text x='280.96' y='339.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='8.28px' lengthAdjust='spacingAndGlyphs'>0</text>
-<text x='355.10' y='339.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='4.62px' lengthAdjust='spacingAndGlyphs'>1</text>
-<text x='429.25' y='339.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>2</text>
-<text x='503.39' y='339.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>3</text>
-<text x='577.53' y='339.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='8.33px' lengthAdjust='spacingAndGlyphs'>4</text>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwyMzQuMDA=)'>
+<rect x='280.96' y='142.87' width='197.71' height='52.38' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='280.96' y='80.01' width='197.71' height='52.38' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='280.96' y='17.15' width='296.57' height='52.38' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<polygon points='267.12,205.20 640.80,205.20 640.80,7.20 267.12,7.20 ' style='stroke-width: 1.12; stroke-linecap: square; stroke-linejoin: miter;' />
+<text x='252.72' y='166.06' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='222.42px' lengthAdjust='spacingAndGlyphs'>Antwortoption mit genau neununddreißig!</text>
+<text x='252.72' y='180.46' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='140.38px' lengthAdjust='spacingAndGlyphs'>Zeichen in der ersten Zeile</text>
+<text x='252.72' y='110.40' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='22.05px' lengthAdjust='spacingAndGlyphs'>kurz</text>
+<text x='252.72' y='40.34' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='195.48px' lengthAdjust='spacingAndGlyphs'>Eine sehr lange Antwortoption, die in</text>
+<text x='252.72' y='54.74' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='210.81px' lengthAdjust='spacingAndGlyphs'>der Abbildung umbrochen werden muss</text>
+<text x='280.96' y='231.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='8.28px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='379.82' y='231.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='4.62px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='478.67' y='231.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='577.53' y='231.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>3</text>
 </g>
-<g clip-path='url(#cpMjY3LjEyfDY0MC44MHw3LjIwfDMxMy4yMA==)'>
-<text x='586.43' y='283.70' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='28.47px' lengthAdjust='spacingAndGlyphs'>NA %</text>
-<text x='289.86' y='224.05' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='29.92px' lengthAdjust='spacingAndGlyphs'>0.0 %</text>
-<text x='438.14' y='164.40' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.12px' lengthAdjust='spacingAndGlyphs'>50.0 %</text>
-<text x='438.14' y='104.76' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.12px' lengthAdjust='spacingAndGlyphs'>50.0 %</text>
-<text x='512.29' y='45.11' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='36.47px' lengthAdjust='spacingAndGlyphs'>75.0 %</text>
+<g clip-path='url(#cpMjY3LjEyfDY0MC44MHw3LjIwfDIwNS4yMA==)'>
+<text x='487.57' y='173.26' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.12px' lengthAdjust='spacingAndGlyphs'>50.0 %</text>
+<text x='487.57' y='110.40' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.12px' lengthAdjust='spacingAndGlyphs'>50.0 %</text>
+<text x='586.43' y='47.55' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='36.47px' lengthAdjust='spacingAndGlyphs'>75.0 %</text>
 </g>
 <defs>
-  <clipPath id='cpNTkuMDR8NjE3Ljc2fDU5LjA0fDI2OC41Ng=='>
-    <rect x='59.04' y='59.04' width='558.72' height='209.52' />
+  <clipPath id='cpNTkuMDR8NjE3Ljc2fDU5LjA0fDE2MC41Ng=='>
+    <rect x='59.04' y='59.04' width='558.72' height='101.52' />
   </clipPath>
 </defs>
-<g clip-path='url(#cpNTkuMDR8NjE3Ljc2fDU5LjA0fDI2OC41Ng==)'>
+<g clip-path='url(#cpNTkuMDR8NjE3Ljc2fDU5LjA0fDE2MC41Ng==)'>
 </g>
 </g>
 </svg>

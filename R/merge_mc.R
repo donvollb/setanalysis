@@ -124,6 +124,11 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                                                digits = digits),
                                       fig_height = 7, fig_width = 9)}
 
+  # Für die Abbildung nur die Antwortoptionen verwenden -------------------
+  # (die Zeilen "NAs" und "Total" stehen nur in der Tabelle)
+
+  results <- results[seq_len(length(x)), ]
+
   colnames(results) <- c("label", "freq", "perc")
     
   # Automatische Zeilenumbrüche einfügen ----------------------------------

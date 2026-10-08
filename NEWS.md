@@ -4,6 +4,13 @@
 Funktionen bleibt unverändert, sofern unten nicht ausdrücklich als
 Fehlerbehebung aufgeführt.
 
+## Fehlerbehebungen
+
+* `merge_mc()` zeichnet die Zeilen „NAs“ und „Total“ nicht mehr als Balken ins
+  Diagramm; sie stehen weiterhin in der Tabelle. Dadurch wird die Abbildung bei
+  `fig.height = "default"` entsprechend niedriger. Die Beispieldaten
+  `BspDaten$Plots$mc` wurden passend dazu bereinigt.
+
 ## Paketinfrastruktur
 
 * Automatisierte Tests mit testthat: Snapshot-Tests halten die Ausgabe aller
