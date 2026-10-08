@@ -267,6 +267,9 @@ test_that("merge_many() meldet nicht unterstützte Typen", {
 # Bekannte Fehler (werden in einem späteren Schritt behoben) --------------
 
 test_that("BEKANNTER FEHLER: merge_many() scheitert, wenn die letzte Spalte sk/mc ist", {
+  # Abbildungen der vorherigen Fragen nicht ins Testverzeichnis schreiben
+  withr::local_dir(withr::local_tempdir())
+  reset_setanalysis_state()
   expect_error(capture.output(merge_many(showup, nr_auto = FALSE)))
 })
 
