@@ -128,6 +128,8 @@ Das Verhalten der Funktionen ist mit Snapshot-Tests (testthat) abgesichert,
 die die erzeugten Berichtsbausteine einschließlich der Grafiken (SVG)
 vergleichen. Die Skripte, mit denen Beispieldaten und Vorschaubilder erzeugt
 werden, liegen in `data-raw/`. Änderungen stehen im [Changelog](https://donvollb.github.io/setanalysis/news/).
+Wie das Paket weiterentwickelt wird (Branches, Tests, GitHub Actions, Releases), beschreibt der Artikel
+[Das Paket pflegen](https://donvollb.github.io/setanalysis/articles/paket-pflegen.html).
 
 ## Autoren und Lizenz
 

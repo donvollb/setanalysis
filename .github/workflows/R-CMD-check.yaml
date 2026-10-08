@@ -12,6 +12,7 @@ on:
       - "_pkgdown.yml"
       - "man/figures/**"
       - "data-raw/**"
+      - "vignettes/articles/**"
       - ".github/workflows/pkgdown.yaml"
   pull_request:
     paths-ignore:
@@ -21,6 +22,7 @@ on:
       - "_pkgdown.yml"
       - "man/figures/**"
       - "data-raw/**"
+      - "vignettes/articles/**"
       - ".github/workflows/pkgdown.yaml"
   workflow_dispatch:
 
