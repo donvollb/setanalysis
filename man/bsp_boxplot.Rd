@@ -2,20 +2,36 @@
 % Please edit documentation in R/legends.R
 \name{bsp_boxplot}
 \alias{bsp_boxplot}
-\title{Beispiel-Boxplot mit Beschriftung}
+\title{Legende: beschrifteter Beispiel-Boxplot}
 \usage{
 bsp_boxplot(x = "default")
 }
 \arguments{
-\item{x}{Daten, bei "default" wird ein Beispieldatensatz genutzt}
+\item{x}{Werte für den Boxplot. Bei \code{"default"} werden feste
+Beispielwerte verwendet, zu denen die Beschriftungen passen.}
 }
 \value{
-Beispiel-Boxplot
+Nichts (unsichtbar \code{NULL}). Die Abbildung wird als Sub-Chunk in
+den Bericht ausgegeben (siehe \code{\link[=subchunkify]{subchunkify()}}).
 }
 \description{
-Beispiel-Boxplot mit Beschriftung
+Gibt einen Beispiel-Boxplot aus, an dem Ausreißer, Median und Maximum
+beschriftet sind. Gedacht für den Abschnitt „Erläuterung zu Grafiken“ am
+Anfang eines Berichts.
 }
 \examples{
-bsp_boxplot() |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+bsp_boxplot()
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+Weitere Legenden:
+\code{\link[=bsp_evasys_sk6]{bsp_evasys_sk6()}},
+\code{\link[=bsp_table_stat]{bsp_table_stat()}}
+}
+\concept{legenden}

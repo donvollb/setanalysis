@@ -2,24 +2,37 @@
 % Please edit documentation in R/output.R
 \name{markdown_in_viewer}
 \alias{markdown_in_viewer}
-\title{Funktion um den Markdown-Code, welcher durch eine Funktion erzeugt wurde
-direkt im Viewer anzuzeigen}
+\title{Vorschau eines Berichtsabschnitts im Viewer}
 \usage{
 markdown_in_viewer(markdown_function)
 }
 \arguments{
-\item{markdown_function}{Funktion, welche Markdown-Code erzeugt}
+\item{markdown_function}{Aufruf einer Funktion, die Berichtscode ausgibt,
+z. B. \code{merge_sc(daten$frage)}.}
 }
 \value{
-Vorschau im Viewer, wie das Endergebnis im Dokument aussehen würde
+Unsichtbar der Pfad zur erzeugten HTML-Datei; die Vorschau wird im
+Viewer geöffnet.
 }
 \description{
-Diese Funktion ist dafür gedacht, die anderen Funktionen, die
-Markdown-Code mit \code{\link[=cat]{cat()}} direkt in die Konsole drucken zu testen, sie ist
-nicht für die Verwendung in einem Dokument gedacht.
+Zeigt das Ergebnis einer Auswertungsfunktion so an, wie es ungefähr im
+Bericht aussehen wird: Die Ausgabe wird in HTML umgewandelt und im
+RStudio-Viewer (bzw. im Browser) geöffnet. Praktisch zum Ausprobieren und
+Testen; im Bericht selbst wird die Funktion nicht verwendet.
 
-\code{markdown.in.viewer()} ist eine veraltete Schreibweise der gleichen Funktion
+Benötigt die zusätzlichen Pakete htmltools, markdown und svglite.
 }
 \examples{
-markdown_in_viewer(merge.fachsem(BspDaten$dataLVE$FachSemN))
+if (interactive()) {
+  markdown_in_viewer(merge_fachsem(BspDaten$dataLVE$FachSemN))
 }
+
+}
+\seealso{
+Weitere Werkzeuge:
+\code{\link[=change_analysis_defaults]{change_analysis_defaults()}},
+\code{\link{list_open_answers}},
+\code{\link{setanalysis_defaults}},
+\code{\link[=subchunkify]{subchunkify()}}
+}
+\concept{werkzeuge}

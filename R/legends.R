@@ -1,17 +1,31 @@
 # Legenden und Beispielgrafiken für die Berichte ------------------------
 
-#' Beispiel-Boxplot mit Beschriftung
+#' Legende: beschrifteter Beispiel-Boxplot
 #'
-#' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt
+#' @description
+#' Gibt einen Beispiel-Boxplot aus, an dem Ausreißer, Median und Maximum
+#' beschriftet sind. Gedacht für den Abschnitt „Erläuterung zu Grafiken“ am
+#' Anfang eines Berichts.
 #'
-#' @returns Beispiel-Boxplot
+#' @param x Werte für den Boxplot. Bei `"default"` werden feste
+#'   Beispielwerte verwendet, zu denen die Beschriftungen passen.
 #'
-#' @examples bsp_boxplot() |> markdown_in_viewer()
+#' @returns Nichts (unsichtbar `NULL`). Die Abbildung wird als Sub-Chunk in
+#'   den Bericht ausgegeben (siehe [subchunkify()]).
 #'
-#' @export bsp_boxplot
-
-bsp_boxplot <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
-{
+#' @family legenden
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' bsp_boxplot()
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+bsp_boxplot <- function(x = "default") {
   if (x[1] == "default") {
     x <- c(
       1.7, 3.5, 3.6, 3.7, 4.0, 4.1, 4.2, 4.2, 4.3, 4.3, 4.4, 4.5,
@@ -77,18 +91,33 @@ bsp_boxplot <- function(x = "default") # Daten, bei "default" wird ein Beispield
   cat("  \n  \n")
 }
 
-#' Beispiel einer Sechserskala
+#' Legende: beschriftete Beispiel-Abbildung einer 6er-Skala
 #'
-#' @param x Daten, bei "default" wird ein Beispieldatensatz genutzt
+#' @description
+#' Gibt eine Beispiel-Abbildung im Stil von [barplot_sk()] aus, in der die
+#' prozentuale Häufigkeit, der Mittelwert und die Standardabweichung
+#' beschriftet sind. Gedacht für den Abschnitt „Erläuterung zu Grafiken“ am
+#' Anfang eines Berichts.
 #'
-#' @returns Grafik
+#' @param x Antworten auf einer 6-stufigen Skala. Bei `"default"` werden feste
+#'   Beispielwerte verwendet, zu denen die Beschriftungen passen.
 #'
-#' @examples bsp_evasys_sk6() |> markdown_in_viewer()
+#' @returns Nichts (unsichtbar `NULL`). Die Abbildung wird als Sub-Chunk in
+#'   den Bericht ausgegeben (siehe [subchunkify()]).
 #'
-#' @export bsp_evasys_sk6
-
-bsp_evasys_sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispieldatensatz genutzt
-{
+#' @family legenden
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' bsp_evasys_sk6()
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+bsp_evasys_sk6 <- function(x = "default") {
   if (x[1] == "default") {
     x <- c(
       1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
@@ -162,20 +191,27 @@ bsp_evasys_sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
   )
 }
 
-#' Beispiel einer Statistik-Tabelle
+#' Legende: Erklärung der Tabellenspalten
 #'
-#' @param all Soll die Tabelle Fragen enthalten? Dann TRUE, sonst FALSE
+#' @description
+#' Erstellt eine Tabelle, die die Abkürzungen in den Kopfzeilen der
+#' Statistiktabellen erklärt (n = Häufigkeit, M = Mittelwert usw.). Gedacht
+#' für den Abschnitt „Legende zu Tabellen“ am Anfang eines Berichts.
 #'
-#' @returns
-#' Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
-#' "Median", "kleinster beob. Wert", "größter beob. Wert"
+#' @param all `TRUE` für die Legende zu Tabellen mit Fragetext und Median
+#'   (wie bei [table_stat_multi()], z. B. in der LVE), `FALSE` für die kurze
+#'   Variante ohne beides.
 #'
-#' @examples bsp_table_stat()
+#' @returns Ein `tinytable`-Objekt (siehe [lv_table()]).
 #'
-#' @export bsp_table_stat
-
-bsp_table_stat <- function(all = TRUE) # all = TRUE für eine Tabelle mit "Frage" und "Median", eher für LVE
-{
+#' @family legenden
+#'
+#' @examples
+#' bsp_table_stat()
+#' bsp_table_stat(all = FALSE)
+#'
+#' @export
+bsp_table_stat <- function(all = TRUE) {
   if (all == TRUE) {
     legend_table <- data.frame(cbind(
       "Frage", "Häufigkeit", "Mittelwert",

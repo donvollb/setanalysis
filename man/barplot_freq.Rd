@@ -2,25 +2,35 @@
 % Please edit documentation in R/plots_bar.R
 \name{barplot_freq}
 \alias{barplot_freq}
-\title{Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordinalen Skalennivaus genutzt werden)}
+\title{Balkendiagramm der Häufigkeiten}
 \usage{
 barplot_freq(x, xlab = "")
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Faktor (die Stufen bestimmen Reihenfolge und Beschriftung der
+Balken).}
 
-\item{xlab}{Achsenbeschriftung}
+\item{xlab}{Beschriftung der x-Achse.}
 }
 \value{
-Barplot
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordinalen Skalennivaus genutzt werden)
+Zeichnet ein senkrechtes Balkendiagramm mit der Häufigkeit jeder Kategorie,
+z. B. für Fachsemester oder in Klassen eingeteilte Noten. Wird von
+\code{\link[=merge_num]{merge_num()}} und \code{\link[=merge_fachsem]{merge_fachsem()}} verwendet.
 }
 \examples{
-
-# Beispiel für Verwendung in merge_num ---------------------------------
-
-barplot_freq(BspDaten$Plots$num, xlab = "Durchschnittsnote für Hochschulzugangsberechtigung")
+barplot_freq(BspDaten$Plots$fsem, xlab = "Fachsemester")
 
 }
+\seealso{
+Weitere Grafikfunktionen:
+\code{\link[=barplot_scmc]{barplot_scmc()}},
+\code{\link[=barplot_sk]{barplot_sk()}},
+\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}},
+\code{\link[=boxplot_grade]{boxplot_grade()}},
+\code{\link[=boxplot_rueck]{boxplot_rueck()}},
+\code{\link[=boxplot_wl]{boxplot_wl()}}
+}
+\concept{grafiken}

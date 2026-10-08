@@ -2,24 +2,54 @@
 % Please edit documentation in R/merge_wl.R
 \name{merge_wl}
 \alias{merge_wl}
-\title{merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
-\code{merge.wl()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Workload der Lehrveranstaltungen auswerten}
 \usage{
 merge_wl(WL, kennung, already.aggr = FALSE)
 }
 \arguments{
-\item{WL}{WL der Daten}
+\item{WL}{Vektor mit dem angegebenen Workload in Stunden pro Woche.
+Erwartet das Attribut \code{label} (Fragetext).}
 
-\item{kennung}{Kennung/Fallnummer zum Aggregieren}
+\item{kennung}{Vektor mit der Kennung der Lehrveranstaltung für jede
+Antwort. Nicht nötig bei \code{already.aggr = TRUE}.}
 
-\item{already.aggr}{Sind die Daten bereits aggregiert?}
+\item{already.aggr}{Liegt der Workload schon je Lehrveranstaltung vor? Dann
+wird nicht noch einmal aggregiert.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-merge-Funktion für den Workload (funktioniert, sollte überarbeitet werden)
-\code{merge.wl()} ist eine veraltete Schreibweise der gleichen Funktion
+Gibt den Fragetext als Überschrift und einen Boxplot des angegebenen
+Workloads (Stunden pro Woche) aus (\code{\link[=boxplot_wl]{boxplot_wl()}}). Standardmäßig wird
+zuerst der Median je Lehrveranstaltung gebildet, sodass jede
+Lehrveranstaltung gleich stark eingeht.
 }
 \examples{
-merge_wl(BspDaten$dataLVE$WL, already.aggr = FALSE,
-         BspDaten$dataLVE$Kennung) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_wl(BspDaten$dataLVE$WL, kennung = BspDaten$dataLVE$Kennung)
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}}
+}
+\concept{auswertung}

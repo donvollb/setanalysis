@@ -2,9 +2,7 @@
 % Please edit documentation in R/merge_num.R
 \name{merge_num}
 \alias{merge_num}
-\title{Funktion für die Abbildung numerischer (quasi metrisch, wie Alter, Abschlussnote, etc.)
-Kann auch für Balkendiagramme bei ordinalen Skalen genutzt werden
-\code{merge.num()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Numerische Frage auswerten}
 \usage{
 merge_num(
   x,
@@ -19,38 +17,83 @@ merge_num(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor mit den Antworten. Zahlen in Textform mit Dezimalkomma
+(z. B. \code{"1,7"}) werden umgewandelt. Erwartet das Attribut \code{label}.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{xlab}{Beschriftung x-Achse}
+\item{xlab}{Beschriftung der x-Achse.}
 
-\item{cut.breaks}{Soll es cuts geben? Wo sollen die "breaks" sein, siehe cut()}
+\item{cut.breaks, cut.labels}{Grenzen und Beschriftungen der Klassen für das
+Diagramm (siehe \code{\link[=cut]{cut()}}, Argumente \code{breaks} und \code{labels}), oder \code{""} für
+keine Klassen.}
 
-\item{cut.labels}{Soll es cuts geben? Wo sollen die "labels" sein, siehe cut()}
+\item{show.table}{Soll die Tabelle gezeigt werden?}
 
-\item{show.table}{Soll die Tabelle gezeigt werden}
+\item{fig.height}{Höhe der Abbildung in Zoll.}
 
-\item{fig.height}{Höhe der Abbildung}
-
-\item{cutoff}{Soll es einen cutoff geben? Alle Werte >= cutoff werden zusammengefasst; Ist nicht mit cuts möglich!}
+\item{cutoff}{Alle Werte ab diesem Wert im Diagramm zu einer Kategorie
+„\code{cutoff}+“ zusammenfassen, oder \code{FALSE}. Nicht zusammen mit
+\code{cut.breaks} möglich.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Funktion für die Abbildung numerischer (quasi metrisch, wie Alter, Abschlussnote, etc.)
-Kann auch für Balkendiagramme bei ordinalen Skalen genutzt werden
-\code{merge.num()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt für eine Frage mit Zahlen als Antwort (z. B.
+Alter oder Abiturnote): Überschrift, Tabelle mit Kennwerten (n, M, SD,
+Median, Minimum, Maximum) und ein Balkendiagramm der Häufigkeiten
+(\code{\link[=barplot_freq]{barplot_freq()}}). Für das Diagramm können die Werte in Klassen
+eingeteilt (\code{cut.breaks}) oder ab einem Wert zusammengefasst werden
+(\code{cutoff}). Die Tabelle beruht immer auf den ursprünglichen Werten.
+
+Der Abschnitt wird so ausgegeben, dass Überschrift, Tabelle und Abbildung
+nicht durch einen Seitenumbruch getrennt werden. Enthält \code{x} nur fehlende
+Werte, wird nichts ausgegeben.
 }
 \examples{
-
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+# Abiturnoten, im Diagramm in Notenbereiche eingeteilt
 merge_num(BspDaten$dataSHOWUP$zugang_note,
-  xlab = "Durchschnittsnote für Hochschulzugangsberechtigung",
-  cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 2000),
+  xlab = "Durchschnittsnote der Hochschulzugangsberechtigung",
+  cut.breaks = c(0, 1.4, 1.9, 2.4, 2.9, 3.4, 4),
   cut.labels = c(
     "1,0 bis 1,4", "1,5 bis 1,9", "2,0 bis 2,4", "2,5 bis 2,9",
     "3,0 bis 3,4", "3,5 bis 4,0"
   )
-) |> markdown_in_viewer()
+)
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=merge_fachsem]{merge_fachsem()}} für Fachsemester.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

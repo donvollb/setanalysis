@@ -2,8 +2,7 @@
 % Please edit documentation in R/merge_sc.R
 \name{merge_sc}
 \alias{merge_sc}
-\title{merge-Funktion für single-choice Fragen
-\code{merge.sc()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Single-Choice-Frage auswerten}
 \usage{
 merge_sc(
   x,
@@ -19,31 +18,87 @@ merge_sc(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor mit den Antworten (Antwortcodes). Erwartet die Attribute
+\code{label} (Fragetext) und \code{labels} (benannte Antwortcodes), wie sie
+\code{\link[=evasys_read_data]{evasys_read_data()}} erzeugt.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{fig.height}{Höhe der Abbildung, bei "default" ist es „Anzahl der Fragen“ * 0.75 + 1}
+\item{fig.height}{Höhe der Abbildung in Zoll. Bei \code{"default"} wird sie aus
+der Anzahl der Antwortoptionen berechnet.}
 
-\item{already.labels}{Wurden die Daten bereits in Label umgewandelt?}
+\item{already.labels}{Liegen die Antworten schon als Text bzw. Faktor vor
+(\code{TRUE})? Standardmäßig (\code{FALSE}) werden die Antwortcodes mithilfe des
+Attributs \code{labels} in Antworttexte übersetzt.}
 
-\item{col2.name}{Name der n-Spalte in der Tabelle}
+\item{col2.name}{Überschrift der Spalte mit den absoluten Häufigkeiten.}
 
-\item{order.table}{Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren}
+\item{order.table}{Reihenfolge der Antwortoptionen in der Tabelle: \code{FALSE}
+(Reihenfolge der Antwortoptionen), \code{"decreasing"} (nach Häufigkeit
+absteigend) oder ein anderer Wert, z. B. \code{TRUE} (aufsteigend).}
 
-\item{show.plot}{Soll der Plot angezeigt werden?}
+\item{show.plot}{Soll ein Balkendiagramm gezeigt werden? Voreinstellung aus
+\link{setanalysis_defaults} (\code{show.plot.sc}).}
 
-\item{pagebreak}{Seitenumbrüche mittendrin verhindern?}
+\item{pagebreak}{Soll nach der Frage ein Seitenumbruch eingefügt werden?}
 
-\item{digits}{Anzahl der Nachkommastellen in der Tabelle}
+\item{digits}{Anzahl der Nachkommastellen der Prozentangaben.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-merge-Funktion für single-choice Fragen
-\code{merge.sc()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt für eine Frage mit genau einer
+Antwortmöglichkeit (Single Choice): Überschrift mit dem Fragetext, eine
+Häufigkeitstabelle und optional ein Balkendiagramm.
+
+Wie alle Auswertungsfunktionen schreibt \code{merge_sc()} den Code für den
+Bericht direkt in die Ausgabe. Sie wird deshalb in einem Quarto-Chunk mit
+\code{output: asis} aufgerufen.
 }
 \examples{
-merge_sc(BspDaten$dataLVE$V3_D) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+# Code für den Bericht (im Quarto-Dokument in einem Chunk mit `output: asis`)
+merge_sc(BspDaten$dataLVE$V3_D)
+
+# Nach Häufigkeit sortiert, ohne Abbildung
+merge_sc(BspDaten$dataLVE$FachSemN, order.table = "decreasing", show.plot = FALSE)
+
+# Vorschau, wie der Abschnitt im Bericht aussieht
+if (interactive()) markdown_in_viewer(merge_sc(BspDaten$dataLVE$V3_D))
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=merge_mc]{merge_mc()}} für Fragen mit mehreren Antwortmöglichkeiten,
+\code{\link[=merge_many]{merge_many()}} für die automatische Auswertung mehrerer Fragen.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

@@ -2,20 +2,32 @@
 % Please edit documentation in R/plots_box.R
 \name{boxplot_grade}
 \alias{boxplot_grade}
-\title{Abbildung der Gesamtnote}
+\title{Boxplot der Gesamtnote}
 \usage{
 boxplot_grade(x)
 }
 \arguments{
-\item{x}{(aggregierte) Daten für den Boxplot}
+\item{x}{Numerischer Vektor (oder einspaltiger Data Frame) mit den Noten,
+meist schon je Lehrveranstaltung gemittelt.}
 }
 \value{
-Boxplot der Gesamtnote
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Abbildung der Gesamtnote
+Zeichnet einen waagerechten Boxplot auf der Notenskala von „sehr gut“ (1)
+bis „ungenügend“ (6). Wird von \code{\link[=merge_grade]{merge_grade()}} verwendet.
 }
 \examples{
 boxplot_grade(BspDaten$Plots$grade)
 
 }
+\seealso{
+Weitere Grafikfunktionen:
+\code{\link[=barplot_freq]{barplot_freq()}},
+\code{\link[=barplot_scmc]{barplot_scmc()}},
+\code{\link[=barplot_sk]{barplot_sk()}},
+\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}},
+\code{\link[=boxplot_rueck]{boxplot_rueck()}},
+\code{\link[=boxplot_wl]{boxplot_wl()}}
+}
+\concept{grafiken}

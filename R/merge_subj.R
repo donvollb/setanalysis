@@ -1,28 +1,42 @@
-#' merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fach
+#' Erstes und zweites Fach gemeinsam auswerten
 #'
-#' @param x1 Daten von Fach 1
-#' @param x2 Daten von Fach 2
-#' @param inkl1 TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr1" zieht sich automatisch die entsprechende inkl. Variable
-#' @param inkl2 TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr2" zieht sich automatisch die entsprechende inkl. Variable
-#' @param nr1 Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#' @param nr2 Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @description
+#' Fasst zwei Single-Choice-Fragen mit denselben Antwortoptionen zusammen,
+#' typischerweise „Was ist Ihr 1. Fach?“ und „Was ist Ihr 2. Fach?“ im
+#' 2-Fach-Bachelor, und wertet sie wie [merge_sc()] in einer gemeinsamen
+#' Tabelle aus. Ein Hinweis unter der Tabelle erklärt, dass sich dadurch der
+#' Stichprobenumfang verdoppelt.
+#'
+#' @param x1,x2 Antworten auf die Frage nach dem 1. bzw. 2. Fach (wie bei
+#'   [merge_sc()]). Überschrift und Antwortoptionen werden aus `x1` genommen.
+#' @param inkl1,inkl2 Wie `inkl` bei [merge_sc()], jeweils für eine der beiden
+#'   Fragen; beim Standard `"nr1"` bzw. `"nr2"` entscheiden die Variablen
+#'   `inkl.<nr1>` bzw. `inkl.<nr2>`. Ausgegeben wird nur, wenn beide Fragen
+#'   eingeschlossen sind.
+#' @param nr1,nr2 Fragenummern der beiden Fragen; beide erscheinen in der
+#'   Überschrift.
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
 #'
 #' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_subj(BspDaten$dataSHOWUP$fach1_2FB, BspDaten$dataSHOWUP$fach2_2FB)
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 #'
-#' merge_subj(
-#'   BspDaten$dataSHOWUP$fach1_2FB,
-#'   BspDaten$dataSHOWUP$fach2_2FB
-#' ) |> markdown_in_viewer()
-#'
-#' @export merge_subj
-
-merge_subj <- function(x1, # Daten von Fach 1
-                       x2, # Daten von Fach 2
-                       inkl1 = "nr1", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr1" zieht sich automatisch die entsprechende inkl. Variable
-                       inkl2 = "nr2", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr2" zieht sich automatisch die entsprechende inkl. Variable
-                       nr1 = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-                       nr2 = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-{
+#' @export
+merge_subj <- function(x1,
+                       x2,
+                       inkl1 = "nr1",
+                       inkl2 = "nr2",
+                       nr1 = "",
+                       nr2 = "") {
   # Überprüfung der inkl-Parameter ----------------------------------------
 
   inkl1 <- .resolve_inkl(inkl1, nr1, marker = "nr1")

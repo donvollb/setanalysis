@@ -2,18 +2,58 @@
 % Please edit documentation in R/input_tabelle.R
 \name{input_tabelle}
 \alias{input_tabelle}
-\title{Aufbereiten der Berichtstabelle}
+\title{Festlegen, welche Fragen in welchen Bericht kommen}
 \usage{
 input_tabelle(blank.path = NULL, rules.path = NULL)
 }
 \arguments{
-\item{blank.path}{Der Dateipfad zur rohen Berichtstabelle (blank-Tabelle) als Excel-Liste. Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.}
+\item{blank.path}{Pfad zur Excel-Datei mit der Berichtstabelle. Ohne
+Angabe öffnet sich ein Dialog zur Dateiauswahl (nur in RStudio).}
 
-\item{rules.path}{Der Dateipfad zur zugehörigen Regeltabelle (TRUE-FALSE Tabelle) als Excel-Liste. Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.}
+\item{rules.path}{Pfad zur Excel-Datei mit der Regeltabelle. Ohne Angabe
+öffnet sich ein Dialog zur Dateiauswahl (nur in RStudio).}
 }
 \value{
-Die aufbereitete Berichtstabelle als dataframe.
+Die Berichtstabelle (Tibble) mit einer zusätzlichen logischen
+Spalte pro Regel. In der ersten Zeile (Master-Bericht) sind alle diese
+Spalten \code{TRUE}.
 }
 \description{
-Diese Funktion liest die Excel-Tabellen ein, in denen einmal die zu erstellenden Berichten und die TRUE-FALSE-REgeln stehen
+Liest zwei Excel-Tabellen ein und berechnet für jeden Bericht, welche
+Fragen er enthält:
+\itemize{
+\item die \strong{Berichtstabelle} („blank“): eine Zeile pro Bericht mit
+Merkmalen wie Studiengang oder Abschluss. Die \strong{erste Zeile muss der
+Master-Bericht} sein, der alle Fragen enthält.
+\item die \strong{Regeltabelle}: eine Zeile pro Frage bzw. Abschnitt. Die erste
+Spalte enthält den Namen (\verb{inkl.<Abschnitt>.<Frage>}, z. B. \code{inkl.2.1},
+oder \verb{header<Abschnitt>}), die zweite die Bedingung.
 }
+
+Bedingungen sind R-Code mit den Spaltennamen der Berichtstabelle, z. B.
+\code{Art != "speziell"} oder \code{Abschluss == "Bachelor of Science (B.Sc.)"}.
+Zusätzlich gibt es \verb{immer TRUE} und \verb{immer FALSE}. Für \code{header}-Zeilen wird
+die Bedingung automatisch erzeugt: Der Abschnitt erscheint, sobald eine
+seiner Fragen erscheint (der Text in der Tabelle wird ignoriert). Die
+\code{header}-Zeilen müssen deshalb nach den zugehörigen \code{inkl}-Zeilen stehen.
+
+Im Berichts-Template werden die Werte einer Zeile als Variablen
+(\code{inkl.2.1} usw.) gesetzt; die Auswertungsfunktionen fragen sie über ihr
+Argument \code{nr} ab (siehe \code{\link[=merge_sc]{merge_sc()}}).
+}
+\examples{
+# Fiktive Beispieltabellen mit sechs Berichten
+berichte <- system.file("extdata", "beispiel_berichte.xlsx", package = "setanalysis")
+regeln <- system.file("extdata", "beispiel_regeln.xlsx", package = "setanalysis")
+
+tabelle <- input_tabelle(berichte, regeln)
+tabelle[, c("Code", "inkl.1.2", "inkl.2.1", "header2", "inkl.3.1")]
+
+}
+\seealso{
+Weitere Funktionen zur Datenaufbereitung:
+\code{\link[=aggr_data]{aggr_data()}},
+\code{\link[=evasys_read_data]{evasys_read_data()}},
+\code{\link[=label_test]{label_test()}}
+}
+\concept{daten}

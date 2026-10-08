@@ -2,8 +2,7 @@
 % Please edit documentation in R/merge_fachsem.R
 \name{merge_fachsem}
 \alias{merge_fachsem}
-\title{merge-Funktion für Fachsemester
-\code{merge.fachsem()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Fachsemester auswerten}
 \usage{
 merge_fachsem(
   x,
@@ -15,23 +14,65 @@ merge_fachsem(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor mit den Fachsemestern (Zahlen).}
 
-\item{fig.height}{Höhe des Plots im Dokument}
+\item{fig.height}{Höhe der Abbildung in Zoll. Beim Standard 5 passen
+Tabelle und Abbildung bei \code{cutoff = 12} auf eine Seite.}
 
-\item{cutoff}{cutoff-Wert, alle Werte >= cutGoff werden zusammengefasst}
+\item{cutoff}{Ab diesem Fachsemester werden alle Werte zusammengefasst.}
 
-\item{group}{Gruppe: "a" für alle, "b" für Bachelor und "m" für Master}
+\item{group}{Für welche Gruppe gilt die Auswertung? \code{"a"} (alle), \code{"b"}
+(nur Bachelor) oder \code{"m"} (nur Master). Bestimmt Überschrift und
+Tabellenkopf; die Daten müssen vorher entsprechend gefiltert sein.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-merge-Funktion für Fachsemester
-\code{merge.fachsem()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt zur Frage nach dem Fachsemester (LVE):
+Überschrift, Häufigkeitstabelle und Balkendiagramm. Alle Semester ab
+\code{cutoff} werden zu einer Kategorie zusammengefasst (z. B. „12+“).
 }
 \examples{
-merge_fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_fachsem(BspDaten$dataLVE$FachSemN)
+
+# Bis zum 8. Semester einzeln, danach zusammengefasst
+merge_fachsem(BspDaten$dataLVE$FachSemN, cutoff = 8)
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=merge_num]{merge_num()}} für andere numerische Fragen.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

@@ -2,27 +2,37 @@
 % Please edit documentation in R/plots_bar.R
 \name{barplot_scmc}
 \alias{barplot_scmc}
-\title{Barplot zur Abbildung von von SC/MC-Fragen}
+\title{Waagerechtes Balkendiagramm für Single- und Multiple-Choice-Fragen}
 \usage{
 barplot_scmc(x, xlab = "")
 }
 \arguments{
-\item{x}{Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)}
+\item{x}{Data Frame mit den Spalten \code{label} (Antwortoption, ggf. mit
+Zeilenumbrüchen), \code{freq} (absolute Häufigkeit) und \code{perc} (Prozent), eine
+Zeile pro Antwortoption.}
 
-\item{xlab}{Beschriftung x-Achse}
+\item{xlab}{Beschriftung der x-Achse.}
 }
 \value{
-Barplot
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Barplot zur Abbildung von von SC/MC-Fragen
+Zeichnet für jede Antwortoption einen waagerechten Balken mit der
+absoluten Häufigkeit; rechts daneben steht der Prozentwert. Wird von
+\code{\link[=merge_sc]{merge_sc()}} und \code{\link[=merge_mc]{merge_mc()}} verwendet. Wurde keine Option gewählt, wird
+statt der Abbildung ein Hinweis ausgegeben.
 }
 \examples{
-
-# Beispiel für Verwendung in merge_sc ----------------------------------
-barplot_scmc(BspDaten$Plots$sc, xlab = "Häufigkeit")
-
-# Beispiel für Verwending in merge_mc ----------------------------------
 barplot_scmc(BspDaten$Plots$mc, xlab = "Häufigkeit")
 
 }
+\seealso{
+Weitere Grafikfunktionen:
+\code{\link[=barplot_freq]{barplot_freq()}},
+\code{\link[=barplot_sk]{barplot_sk()}},
+\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}},
+\code{\link[=boxplot_grade]{boxplot_grade()}},
+\code{\link[=boxplot_rueck]{boxplot_rueck()}},
+\code{\link[=boxplot_wl]{boxplot_wl()}}
+}
+\concept{grafiken}

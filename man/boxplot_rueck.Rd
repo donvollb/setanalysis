@@ -2,20 +2,32 @@
 % Please edit documentation in R/plots_box.R
 \name{boxplot_rueck}
 \alias{boxplot_rueck}
-\title{Abbildung des Rücklaufs}
+\title{Boxplot des Rücklaufs}
 \usage{
 boxplot_rueck(x)
 }
 \arguments{
-\item{x}{(aggregierte) Daten für den Boxplot}
+\item{x}{Numerischer Vektor mit dem Rücklauf je Lehrveranstaltung in
+Prozent.}
 }
 \value{
-Boxplot der Rücklaufs
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Abbildung des Rücklaufs
+Zeichnet einen waagerechten Boxplot des Rücklaufs in Prozent (Achse von 0
+bis 120 \%). Wird von \code{\link[=merge_rueck]{merge_rueck()}} verwendet.
 }
 \examples{
 boxplot_rueck(BspDaten$Plots$rueck)
 
 }
+\seealso{
+Weitere Grafikfunktionen:
+\code{\link[=barplot_freq]{barplot_freq()}},
+\code{\link[=barplot_scmc]{barplot_scmc()}},
+\code{\link[=barplot_sk]{barplot_sk()}},
+\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}},
+\code{\link[=boxplot_grade]{boxplot_grade()}},
+\code{\link[=boxplot_wl]{boxplot_wl()}}
+}
+\concept{grafiken}

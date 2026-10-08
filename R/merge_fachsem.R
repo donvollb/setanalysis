@@ -1,24 +1,44 @@
-#' merge-Funktion für Fachsemester
-#' `merge.fachsem()` ist eine veraltete Schreibweise der gleichen Funktion
+#' Fachsemester auswerten
 #'
-#' @param x Daten
-#' @param fig.height Höhe des Plots im Dokument
-#' @param cutoff cutoff-Wert, alle Werte >= cutGoff werden zusammengefasst
-#' @param group Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @description
+#' Erzeugt den Berichtsabschnitt zur Frage nach dem Fachsemester (LVE):
+#' Überschrift, Häufigkeitstabelle und Balkendiagramm. Alle Semester ab
+#' `cutoff` werden zu einer Kategorie zusammengefasst (z. B. „12+“).
 #'
-#' @examples merge_fachsem(BspDaten$dataLVE$FachSemN) |> markdown_in_viewer()
+#' @param x Vektor mit den Fachsemestern (Zahlen).
+#' @param fig.height Höhe der Abbildung in Zoll. Beim Standard 5 passen
+#'   Tabelle und Abbildung bei `cutoff = 12` auf eine Seite.
+#' @param cutoff Ab diesem Fachsemester werden alle Werte zusammengefasst.
+#' @param group Für welche Gruppe gilt die Auswertung? `"a"` (alle), `"b"`
+#'   (nur Bachelor) oder `"m"` (nur Master). Bestimmt Überschrift und
+#'   Tabellenkopf; die Daten müssen vorher entsprechend gefiltert sein.
+#' @inheritParams merge_sc
 #'
-#' @export merge_fachsem
-
-merge_fachsem <- function(x, # Daten
-                          fig.height = 5, # Höhe des Plots im Markdown, 5 ist optimal bei cutoff 12, damit Tabelle und Abbildung auf eine Seite passen
-                          cutoff = 12, # cutoff-Wert, alle Werte >= cutoff werden zusammengefasst
-                          group = "a", # Gruppe: "a" für alle, "b" für Bachelor und "m" für Master
-                          inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                          nr = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-{
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [merge_num()] für andere numerische Fragen.
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_fachsem(BspDaten$dataLVE$FachSemN)
+#'
+#' # Bis zum 8. Semester einzeln, danach zusammengefasst
+#' merge_fachsem(BspDaten$dataLVE$FachSemN, cutoff = 8)
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+merge_fachsem <- function(x,
+                          fig.height = 5,
+                          cutoff = 12,
+                          group = "a",
+                          inkl = "nr",
+                          nr = "") {
   inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {

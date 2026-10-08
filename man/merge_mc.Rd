@@ -2,7 +2,7 @@
 % Please edit documentation in R/merge_mc.R
 \name{merge_mc}
 \alias{merge_mc}
-\title{merge-Funktion für MC-Fragen}
+\title{Multiple-Choice-Frage auswerten}
 \usage{
 merge_mc(
   x,
@@ -22,45 +22,93 @@ merge_mc(
 )
 }
 \arguments{
-\item{x}{Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, dass Labels enthalten sind}
+\item{x}{Data Frame mit einer Spalte pro Antwortoption. Ein Wert ungleich 0
+bedeutet „gewählt“, 0 „nicht gewählt“, \code{NA} „keine Angabe“. Jede Spalte
+braucht das Attribut \code{label} in der Form \code{"Fragetext : Antwortoption"}
+(wie von \code{\link[=evasys_read_data]{evasys_read_data()}} erzeugt).}
 
-\item{head}{Fragetext, bei "default" wird dieser automatisch aus den Labels gezogen}
+\item{head}{Fragetext für die Überschrift. Bei \code{"default"} wird er aus dem
+Label der ersten Spalte genommen (Text vor dem \code{:}).}
 
-\item{col1.name}{Name der Antwortoption in der Tabelle}
+\item{col1.name}{Überschrift der Spalte mit den Antwortoptionen.}
 
-\item{col2.name}{Name der n-Spalte in der Tabelle}
+\item{col2.name}{Überschrift der Spalte mit den absoluten Häufigkeiten.}
 
-\item{show.table}{Soll die Tabelle angezeigt werden?}
+\item{show.table}{Soll die Tabelle gezeigt werden?}
 
-\item{fig.height}{Höhe der Abbildung, bei "default" ist es „Anzahl der Antwortoptionen“ * 0.75 + 1}
+\item{fig.height}{Höhe der Abbildung in Zoll. Bei \code{"default"} wird sie aus
+der Anzahl der Antwortoptionen berechnet.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{lime}{Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)}
+\item{lime}{Liegen die Daten im Format eines LimeSurvey-Exports vor
+(1 = gewählt, 2 = nicht gewählt; Label \code{"[Antwortoption] Fragetext"})?}
 
-\item{filter}{FILTER-Klammer für LimeSurvey}
+\item{filter}{Nur mit \code{lime = TRUE}: Text, der dem Fragetext in eckigen
+Klammern vorangestellt wird (z. B. ein Filterhinweis), oder \code{FALSE}.}
 
-\item{valid.perc}{Mit gültigen Prozent?}
+\item{valid.perc}{Sollen zusätzlich gültige Prozent (ohne fehlende Angaben)
+sowie die Zeilen „NAs“ und „Total“ gezeigt werden?}
 
-\item{order.table}{Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren}
+\item{order.table}{Reihenfolge der Antwortoptionen in der Tabelle: \code{FALSE}
+(Reihenfolge der Antwortoptionen), \code{"decreasing"} (nach Häufigkeit
+absteigend) oder ein anderer Wert, z. B. \code{TRUE} (aufsteigend).}
 
-\item{digits}{Wie viele Nachkommastellen sollen angezeigt werden?}
+\item{digits}{Anzahl der Nachkommastellen der Prozentangaben.}
 
-\item{show.plot}{Soll der Plot angezeigt werden?}
+\item{show.plot}{Soll ein Balkendiagramm gezeigt werden? Voreinstellung aus
+\link{setanalysis_defaults} (\code{show.plot.mc}).}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-\code{merge.mc()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt für eine Frage, bei der mehrere Antworten
+gewählt werden können (Multiple Choice): Überschrift, Tabelle mit der
+Häufigkeit jeder Antwortoption und optional ein Balkendiagramm.
 }
 \examples{
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+abschluesse <- BspDaten$dataSHOWUP[, paste0("abschluss_", 1:8)]
 
-# Gewünschte Items auswählen -------------------------------------------
+merge_mc(abschluesse)
 
-Abschlüsse <- BspDaten$dataSHOWUP[, paste0("abschluss_", 1:8)]
+# Nach Häufigkeit sortiert, ohne gültige Prozent und ohne Abbildung
+merge_mc(abschluesse, order.table = "decreasing", valid.perc = FALSE, show.plot = FALSE)
 
-# merge_mc-Funktion ausführen und anzeigen -----------------------------
-
-merge_mc(Abschlüsse) |> markdown_in_viewer()
+if (interactive()) markdown_in_viewer(merge_mc(abschluesse))
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=merge_sc]{merge_sc()}} für Fragen mit genau einer Antwortmöglichkeit.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

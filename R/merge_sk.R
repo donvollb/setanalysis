@@ -1,37 +1,70 @@
-#' Funktion für Likert-Skalen
-#' `merge.evasys.sk()` ist eine veraltete Schreibweise der gleichen Funktion
+#' Skalenfrage auswerten (Einzelantworten)
 #'
-#' @param x Daten
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#' @param show.alt Zeige Ausweichoptionen, falls es sie gibt
-#' @param number Anzahl Antwortoptionen des Items (OHNE AUSWEICHOPTIONEN!)
-#' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
-#' @param alt2 Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
-#' @param alt1.num Welche Zahl entspricht alt1
-#' @param alt2.num Welche Zahl entspricht alt2
-#' @param lime Handelt es sich um exportierte LimeSurvey-Daten?
-#' @param lime.brackets Müssen eckige Klammern um den Fragetext herum entfernt werden?
-#' @param show.plot Zeige Plot?
+#' @description
+#' Erzeugt den Berichtsabschnitt für eine einzelne Skalenfrage (z. B. eine
+#' 6-stufige Likert-Skala): Überschrift, Tabelle mit Kennwerten (n, M, SD,
+#' Median, Minimum, Maximum), optional die Häufigkeit von Ausweichoptionen
+#' sowie eine Abbildung mit der Verteilung der Antworten, Mittelwert und
+#' Standardabweichung ([barplot_sk()]).
+#'
+#' Der Abschnitt wird so ausgegeben, dass Überschrift, Tabelle und Abbildung
+#' nicht durch einen Seitenumbruch getrennt werden.
+#'
+#' @param x Vektor mit den Antworten (Zahlen). Erwartet die Attribute `label`
+#'   (Fragetext) und `labels` (benannte Antwortcodes; das erste und das
+#'   `number`-te Label beschriften die Pole der Abbildung).
+#' @param show.alt Sollen Ausweichoptionen und die Abbildung gezeigt werden?
+#'   Bei `FALSE` werden nur Überschrift und Tabelle ausgegeben.
+#' @param number Anzahl der Skalenstufen **ohne** Ausweichoptionen. Werte
+#'   außerhalb von `1:number` gehen nicht in Tabelle und Abbildung ein.
+#' @param alt1,alt2 Text der ersten bzw. zweiten Ausweichoption (z. B.
+#'   `"kann ich nicht beurteilen"`) oder `FALSE`, wenn es sie nicht gibt.
+#'   Ausgegeben wird, wie oft sie gewählt wurde.
+#' @param alt1.num,alt2.num Code der ersten bzw. zweiten Ausweichoption in
+#'   den Daten.
+#' @param lime Liegen die Daten im Format eines LimeSurvey-Exports vor (Faktor
+#'   mit den Antworttexten als Stufen)?
+#' @param lime.brackets Nur mit `lime = TRUE`: Steht der eigentliche
+#'   Fragetext in eckigen Klammern am Anfang des Labels? Dann wird nur dieser
+#'   Teil verwendet.
+#' @param show.plot Soll die Abbildung gezeigt werden? Voreinstellung aus
+#'   [setanalysis_defaults] (`show.plot.sk`).
+#' @inheritParams merge_sc
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [merge_aggr_sk()], um mehrere Skalenfragen gemeinsam oder auf
+#'   Ebene von Lehrveranstaltungen aggregiert darzustellen.
 #'
 #' @examples
-#' merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown_in_viewer()
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang)
 #'
-#' @export merge_sk
-
-merge_sk <- function(x, # Daten
-                     inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                     nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-                     show.alt = TRUE, # Zeige Ausweichoptionen, falls es sie gibt
-                     number = 6, # Skala (OHNE AUSWEICHOPTIONEN!)
-                     alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
-                     alt2 = FALSE, # Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
-                     alt1.num = 0, # Welche Zahl entspricht alt1
-                     alt2.num = 7, # Welche Zahl entspricht alt2
-                     lime = FALSE, # Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
-                     lime.brackets = FALSE, # Müssen eckige Klammern um den Fragetext herum entfernt werden?
-                     show.plot = setanalysis_defaults$show.plot.sk) # Zeige Plot?
-{
+#' # Mit Ausweichoption (Code 0 in den Daten)
+#' merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang, alt1 = "kann ich nicht beurteilen")
+#'
+#' if (interactive()) markdown_in_viewer(merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang))
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+merge_sk <- function(x,
+                     inkl = "nr",
+                     nr = "",
+                     show.alt = TRUE,
+                     number = 6,
+                     alt1 = FALSE,
+                     alt2 = FALSE,
+                     alt1.num = 0,
+                     alt2.num = 7,
+                     lime = FALSE,
+                     lime.brackets = FALSE,
+                     show.plot = setanalysis_defaults$show.plot.sk) {
   if (sum(!is.na(x)) == 0) {
     return(invisible())
   } # ohne gültige Daten nicht ausführen

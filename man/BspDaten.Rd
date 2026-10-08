@@ -3,29 +3,48 @@
 \docType{data}
 \name{BspDaten}
 \alias{BspDaten}
-\title{Beispiel-Daten}
+\title{Beispieldaten}
 \format{
-\subsection{\code{BspDaten}}{
-
-Eine Liste mit fünf Elementen
-
+Eine Liste mit fünf Elementen:
 \describe{
-\item{dataLVE}{Daten der LVE 2024}
-\item{dataSHOWUP}{Daten der SHOWUP 2024/25}
-\item{Plots}{Daten für die Testung der Bar- und Boxplotfunktionen}
-\item{Tabellen}{Daten für die Testung der Tabellenfunktionen}
-\item{pInfo}{Exemplarische personalised-Info-Tabelle}
-}
+\item{\code{dataLVE}}{Data Frame mit 4559 Antworten aus 449
+Lehrveranstaltungen, u. a. \code{Teilbereich} (Fachbereich), \code{Kennung}
+(pseudonymisierte Kennung der Lehrveranstaltung), \code{Teilnehmer}
+(angemeldete Teilnehmende), \code{FachSemN} (Fachsemester), \code{KF_01} bis
+\code{KF_03} (Kernfragen, 6-stufige Skala), \code{Note} (Gesamtnote 1–6), \code{V3_D}
+(Single Choice ja/nein) und \code{WL} (Workload in Stunden pro Woche).}
+\item{\code{dataSHOWUP}}{Data Frame mit 242 Antworten, u. a. \code{abschluss_1} bis
+\code{abschluss_8} (Multiple Choice), \code{fach1_2FB} und \code{fach2_2FB} (1. und
+2. Fach im 2-Fach-Bachelor), \code{offen} (offene Frage), \code{zugang_note}
+(Durchschnittsnote) und \code{info_ausr_studgang} (6-stufige Skala, Code 0 =
+„kann ich nicht beurteilen“).}
+\item{\code{pInfo}}{Beispiel einer Berichtstabelle mit vier Berichten (je
+Fachbereich). Die Spalte \code{FB.txt.falsch} enthält absichtlich einen
+Tippfehler zum Ausprobieren von \code{\link[=label_test]{label_test()}}.}
+\item{\code{Plots}}{Vorbereitete Eingaben für die Grafikfunktionen, z. B.
+\code{aggr.data} (Mittelwerte je Lehrveranstaltung), \code{grade}, \code{rueck}, \code{WL},
+\code{num}, \code{fsem}, \code{sc} und \code{mc}.}
+\item{\code{Tabellen}}{Vorbereitete Eingaben für die Tabellenfunktionen:
+\code{multi} (Mittelwerte von 15 Items je Lehrveranstaltung) und \code{freq}
+(Faktor ja/nein).}
 }
 }
 \usage{
 BspDaten
 }
 \description{
-Dieses Objekt enthält mehrere Beispieldaten, die in den Beispielen der
-Dokumentation genutzt werden. Die Daten entstamme der LVE 2024 und der SHOWUP 2024/25.
+Anonymisierte Daten aus einer Lehrveranstaltungsevaluation (LVE,
+Sommersemester 2024) und einer Studieneingangsbefragung (SHOWUP 2024/25),
+aufbereitet wie mit \code{\link[=evasys_read_data]{evasys_read_data()}}: Jede Frage trägt die Attribute
+\code{label} (Fragetext), \code{nr} (Fragenummer), \code{type} (Fragetyp) und ggf.
+\code{labels} (Antwortcodes). Die Daten werden in den Beispielen und Tests des
+Pakets verwendet.
 }
 \examples{
-BspDaten$dataLVE$FachSemN |> hist()
+str(BspDaten, max.level = 1)
+
+# Fragetext und Antwortcodes einer Frage
+attr(BspDaten$dataLVE$KF_01, "label")
+attr(BspDaten$dataLVE$KF_01, "labels")
 }
 \keyword{datasets}

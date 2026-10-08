@@ -2,25 +2,27 @@
 % Please edit documentation in R/plots_bar.R
 \name{barplot_sk}
 \alias{barplot_sk}
-\title{Barplot-Boxplot Hypbrid für die Darstellung von ordinalskalierten Variablen
-(analog zu alten EvaSys-Skalen)}
+\title{Verteilung einer Skalenfrage mit Mittelwert und Standardabweichung}
 \usage{
 barplot_sk(x, tmin, tmax, number = 6)
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Numerischer Vektor mit den Antworten. Werte außerhalb von
+\code{1:number} (z. B. Ausweichoptionen) werden nicht berücksichtigt.}
 
-\item{tmin}{Beschriftung links}
+\item{tmin, tmax}{Beschriftung des linken bzw. rechten Pols.}
 
-\item{tmax}{Beschriftung rechts}
-
-\item{number}{Skala (6 für Sechserskala etc.)}
+\item{number}{Anzahl der Skalenstufen.}
 }
 \value{
-Barplot-Boxplot-Hybrid
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Die optimale Chunk-Einstellung hierfür ist: fig.width = 6, fig.height = 1.4
+Zeichnet die Antworten einer Skalenfrage im Stil der evasys-Berichte: ein
+Balken pro Skalenstufe mit dem Prozentwert darüber, die Beschriftung der
+beiden Pole links und rechts sowie eine Markierung für Mittelwert und
+Standardabweichung. Wird von \code{\link[=merge_sk]{merge_sk()}} verwendet (Abbildungsgröße dort:
+9 × 2 Zoll).
 }
 \examples{
 barplot_sk(BspDaten$dataSHOWUP$info_ausr_studgang,
@@ -28,3 +30,16 @@ barplot_sk(BspDaten$dataSHOWUP$info_ausr_studgang,
 )
 
 }
+\seealso{
+\code{\link[=bsp_evasys_sk6]{bsp_evasys_sk6()}} für eine beschriftete Legende zu dieser
+Abbildung.
+
+Weitere Grafikfunktionen:
+\code{\link[=barplot_freq]{barplot_freq()}},
+\code{\link[=barplot_scmc]{barplot_scmc()}},
+\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}},
+\code{\link[=boxplot_grade]{boxplot_grade()}},
+\code{\link[=boxplot_rueck]{boxplot_rueck()}},
+\code{\link[=boxplot_wl]{boxplot_wl()}}
+}
+\concept{grafiken}

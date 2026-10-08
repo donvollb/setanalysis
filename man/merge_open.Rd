@@ -2,12 +2,7 @@
 % Please edit documentation in R/merge_open.R
 \name{merge_open}
 \alias{merge_open}
-\title{Funktion für offene Antworten
-Die Funktion war ehemals auf zwei (jetzt veraltete) Funktionen aufgeteilt:
-\itemize{
-\item \code{open.answers()}: Verweis auf Anhang bei Berichten mit Anhang
-\item \code{merge.open()}: Eigentliche Auswertung der offenen Antworten
-}}
+\title{Offene Frage auswerten}
 \usage{
 merge_open(
   x,
@@ -21,40 +16,78 @@ merge_open(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor (Text) mit den Antworten. Erwartet das Attribut \code{label}
+(Fragetext). Fehlende Antworten (\code{NA}) werden ignoriert.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{inkl_global}{Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden}
+\item{inkl_global}{Zweiter Schalter, der alle offenen Fragen eines Berichts
+gemeinsam ein- oder ausschließt. Voreinstellung aus
+\link{setanalysis_defaults} (\code{inkl.open}).}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{freq}{Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt.
-"auto" führt zur Anzeige der Häufigkeiten, wenn Antworten mehrfach vorkommen, sonst nicht.}
+\item{freq}{Sollen gleiche Antworten zusammengefasst und mit Häufigkeit
+gezeigt werden? \code{TRUE}, \code{FALSE} oder \code{"auto"} (nur, wenn mindestens eine
+Antwort mehrfach vorkommt).}
 
-\item{appendix}{Gibt es einen Extra-Anhang, in dem die offenen Antworten gesammelt werden sollen?}
+\item{appendix}{Sollen die Antworten im Anhang statt an Ort und Stelle
+stehen? Voreinstellung aus \link{setanalysis_defaults} (\code{open.appendix}).}
 
-\item{is_appendix}{Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.}
-
-\item{anchor}{Nur relevant, falls es einen Anhang gibt. Anker, damit auf den Output weiter oben im pdf Verlinkt werden kann.}
+\item{is_appendix, anchor}{Werden intern von \code{\link[=appendix_open]{appendix_open()}} gesetzt, um
+die Ausgabe im Anhang mit Rücksprung-Link zu erzeugen.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Funktion für offene Antworten
-Die Funktion war ehemals auf zwei (jetzt veraltete) Funktionen aufgeteilt:
-\itemize{
-\item \code{open.answers()}: Verweis auf Anhang bei Berichten mit Anhang
-\item \code{merge.open()}: Eigentliche Auswertung der offenen Antworten
-}
+Gibt die Antworten auf eine offene Frage als Tabelle aus. Kommen Antworten
+mehrfach vor (Groß- und Kleinschreibung wird dabei ignoriert), zeigt die
+Tabelle jede Antwort einmal mit ihrer Häufigkeit, sortiert nach Häufigkeit.
+
+Bei Berichten mit Anhang (\code{appendix = TRUE}, Standard) erscheint an der
+Stelle der Frage nur die Überschrift mit einem Link in den Anhang. Die
+Antworten werden gesammelt und am Ende des Berichts mit \code{\link[=appendix_open]{appendix_open()}}
+ausgegeben.
 }
 \examples{
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+# Antworten direkt an Ort und Stelle
+merge_open(BspDaten$dataSHOWUP$offen, appendix = FALSE)
 
-# Beispiel für Bericht mit Anhang – Häufigkeiten werden angezeigt
-{
-  merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
-  appendix.open()
-} |> markdown_in_viewer()
-
-# Ergebnis für Bericht ohne Anhang – Ohne Häufigkeiten, weil jeder Eintrag nur einmal
-merge_open(BspDaten$dataSHOWUP$offen, appendix = FALSE) |> markdown_in_viewer()
+# Bericht mit Anhang: zuerst nur Überschrift und Link, am Ende der Anhang
+merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
+appendix_open()
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=appendix_open]{appendix_open()}} für die Ausgabe des Anhangs.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

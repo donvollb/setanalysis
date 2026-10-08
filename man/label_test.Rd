@@ -2,26 +2,41 @@
 % Please edit documentation in R/data_preparation.R
 \name{label_test}
 \alias{label_test}
-\title{Testet, ob die Labels aus personalized.info so im Datensatz vorkommen}
+\title{Schreibweisen in Berichtstabelle und Daten abgleichen}
 \usage{
 label_test(col, var, exception = "alle")
 }
 \arguments{
-\item{col}{Spalte aus der Info-Tabelle, z.B. info$Fb.text}
+\item{col}{Spalte der Berichtstabelle, z. B. \code{info$FB.txt}.}
 
-\item{var}{Variable aus Datensatz, die der Spalte entspricht}
+\item{var}{Passende Variable im Datensatz. Bei einem Faktor werden seine
+Stufen verwendet, sonst die vorkommenden Werte.}
 
-\item{exception}{Ausnahmen, die nicht überprüft werden sollen}
+\item{exception}{Einträge von \code{col}, die nicht geprüft werden (Standard:
+\code{"alle"}, z. B. für einen Gesamtbericht).}
+}
+\value{
+Die Meldung als Text (unsichtbar); sie wird außerdem ausgegeben.
+Bei Abweichungen gibt es eine Meldung pro nicht gefundenem Eintrag.
 }
 \description{
-Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
+Prüft, ob alle Einträge einer Spalte der Berichtstabelle (z. B. die Namen
+der Fachbereiche, nach denen die Daten je Bericht gefiltert werden) in
+genau dieser Schreibweise auch in den Daten vorkommen. So fallen
+Tippfehler auf, bevor ein Bericht versehentlich leer bleibt.
 }
 \examples{
-# In diesem Fall wird die Variable "FB.text" aus der Info mit der Variable
-# "Teilbereich" aus dem Datensatz verglichen und alles stimmt
+# Alles stimmt
 label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
 
-# So sieht es aus, wenn die Labels nicht komplett übereinstimmen:
+# Ein Eintrag mit Tippfehler
 label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
 
 }
+\seealso{
+Weitere Funktionen zur Datenaufbereitung:
+\code{\link[=aggr_data]{aggr_data()}},
+\code{\link[=evasys_read_data]{evasys_read_data()}},
+\code{\link[=input_tabelle]{input_tabelle()}}
+}
+\concept{daten}

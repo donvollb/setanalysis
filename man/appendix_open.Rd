@@ -2,22 +2,56 @@
 % Please edit documentation in R/merge_open.R
 \name{appendix_open}
 \alias{appendix_open}
-\title{Funktion um alle offenen Antworten unten in den Anhang zu packen
-\code{appendix.open()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Anhang mit den offenen Antworten ausgeben}
 \usage{
 appendix_open(freq = "auto")
 }
 \arguments{
-\item{freq}{Sollen die offenen Antworten nach Häufigkeit gruppiert werden?}
+\item{freq}{Sollen gleiche Antworten zusammengefasst werden? Siehe
+\code{\link[=merge_open]{merge_open()}}.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben. Wurde vorher keine offene Frage mit Anhang
+aufgerufen, wird nichts ausgegeben.
 }
 \description{
-Funktion um alle offenen Antworten unten in den Anhang zu packen
-\code{appendix.open()} ist eine veraltete Schreibweise der gleichen Funktion
+Gibt den Anhang „Fragen mit offenem Antwortformat“ aus: alle offenen
+Fragen, die zuvor mit \code{merge_open(..., appendix = TRUE)} aufgerufen wurden,
+jeweils mit Link zurück zur Stelle im Bericht.
+
+\code{appendix_open()} gehört ans Ende jedes Berichts mit Anhang. Danach wird
+der Speicher der offenen Antworten (\link{list_open_answers}) geleert, damit ein
+weiterer Bericht in derselben R-Sitzung neu beginnt.
 }
 \examples{
-# Damit diese Funktion sinnvoll funktioniert, muss vorher mindestens eine
-# offene Frage aufgerufen worden
-invisible(capture.output(merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)))
-appendix_open() |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
+
+# … weitere Fragen des Berichts …
+
+appendix_open()
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+Weitere Auswertungsfunktionen:
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

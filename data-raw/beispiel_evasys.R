@@ -10,7 +10,7 @@
 # Beide Dateien sind wie bei evasys Latin-1-kodiert und durch Semikolon getrennt.
 #
 # Ausführen aus dem Paketverzeichnis:
-# source("tests/testthat/fixtures/make_evasys_fixture.R")
+# source("data-raw/beispiel_evasys.R")
 
 rohdaten <- c(
   '"[FILTER] semester";"zufrieden";"abschluss_1";"abschluss_2";"kommentar";"alter"',
@@ -77,6 +77,6 @@ codebuch <- c(
   trenner
 )
 
-ordner <- "tests/testthat/fixtures"
-writeLines(iconv(rohdaten, "UTF-8", "latin1"), file.path(ordner, "evasys_rohdaten.csv"), useBytes = TRUE)
-writeLines(iconv(codebuch, "UTF-8", "latin1"), file.path(ordner, "evasys_codebuch.csv"), useBytes = TRUE)
+ordner <- "inst/extdata"
+writeLines(iconv(rohdaten, "UTF-8", "latin1"), file.path(ordner, "beispiel_evasys_rohdaten.csv"), useBytes = TRUE)
+writeLines(iconv(codebuch, "UTF-8", "latin1"), file.path(ordner, "beispiel_evasys_codebuch.csv"), useBytes = TRUE)

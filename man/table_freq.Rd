@@ -2,7 +2,7 @@
 % Please edit documentation in R/tables.R
 \name{table_freq}
 \alias{table_freq}
-\title{Einfache Häufigkeitstabelle}
+\title{Häufigkeitstabelle erstellen}
 \usage{
 table_freq(
   x,
@@ -17,31 +17,49 @@ table_freq(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor oder Faktor mit den Antworten.}
 
-\item{cutoff}{Soll es einen "cutoff" geben? z.B. werden bei 12 alle Werte >= 12 in "12 oder höher" dargestellt}
+\item{cutoff}{Ist der größte Wert in \code{x} gleich \code{cutoff}, wird er als
+„\code{cutoff} oder höher“ beschriftet (für vorher zusammengefasste Werte),
+sonst \code{FALSE}.}
 
-\item{show.all}{Sollen auch nicht gewählte Antwortoptionen angezeigt werden?}
+\item{show.all}{Sollen auch Antwortoptionen gezeigt werden, die niemand
+gewählt hat?}
 
-\item{col1.name}{Name der ersten Zelle der Kopfzeile}
+\item{col1.name, col2.name}{Überschrift der ersten Spalte (Antworten) und
+der zweiten Spalte (absolute Häufigkeit).}
 
-\item{col2.name}{Name der zweiten Zelle der Kopfzeile (standardmäßig N)}
+\item{col.width}{Spaltenbreiten (siehe \code{\link[=lv_table]{lv_table()}}). Bei \code{"default"}
+werden \code{col.width3} bzw. \code{col.width4} aus \link{setanalysis_defaults}
+verwendet.}
 
-\item{col.width}{Spaltenbreiten (siehe lv_table)}
+\item{order.table}{Reihenfolge der Zeilen: \code{FALSE} (wie in den Daten),
+\code{"decreasing"} (nach Häufigkeit absteigend) oder ein anderer Wert, z. B.
+\code{TRUE} (aufsteigend). „NAs“ und „Total“ bleiben am Ende.}
 
-\item{order.table}{Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren}
+\item{bold}{Soll die Kopfzeile fett gedruckt werden?}
 
-\item{bold}{Soll die Kopfzeile fett sein? (siehe lv_table)}
-
-\item{digits}{Nachkommastellen}
+\item{digits}{Anzahl der Nachkommastellen der Prozentangaben.}
 }
 \value{
-Tabelle
+Ein \code{tinytable}-Objekt (siehe \code{\link[=lv_table]{lv_table()}}).
 }
 \description{
-Einfache Häufigkeitstabelle
+Erstellt eine Häufigkeitstabelle mit absoluter Häufigkeit, Prozent und der
+Zeile „Total“. Gibt es fehlende Werte, kommen die Zeile „NAs“ und die
+Spalte „gültige \%“ (Prozent ohne fehlende Werte) hinzu. Wird z. B. von
+\code{\link[=merge_sc]{merge_sc()}} und \code{\link[=merge_fachsem]{merge_fachsem()}} verwendet.
 }
 \examples{
-table_freq(BspDaten$Tabellen$freq)
+table_freq(BspDaten$Tabellen$freq, col1.name = "Überschneidung")
+
+table_freq(BspDaten$Tabellen$freq, order.table = "decreasing")
 
 }
+\seealso{
+Weitere Tabellenfunktionen:
+\code{\link[=lv_table]{lv_table()}},
+\code{\link[=table_stat_multi]{table_stat_multi()}},
+\code{\link[=table_stat_single]{table_stat_single()}}
+}
+\concept{tabellen}

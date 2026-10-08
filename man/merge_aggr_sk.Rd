@@ -2,8 +2,7 @@
 % Please edit documentation in R/merge_aggr_sk.R
 \name{merge_aggr_sk}
 \alias{merge_aggr_sk}
-\title{merge-Funktion für die Darstellung der aggregierten Ergebnisse einer oder
-mehrerer Skalenfragen#}
+\title{Skalenfragen gemeinsam auswerten, optional pro Lehrveranstaltung aggregiert}
 \usage{
 merge_aggr_sk(
   x,
@@ -27,53 +26,111 @@ merge_aggr_sk(
 )
 }
 \arguments{
-\item{x}{Itemdaten (Dataframe mit einer oder mehreren Spalten)}
+\item{x}{Data Frame mit einer Spalte pro Item (oder ein einzelnes Item als
+Vektor). Jede Spalte braucht die Attribute \code{label} (Fragetext) und
+\code{labels} (benannte Antwortcodes).}
 
-\item{kennung}{Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt)}
+\item{kennung}{Vektor mit der Kennung der Lehrveranstaltung (oder einer
+anderen Gruppe) für jede Zeile von \code{x}. Nur bei \code{aggr = TRUE} nötig.}
 
-\item{number}{Anzahl Antwortoptionen der Items (OHNE AUSWEICHOPTIONEN!), wird bei "default" automatisch gezogen}
+\item{number}{Anzahl der Skalenstufen \strong{ohne} Ausweichoptionen. Bei
+\code{"default"} die Anzahl der Antwortlabels der Items (alle Items müssen
+gleich viele haben). Haben Ausweichoptionen ein eigenes Label, sollte
+\code{number} angegeben werden.}
 
-\item{alt1}{Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)}
+\item{alt1, alt2}{Text der ersten bzw. zweiten Ausweichoption oder \code{FALSE}.
+Ist ein Text angegeben, zeigt die Tabelle eine zusätzliche Spalte mit der
+Häufigkeit dieser Antwort je Item. \code{alt2} ist nur zusammen mit \code{alt1}
+möglich.}
 
-\item{alt2}{Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)}
+\item{alt1.num, alt2.num}{Code der ersten bzw. zweiten Ausweichoption in
+den Daten.}
 
-\item{alt1.num}{Welche Zahl entspricht alt1}
+\item{nr}{Fragenummer des \strong{ersten} Items, z. B. \code{"2.1"}. Die folgenden
+Items werden fortlaufend nummeriert (\code{"2.2"}, \code{"2.3"}, …), die Nummern
+werden den Fragetexten vorangestellt. Bei \code{inkl = "nr"} wird jedes Item
+einzeln über seine Variable \verb{inkl.<nr>} ein- oder ausgeschlossen.}
 
-\item{alt2.num}{Welche Zahl entspricht alt2}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer der ersten Frage}
+\item{tmin, tmid, tmax}{Beschriftung des linken Pols, der Mitte (nur bei
+ungerader Stufenzahl) und des rechten Pols. Bei \code{"default"} werden die
+Antwortlabels der Items verwendet; unterscheiden sie sich zwischen den
+Items, gibt es eine Warnung.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{show.table}{Soll die Tabelle gezeigt werden?}
 
-\item{tmin}{linker Pol, bei "default" wird das Label automatisch gezogen}
+\item{show.plot}{Sollen die Boxplots gezeigt werden?}
 
-\item{tmid}{mittlerer Pol (für 5er Skalen), bei "default" automatisch}
+\item{fig.height}{Höhe der Abbildung in Zoll. Bei \code{"default"} wird sie aus
+der Anzahl der Items berechnet.}
 
-\item{tmax}{rechter Pol, "default" wie oben}
+\item{col2.name}{Überschrift der Spalte mit der Anzahl (z. B. Anzahl der
+Lehrveranstaltungen bei \code{aggr = TRUE}).}
 
-\item{show.table}{Soll die Tabelle angezeigt werden?}
+\item{message}{Text, der vor der Tabelle ausgegeben wird (Markdown), oder
+\code{""} für keinen.}
 
-\item{show.plot}{Sollen Boxplots dazu angezeigt werden?}
-
-\item{fig.height}{Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1}
-
-\item{col2.name}{Titel der n-Spalte}
-
-\item{message}{Soll ein Hinweistext am Anfang erfolgen?}
-
-\item{aggr}{Sollen Daten aggregiert werden?}
+\item{aggr}{Sollen die Antworten zuerst je \code{kennung} gemittelt werden
+(siehe \code{\link[=aggr_data]{aggr_data()}})?}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-\code{merge.multi.sk()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt für eine oder mehrere Skalenfragen mit
+derselben Skala: eine gemeinsame Tabelle mit Kennwerten je Item (n, M, SD,
+Median, Minimum, Maximum, optional Ausweichoptionen) und Boxplots je Item
+(\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}}).
+
+Mit \code{aggr = TRUE} werden die Antworten zuerst je Lehrveranstaltung
+(\code{kennung}) gemittelt. Jede Lehrveranstaltung geht dann mit ihrem
+Mittelwert ein, und \code{n} zählt Lehrveranstaltungen statt Antworten.
 }
 \examples{
-# Objekt erstellen, dass mehrere Fragen enthält:
-KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+kernfragen <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
 
-# Funktion ausführen:
-markdown_in_viewer(merge_aggr_sk(KF_123,
-  number = 6, aggr = TRUE,
-  kennung = BspDaten$dataLVE$Kennung
-))
+# Mittelwerte je Lehrveranstaltung
+merge_aggr_sk(kernfragen, kennung = BspDaten$dataLVE$Kennung, aggr = TRUE)
+
+# Alle Antworten, nur Tabelle
+merge_aggr_sk(kernfragen, show.plot = FALSE)
+
+if (interactive()) {
+  markdown_in_viewer(
+    merge_aggr_sk(kernfragen, kennung = BspDaten$dataLVE$Kennung, aggr = TRUE)
+  )
+}
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=merge_sk]{merge_sk()}} für die Auswertung einer einzelnen Skalenfrage mit
+Häufigkeitsverteilung.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

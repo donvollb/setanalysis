@@ -2,21 +2,77 @@
 % Please edit documentation in R/merge_auto.R
 \name{merge_auto}
 \alias{merge_auto}
-\title{Funktion, die den automatisch Itemtyp erkennt und entsprechend auswertet}
+\title{Frage mit passender Funktion auswerten (Typ wird erkannt)}
 \usage{
 merge_auto(x, nr_auto = TRUE, nr = "", inkl = "nr", ...)
 }
 \arguments{
-\item{x}{auszuwertende Daten}
+\item{x}{Eine Spalte (Vektor) oder ein Data Frame mit den Spalten einer
+MC-Frage bzw. mehreren Skalenfragen.}
 
-\item{nr_auto}{Soll die Nummer automatisch ermittelt werden?}
+\item{nr_auto}{Soll die Fragenummer aus dem Attribut \code{nr} übernommen
+werden, wenn weder \code{nr} noch \code{inkl} angegeben sind? Dann wird auch die
+Variable \verb{inkl.<nr>} abgefragt, die dafür existieren muss.}
 
-\item{nr}{Manuelle Eingabemöglichkeit der Nummer}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{...}{Argumente zum „weitergeben“ in die Funktion}
+\item{...}{Weitere Argumente für die jeweilige Auswertungsfunktion.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Funktion, die den automatisch Itemtyp erkennt und entsprechend auswertet
+Wählt anhand des Attributs \code{type} (von \code{\link[=evasys_read_data]{evasys_read_data()}} gesetzt) die
+passende Auswertungsfunktion und ruft sie auf:\tabular{ll}{
+   Typ in \code{x} \tab Auswertung \cr
+   \code{"sc"} (Single Choice) \tab \code{\link[=merge_sc]{merge_sc()}} \cr
+   \code{"sk"} (Skalenfrage) \tab \code{\link[=merge_sk]{merge_sk()}} \cr
+   \code{"open/num"} mit überwiegend Text \tab \code{\link[=merge_open]{merge_open()}} \cr
+   \code{"open/num"} mit Zahlen \tab \code{\link[=merge_num]{merge_num()}} \cr
+   Data Frame mit \code{"mc"}-Spalten \tab \code{\link[=merge_mc]{merge_mc()}} \cr
+   Data Frame mit \code{"sk"}-Spalten \tab \code{\link[=merge_aggr_sk]{merge_aggr_sk()}} \cr
 }
+
+
+Bei offenen Fragen entscheidet der Inhalt: Zahlen oder Text, der zu mehr
+als der Hälfte aus Ziffern besteht, gelten als numerisch.
+}
+\examples{
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_auto(BspDaten$dataLVE$V3_D, nr_auto = FALSE) # Single Choice
+merge_auto(BspDaten$dataSHOWUP$zugang_note, nr_auto = FALSE) # numerisch
+\dontshow{
+setwd(.old_wd)
+}
+
+}
+\seealso{
+\code{\link[=merge_many]{merge_many()}} für mehrere Fragen auf einmal.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

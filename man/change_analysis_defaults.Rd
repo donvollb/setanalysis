@@ -2,31 +2,43 @@
 % Please edit documentation in R/settings.R
 \name{change_analysis_defaults}
 \alias{change_analysis_defaults}
-\title{Funktion um Einstellungsvariablen anzupassen}
+\title{Einstellungen des Pakets ändern}
 \usage{
 change_analysis_defaults(...)
 }
 \arguments{
-\item{...}{Argumente, die die Einstellungen ändern sollen, z. B.
-\code{color.bars = "red"} oder \code{show.plot.sc = FALSE}.
-Die Namen der Argumente müssen mit den Namen der Einstellungsvariablen übereinstimmen.}
+\item{...}{Einstellungen in der Form \code{name = wert}, z. B.
+\code{color.bars = "#507289"} oder \code{show.plot.sc = FALSE}. Die möglichen Namen
+stehen in \link{setanalysis_defaults}.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}).
 }
 \description{
-Funktion um Einstellungsvariablen anzupassen
+Ändert einen oder mehrere Einträge in \link{setanalysis_defaults}, z. B. die
+Akzentfarbe oder ob Abbildungen gezeigt werden. Die Änderung gilt für alle
+folgenden Aufrufe in der R-Sitzung, typischerweise also für den ganzen
+Bericht. Nur bestehende Einstellungen können geändert werden.
 }
 \examples{
+alte_werte <- mget(c("color.bars", "show.plot.sc"), envir = setanalysis_defaults)
 
-# Hier wird die Farbe der Balken auf rot geändert und eingestellt,
-# dass keine SC-Plots gezeigt werden sollen
-
-change_analysis_defaults(color.bars = "red", show.plot.sc = FALSE)
-
-# Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
-
+# Balken blaugrau, keine Abbildungen bei Single-Choice-Fragen
+change_analysis_defaults(color.bars = "#507289", show.plot.sc = FALSE)
 setanalysis_defaults$color.bars
-setanalysis_defaults$show.plot.sc
 
-# Diese Änderung ginge nicht, weil die Variable nicht existiert
-# change_analysis_defaults(color.width2 = "turquoise")
+# Unbekannte Einstellungen führen zu einem Fehler
+try(change_analysis_defaults(farbe = "red"))
+
+# Vorherige Werte wiederherstellen
+do.call(change_analysis_defaults, alte_werte)
 
 }
+\seealso{
+Weitere Werkzeuge:
+\code{\link{list_open_answers}},
+\code{\link[=markdown_in_viewer]{markdown_in_viewer()}},
+\code{\link{setanalysis_defaults}},
+\code{\link[=subchunkify]{subchunkify()}}
+}
+\concept{werkzeuge}

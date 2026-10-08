@@ -2,7 +2,7 @@
 % Please edit documentation in R/tables.R
 \name{lv_table}
 \alias{lv_table}
-\title{Funktion zur Tabellenerstellung}
+\title{Tabelle im Stil der Berichte formatieren}
 \usage{
 lv_table(
   x,
@@ -14,24 +14,45 @@ lv_table(
 )
 }
 \arguments{
-\item{x}{Objekt (üblicherweise Dataframe)}
+\item{x}{Data Frame mit dem Tabelleninhalt.}
 
-\item{col.width}{Vektor der Spaltenbreiten, bei "default" automatische Spaltenbreiten}
+\item{col.width}{Spaltenbreiten, wie bei \code{width} in \code{\link[tinytable:tt]{tinytable::tt()}}:
+eine Zahl (Breite der ganzen Tabelle als Anteil der Seitenbreite) oder ein
+Vektor mit relativen Breiten je Spalte.}
 
-\item{bold}{Sollen die Kopfzeile fettgedruckt sein?}
+\item{bold}{Soll die Kopfzeile fett gedruckt werden?}
 
-\item{bold.corner}{Soll die Zelle links oben im Eck fettgedruckt sein?}
+\item{bold.corner}{Soll auch die Zelle oben links fett sein? Bei \code{FALSE}
+wird sie normal gedruckt (z. B. wenn dort ein Hinweis zur Skala steht).}
 
-\item{digits}{Anzahl der Nachkommastellen}
+\item{digits}{Anzahl der Nachkommastellen für Zahlen.}
 
-\item{striped}{Soll die Tabelle Streifen (Schattierungen) erhalten}
+\item{striped}{Sollen die Zeilen abwechselnd eingefärbt werden?}
 }
 \value{
-Tabelle
+Ein \code{tinytable}-Objekt. Im Bericht (auch über \code{\link[=subchunkify]{subchunkify()}})
+wird es automatisch im passenden Format ausgegeben.
 }
 \description{
-Funktion zur Tabellenerstellung
+Wandelt einen Data Frame in eine mit \code{\link[tinytable:tt]{tinytable::tt()}} formatierte Tabelle
+im einheitlichen Stil der Berichte um: fette Kopfzeile, abwechselnd
+eingefärbte Zeilen (Akzentfarbe \code{color.bars} aus \link{setanalysis_defaults}
+mit 10 \% Deckkraft), erste Spalte linksbündig, übrige Spalten rechtsbündig
+(bei nur einer Zeile zentriert). Spalten mit ganzen Zahlen werden ohne
+Nachkommastellen gezeigt.
+
+Alle anderen Tabellenfunktionen des Pakets nutzen \code{lv_table()}.
 }
 \examples{
-lv_table(head(mtcars, 10))
+lv_table(head(mtcars))
+
+lv_table(head(mtcars), striped = FALSE, digits = 1)
+
 }
+\seealso{
+Weitere Tabellenfunktionen:
+\code{\link[=table_freq]{table_freq()}},
+\code{\link[=table_stat_multi]{table_stat_multi()}},
+\code{\link[=table_stat_single]{table_stat_single()}}
+}
+\concept{tabellen}

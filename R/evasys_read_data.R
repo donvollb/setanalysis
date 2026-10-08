@@ -1,13 +1,40 @@
-#' Aufbereitung von Rohdaten aus evasys
+#' Rohdaten und Codebuch aus evasys einlesen
 #'
-#' Diese Funktion liest Rohdaten aus EvaSys ein und bereitet sie auf. Dafür wird der Rohdatensatz als csv-Datei sowie das zugehörige Codebuch als csv-Datei benötigt.
+#' @description
+#' Liest den CSV-Export der Rohdaten und das zugehörige Codebuch aus evasys
+#' ein und bereitet die Daten für die Auswertung auf. Jede Variable erhält die
+#' Attribute
 #'
-#' @param raw.data.path Der Dateipfad zu den Rohdaten (eine csv-Datei). Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.
-#' @param codebook.path Der Dateipfad zum zugehörigen Codebook aus evasys (eine csv-Datei). Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.
-#' @return Der aufbereitete Datensatz als dataframe.
-
+#' * `label`: Fragetext (ohne Fragenummer),
+#' * `nr`: Fragenummer im Fragebogen, z. B. `"2.1"`,
+#' * `type`: Fragetyp, `"sc"` (Single Choice), `"mc"` (Multiple Choice),
+#'   `"sk"` (Skalenfrage) oder `"open/num"` (offene oder numerische Frage),
+#' * `labels`: bei Single-Choice- und Skalenfragen die Antwortcodes mit ihren
+#'   Bezeichnungen.
+#'
+#' Außerdem werden das Präfix `[FILTER]` aus Spaltennamen entfernt, die
+#' Spalten von MC-Fragen passend zum Codebuch nummeriert (`frage_1`,
+#' `frage_2`, …) und Platzhalter in offenen Antworten (`""`, `"-"`, `"."`,
+#' `"/"`, `"[Freitextfeld]"`) durch `NA` ersetzt.
+#'
+#' @param raw.data.path Pfad zur CSV-Datei mit den Rohdaten. Ohne Angabe
+#'   öffnet sich ein Dialog zur Dateiauswahl (nur in RStudio).
+#' @param codebook.path Pfad zur CSV-Datei mit dem Codebuch. Ohne Angabe
+#'   öffnet sich ein Dialog zur Dateiauswahl (nur in RStudio).
+#'
+#' @returns Data Frame mit den aufbereiteten Daten.
+#'
+#' @family daten
+#'
+#' @examples
+#' # Kleiner, fiktiver Export im Format von evasys
+#' rohdaten <- system.file("extdata", "beispiel_evasys_rohdaten.csv", package = "setanalysis")
+#' codebuch <- system.file("extdata", "beispiel_evasys_codebuch.csv", package = "setanalysis")
+#'
+#' daten <- evasys_read_data(rohdaten, codebuch)
+#' str(daten$zufrieden)
+#'
 #' @export
-
 evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
   # Rohdaten und Codebuch einlesen --------------------------------------------
 

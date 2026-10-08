@@ -2,18 +2,51 @@
 % Please edit documentation in R/evasys_read_data.R
 \name{evasys_read_data}
 \alias{evasys_read_data}
-\title{Aufbereitung von Rohdaten aus evasys}
+\title{Rohdaten und Codebuch aus evasys einlesen}
 \usage{
 evasys_read_data(raw.data.path = NULL, codebook.path = NULL)
 }
 \arguments{
-\item{raw.data.path}{Der Dateipfad zu den Rohdaten (eine csv-Datei). Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.}
+\item{raw.data.path}{Pfad zur CSV-Datei mit den Rohdaten. Ohne Angabe
+öffnet sich ein Dialog zur Dateiauswahl (nur in RStudio).}
 
-\item{codebook.path}{Der Dateipfad zum zugehörigen Codebook aus evasys (eine csv-Datei). Sofern nichts angegeben wird, kann man eine Datei über ein Dialogfenster auswählen.}
+\item{codebook.path}{Pfad zur CSV-Datei mit dem Codebuch. Ohne Angabe
+öffnet sich ein Dialog zur Dateiauswahl (nur in RStudio).}
 }
 \value{
-Der aufbereitete Datensatz als dataframe.
+Data Frame mit den aufbereiteten Daten.
 }
 \description{
-Diese Funktion liest Rohdaten aus EvaSys ein und bereitet sie auf. Dafür wird der Rohdatensatz als csv-Datei sowie das zugehörige Codebuch als csv-Datei benötigt.
+Liest den CSV-Export der Rohdaten und das zugehörige Codebuch aus evasys
+ein und bereitet die Daten für die Auswertung auf. Jede Variable erhält die
+Attribute
+\itemize{
+\item \code{label}: Fragetext (ohne Fragenummer),
+\item \code{nr}: Fragenummer im Fragebogen, z. B. \code{"2.1"},
+\item \code{type}: Fragetyp, \code{"sc"} (Single Choice), \code{"mc"} (Multiple Choice),
+\code{"sk"} (Skalenfrage) oder \code{"open/num"} (offene oder numerische Frage),
+\item \code{labels}: bei Single-Choice- und Skalenfragen die Antwortcodes mit ihren
+Bezeichnungen.
 }
+
+Außerdem werden das Präfix \verb{[FILTER]} aus Spaltennamen entfernt, die
+Spalten von MC-Fragen passend zum Codebuch nummeriert (\code{frage_1},
+\code{frage_2}, …) und Platzhalter in offenen Antworten (\code{""}, \code{"-"}, \code{"."},
+\code{"/"}, \code{"[Freitextfeld]"}) durch \code{NA} ersetzt.
+}
+\examples{
+# Kleiner, fiktiver Export im Format von evasys
+rohdaten <- system.file("extdata", "beispiel_evasys_rohdaten.csv", package = "setanalysis")
+codebuch <- system.file("extdata", "beispiel_evasys_codebuch.csv", package = "setanalysis")
+
+daten <- evasys_read_data(rohdaten, codebuch)
+str(daten$zufrieden)
+
+}
+\seealso{
+Weitere Funktionen zur Datenaufbereitung:
+\code{\link[=aggr_data]{aggr_data()}},
+\code{\link[=input_tabelle]{input_tabelle()}},
+\code{\link[=label_test]{label_test()}}
+}
+\concept{daten}

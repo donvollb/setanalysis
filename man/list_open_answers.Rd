@@ -2,10 +2,26 @@
 % Please edit documentation in R/settings.R
 \name{list_open_answers}
 \alias{list_open_answers}
-\title{Umgebung für die offenen Antworten -------------------------------------}
+\title{Speicher für die offenen Antworten des Anhangs}
+\format{
+Eine Umgebung mit dem Zähler \code{anchor.nr} (Anzahl der gesammelten
+Fragen) sowie den Einträgen \code{var.1}, \code{nr.1}, \code{var.2}, \code{nr.2}, … mit den
+Antworten und Fragenummern.
+}
 \usage{
 list_open_answers
 }
 \description{
-Diese Umgebung wird verwendet, um die offenen Antworten für die verschiedenen Fragen zu speichern.
+Umgebung, in der \code{\link[=merge_open]{merge_open()}} bei \code{appendix = TRUE} die offenen Fragen
+eines Berichts sammelt, bis \code{\link[=appendix_open]{appendix_open()}} sie im Anhang ausgibt und den
+Speicher wieder leert. Für die normale Nutzung muss man sie nicht direkt
+ansprechen.
 }
+\seealso{
+Weitere Werkzeuge:
+\code{\link[=change_analysis_defaults]{change_analysis_defaults()}},
+\code{\link[=markdown_in_viewer]{markdown_in_viewer()}},
+\code{\link{setanalysis_defaults}},
+\code{\link[=subchunkify]{subchunkify()}}
+}
+\concept{werkzeuge}

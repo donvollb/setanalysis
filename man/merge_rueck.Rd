@@ -2,25 +2,53 @@
 % Please edit documentation in R/merge_rueck.R
 \name{merge_rueck}
 \alias{merge_rueck}
-\title{Boxplot für Rücklaufsabbildung (LVE)}
+\title{Rücklauf der Lehrveranstaltungen auswerten}
 \usage{
 merge_rueck(x, kennung)
 }
 \arguments{
-\item{x}{Objekt mit Teilnehmendenzahlen}
+\item{x}{Vektor mit der angegebenen Teilnehmendenzahl der jeweiligen
+Lehrveranstaltung (in jeder Zeile einer Lehrveranstaltung derselbe Wert).}
 
-\item{kennung}{Kennungen}
+\item{kennung}{Vektor mit der Kennung der Lehrveranstaltung für jede
+Zeile.}
 }
 \value{
-Boxplot der Rückläufe
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Boxplot für Rücklaufsabbildung (LVE)
+Berechnet für jede Lehrveranstaltung den Rücklauf (Anzahl der Antworten
+geteilt durch die Zahl der angemeldeten Teilnehmenden, in Prozent) und gibt
+eine Tabelle mit Kennwerten sowie einen Boxplot (\code{\link[=boxplot_rueck]{boxplot_rueck()}}) aus.
+
+Da die Teilnehmendenzahl meist bei der Anmeldung zur Evaluation angegeben
+wird, kann der Rücklauf über 100 \% liegen.
 }
 \examples{
-merge_rueck(
-  BspDaten$dataLVE$Teilnehmer,
-  BspDaten$dataLVE$Kennung
-) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_rueck(BspDaten$dataLVE$Teilnehmer, BspDaten$dataLVE$Kennung)
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

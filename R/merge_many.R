@@ -1,17 +1,46 @@
-#' Funktion für die automatische Auswertung mehrerer verschiedener Items unterschiedlicher Typen
+#' Mehrere Fragen auf einmal auswerten
 #'
-#' @param x Ausschnitt aus dem Datensatz, der ausgewertet werden soll
-#' @param multi.sk Sollen aufeinanderfolgende sk-Items gemeinsam ausgewertet werden?
-#' @param nr_auto Soll die Nummer automatisch ermittelt werden?
-#' @param nr Manuelle Eingabemöglichkeit der Nummer
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
+#' @description
+#' Geht die Spalten eines Data Frames der Reihe nach durch und wertet jede
+#' Frage mit [merge_auto()] aus. Spalten, die zusammengehören, werden dabei
+#' gemeinsam ausgewertet:
 #'
-#' @export merge_many
-
-merge_many <- function(x, # Ausschnitt aus dem Datensatz
-                       multi.sk = TRUE, # Sollen aufeinanderfolgende sk-Items gemeinsam ausgewertet werden?
-                       nr_auto = TRUE, # Soll die Nummer automatisch ermittelt werden?
-                       nr = "", #
+#' * Spalten einer MC-Frage (gleiche Fragenummer im Attribut `nr`) mit
+#'   [merge_mc()],
+#' * aufeinanderfolgende Skalenfragen mit [merge_aggr_sk()] (bei
+#'   `multi.sk = TRUE`); eine einzelne Skalenfrage mit [merge_sk()].
+#'
+#' Alle Spalten brauchen das Attribut `type` (`"sc"`, `"mc"`, `"sk"` oder
+#' `"open/num"`), wie es [evasys_read_data()] setzt.
+#'
+#' @param x Data Frame mit den auszuwertenden Fragen (oder eine einzelne
+#'   Spalte).
+#' @param multi.sk Sollen aufeinanderfolgende Skalenfragen gemeinsam
+#'   ausgewertet werden? Bei `FALSE` wird jede einzeln mit [merge_sk()]
+#'   ausgewertet.
+#' @inheritParams merge_auto
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' # MC-Frage (8 Spalten), zwei Single-Choice-Fragen, eine offene und eine
+#' # numerische Frage
+#' merge_many(BspDaten$dataSHOWUP[, 1:12], nr_auto = FALSE)
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+merge_many <- function(x,
+                       multi.sk = TRUE,
+                       nr_auto = TRUE,
+                       nr = "",
                        inkl = "nr") {
   # Nur eine Spalte: direkt auswerten -------------------------------------
   if (!is.list(x)) {

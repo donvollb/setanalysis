@@ -2,29 +2,44 @@
 % Please edit documentation in R/plots_box.R
 \name{boxplot_aggr_sk}
 \alias{boxplot_aggr_sk}
-\title{Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden}
+\title{Boxplots für mehrere Skalenfragen}
 \usage{
 boxplot_aggr_sk(x, item_labels, skala)
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Data Frame mit einer numerischen Spalte pro Item.}
 
-\item{item_labels}{Labels/Text/Beschriftungen der Y-Achse}
+\item{item_labels}{Beschriftungen der Items (y-Achse), gleiche Reihenfolge
+wie die Spalten von \code{x}.}
 
-\item{skala}{Skala der x-Achse}
+\item{skala}{Beschriftungen der Skalenstufen (x-Achse), z. B.
+\code{c("trifft gar nicht zu", "", "", "", "", "trifft voll zu")}. Die Länge
+bestimmt die Anzahl der Stufen.}
 }
 \value{
-Boxplot
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden
+Zeichnet für jedes Item einen waagerechten Boxplot auf einer gemeinsamen
+Skala, beschriftet mit den Fragetexten. Wird von \code{\link[=merge_aggr_sk]{merge_aggr_sk()}}
+verwendet. Bei einer 5-stufigen Skala erscheint unter der Abbildung ein
+Hinweis, dass die Skalenlogik von den 6-stufigen Skalen abweicht.
 }
 \examples{
-
 boxplot_aggr_sk(
-  BspDaten$Plots$aggr.data,
-  BspDaten$Plots$aggr.labels,
+  BspDaten$Plots$aggr.data[, 1:4],
+  BspDaten$Plots$aggr.labels[1:4],
   BspDaten$Plots$aggr.skala
 )
 
 }
+\seealso{
+Weitere Grafikfunktionen:
+\code{\link[=barplot_freq]{barplot_freq()}},
+\code{\link[=barplot_scmc]{barplot_scmc()}},
+\code{\link[=barplot_sk]{barplot_sk()}},
+\code{\link[=boxplot_grade]{boxplot_grade()}},
+\code{\link[=boxplot_rueck]{boxplot_rueck()}},
+\code{\link[=boxplot_wl]{boxplot_wl()}}
+}
+\concept{grafiken}

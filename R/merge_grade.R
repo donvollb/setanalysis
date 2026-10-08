@@ -1,26 +1,43 @@
-#' merge-Funktion für Schulnoten
-#' `grade()` ist eine veraltete Schreibweise der gleichen Funktion
+#' Gesamtnote auswerten
 #'
-#' @param x Daten
-#' @param kennung Kennung/Fallnummer zum Aggregieren
-#' @param show.table Soll Tabelle gezeigt werden?
-#' @param already.aggr Sind die Daten bereits aggregiert?
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
+#' @description
+#' Erzeugt den Berichtsabschnitt für eine Gesamtnote im Schulnotenformat
+#' (1 = sehr gut bis 6 = ungenügend): eine Tabelle mit Kennwerten und einen
+#' Boxplot ([boxplot_grade()]). Standardmäßig werden die Noten zuerst je
+#' Lehrveranstaltung gemittelt, sodass jede Lehrveranstaltung gleich stark
+#' eingeht.
+#'
+#' @param x Vektor mit den Noten. Das Attribut `label` wird als Fragetext in
+#'   der Tabelle verwendet.
+#' @param kennung Vektor mit der Kennung der Lehrveranstaltung für jede Note.
+#'   Nicht nötig bei `already.aggr = TRUE`.
+#' @param show.table Soll die Tabelle gezeigt werden?
+#' @param already.aggr Sind die Noten schon je Lehrveranstaltung gemittelt?
+#'   Dann wird nicht noch einmal aggregiert.
+#' @inheritParams merge_sc
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [aggr_data()] für die Aggregierung.
 #'
 #' @examples
-#' merge_grade(BspDaten$dataLVE$Note,
-#'   kennung = BspDaten$dataLVE$Kennung
-#' ) |> markdown_in_viewer()
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_grade(BspDaten$dataLVE$Note, kennung = BspDaten$dataLVE$Kennung)
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
 #' @export
-
-merge_grade <- function(x, # Daten
-                        kennung, # Kennung/Fallnummer zum Aggregieren
-                        show.table = TRUE, # Soll Tabelle gezeigt werden?
-                        already.aggr = FALSE, # Sind die Daten bereits aggregiert, bei TRUE wird nicht aggregiert
-                        inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                        nr = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-{
+merge_grade <- function(x,
+                        kennung,
+                        show.table = TRUE,
+                        already.aggr = FALSE,
+                        inkl = "nr",
+                        nr = "") {
   inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {

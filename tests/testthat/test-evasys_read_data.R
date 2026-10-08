@@ -1,5 +1,5 @@
-# Fiktiver evasys-Export, erzeugt mit fixtures/make_evasys_fixture.R
-fixture <- function(datei) test_path("fixtures", datei)
+# Fiktiver evasys-Export aus inst/extdata, erzeugt mit data-raw/beispiel_evasys.R
+fixture <- function(datei) system.file("extdata", paste0("beispiel_", datei), package = "setanalysis")
 
 test_that("evasys_read_data() bereitet Rohdaten und Codebuch unverändert auf", {
   daten <- evasys_read_data(fixture("evasys_rohdaten.csv"), fixture("evasys_codebuch.csv"))

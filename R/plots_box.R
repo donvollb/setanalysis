@@ -1,27 +1,33 @@
 # Boxplots ---------------------------------------------------------------
 
-#' Boxplots für Skalenfragen auf aggregiertem Niveau: Funktioniert, sollte aber überarbeitet werden
+#' Boxplots für mehrere Skalenfragen
 #'
-#' @param x Daten
-#' @param item_labels Labels/Text/Beschriftungen der Y-Achse
-#' @param skala Skala der x-Achse
+#' @description
+#' Zeichnet für jedes Item einen waagerechten Boxplot auf einer gemeinsamen
+#' Skala, beschriftet mit den Fragetexten. Wird von [merge_aggr_sk()]
+#' verwendet. Bei einer 5-stufigen Skala erscheint unter der Abbildung ein
+#' Hinweis, dass die Skalenlogik von den 6-stufigen Skalen abweicht.
 #'
-#' @returns Boxplot
+#' @param x Data Frame mit einer numerischen Spalte pro Item.
+#' @param item_labels Beschriftungen der Items (y-Achse), gleiche Reihenfolge
+#'   wie die Spalten von `x`.
+#' @param skala Beschriftungen der Skalenstufen (x-Achse), z. B.
+#'   `c("trifft gar nicht zu", "", "", "", "", "trifft voll zu")`. Die Länge
+#'   bestimmt die Anzahl der Stufen.
+#'
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
+#'
+#' @family grafiken
 #'
 #' @examples
-#'
 #' boxplot_aggr_sk(
-#'   BspDaten$Plots$aggr.data,
-#'   BspDaten$Plots$aggr.labels,
+#'   BspDaten$Plots$aggr.data[, 1:4],
+#'   BspDaten$Plots$aggr.labels[1:4],
 #'   BspDaten$Plots$aggr.skala
 #' )
 #'
-#' @export boxplot_aggr_sk
-
-boxplot_aggr_sk <- function(x, # Daten
-                            item_labels, # Labels/Text/Beschriftungen der Y-Achse
-                            skala) # Skala der x-Achse
-{
+#' @export
+boxplot_aggr_sk <- function(x, item_labels, skala) {
   data_matrix <- cbind(x)
   n_items <- ncol(data_matrix)
   n_skala <- length(skala)
@@ -75,18 +81,24 @@ boxplot_aggr_sk <- function(x, # Daten
   }
 }
 
-#' Abbildung der Gesamtnote
+#' Boxplot der Gesamtnote
 #'
-#' @param x (aggregierte) Daten für den Boxplot
+#' @description
+#' Zeichnet einen waagerechten Boxplot auf der Notenskala von „sehr gut“ (1)
+#' bis „ungenügend“ (6). Wird von [merge_grade()] verwendet.
 #'
-#' @returns Boxplot der Gesamtnote
+#' @param x Numerischer Vektor (oder einspaltiger Data Frame) mit den Noten,
+#'   meist schon je Lehrveranstaltung gemittelt.
 #'
-#' @examples boxplot_grade(BspDaten$Plots$grade)
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 #'
-#' @export boxplot_grade
-
-boxplot_grade <- function(x) # Daten
-{
+#' @family grafiken
+#'
+#' @examples
+#' boxplot_grade(BspDaten$Plots$grade)
+#'
+#' @export
+boxplot_grade <- function(x) {
   # Grafikparameter speichern; sie werden beim Verlassen der Funktion
   # (auch bei einem Fehler) wiederhergestellt
 
@@ -121,18 +133,24 @@ boxplot_grade <- function(x) # Daten
   )
 }
 
-#' Abbildung des Rücklaufs
+#' Boxplot des Rücklaufs
 #'
-#' @param x (aggregierte) Daten für den Boxplot
+#' @description
+#' Zeichnet einen waagerechten Boxplot des Rücklaufs in Prozent (Achse von 0
+#' bis 120 %). Wird von [merge_rueck()] verwendet.
 #'
-#' @returns Boxplot der Rücklaufs
+#' @param x Numerischer Vektor mit dem Rücklauf je Lehrveranstaltung in
+#'   Prozent.
 #'
-#' @examples boxplot_rueck(BspDaten$Plots$rueck)
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 #'
-#' @export boxplot_rueck
-
-boxplot_rueck <- function(x) # Daten
-{
+#' @family grafiken
+#'
+#' @examples
+#' boxplot_rueck(BspDaten$Plots$rueck)
+#'
+#' @export
+boxplot_rueck <- function(x) {
   # Grafikparameter speichern; sie werden beim Verlassen der Funktion
   # (auch bei einem Fehler) wiederhergestellt
 
@@ -164,23 +182,30 @@ boxplot_rueck <- function(x) # Daten
   )
 }
 
-#' Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden
+#' Boxplot des Workloads
 #'
-#' @param x Daten
-#' @param skala Skala x-Achse
+#' @description
+#' Zeichnet einen waagerechten Boxplot des angegebenen Workloads in Stunden
+#' pro Woche; unter der Achse steht die Anzahl der Lehrveranstaltungen. Wird
+#' von [merge_wl()] verwendet.
 #'
-#' @examples boxplot_wl(x = BspDaten$Plots$WL)
+#' @param x Numerischer Vektor mit dem Workload je Lehrveranstaltung (Stunden
+#'   pro Woche).
+#' @param skala Beschriftungen der x-Achse, eine pro Stufe ab 0 Stunden.
 #'
-#' @returns Boxplot
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 #'
-#' @export boxplot_wl
-
-boxplot_wl <- function(x, # Daten
+#' @family grafiken
+#'
+#' @examples
+#' boxplot_wl(BspDaten$Plots$WL)
+#'
+#' @export
+boxplot_wl <- function(x,
                        skala = c(
                          "0h", "1h", "2h", "3h", "4h", "5h", "6h", "7h",
                          "8h", "9h", "10h", "11h", "12h", "mehr\nals 12h"
-                       )) # Skala x-Achse
-{
+                       )) {
   # Berechnung der Anzahl der Veranstaltungen und Länge der Skala ---------
 
   n <- length(x)

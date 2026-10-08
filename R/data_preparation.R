@@ -1,16 +1,31 @@
 # Aufbereitung und Prüfung von Daten -------------------------------------
 
-#' Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
+#' Antworten je Gruppe mitteln
 #'
-#' @param vars Variablen (oder eine Variable), die aggregiert werden sollen
-#' @param kennung Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen
+#' @description
+#' Berechnet für jede Gruppe (z. B. jede Lehrveranstaltung) den Mittelwert
+#' jeder Variable. So geht später jede Gruppe gleich stark in Tabellen und
+#' Abbildungen ein, unabhängig davon, wie viele Antworten sie hat. Wird von
+#' [merge_aggr_sk()] und [merge_grade()] verwendet.
 #'
-#' @export aggr_data
-
-# Funktion zum Aggregieren von Daten anhand einer Kennung/Fallnummer
-aggr_data <- function(vars, # Variablen (oder eine Variable), die aggregiert werden sollen
-                      kennung) # kennung können z.B. die LV-Kennungen oder die Fallnummern sein
-{
+#' @param vars Data Frame mit den zu mittelnden Variablen oder ein einzelner
+#'   Vektor. Werte werden in Zahlen umgewandelt, fehlende Werte ignoriert.
+#' @param kennung Vektor mit der Gruppenzugehörigkeit (z. B. Kennung der
+#'   Lehrveranstaltung) für jede Zeile von `vars`.
+#'
+#' @returns Data Frame mit einer Zeile pro Gruppe (in der Reihenfolge, in der
+#'   die Gruppen in `kennung` zuerst vorkommen) und einer Spalte pro Variable.
+#'   Die Attribute `label` der Variablen bleiben erhalten.
+#'
+#' @family daten
+#'
+#' @examples
+#' lve <- BspDaten$dataLVE
+#' mittelwerte <- aggr_data(lve[, c("KF_01", "KF_02")], lve$Kennung)
+#' head(mittelwerte)
+#'
+#' @export
+aggr_data <- function(vars, kennung) {
   labels <- as.character(lapply(data.frame(vars), attr, which = "label"))
   x <- data.frame(data.frame(vars)[0, ])
   for (n in unique(kennung)) {
@@ -27,27 +42,34 @@ aggr_data <- function(vars, # Variablen (oder eine Variable), die aggregiert wer
   return(x)
 }
 
-#' Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
+#' Schreibweisen in Berichtstabelle und Daten abgleichen
 #'
-#' @param col Spalte aus der Info-Tabelle, z.B. info$Fb.text
-#' @param var Variable aus Datensatz, die der Spalte entspricht
-#' @param exception Ausnahmen, die nicht überprüft werden sollen
+#' @description
+#' Prüft, ob alle Einträge einer Spalte der Berichtstabelle (z. B. die Namen
+#' der Fachbereiche, nach denen die Daten je Bericht gefiltert werden) in
+#' genau dieser Schreibweise auch in den Daten vorkommen. So fallen
+#' Tippfehler auf, bevor ein Bericht versehentlich leer bleibt.
+#'
+#' @param col Spalte der Berichtstabelle, z. B. `info$FB.txt`.
+#' @param var Passende Variable im Datensatz. Bei einem Faktor werden seine
+#'   Stufen verwendet, sonst die vorkommenden Werte.
+#' @param exception Einträge von `col`, die nicht geprüft werden (Standard:
+#'   `"alle"`, z. B. für einen Gesamtbericht).
+#'
+#' @returns Die Meldung als Text (unsichtbar); sie wird außerdem ausgegeben.
+#'   Bei Abweichungen gibt es eine Meldung pro nicht gefundenem Eintrag.
+#'
+#' @family daten
 #'
 #' @examples
-#' # In diesem Fall wird die Variable "FB.text" aus der Info mit der Variable
-#' # "Teilbereich" aus dem Datensatz verglichen und alles stimmt
+#' # Alles stimmt
 #' label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
 #'
-#' # So sieht es aus, wenn die Labels nicht komplett übereinstimmen:
+#' # Ein Eintrag mit Tippfehler
 #' label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
 #'
-#' @export label_test
-
-# Testen, ob Labels aus personalized.info so im Datensatz vorkommen
-label_test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
-                       var, # Variable aus Datensatz, die der Spalte entspricht
-                       exception = "alle") { # Ausnahmen, die nicht überprüft werden sollen
-
+#' @export
+label_test <- function(col, var, exception = "alle") {
   labels_col <- unique(col)
 
   # Ausnahmen nicht prüfen

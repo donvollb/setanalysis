@@ -1,20 +1,34 @@
-#' Boxplot für Rücklaufsabbildung (LVE)
+#' Rücklauf der Lehrveranstaltungen auswerten
 #'
-#' @param x Objekt mit Teilnehmendenzahlen
-#' @param kennung Kennungen
+#' @description
+#' Berechnet für jede Lehrveranstaltung den Rücklauf (Anzahl der Antworten
+#' geteilt durch die Zahl der angemeldeten Teilnehmenden, in Prozent) und gibt
+#' eine Tabelle mit Kennwerten sowie einen Boxplot ([boxplot_rueck()]) aus.
 #'
-#' @returns Boxplot der Rückläufe
+#' Da die Teilnehmendenzahl meist bei der Anmeldung zur Evaluation angegeben
+#' wird, kann der Rücklauf über 100 % liegen.
+#'
+#' @param x Vektor mit der angegebenen Teilnehmendenzahl der jeweiligen
+#'   Lehrveranstaltung (in jeder Zeile einer Lehrveranstaltung derselbe Wert).
+#' @param kennung Vektor mit der Kennung der Lehrveranstaltung für jede
+#'   Zeile.
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
 #'
 #' @examples
-#' merge_rueck(
-#'   BspDaten$dataLVE$Teilnehmer,
-#'   BspDaten$dataLVE$Kennung
-#' ) |> markdown_in_viewer()
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_rueck(BspDaten$dataLVE$Teilnehmer, BspDaten$dataLVE$Kennung)
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 #'
-#' @export merge_rueck
-
-merge_rueck <- function(x, # Objekt mit Teilnehmendenzahlen
-                        kennung) {
+#' @export
+merge_rueck <- function(x, kennung) {
   participants <- data.frame(kennung, x) # Erstelle einen Datensatz aus beiden
   per_course <- participants[!duplicated(participants$kennung), ] # Nehme nur eine Zeile pro Kennung
   n_per_course <- data.frame(table(kennung)) # Zähle, wie oft jede Kennung vorkommt

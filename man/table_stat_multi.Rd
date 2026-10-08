@@ -2,7 +2,7 @@
 % Please edit documentation in R/tables.R
 \name{table_stat_multi}
 \alias{table_stat_multi}
-\title{Einfache Statistiktabelle für mehrere Items mit Fragetexten}
+\title{Kennwerte mehrerer Items als Tabelle}
 \usage{
 table_stat_multi(
   x,
@@ -19,36 +19,43 @@ table_stat_multi(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Data Frame mit einer numerischen Spalte pro Item.}
 
-\item{col1.name}{Name der ersten Zelle der Kopfzeile}
+\item{col1.name, col2.name}{Überschrift der Spalte mit den Fragetexten und
+der Spalte mit der Anzahl.}
 
-\item{col2.name}{Name der zweiten Zelle der Kopfzeile}
+\item{alt1, alt2}{Überschrift der Spalte für die erste bzw. zweite
+Ausweichoption oder \code{FALSE}. \code{alt2} ist nur zusammen mit \code{alt1} möglich.}
 
-\item{alt1}{Text für erste Ausweichoption}
+\item{alt1.list, alt2.list}{Häufigkeiten der Ausweichoptionen, ein Wert pro
+Item.}
 
-\item{alt2}{Text für zweite Ausweichoption}
+\item{digits}{Anzahl der Nachkommastellen.}
 
-\item{alt1.list}{Antworthäufigkeiten erste Ausweichoption}
+\item{bold, bold.corner}{Siehe \code{\link[=lv_table]{lv_table()}}.}
 
-\item{alt2.list}{Antworthäufigkeiten zweite Ausweichoption}
-
-\item{digits}{Anzahl der Nachkommastellend}
-
-\item{bold}{Sollen die Kopfzeile fettgedruckt sein? (siehe lv_table)}
-
-\item{bold.corner}{Soll die Zelle ganz links in der Kopfzeile fettgedruckt sein?}
-
-\item{labels}{Fragetexte, bei "labels" werden die Labels der Variablen genommen}
+\item{labels}{Fragetexte der Items. Bei \code{"labels"} werden die Attribute
+\code{label} der Spalten verwendet.}
 }
 \value{
-Tabelle
+Ein \code{tinytable}-Objekt (siehe \code{\link[=lv_table]{lv_table()}}). Die Spaltenbreiten
+kommen aus \link{setanalysis_defaults} (\code{col.width.sm}, \code{col.width.sm.alt1},
+\code{col.width.sm.alt2}).
 }
 \description{
-Einfache Statistiktabelle für mehrere Items mit Fragetexten
+Erstellt eine Tabelle mit einer Zeile pro Item: Fragetext, Anzahl (n),
+Mittelwert (M), Standardabweichung (SD), Median (MD), Minimum, Maximum und
+optional die Häufigkeit von bis zu zwei Ausweichoptionen. Wird z. B. von
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}} und \code{\link[=merge_grade]{merge_grade()}} verwendet.
 }
 \examples{
-
-table_stat_multi(BspDaten$Tabellen$multi)
+table_stat_multi(BspDaten$Tabellen$multi[, 1:3], col2.name = "n")
 
 }
+\seealso{
+Weitere Tabellenfunktionen:
+\code{\link[=lv_table]{lv_table()}},
+\code{\link[=table_freq]{table_freq()}},
+\code{\link[=table_stat_single]{table_stat_single()}}
+}
+\concept{tabellen}

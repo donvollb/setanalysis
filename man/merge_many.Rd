@@ -2,21 +2,76 @@
 % Please edit documentation in R/merge_many.R
 \name{merge_many}
 \alias{merge_many}
-\title{Funktion für die automatische Auswertung mehrerer verschiedener Items unterschiedlicher Typen}
+\title{Mehrere Fragen auf einmal auswerten}
 \usage{
 merge_many(x, multi.sk = TRUE, nr_auto = TRUE, nr = "", inkl = "nr")
 }
 \arguments{
-\item{x}{Ausschnitt aus dem Datensatz, der ausgewertet werden soll}
+\item{x}{Data Frame mit den auszuwertenden Fragen (oder eine einzelne
+Spalte).}
 
-\item{multi.sk}{Sollen aufeinanderfolgende sk-Items gemeinsam ausgewertet werden?}
+\item{multi.sk}{Sollen aufeinanderfolgende Skalenfragen gemeinsam
+ausgewertet werden? Bei \code{FALSE} wird jede einzeln mit \code{\link[=merge_sk]{merge_sk()}}
+ausgewertet.}
 
-\item{nr_auto}{Soll die Nummer automatisch ermittelt werden?}
+\item{nr_auto}{Soll die Fragenummer aus dem Attribut \code{nr} übernommen
+werden, wenn weder \code{nr} noch \code{inkl} angegeben sind? Dann wird auch die
+Variable \verb{inkl.<nr>} abgefragt, die dafür existieren muss.}
 
-\item{nr}{Manuelle Eingabemöglichkeit der Nummer}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Funktion für die automatische Auswertung mehrerer verschiedener Items unterschiedlicher Typen
+Geht die Spalten eines Data Frames der Reihe nach durch und wertet jede
+Frage mit \code{\link[=merge_auto]{merge_auto()}} aus. Spalten, die zusammengehören, werden dabei
+gemeinsam ausgewertet:
+\itemize{
+\item Spalten einer MC-Frage (gleiche Fragenummer im Attribut \code{nr}) mit
+\code{\link[=merge_mc]{merge_mc()}},
+\item aufeinanderfolgende Skalenfragen mit \code{\link[=merge_aggr_sk]{merge_aggr_sk()}} (bei
+\code{multi.sk = TRUE}); eine einzelne Skalenfrage mit \code{\link[=merge_sk]{merge_sk()}}.
 }
+
+Alle Spalten brauchen das Attribut \code{type} (\code{"sc"}, \code{"mc"}, \code{"sk"} oder
+\code{"open/num"}), wie es \code{\link[=evasys_read_data]{evasys_read_data()}} setzt.
+}
+\examples{
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+# MC-Frage (8 Spalten), zwei Single-Choice-Fragen, eine offene und eine
+# numerische Frage
+merge_many(BspDaten$dataSHOWUP[, 1:12], nr_auto = FALSE)
+\dontshow{
+setwd(.old_wd)
+}
+
+}
+\seealso{
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

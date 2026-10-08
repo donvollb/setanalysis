@@ -51,6 +51,16 @@ Fehlerbehebung aufgeführt.
 
 ## Dokumentation
 
+* Alle Hilfeseiten wurden neu geschrieben: klare Titel und Beschreibungen,
+  vollständig beschriebene Argumente und Rückgabewerte, Querverweise und
+  Funktionsgruppen (Auswertung, Tabellen, Grafiken, Legenden,
+  Datenaufbereitung, Werkzeuge).
+* Neue Paket-Hilfeseite `?setanalysis` mit dem typischen Ablauf und einer
+  Erklärung der inkl.-Logik.
+* Alle Beispiele laufen und legen keine Dateien mehr im Arbeitsverzeichnis an.
+  Für `evasys_read_data()` und `input_tabelle()` liegen fiktive
+  Beispieldateien in `inst/extdata/`.
+
 * Alle veralteten Funktionsnamen (z. B. `merge.sc()`, `grade()`,
   `open.answers()`) sind in einer gemeinsamen Hilfeseite
   `?setanalysis-deprecated` mit ihrer jeweils aktuellen Entsprechung

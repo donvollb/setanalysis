@@ -2,7 +2,7 @@
 % Please edit documentation in R/plots_box.R
 \name{boxplot_wl}
 \alias{boxplot_wl}
-\title{Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden}
+\title{Boxplot des Workloads}
 \usage{
 boxplot_wl(
   x,
@@ -11,17 +11,30 @@ boxplot_wl(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Numerischer Vektor mit dem Workload je Lehrveranstaltung (Stunden
+pro Woche).}
 
-\item{skala}{Skala x-Achse}
+\item{skala}{Beschriftungen der x-Achse, eine pro Stufe ab 0 Stunden.}
 }
 \value{
-Boxplot
+Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
 }
 \description{
-Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden
+Zeichnet einen waagerechten Boxplot des angegebenen Workloads in Stunden
+pro Woche; unter der Achse steht die Anzahl der Lehrveranstaltungen. Wird
+von \code{\link[=merge_wl]{merge_wl()}} verwendet.
 }
 \examples{
-boxplot_wl(x = BspDaten$Plots$WL)
+boxplot_wl(BspDaten$Plots$WL)
 
 }
+\seealso{
+Weitere Grafikfunktionen:
+\code{\link[=barplot_freq]{barplot_freq()}},
+\code{\link[=barplot_scmc]{barplot_scmc()}},
+\code{\link[=barplot_sk]{barplot_sk()}},
+\code{\link[=boxplot_aggr_sk]{boxplot_aggr_sk()}},
+\code{\link[=boxplot_grade]{boxplot_grade()}},
+\code{\link[=boxplot_rueck]{boxplot_rueck()}}
+}
+\concept{grafiken}

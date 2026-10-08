@@ -2,8 +2,7 @@
 % Please edit documentation in R/merge_grade.R
 \name{merge_grade}
 \alias{merge_grade}
-\title{merge-Funktion für Schulnoten
-\code{grade()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Gesamtnote auswerten}
 \usage{
 merge_grade(
   x,
@@ -15,24 +14,64 @@ merge_grade(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor mit den Noten. Das Attribut \code{label} wird als Fragetext in
+der Tabelle verwendet.}
 
-\item{kennung}{Kennung/Fallnummer zum Aggregieren}
+\item{kennung}{Vektor mit der Kennung der Lehrveranstaltung für jede Note.
+Nicht nötig bei \code{already.aggr = TRUE}.}
 
-\item{show.table}{Soll Tabelle gezeigt werden?}
+\item{show.table}{Soll die Tabelle gezeigt werden?}
 
-\item{already.aggr}{Sind die Daten bereits aggregiert?}
+\item{already.aggr}{Sind die Noten schon je Lehrveranstaltung gemittelt?
+Dann wird nicht noch einmal aggregiert.}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-merge-Funktion für Schulnoten
-\code{grade()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt für eine Gesamtnote im Schulnotenformat
+(1 = sehr gut bis 6 = ungenügend): eine Tabelle mit Kennwerten und einen
+Boxplot (\code{\link[=boxplot_grade]{boxplot_grade()}}). Standardmäßig werden die Noten zuerst je
+Lehrveranstaltung gemittelt, sodass jede Lehrveranstaltung gleich stark
+eingeht.
 }
 \examples{
-merge_grade(BspDaten$dataLVE$Note,
-  kennung = BspDaten$dataLVE$Kennung
-) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
 }
+merge_grade(BspDaten$dataLVE$Note, kennung = BspDaten$dataLVE$Kennung)
+\dontshow{
+setwd(.old_wd)
+}
+
+}
+\seealso{
+\code{\link[=aggr_data]{aggr_data()}} für die Aggregierung.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

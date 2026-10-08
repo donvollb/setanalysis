@@ -1,32 +1,73 @@
-#' merge-Funktion für single-choice Fragen
-#' `merge.sc()` ist eine veraltete Schreibweise der gleichen Funktion
+#' Single-Choice-Frage auswerten
 #'
-#' @param x Daten
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#' @param fig.height Höhe der Abbildung, bei "default" ist es „Anzahl der Fragen“ * 0.75 + 1
-#' @param already.labels Wurden die Daten bereits in Label umgewandelt?
-#' @param col2.name Name der n-Spalte in der Tabelle
-#' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-#' @param show.plot Soll der Plot angezeigt werden?
-#' @param pagebreak Seitenumbrüche mittendrin verhindern?
-#' @param digits Anzahl der Nachkommastellen in der Tabelle
+#' @description
+#' Erzeugt den Berichtsabschnitt für eine Frage mit genau einer
+#' Antwortmöglichkeit (Single Choice): Überschrift mit dem Fragetext, eine
+#' Häufigkeitstabelle und optional ein Balkendiagramm.
 #'
-#' @examples merge_sc(BspDaten$dataLVE$V3_D) |> markdown_in_viewer()
+#' Wie alle Auswertungsfunktionen schreibt `merge_sc()` den Code für den
+#' Bericht direkt in die Ausgabe. Sie wird deshalb in einem Quarto-Chunk mit
+#' `output: asis` aufgerufen.
 #'
-#' @export merge_sc
-
-merge_sc <- function(x, # Daten
-                     inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                     nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-                     fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen*0.75 +1
-                     already.labels = FALSE, # Wurden die Daten bereits in Label umgewandelt?
-                     col2.name = "n", # Name der n-Spalte in Tabelle
-                     order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     show.plot = setanalysis_defaults$show.plot.sc, # Soll der Plot angezeigt werden?
-                     pagebreak = FALSE, # Seitenumbruch dahinter?
-                     digits = 1) # Anzahl Nachkommastellen
-{
+#' @param x Vektor mit den Antworten (Antwortcodes). Erwartet die Attribute
+#'   `label` (Fragetext) und `labels` (benannte Antwortcodes), wie sie
+#'   [evasys_read_data()] erzeugt.
+#' @param inkl Soll die Frage im Bericht erscheinen? `TRUE` oder `FALSE`.
+#'   Beim Standard `"nr"` entscheidet die Variable `inkl.<nr>` (z. B.
+#'   `inkl.2.1` bei `nr = "2.1"`), die im Berichts-Template gesetzt ist, meist
+#'   aus der Berichtstabelle von [input_tabelle()]. Ohne Fragenummer wird die
+#'   Frage immer ausgegeben.
+#' @param nr Fragenummer, z. B. `"2.1"`. Sie wird der Überschrift vorangestellt
+#'   und bestimmt bei `inkl = "nr"`, welche Variable `inkl.<nr>` abgefragt
+#'   wird. Standard: `""` (keine Nummer).
+#' @param fig.height Höhe der Abbildung in Zoll. Bei `"default"` wird sie aus
+#'   der Anzahl der Antwortoptionen berechnet.
+#' @param already.labels Liegen die Antworten schon als Text bzw. Faktor vor
+#'   (`TRUE`)? Standardmäßig (`FALSE`) werden die Antwortcodes mithilfe des
+#'   Attributs `labels` in Antworttexte übersetzt.
+#' @param col2.name Überschrift der Spalte mit den absoluten Häufigkeiten.
+#' @param order.table Reihenfolge der Antwortoptionen in der Tabelle: `FALSE`
+#'   (Reihenfolge der Antwortoptionen), `"decreasing"` (nach Häufigkeit
+#'   absteigend) oder ein anderer Wert, z. B. `TRUE` (aufsteigend).
+#' @param show.plot Soll ein Balkendiagramm gezeigt werden? Voreinstellung aus
+#'   [setanalysis_defaults] (`show.plot.sc`).
+#' @param pagebreak Soll nach der Frage ein Seitenumbruch eingefügt werden?
+#' @param digits Anzahl der Nachkommastellen der Prozentangaben.
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [merge_mc()] für Fragen mit mehreren Antwortmöglichkeiten,
+#'   [merge_many()] für die automatische Auswertung mehrerer Fragen.
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' # Code für den Bericht (im Quarto-Dokument in einem Chunk mit `output: asis`)
+#' merge_sc(BspDaten$dataLVE$V3_D)
+#'
+#' # Nach Häufigkeit sortiert, ohne Abbildung
+#' merge_sc(BspDaten$dataLVE$FachSemN, order.table = "decreasing", show.plot = FALSE)
+#'
+#' # Vorschau, wie der Abschnitt im Bericht aussieht
+#' if (interactive()) markdown_in_viewer(merge_sc(BspDaten$dataLVE$V3_D))
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+merge_sc <- function(x,
+                     inkl = "nr",
+                     nr = "",
+                     fig.height = "default",
+                     already.labels = FALSE,
+                     col2.name = "n",
+                     order.table = FALSE,
+                     show.plot = setanalysis_defaults$show.plot.sc,
+                     pagebreak = FALSE,
+                     digits = 1) {
   inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {

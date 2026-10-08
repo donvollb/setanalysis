@@ -1,20 +1,42 @@
 # Ausgabe in Quarto-/R-Markdown-Dokumente -------------------------------
 
-#' Erzeugt Subchunks für die Berichte
+#' Abbildung oder Tabelle als eigenen Chunk ausgeben
 #'
-#' @param g Code (kann auch mit Aufzählung ("c(...)") benutzt werden)
-#' @param fig_height Höhe des Sub-Chunks
-#' @param fig_width Breite des Sub-Chunks
-#' @param hide Soll für die results-Option des Chunks "asis" verwendet werden?
+#' @description
+#' In einem Chunk mit `output: asis` haben alle Abbildungen dieselbe Größe.
+#' `subchunkify()` erzeugt deshalb für einen einzelnen Ausdruck (z. B. eine
+#' Abbildung oder eine Tabelle) einen eigenen kleinen Chunk mit eigener
+#' Abbildungsgröße, wertet ihn mit knitr aus und gibt das Ergebnis in den
+#' Bericht aus. Alle Auswertungsfunktionen nutzen `subchunkify()` für ihre
+#' Tabellen und Abbildungen.
 #'
-#' @returns Subchunk
+#' @param g Ausdruck, der eine Abbildung zeichnet oder eine Tabelle erzeugt.
+#'   Er wird erst im Sub-Chunk ausgewertet. Mehrere Befehle können mit
+#'   `c(...)` übergeben werden (dann `hide = TRUE` verwenden).
+#' @param fig_height,fig_width Höhe und Breite der Abbildung in Zoll.
+#' @param hide Bei `TRUE` wird nur die Abbildung ausgegeben und sonstige
+#'   Ausgaben des Ausdrucks werden unterdrückt (Chunk-Option
+#'   `results = "hide"`); bei `FALSE` wird alles wie in einem
+#'   `asis`-Chunk ausgegeben.
+#'
+#' @returns Nichts (unsichtbar `NULL`). Das Ergebnis des Sub-Chunks wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family werkzeuge
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' # Tabelle und Abbildung mit eigener Größe
+#' subchunkify(lv_table(head(mtcars, 3)))
+#' subchunkify(boxplot_grade(BspDaten$Plots$grade), fig_height = 2, fig_width = 9)
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 #'
 #' @export
-subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt werden)
-                        fig_height = 7, # Höhe des Sub-Chunks
-                        fig_width = 5, # Breite des Sub-Chunks
-                        hide = FALSE) # Soll für die results-Option des Chunks "asis" verwendet werden?
-{
+subchunkify <- function(g, fig_height = 7, fig_width = 5, hide = FALSE) {
   # Code in eine Funktion verpacken: `g` wird so erst im Sub-Chunk ausgewertet
   # und knitr erfasst die dabei entstehenden Abbildungen mit eigener Größe
   g_deparsed <- paste0(deparse(
@@ -52,21 +74,30 @@ subchunkify <- function(g, # Code (kann auch mit Aufzählung ("c(...)") benutzt 
 .subchunk_env <- new.env(parent = emptyenv())
 .subchunk_env$counter <- 0
 
-#' Funktion um den Markdown-Code, welcher durch eine Funktion erzeugt wurde
-#' direkt im Viewer anzuzeigen
+#' Vorschau eines Berichtsabschnitts im Viewer
 #'
-#' @param markdown_function Funktion, welche Markdown-Code erzeugt
+#' @description
+#' Zeigt das Ergebnis einer Auswertungsfunktion so an, wie es ungefähr im
+#' Bericht aussehen wird: Die Ausgabe wird in HTML umgewandelt und im
+#' RStudio-Viewer (bzw. im Browser) geöffnet. Praktisch zum Ausprobieren und
+#' Testen; im Bericht selbst wird die Funktion nicht verwendet.
 #'
-#' @description Diese Funktion ist dafür gedacht, die anderen Funktionen, die
-#' Markdown-Code mit [cat()] direkt in die Konsole drucken zu testen, sie ist
-#' nicht für die Verwendung in einem Dokument gedacht.
+#' Benötigt die zusätzlichen Pakete htmltools, markdown und svglite.
 #'
-#' `markdown.in.viewer()` ist eine veraltete Schreibweise der gleichen Funktion
+#' @param markdown_function Aufruf einer Funktion, die Berichtscode ausgibt,
+#'   z. B. `merge_sc(daten$frage)`.
 #'
-#' @returns Vorschau im Viewer, wie das Endergebnis im Dokument aussehen würde
+#' @returns Unsichtbar der Pfad zur erzeugten HTML-Datei; die Vorschau wird im
+#'   Viewer geöffnet.
+#'
+#' @family werkzeuge
+#'
+#' @examples
+#' if (interactive()) {
+#'   markdown_in_viewer(merge_fachsem(BspDaten$dataLVE$FachSemN))
+#' }
+#'
 #' @export
-#'
-#' @examples markdown_in_viewer(merge.fachsem(BspDaten$dataLVE$FachSemN))
 markdown_in_viewer <- function(markdown_function) {
   # Zusätzlich benötigte Pakete prüfen (nur für diese Vorschau nötig) -----
   required <- c("htmltools", "markdown", "svglite")

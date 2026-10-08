@@ -1,41 +1,58 @@
-#' Funktion für offene Antworten
-#' Die Funktion war ehemals auf zwei (jetzt veraltete) Funktionen aufgeteilt:
-#' - `open.answers()`: Verweis auf Anhang bei Berichten mit Anhang
-#' - `merge.open()`: Eigentliche Auswertung der offenen Antworten
+#' Offene Frage auswerten
 #'
-#' @param x Daten
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param inkl_global Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#' @param freq Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt.
-#' "auto" führt zur Anzeige der Häufigkeiten, wenn Antworten mehrfach vorkommen, sonst nicht.
-#' @param appendix Gibt es einen Extra-Anhang, in dem die offenen Antworten gesammelt werden sollen?
-#' @param is_appendix Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
-#' @param anchor Nur relevant, falls es einen Anhang gibt. Anker, damit auf den Output weiter oben im pdf Verlinkt werden kann.
+#' @description
+#' Gibt die Antworten auf eine offene Frage als Tabelle aus. Kommen Antworten
+#' mehrfach vor (Groß- und Kleinschreibung wird dabei ignoriert), zeigt die
+#' Tabelle jede Antwort einmal mit ihrer Häufigkeit, sortiert nach Häufigkeit.
+#'
+#' Bei Berichten mit Anhang (`appendix = TRUE`, Standard) erscheint an der
+#' Stelle der Frage nur die Überschrift mit einem Link in den Anhang. Die
+#' Antworten werden gesammelt und am Ende des Berichts mit [appendix_open()]
+#' ausgegeben.
+#'
+#' @param x Vektor (Text) mit den Antworten. Erwartet das Attribut `label`
+#'   (Fragetext). Fehlende Antworten (`NA`) werden ignoriert.
+#' @param inkl_global Zweiter Schalter, der alle offenen Fragen eines Berichts
+#'   gemeinsam ein- oder ausschließt. Voreinstellung aus
+#'   [setanalysis_defaults] (`inkl.open`).
+#' @param freq Sollen gleiche Antworten zusammengefasst und mit Häufigkeit
+#'   gezeigt werden? `TRUE`, `FALSE` oder `"auto"` (nur, wenn mindestens eine
+#'   Antwort mehrfach vorkommt).
+#' @param appendix Sollen die Antworten im Anhang statt an Ort und Stelle
+#'   stehen? Voreinstellung aus [setanalysis_defaults] (`open.appendix`).
+#' @param is_appendix,anchor Werden intern von [appendix_open()] gesetzt, um
+#'   die Ausgabe im Anhang mit Rücksprung-Link zu erzeugen.
+#' @inheritParams merge_sc
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [appendix_open()] für die Ausgabe des Anhangs.
 #'
 #' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' # Antworten direkt an Ort und Stelle
+#' merge_open(BspDaten$dataSHOWUP$offen, appendix = FALSE)
 #'
-#' # Beispiel für Bericht mit Anhang – Häufigkeiten werden angezeigt
-#' {
-#'   merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
-#'   appendix.open()
-#' } |> markdown_in_viewer()
+#' # Bericht mit Anhang: zuerst nur Überschrift und Link, am Ende der Anhang
+#' merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
+#' appendix_open()
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 #'
-#' # Ergebnis für Bericht ohne Anhang – Ohne Häufigkeiten, weil jeder Eintrag nur einmal
-#' merge_open(BspDaten$dataSHOWUP$offen, appendix = FALSE) |> markdown_in_viewer()
-#'
-#' @export merge_open
-#'
-
-merge_open <- function(x, # Daten
-                       inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                       inkl_global = setanalysis_defaults$inkl.open, # Zweite inkl-Variable, die die globale Variable "inkl.open" abfragt. Kann auch in TRUE oder FALSE geändert werden
-                       nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-                       freq = "auto", # Sollen gleiche offene Antworten zusammengefasst werden? Dann werden auch Häufigkeiten angezeigt
-                       appendix = setanalysis_defaults$open.appendix, # Gibt es einen Extra-Anhang, in dem die offenen Antworten gesammelt werden sollen?
-                       is_appendix = FALSE, # Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
-                       anchor = FALSE) # Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
-{
+#' @export
+merge_open <- function(x,
+                       inkl = "nr",
+                       inkl_global = setanalysis_defaults$inkl.open,
+                       nr = "",
+                       freq = "auto",
+                       appendix = setanalysis_defaults$open.appendix,
+                       is_appendix = FALSE,
+                       anchor = FALSE) {
   inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE || inkl_global != TRUE) {
@@ -124,19 +141,40 @@ merge_open <- function(x, # Daten
   cat(" \n\n")
 }
 
-#' Funktion um alle offenen Antworten unten in den Anhang zu packen
-#' `appendix.open()` ist eine veraltete Schreibweise der gleichen Funktion
+#' Anhang mit den offenen Antworten ausgeben
 #'
-#' @param freq Sollen die offenen Antworten nach Häufigkeit gruppiert werden?
+#' @description
+#' Gibt den Anhang „Fragen mit offenem Antwortformat“ aus: alle offenen
+#' Fragen, die zuvor mit `merge_open(..., appendix = TRUE)` aufgerufen wurden,
+#' jeweils mit Link zurück zur Stelle im Bericht.
+#'
+#' `appendix_open()` gehört ans Ende jedes Berichts mit Anhang. Danach wird
+#' der Speicher der offenen Antworten ([list_open_answers]) geleert, damit ein
+#' weiterer Bericht in derselben R-Sitzung neu beginnt.
+#'
+#' @param freq Sollen gleiche Antworten zusammengefasst werden? Siehe
+#'   [merge_open()].
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben. Wurde vorher keine offene Frage mit Anhang
+#'   aufgerufen, wird nichts ausgegeben.
+#'
+#' @family auswertung
 #'
 #' @examples
-#' # Damit diese Funktion sinnvoll funktioniert, muss vorher mindestens eine
-#' # offene Frage aufgerufen worden
-#' invisible(capture.output(merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)))
-#' appendix_open() |> markdown_in_viewer()
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_open(BspDaten$dataSHOWUP$offen, appendix = TRUE)
 #'
-#' @export appendix_open
-
+#' # … weitere Fragen des Berichts …
+#'
+#' appendix_open()
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
 appendix_open <- function(freq = "auto") {
   anchor.nr <- list_open_answers$anchor.nr
 

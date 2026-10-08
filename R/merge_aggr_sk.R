@@ -1,60 +1,97 @@
-#' merge-Funktion für die Darstellung der aggregierten Ergebnisse einer oder
-#' mehrerer Skalenfragen#
+#' Skalenfragen gemeinsam auswerten, optional pro Lehrveranstaltung aggregiert
 #'
-#' `merge.multi.sk()` ist eine veraltete Schreibweise der gleichen Funktion
-
+#' @description
+#' Erzeugt den Berichtsabschnitt für eine oder mehrere Skalenfragen mit
+#' derselben Skala: eine gemeinsame Tabelle mit Kennwerten je Item (n, M, SD,
+#' Median, Minimum, Maximum, optional Ausweichoptionen) und Boxplots je Item
+#' ([boxplot_aggr_sk()]).
 #'
-#' @param x Itemdaten (Dataframe mit einer oder mehreren Spalten)
-#' @param kennung Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt)
-#' @param number Anzahl Antwortoptionen der Items (OHNE AUSWEICHOPTIONEN!), wird bei "default" automatisch gezogen
-#' @param alt1 Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
-#' @param alt2 Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
-#' @param alt1.num Welche Zahl entspricht alt1
-#' @param alt2.num Welche Zahl entspricht alt2
-#' @param nr Nummer der ersten Frage
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param tmin linker Pol, bei "default" wird das Label automatisch gezogen
-#' @param tmid mittlerer Pol (für 5er Skalen), bei "default" automatisch
-#' @param tmax rechter Pol, "default" wie oben
-#' @param show.table Soll die Tabelle angezeigt werden?
-#' @param show.plot Sollen Boxplots dazu angezeigt werden?
-#' @param fig.height Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
-#' @param col2.name Titel der n-Spalte
-#' @param message Soll ein Hinweistext am Anfang erfolgen?
-#' @param aggr Sollen Daten aggregiert werden?
+#' Mit `aggr = TRUE` werden die Antworten zuerst je Lehrveranstaltung
+#' (`kennung`) gemittelt. Jede Lehrveranstaltung geht dann mit ihrem
+#' Mittelwert ein, und `n` zählt Lehrveranstaltungen statt Antworten.
+#'
+#' @param x Data Frame mit einer Spalte pro Item (oder ein einzelnes Item als
+#'   Vektor). Jede Spalte braucht die Attribute `label` (Fragetext) und
+#'   `labels` (benannte Antwortcodes).
+#' @param kennung Vektor mit der Kennung der Lehrveranstaltung (oder einer
+#'   anderen Gruppe) für jede Zeile von `x`. Nur bei `aggr = TRUE` nötig.
+#' @param number Anzahl der Skalenstufen **ohne** Ausweichoptionen. Bei
+#'   `"default"` die Anzahl der Antwortlabels der Items (alle Items müssen
+#'   gleich viele haben). Haben Ausweichoptionen ein eigenes Label, sollte
+#'   `number` angegeben werden.
+#' @param alt1,alt2 Text der ersten bzw. zweiten Ausweichoption oder `FALSE`.
+#'   Ist ein Text angegeben, zeigt die Tabelle eine zusätzliche Spalte mit der
+#'   Häufigkeit dieser Antwort je Item. `alt2` ist nur zusammen mit `alt1`
+#'   möglich.
+#' @param alt1.num,alt2.num Code der ersten bzw. zweiten Ausweichoption in
+#'   den Daten.
+#' @param nr Fragenummer des **ersten** Items, z. B. `"2.1"`. Die folgenden
+#'   Items werden fortlaufend nummeriert (`"2.2"`, `"2.3"`, …), die Nummern
+#'   werden den Fragetexten vorangestellt. Bei `inkl = "nr"` wird jedes Item
+#'   einzeln über seine Variable `inkl.<nr>` ein- oder ausgeschlossen.
+#' @param tmin,tmid,tmax Beschriftung des linken Pols, der Mitte (nur bei
+#'   ungerader Stufenzahl) und des rechten Pols. Bei `"default"` werden die
+#'   Antwortlabels der Items verwendet; unterscheiden sie sich zwischen den
+#'   Items, gibt es eine Warnung.
+#' @param show.table Soll die Tabelle gezeigt werden?
+#' @param show.plot Sollen die Boxplots gezeigt werden?
+#' @param fig.height Höhe der Abbildung in Zoll. Bei `"default"` wird sie aus
+#'   der Anzahl der Items berechnet.
+#' @param col2.name Überschrift der Spalte mit der Anzahl (z. B. Anzahl der
+#'   Lehrveranstaltungen bei `aggr = TRUE`).
+#' @param message Text, der vor der Tabelle ausgegeben wird (Markdown), oder
+#'   `""` für keinen.
+#' @param aggr Sollen die Antworten zuerst je `kennung` gemittelt werden
+#'   (siehe [aggr_data()])?
+#' @inheritParams merge_sc
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [merge_sk()] für die Auswertung einer einzelnen Skalenfrage mit
+#'   Häufigkeitsverteilung.
 #'
 #' @examples
-#' # Objekt erstellen, dass mehrere Fragen enthält:
-#' KF_123 <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' kernfragen <- BspDaten$dataLVE[, c("KF_01", "KF_02", "KF_03")]
 #'
-#' # Funktion ausführen:
-#' markdown_in_viewer(merge_aggr_sk(KF_123,
-#'   number = 6, aggr = TRUE,
-#'   kennung = BspDaten$dataLVE$Kennung
-#' ))
+#' # Mittelwerte je Lehrveranstaltung
+#' merge_aggr_sk(kernfragen, kennung = BspDaten$dataLVE$Kennung, aggr = TRUE)
 #'
-#' @export merge_aggr_sk
-
-
-merge_aggr_sk <- function(x, # Daten
-                          kennung, # Objekt mit Kennungen (oder Fallnummern, nur bei Aggregierung benötigt
-                          number = "default", # Skala: 6 für Sechser, etc. (OHNE AUSWEICHOPTION)
-                          alt1 = FALSE, # Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)
-                          alt2 = FALSE, # Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)
-                          alt1.num = 0, # Welche Zahl entspricht alt1
-                          alt2.num = 7, # Welche Zahl entspricht alt2
-                          nr = "", # Nummer der ersten Frage
-                          inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                          tmin = "default", # linker Pol, bei "default" wird das Label automatisch gezogen
-                          tmid = "default", # mittlerer Pol (für 5er Skalen), bei "default" automatisch
-                          tmax = "default", # rechter Pol, "default" wie oben
-                          show.table = TRUE, # Soll Tabelle angezeigt werden?
-                          show.plot = TRUE, # Sollen Boxplots dazu angezeigt werden?
-                          fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Fragen + 1
-                          col2.name = "n", # Titel der n-Spalte, in LVE in "N\\textsubscript{courses}" ändern
-                          message = "", # Soll ein Hinweistext am Anfang erfolgen?
-                          aggr = FALSE) # Sollen Daten aggregiert werden?
-{
+#' # Alle Antworten, nur Tabelle
+#' merge_aggr_sk(kernfragen, show.plot = FALSE)
+#'
+#' if (interactive()) {
+#'   markdown_in_viewer(
+#'     merge_aggr_sk(kernfragen, kennung = BspDaten$dataLVE$Kennung, aggr = TRUE)
+#'   )
+#' }
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
+merge_aggr_sk <- function(x,
+                          kennung,
+                          number = "default",
+                          alt1 = FALSE,
+                          alt2 = FALSE,
+                          alt1.num = 0,
+                          alt2.num = 7,
+                          nr = "",
+                          inkl = "nr",
+                          tmin = "default",
+                          tmid = "default",
+                          tmax = "default",
+                          show.table = TRUE,
+                          show.plot = TRUE,
+                          fig.height = "default",
+                          col2.name = "n",
+                          message = "",
+                          aggr = FALSE) {
   if (inkl == "nr") {
     if (nr == "") {
       inkl <- TRUE

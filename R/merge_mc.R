@@ -1,49 +1,67 @@
-#' merge-Funktion für MC-Fragen
+#' Multiple-Choice-Frage auswerten
 #'
-#' `merge.mc()` ist eine veraltete Schreibweise der gleichen Funktion
+#' @description
+#' Erzeugt den Berichtsabschnitt für eine Frage, bei der mehrere Antworten
+#' gewählt werden können (Multiple Choice): Überschrift, Tabelle mit der
+#' Häufigkeit jeder Antwortoption und optional ein Balkendiagramm.
 #'
-#' @param x Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, dass Labels enthalten sind
-#' @param head Fragetext, bei "default" wird dieser automatisch aus den Labels gezogen
-#' @param col1.name Name der Antwortoption in der Tabelle
-#' @param col2.name Name der n-Spalte in der Tabelle
-#' @param show.table Soll die Tabelle angezeigt werden?
-#' @param fig.height Höhe der Abbildung, bei "default" ist es „Anzahl der Antwortoptionen“ * 0.75 + 1
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param nr Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-#' @param lime Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
-#' @param filter FILTER-Klammer für LimeSurvey
-#' @param valid.perc Mit gültigen Prozent?
-#' @param order.table Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-#' @param show.plot Soll der Plot angezeigt werden?
-#' @param digits Wie viele Nachkommastellen sollen angezeigt werden?
+#' @param x Data Frame mit einer Spalte pro Antwortoption. Ein Wert ungleich 0
+#'   bedeutet „gewählt“, 0 „nicht gewählt“, `NA` „keine Angabe“. Jede Spalte
+#'   braucht das Attribut `label` in der Form `"Fragetext : Antwortoption"`
+#'   (wie von [evasys_read_data()] erzeugt).
+#' @param head Fragetext für die Überschrift. Bei `"default"` wird er aus dem
+#'   Label der ersten Spalte genommen (Text vor dem `:`).
+#' @param col1.name Überschrift der Spalte mit den Antwortoptionen.
+#' @param show.table Soll die Tabelle gezeigt werden?
+#' @param fig.height Höhe der Abbildung in Zoll. Bei `"default"` wird sie aus
+#'   der Anzahl der Antwortoptionen berechnet.
+#' @param lime Liegen die Daten im Format eines LimeSurvey-Exports vor
+#'   (1 = gewählt, 2 = nicht gewählt; Label `"[Antwortoption] Fragetext"`)?
+#' @param filter Nur mit `lime = TRUE`: Text, der dem Fragetext in eckigen
+#'   Klammern vorangestellt wird (z. B. ein Filterhinweis), oder `FALSE`.
+#' @param valid.perc Sollen zusätzlich gültige Prozent (ohne fehlende Angaben)
+#'   sowie die Zeilen „NAs“ und „Total“ gezeigt werden?
+#' @param show.plot Soll ein Balkendiagramm gezeigt werden? Voreinstellung aus
+#'   [setanalysis_defaults] (`show.plot.mc`).
+#' @inheritParams merge_sc
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [merge_sc()] für Fragen mit genau einer Antwortmöglichkeit.
 #'
 #' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' abschluesse <- BspDaten$dataSHOWUP[, paste0("abschluss_", 1:8)]
 #'
-#' # Gewünschte Items auswählen -------------------------------------------
+#' merge_mc(abschluesse)
 #'
-#' Abschlüsse <- BspDaten$dataSHOWUP[, paste0("abschluss_", 1:8)]
+#' # Nach Häufigkeit sortiert, ohne gültige Prozent und ohne Abbildung
+#' merge_mc(abschluesse, order.table = "decreasing", valid.perc = FALSE, show.plot = FALSE)
 #'
-#' # merge_mc-Funktion ausführen und anzeigen -----------------------------
+#' if (interactive()) markdown_in_viewer(merge_mc(abschluesse))
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
 #'
-#' merge_mc(Abschlüsse) |> markdown_in_viewer()
-#'
-#' @export merge_mc
-
-merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Darauf achten, das Labels enthalten sind
-                     head = "default", # Fragetext, bei "default wird dieser automatisch aus den Lables gezogen
-                     col1.name = "Antwortoption", # Erste Zelle der ersten Spalte in Tabelle
-                     col2.name = "n", # Name der n-Spalte in Tabelle
-                     show.table = TRUE, # Soll Tabelle angezeigt werden?
-                     fig.height = "default", # Höhe der Abbildung, bei "default" ist es Anzahl der Antwortoptionen*0.75 +1
-                     inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-                     nr = "", # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
-                     lime = FALSE, # Für Daten im Format nach LimeSurvey Export (nach Syntax-Skript)
-                     filter = FALSE, # FILTER-Klammer für LimeSurvey
-                     valid.perc = TRUE, # mit gültigen Prozent?
-                     order.table = FALSE, # Soll nach Häufigkeit sortiert werden? "decreasing" für absteigendes Sortieren
-                     digits = 1, # Wie viele Nachkommastellen sollen angezeigt werden?
-                     show.plot = setanalysis_defaults$show.plot.mc) # Soll der Plot angezeigt werden?
-{
+#' @export
+merge_mc <- function(x,
+                     head = "default",
+                     col1.name = "Antwortoption",
+                     col2.name = "n",
+                     show.table = TRUE,
+                     fig.height = "default",
+                     inkl = "nr",
+                     nr = "",
+                     lime = FALSE,
+                     filter = FALSE,
+                     valid.perc = TRUE,
+                     order.table = FALSE,
+                     digits = 1,
+                     show.plot = setanalysis_defaults$show.plot.mc) {
   inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {

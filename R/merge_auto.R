@@ -1,20 +1,51 @@
-#' Funktion, die den automatisch Itemtyp erkennt und entsprechend auswertet
+#' Frage mit passender Funktion auswerten (Typ wird erkannt)
 #'
-#' @param x auszuwertende Daten
-#' @param nr_auto Soll die Nummer automatisch ermittelt werden?
-#' @param nr Manuelle Eingabemöglichkeit der Nummer
-#' @param inkl TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
-#' @param ... Argumente zum „weitergeben“ in die Funktion
+#' @description
+#' Wählt anhand des Attributs `type` (von [evasys_read_data()] gesetzt) die
+#' passende Auswertungsfunktion und ruft sie auf:
 #'
-#' @export merge_auto
-
+#' | Typ in `x`                         | Auswertung        |
+#' |------------------------------------|-------------------|
+#' | `"sc"` (Single Choice)             | [merge_sc()]      |
+#' | `"sk"` (Skalenfrage)               | [merge_sk()]      |
+#' | `"open/num"` mit überwiegend Text  | [merge_open()]    |
+#' | `"open/num"` mit Zahlen            | [merge_num()]     |
+#' | Data Frame mit `"mc"`-Spalten      | [merge_mc()]      |
+#' | Data Frame mit `"sk"`-Spalten      | [merge_aggr_sk()] |
+#'
+#' Bei offenen Fragen entscheidet der Inhalt: Zahlen oder Text, der zu mehr
+#' als der Hälfte aus Ziffern besteht, gelten als numerisch.
+#'
+#' @param x Eine Spalte (Vektor) oder ein Data Frame mit den Spalten einer
+#'   MC-Frage bzw. mehreren Skalenfragen.
+#' @param nr_auto Soll die Fragenummer aus dem Attribut `nr` übernommen
+#'   werden, wenn weder `nr` noch `inkl` angegeben sind? Dann wird auch die
+#'   Variable `inkl.<nr>` abgefragt, die dafür existieren muss.
+#' @param ... Weitere Argumente für die jeweilige Auswertungsfunktion.
+#' @inheritParams merge_sc
+#'
+#' @returns Nichts (unsichtbar `NULL`). Der Code für den Bericht wird mit
+#'   [cat()] ausgegeben.
+#'
+#' @family auswertung
+#' @seealso [merge_many()] für mehrere Fragen auf einmal.
+#'
+#' @examples
+#' \dontshow{
+#' .old_wd <- setwd(tempdir())
+#' }
+#' merge_auto(BspDaten$dataLVE$V3_D, nr_auto = FALSE) # Single Choice
+#' merge_auto(BspDaten$dataSHOWUP$zugang_note, nr_auto = FALSE) # numerisch
+#' \dontshow{
+#' setwd(.old_wd)
+#' }
+#'
+#' @export
 merge_auto <- function(x,
                        nr_auto = TRUE,
                        nr = "",
                        inkl = "nr",
-                       ...) { # Argumente zum „weitergeben“ in die Funktion
-
-
+                       ...) {
   if (!is.list(x)) {
     type <- attr(x, "type")
   } else {

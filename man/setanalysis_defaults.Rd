@@ -2,10 +2,49 @@
 % Please edit documentation in R/settings.R
 \name{setanalysis_defaults}
 \alias{setanalysis_defaults}
-\title{Globale Umgebung für die Paketkonfiguration}
+\title{Einstellungen des Pakets}
+\format{
+Eine Umgebung mit folgenden Einträgen:
+\describe{
+\item{\code{font.family}}{Schriftart der Abbildungen (\code{"Red Hat Text"}; wird
+beim Laden des Pakets registriert).}
+\item{\code{color.bars}}{Akzentfarbe für Balken, Boxen und die eingefärbten
+Tabellenzeilen.}
+\item{\code{col.width3}, \code{col.width4}}{Relative Spaltenbreiten der
+Häufigkeitstabellen mit drei bzw. vier Spalten (\code{\link[=table_freq]{table_freq()}},
+\code{\link[=merge_mc]{merge_mc()}}).}
+\item{\code{col.width.sm}, \code{col.width.sm.alt1}, \code{col.width.sm.alt2}}{Relative
+Spaltenbreiten der Statistiktabellen für mehrere Items ohne bzw. mit
+einer oder zwei Ausweichoptionen (\code{\link[=table_stat_multi]{table_stat_multi()}}).}
+\item{\code{col1.width.tss}}{Wird derzeit nicht verwendet (aus früheren
+Versionen).}
+\item{\code{show.plot.sc}, \code{show.plot.mc}, \code{show.plot.sk}}{Voreinstellung für
+\code{show.plot} in \code{\link[=merge_sc]{merge_sc()}}, \code{\link[=merge_mc]{merge_mc()}} und \code{\link[=merge_sk]{merge_sk()}}.}
+\item{\code{open.appendix}}{Voreinstellung für \code{appendix} in \code{\link[=merge_open]{merge_open()}}:
+offene Antworten im Anhang sammeln?}
+\item{\code{inkl.open}}{Voreinstellung für \code{inkl_global} in \code{\link[=merge_open]{merge_open()}}:
+offene Fragen überhaupt ausgeben?}
+}
+}
 \usage{
 setanalysis_defaults
 }
 \description{
-Diese Umgebung wird verwendet, um Konfigurationswerte wie Farben zu speichern.
+Umgebung mit den Einstellungen, die die Auswertungsfunktionen verwenden
+(Farben, Spaltenbreiten und Voreinstellungen). Die Werte lassen sich mit
+\code{\link[=change_analysis_defaults]{change_analysis_defaults()}} für einen Bericht ändern, z. B. eine eigene
+Akzentfarbe je Befragung.
 }
+\examples{
+setanalysis_defaults$color.bars
+ls(setanalysis_defaults)
+
+}
+\seealso{
+Weitere Werkzeuge:
+\code{\link[=change_analysis_defaults]{change_analysis_defaults()}},
+\code{\link{list_open_answers}},
+\code{\link[=markdown_in_viewer]{markdown_in_viewer()}},
+\code{\link[=subchunkify]{subchunkify()}}
+}
+\concept{werkzeuge}

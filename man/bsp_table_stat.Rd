@@ -2,21 +2,31 @@
 % Please edit documentation in R/legends.R
 \name{bsp_table_stat}
 \alias{bsp_table_stat}
-\title{Beispiel einer Statistik-Tabelle}
+\title{Legende: Erklärung der Tabellenspalten}
 \usage{
 bsp_table_stat(all = TRUE)
 }
 \arguments{
-\item{all}{Soll die Tabelle Fragen enthalten? Dann TRUE, sonst FALSE}
+\item{all}{\code{TRUE} für die Legende zu Tabellen mit Fragetext und Median
+(wie bei \code{\link[=table_stat_multi]{table_stat_multi()}}, z. B. in der LVE), \code{FALSE} für die kurze
+Variante ohne beides.}
 }
 \value{
-Eine Tabelle mit den Spalten "Häufigkeit", "Mittelwert", "Standardabweichung",
-"Median", "kleinster beob. Wert", "größter beob. Wert"
+Ein \code{tinytable}-Objekt (siehe \code{\link[=lv_table]{lv_table()}}).
 }
 \description{
-Beispiel einer Statistik-Tabelle
+Erstellt eine Tabelle, die die Abkürzungen in den Kopfzeilen der
+Statistiktabellen erklärt (n = Häufigkeit, M = Mittelwert usw.). Gedacht
+für den Abschnitt „Legende zu Tabellen“ am Anfang eines Berichts.
 }
 \examples{
 bsp_table_stat()
+bsp_table_stat(all = FALSE)
 
 }
+\seealso{
+Weitere Legenden:
+\code{\link[=bsp_boxplot]{bsp_boxplot()}},
+\code{\link[=bsp_evasys_sk6]{bsp_evasys_sk6()}}
+}
+\concept{legenden}

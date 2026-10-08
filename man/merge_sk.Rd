@@ -2,8 +2,7 @@
 % Please edit documentation in R/merge_sk.R
 \name{merge_sk}
 \alias{merge_sk}
-\title{Funktion für Likert-Skalen
-\code{merge.evasys.sk()} ist eine veraltete Schreibweise der gleichen Funktion}
+\title{Skalenfrage auswerten (Einzelantworten)}
 \usage{
 merge_sk(
   x,
@@ -21,35 +20,89 @@ merge_sk(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Vektor mit den Antworten (Zahlen). Erwartet die Attribute \code{label}
+(Fragetext) und \code{labels} (benannte Antwortcodes; das erste und das
+\code{number}-te Label beschriften die Pole der Abbildung).}
 
-\item{inkl}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable}
+\item{inkl}{Soll die Frage im Bericht erscheinen? \code{TRUE} oder \code{FALSE}.
+Beim Standard \code{"nr"} entscheidet die Variable \verb{inkl.<nr>} (z. B.
+\code{inkl.2.1} bei \code{nr = "2.1"}), die im Berichts-Template gesetzt ist, meist
+aus der Berichtstabelle von \code{\link[=input_tabelle]{input_tabelle()}}. Ohne Fragenummer wird die
+Frage immer ausgegeben.}
 
-\item{nr}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr}{Fragenummer, z. B. \code{"2.1"}. Sie wird der Überschrift vorangestellt
+und bestimmt bei \code{inkl = "nr"}, welche Variable \verb{inkl.<nr>} abgefragt
+wird. Standard: \code{""} (keine Nummer).}
 
-\item{show.alt}{Zeige Ausweichoptionen, falls es sie gibt}
+\item{show.alt}{Sollen Ausweichoptionen und die Abbildung gezeigt werden?
+Bei \code{FALSE} werden nur Überschrift und Tabelle ausgegeben.}
 
-\item{number}{Anzahl Antwortoptionen des Items (OHNE AUSWEICHOPTIONEN!)}
+\item{number}{Anzahl der Skalenstufen \strong{ohne} Ausweichoptionen. Werte
+außerhalb von \code{1:number} gehen nicht in Tabelle und Abbildung ein.}
 
-\item{alt1}{Text für erste Ausweichoption (standardmäßig 0 in den Daten, siehe alt1.num)}
+\item{alt1, alt2}{Text der ersten bzw. zweiten Ausweichoption (z. B.
+\code{"kann ich nicht beurteilen"}) oder \code{FALSE}, wenn es sie nicht gibt.
+Ausgegeben wird, wie oft sie gewählt wurde.}
 
-\item{alt2}{Text für zweite Ausweichoption (standardmäßig 7 in den Daten, siehe alt1.num)}
+\item{alt1.num, alt2.num}{Code der ersten bzw. zweiten Ausweichoption in
+den Daten.}
 
-\item{alt1.num}{Welche Zahl entspricht alt1}
+\item{lime}{Liegen die Daten im Format eines LimeSurvey-Exports vor (Faktor
+mit den Antworttexten als Stufen)?}
 
-\item{alt2.num}{Welche Zahl entspricht alt2}
+\item{lime.brackets}{Nur mit \code{lime = TRUE}: Steht der eigentliche
+Fragetext in eckigen Klammern am Anfang des Labels? Dann wird nur dieser
+Teil verwendet.}
 
-\item{lime}{Handelt es sich um exportierte LimeSurvey-Daten?}
-
-\item{lime.brackets}{Müssen eckige Klammern um den Fragetext herum entfernt werden?}
-
-\item{show.plot}{Zeige Plot?}
+\item{show.plot}{Soll die Abbildung gezeigt werden? Voreinstellung aus
+\link{setanalysis_defaults} (\code{show.plot.sk}).}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Funktion für Likert-Skalen
-\code{merge.evasys.sk()} ist eine veraltete Schreibweise der gleichen Funktion
+Erzeugt den Berichtsabschnitt für eine einzelne Skalenfrage (z. B. eine
+6-stufige Likert-Skala): Überschrift, Tabelle mit Kennwerten (n, M, SD,
+Median, Minimum, Maximum), optional die Häufigkeit von Ausweichoptionen
+sowie eine Abbildung mit der Verteilung der Antworten, Mittelwert und
+Standardabweichung (\code{\link[=barplot_sk]{barplot_sk()}}).
+
+Der Abschnitt wird so ausgegeben, dass Überschrift, Tabelle und Abbildung
+nicht durch einen Seitenumbruch getrennt werden.
 }
 \examples{
-merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang)
+
+# Mit Ausweichoption (Code 0 in den Daten)
+merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang, alt1 = "kann ich nicht beurteilen")
+
+if (interactive()) markdown_in_viewer(merge_sk(BspDaten$dataSHOWUP$info_ausr_studgang))
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}}, um mehrere Skalenfragen gemeinsam oder auf
+Ebene von Lehrveranstaltungen aggregiert darzustellen.
+
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_subj]{merge_subj()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

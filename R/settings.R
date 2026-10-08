@@ -1,13 +1,43 @@
 # Paketeinstellungen und Speicher für offene Antworten ------------------
 
-# Festlegen der Standardeinstellungen bei Laden des Pakets ---------------
-
-#' Globale Umgebung für die Paketkonfiguration
+#' Einstellungen des Pakets
 #'
-#' Diese Umgebung wird verwendet, um Konfigurationswerte wie Farben zu speichern.
-#' @export setanalysis_defaults
-
-setanalysis_defaults <<- new.env(parent = emptyenv())
+#' @description
+#' Umgebung mit den Einstellungen, die die Auswertungsfunktionen verwenden
+#' (Farben, Spaltenbreiten und Voreinstellungen). Die Werte lassen sich mit
+#' [change_analysis_defaults()] für einen Bericht ändern, z. B. eine eigene
+#' Akzentfarbe je Befragung.
+#'
+#' @format Eine Umgebung mit folgenden Einträgen:
+#' \describe{
+#'   \item{`font.family`}{Schriftart der Abbildungen (`"Red Hat Text"`; wird
+#'     beim Laden des Pakets registriert).}
+#'   \item{`color.bars`}{Akzentfarbe für Balken, Boxen und die eingefärbten
+#'     Tabellenzeilen.}
+#'   \item{`col.width3`, `col.width4`}{Relative Spaltenbreiten der
+#'     Häufigkeitstabellen mit drei bzw. vier Spalten ([table_freq()],
+#'     [merge_mc()]).}
+#'   \item{`col.width.sm`, `col.width.sm.alt1`, `col.width.sm.alt2`}{Relative
+#'     Spaltenbreiten der Statistiktabellen für mehrere Items ohne bzw. mit
+#'     einer oder zwei Ausweichoptionen ([table_stat_multi()]).}
+#'   \item{`col1.width.tss`}{Wird derzeit nicht verwendet (aus früheren
+#'     Versionen).}
+#'   \item{`show.plot.sc`, `show.plot.mc`, `show.plot.sk`}{Voreinstellung für
+#'     `show.plot` in [merge_sc()], [merge_mc()] und [merge_sk()].}
+#'   \item{`open.appendix`}{Voreinstellung für `appendix` in [merge_open()]:
+#'     offene Antworten im Anhang sammeln?}
+#'   \item{`inkl.open`}{Voreinstellung für `inkl_global` in [merge_open()]:
+#'     offene Fragen überhaupt ausgeben?}
+#' }
+#'
+#' @family werkzeuge
+#'
+#' @examples
+#' setanalysis_defaults$color.bars
+#' ls(setanalysis_defaults)
+#'
+#' @export
+setanalysis_defaults <- new.env(parent = emptyenv())
 
 setanalysis_defaults$font.family <- "Red Hat Text"
 setanalysis_defaults$col.width3 <- c(108, 18, 11)
@@ -23,12 +53,22 @@ setanalysis_defaults$show.plot.sk <- TRUE
 setanalysis_defaults$open.appendix <- TRUE
 setanalysis_defaults$inkl.open <- TRUE
 
-#' Umgebung für die offenen Antworten -------------------------------------
+#' Speicher für die offenen Antworten des Anhangs
 #'
-#' Diese Umgebung wird verwendet, um die offenen Antworten für die verschiedenen Fragen zu speichern.
-#' @export list_open_answers
-
-list_open_answers <<- new.env(parent = emptyenv())
+#' @description
+#' Umgebung, in der [merge_open()] bei `appendix = TRUE` die offenen Fragen
+#' eines Berichts sammelt, bis [appendix_open()] sie im Anhang ausgibt und den
+#' Speicher wieder leert. Für die normale Nutzung muss man sie nicht direkt
+#' ansprechen.
+#'
+#' @format Eine Umgebung mit dem Zähler `anchor.nr` (Anzahl der gesammelten
+#'   Fragen) sowie den Einträgen `var.1`, `nr.1`, `var.2`, `nr.2`, … mit den
+#'   Antworten und Fragenummern.
+#'
+#' @family werkzeuge
+#'
+#' @export
+list_open_answers <- new.env(parent = emptyenv())
 
 list_open_answers$anchor.nr <- 0
 
@@ -42,29 +82,36 @@ list.open.answers <- list_open_answers
 
 # Funktion, um diese Einstellungen zu ändern ------------------------------
 
-#' Funktion um Einstellungsvariablen anzupassen
+#' Einstellungen des Pakets ändern
 #'
-#' @param ... Argumente, die die Einstellungen ändern sollen, z. B.
-#' `color.bars = "red"` oder `show.plot.sc = FALSE`.
-#' Die Namen der Argumente müssen mit den Namen der Einstellungsvariablen übereinstimmen.
+#' @description
+#' Ändert einen oder mehrere Einträge in [setanalysis_defaults], z. B. die
+#' Akzentfarbe oder ob Abbildungen gezeigt werden. Die Änderung gilt für alle
+#' folgenden Aufrufe in der R-Sitzung, typischerweise also für den ganzen
+#' Bericht. Nur bestehende Einstellungen können geändert werden.
 #'
-#' @export change_analysis_defaults
+#' @param ... Einstellungen in der Form `name = wert`, z. B.
+#'   `color.bars = "#507289"` oder `show.plot.sc = FALSE`. Die möglichen Namen
+#'   stehen in [setanalysis_defaults].
+#'
+#' @returns Nichts (unsichtbar `NULL`).
+#'
+#' @family werkzeuge
 #'
 #' @examples
+#' alte_werte <- mget(c("color.bars", "show.plot.sc"), envir = setanalysis_defaults)
 #'
-#' # Hier wird die Farbe der Balken auf rot geändert und eingestellt,
-#' # dass keine SC-Plots gezeigt werden sollen
-#'
-#' change_analysis_defaults(color.bars = "red", show.plot.sc = FALSE)
-#'
-#' # Eine Überprüfung zeigt, dass die Änderungen erfolgreich waren
-#'
+#' # Balken blaugrau, keine Abbildungen bei Single-Choice-Fragen
+#' change_analysis_defaults(color.bars = "#507289", show.plot.sc = FALSE)
 #' setanalysis_defaults$color.bars
-#' setanalysis_defaults$show.plot.sc
 #'
-#' # Diese Änderung ginge nicht, weil die Variable nicht existiert
-#' # change_analysis_defaults(color.width2 = "turquoise")
+#' # Unbekannte Einstellungen führen zu einem Fehler
+#' try(change_analysis_defaults(farbe = "red"))
 #'
+#' # Vorherige Werte wiederherstellen
+#' do.call(change_analysis_defaults, alte_werte)
+#'
+#' @export
 change_analysis_defaults <- function(...) {
   changes <- list(...)
 

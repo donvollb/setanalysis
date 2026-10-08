@@ -2,7 +2,7 @@
 % Please edit documentation in R/tables.R
 \name{table_stat_single}
 \alias{table_stat_single}
-\title{Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle}
+\title{Kennwerte einer Frage als Tabelle}
 \usage{
 table_stat_single(
   x,
@@ -13,19 +13,35 @@ table_stat_single(
 )
 }
 \arguments{
-\item{x}{Daten}
+\item{x}{Numerischer Vektor.}
 
-\item{md}{Mit Median?}
+\item{md}{Soll der Median gezeigt werden?}
 
-\item{col1.name}{Name der ersten Zelle der Kopfzeile}
+\item{col1.name}{Überschrift der Spalte mit der Anzahl.}
 
-\item{bold}{Fettdruck der Kopfzeile}
+\item{bold}{Soll die Kopfzeile fett gedruckt werden?}
 
-\item{digits}{Anzahl der Nachkommastellen in der Tabelle}
+\item{digits}{Anzahl der Nachkommastellen.}
 }
 \value{
-Tabelle
+Ein \code{tinytable}-Objekt (siehe \code{\link[=lv_table]{lv_table()}}).
 }
 \description{
-Einfache Statistiktabelle für ein Item ohne Fragetext in Tabelle
+Erstellt eine einzeilige Tabelle mit den Kennwerten einer Variable:
+Anzahl (n), Mittelwert (M), Standardabweichung (SD), optional Median (MD),
+Minimum und Maximum. Wird z. B. von \code{\link[=merge_sk]{merge_sk()}} und \code{\link[=merge_num]{merge_num()}}
+verwendet.
 }
+\examples{
+table_stat_single(BspDaten$dataLVE$KF_01, md = TRUE, col1.name = "n")
+
+}
+\seealso{
+\code{\link[=table_stat_multi]{table_stat_multi()}} für mehrere Items mit Fragetexten.
+
+Weitere Tabellenfunktionen:
+\code{\link[=lv_table]{lv_table()}},
+\code{\link[=table_freq]{table_freq()}},
+\code{\link[=table_stat_multi]{table_stat_multi()}}
+}
+\concept{tabellen}

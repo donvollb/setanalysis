@@ -1,24 +1,25 @@
 # Balkendiagramme --------------------------------------------------------
 
-#' Barplot zur Abbildung von Häufigkeiten (kann auch für Balkendiagramme bei ordinalen Skalennivaus genutzt werden)
+#' Balkendiagramm der Häufigkeiten
 #'
-#' @param x Daten
-#' @param xlab Achsenbeschriftung
+#' @description
+#' Zeichnet ein senkrechtes Balkendiagramm mit der Häufigkeit jeder Kategorie,
+#' z. B. für Fachsemester oder in Klassen eingeteilte Noten. Wird von
+#' [merge_num()] und [merge_fachsem()] verwendet.
 #'
+#' @param x Faktor (die Stufen bestimmen Reihenfolge und Beschriftung der
+#'   Balken).
+#' @param xlab Beschriftung der x-Achse.
 #'
-#' @returns Barplot
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
+#'
+#' @family grafiken
 #'
 #' @examples
+#' barplot_freq(BspDaten$Plots$fsem, xlab = "Fachsemester")
 #'
-#' # Beispiel für Verwendung in merge_num ---------------------------------
-#'
-#' barplot_freq(BspDaten$Plots$num, xlab = "Durchschnittsnote für Hochschulzugangsberechtigung")
-#'
-#' @export barplot_freq
-
-barplot_freq <- function(x, # Daten
-                         xlab = "") # Achsenbeschriftung
-{
+#' @export
+barplot_freq <- function(x, xlab = "") {
   # Maximale Antworthäufigkeit ermitteln (für y-Achsenskalierung) ---------
 
   x_max <- max(table(x))
@@ -55,28 +56,28 @@ barplot_freq <- function(x, # Daten
   .text_bottom_2(xlab, line = 2.5)
 }
 
-#' Barplot zur Abbildung von von SC/MC-Fragen
+#' Waagerechtes Balkendiagramm für Single- und Multiple-Choice-Fragen
 #'
-#' @param x Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)
-#' @param xlab Beschriftung x-Achse
+#' @description
+#' Zeichnet für jede Antwortoption einen waagerechten Balken mit der
+#' absoluten Häufigkeit; rechts daneben steht der Prozentwert. Wird von
+#' [merge_sc()] und [merge_mc()] verwendet. Wurde keine Option gewählt, wird
+#' statt der Abbildung ein Hinweis ausgegeben.
 #'
-#' @returns Barplot
+#' @param x Data Frame mit den Spalten `label` (Antwortoption, ggf. mit
+#'   Zeilenumbrüchen), `freq` (absolute Häufigkeit) und `perc` (Prozent), eine
+#'   Zeile pro Antwortoption.
+#' @param xlab Beschriftung der x-Achse.
+#'
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
+#'
+#' @family grafiken
 #'
 #' @examples
-#'
-#' # Beispiel für Verwendung in merge_sc ----------------------------------
-#' barplot_scmc(BspDaten$Plots$sc, xlab = "Häufigkeit")
-#'
-#' # Beispiel für Verwending in merge_mc ----------------------------------
 #' barplot_scmc(BspDaten$Plots$mc, xlab = "Häufigkeit")
 #'
-#' @export barplot_scmc
-
-
-# Horizontaler Barplot für Abbildungen von SC/MC-Fragen
-barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und Prozent)
-                         xlab = "") # Beschriftung x-Achse
-{
+#' @export
+barplot_scmc <- function(x, xlab = "") {
   # wenn alles Nullen (Daten gleich Nullvektor),
   # dann Funktion abbrechen und Nachricht schreiben
 
@@ -130,30 +131,33 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
   )
 }
 
-#' Barplot-Boxplot Hypbrid für die Darstellung von ordinalskalierten Variablen
-#' (analog zu alten EvaSys-Skalen)
+#' Verteilung einer Skalenfrage mit Mittelwert und Standardabweichung
 #'
 #' @description
-#' Die optimale Chunk-Einstellung hierfür ist: fig.width = 6, fig.height = 1.4
+#' Zeichnet die Antworten einer Skalenfrage im Stil der evasys-Berichte: ein
+#' Balken pro Skalenstufe mit dem Prozentwert darüber, die Beschriftung der
+#' beiden Pole links und rechts sowie eine Markierung für Mittelwert und
+#' Standardabweichung. Wird von [merge_sk()] verwendet (Abbildungsgröße dort:
+#' 9 × 2 Zoll).
 #'
-#' @param x Daten
-#' @param tmin Beschriftung links
-#' @param tmax Beschriftung rechts
-#' @param number Skala (6 für Sechserskala etc.)
+#' @param x Numerischer Vektor mit den Antworten. Werte außerhalb von
+#'   `1:number` (z. B. Ausweichoptionen) werden nicht berücksichtigt.
+#' @param tmin,tmax Beschriftung des linken bzw. rechten Pols.
+#' @param number Anzahl der Skalenstufen.
+#'
+#' @returns Kein verwertbarer Wert (unsichtbar); die Abbildung wird gezeichnet.
+#'
+#' @family grafiken
+#' @seealso [bsp_evasys_sk6()] für eine beschriftete Legende zu dieser
+#'   Abbildung.
 #'
 #' @examples
 #' barplot_sk(BspDaten$dataSHOWUP$info_ausr_studgang,
 #'   tmin = "stimme gar nicht zu", tmax = "stimme voll zu"
 #' )
 #'
-#' @returns Barplot-Boxplot-Hybrid
 #' @export
-
-barplot_sk <- function(x, # Daten
-                       tmin, # Beschriftung links
-                       tmax, # Beschriftung rechts
-                       number = 6) # Skala (6 für Sechserskala etc.)
-{
+barplot_sk <- function(x, tmin, tmax, number = 6) {
   x[!(x %in% c(1:number))] <- NA
   x <- x[!is.na(x)]
 

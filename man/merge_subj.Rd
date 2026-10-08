@@ -2,31 +2,57 @@
 % Please edit documentation in R/merge_subj.R
 \name{merge_subj}
 \alias{merge_subj}
-\title{merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fach}
+\title{Erstes und zweites Fach gemeinsam auswerten}
 \usage{
 merge_subj(x1, x2, inkl1 = "nr1", inkl2 = "nr2", nr1 = "", nr2 = "")
 }
 \arguments{
-\item{x1}{Daten von Fach 1}
+\item{x1, x2}{Antworten auf die Frage nach dem 1. bzw. 2. Fach (wie bei
+\code{\link[=merge_sc]{merge_sc()}}). Überschrift und Antwortoptionen werden aus \code{x1} genommen.}
 
-\item{x2}{Daten von Fach 2}
+\item{inkl1, inkl2}{Wie \code{inkl} bei \code{\link[=merge_sc]{merge_sc()}}, jeweils für eine der beiden
+Fragen; beim Standard \code{"nr1"} bzw. \code{"nr2"} entscheiden die Variablen
+\verb{inkl.<nr1>} bzw. \verb{inkl.<nr2>}. Ausgegeben wird nur, wenn beide Fragen
+eingeschlossen sind.}
 
-\item{inkl1}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr1" zieht sich automatisch die entsprechende inkl. Variable}
-
-\item{inkl2}{TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr2" zieht sich automatisch die entsprechende inkl. Variable}
-
-\item{nr1}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
-
-\item{nr2}{Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird}
+\item{nr1, nr2}{Fragenummern der beiden Fragen; beide erscheinen in der
+Überschrift.}
+}
+\value{
+Nichts (unsichtbar \code{NULL}). Der Code für den Bericht wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-merge-Funktion zum Zusammenfügen der single-choice Fragen nach dem 1. und 2. Fach
+Fasst zwei Single-Choice-Fragen mit denselben Antwortoptionen zusammen,
+typischerweise „Was ist Ihr 1. Fach?“ und „Was ist Ihr 2. Fach?“ im
+2-Fach-Bachelor, und wertet sie wie \code{\link[=merge_sc]{merge_sc()}} in einer gemeinsamen
+Tabelle aus. Ein Hinweis unter der Tabelle erklärt, dass sich dadurch der
+Stichprobenumfang verdoppelt.
 }
 \examples{
-
-merge_subj(
-  BspDaten$dataSHOWUP$fach1_2FB,
-  BspDaten$dataSHOWUP$fach2_2FB
-) |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+merge_subj(BspDaten$dataSHOWUP$fach1_2FB, BspDaten$dataSHOWUP$fach2_2FB)
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+Weitere Auswertungsfunktionen:
+\code{\link[=appendix_open]{appendix_open()}},
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}},
+\code{\link[=merge_auto]{merge_auto()}},
+\code{\link[=merge_fachsem]{merge_fachsem()}},
+\code{\link[=merge_grade]{merge_grade()}},
+\code{\link[=merge_many]{merge_many()}},
+\code{\link[=merge_mc]{merge_mc()}},
+\code{\link[=merge_num]{merge_num()}},
+\code{\link[=merge_open]{merge_open()}},
+\code{\link[=merge_rueck]{merge_rueck()}},
+\code{\link[=merge_sc]{merge_sc()}},
+\code{\link[=merge_sk]{merge_sk()}},
+\code{\link[=merge_wl]{merge_wl()}}
+}
+\concept{auswertung}

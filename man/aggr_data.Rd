@@ -2,15 +2,38 @@
 % Please edit documentation in R/data_preparation.R
 \name{aggr_data}
 \alias{aggr_data}
-\title{Testet, ob die Labels aus personalized.info so im Datensatz vorkommen}
+\title{Antworten je Gruppe mitteln}
 \usage{
 aggr_data(vars, kennung)
 }
 \arguments{
-\item{vars}{Variablen (oder eine Variable), die aggregiert werden sollen}
+\item{vars}{Data Frame mit den zu mittelnden Variablen oder ein einzelner
+Vektor. Werte werden in Zahlen umgewandelt, fehlende Werte ignoriert.}
 
-\item{kennung}{Die Kennungen (z. B. LV-Kennungen oder Fallnummern), nach denen die Daten aggregiert werden sollen}
+\item{kennung}{Vektor mit der Gruppenzugehörigkeit (z. B. Kennung der
+Lehrveranstaltung) für jede Zeile von \code{vars}.}
+}
+\value{
+Data Frame mit einer Zeile pro Gruppe (in der Reihenfolge, in der
+die Gruppen in \code{kennung} zuerst vorkommen) und einer Spalte pro Variable.
+Die Attribute \code{label} der Variablen bleiben erhalten.
 }
 \description{
-Testet, ob die Labels aus personalized.info so im Datensatz vorkommen
+Berechnet für jede Gruppe (z. B. jede Lehrveranstaltung) den Mittelwert
+jeder Variable. So geht später jede Gruppe gleich stark in Tabellen und
+Abbildungen ein, unabhängig davon, wie viele Antworten sie hat. Wird von
+\code{\link[=merge_aggr_sk]{merge_aggr_sk()}} und \code{\link[=merge_grade]{merge_grade()}} verwendet.
 }
+\examples{
+lve <- BspDaten$dataLVE
+mittelwerte <- aggr_data(lve[, c("KF_01", "KF_02")], lve$Kennung)
+head(mittelwerte)
+
+}
+\seealso{
+Weitere Funktionen zur Datenaufbereitung:
+\code{\link[=evasys_read_data]{evasys_read_data()}},
+\code{\link[=input_tabelle]{input_tabelle()}},
+\code{\link[=label_test]{label_test()}}
+}
+\concept{daten}

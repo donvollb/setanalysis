@@ -2,22 +2,51 @@
 % Please edit documentation in R/output.R
 \name{subchunkify}
 \alias{subchunkify}
-\title{Erzeugt Subchunks für die Berichte}
+\title{Abbildung oder Tabelle als eigenen Chunk ausgeben}
 \usage{
 subchunkify(g, fig_height = 7, fig_width = 5, hide = FALSE)
 }
 \arguments{
-\item{g}{Code (kann auch mit Aufzählung ("c(...)") benutzt werden)}
+\item{g}{Ausdruck, der eine Abbildung zeichnet oder eine Tabelle erzeugt.
+Er wird erst im Sub-Chunk ausgewertet. Mehrere Befehle können mit
+\code{c(...)} übergeben werden (dann \code{hide = TRUE} verwenden).}
 
-\item{fig_height}{Höhe des Sub-Chunks}
+\item{fig_height, fig_width}{Höhe und Breite der Abbildung in Zoll.}
 
-\item{fig_width}{Breite des Sub-Chunks}
-
-\item{hide}{Soll für die results-Option des Chunks "asis" verwendet werden?}
+\item{hide}{Bei \code{TRUE} wird nur die Abbildung ausgegeben und sonstige
+Ausgaben des Ausdrucks werden unterdrückt (Chunk-Option
+\code{results = "hide"}); bei \code{FALSE} wird alles wie in einem
+\code{asis}-Chunk ausgegeben.}
 }
 \value{
-Subchunk
+Nichts (unsichtbar \code{NULL}). Das Ergebnis des Sub-Chunks wird mit
+\code{\link[=cat]{cat()}} ausgegeben.
 }
 \description{
-Erzeugt Subchunks für die Berichte
+In einem Chunk mit \code{output: asis} haben alle Abbildungen dieselbe Größe.
+\code{subchunkify()} erzeugt deshalb für einen einzelnen Ausdruck (z. B. eine
+Abbildung oder eine Tabelle) einen eigenen kleinen Chunk mit eigener
+Abbildungsgröße, wertet ihn mit knitr aus und gibt das Ergebnis in den
+Bericht aus. Alle Auswertungsfunktionen nutzen \code{subchunkify()} für ihre
+Tabellen und Abbildungen.
 }
+\examples{
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+# Tabelle und Abbildung mit eigener Größe
+subchunkify(lv_table(head(mtcars, 3)))
+subchunkify(boxplot_grade(BspDaten$Plots$grade), fig_height = 2, fig_width = 9)
+\dontshow{
+setwd(.old_wd)
+}
+
+}
+\seealso{
+Weitere Werkzeuge:
+\code{\link[=change_analysis_defaults]{change_analysis_defaults()}},
+\code{\link{list_open_answers}},
+\code{\link[=markdown_in_viewer]{markdown_in_viewer()}},
+\code{\link{setanalysis_defaults}}
+}
+\concept{werkzeuge}

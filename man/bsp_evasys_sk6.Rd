@@ -2,20 +2,37 @@
 % Please edit documentation in R/legends.R
 \name{bsp_evasys_sk6}
 \alias{bsp_evasys_sk6}
-\title{Beispiel einer Sechserskala}
+\title{Legende: beschriftete Beispiel-Abbildung einer 6er-Skala}
 \usage{
 bsp_evasys_sk6(x = "default")
 }
 \arguments{
-\item{x}{Daten, bei "default" wird ein Beispieldatensatz genutzt}
+\item{x}{Antworten auf einer 6-stufigen Skala. Bei \code{"default"} werden feste
+Beispielwerte verwendet, zu denen die Beschriftungen passen.}
 }
 \value{
-Grafik
+Nichts (unsichtbar \code{NULL}). Die Abbildung wird als Sub-Chunk in
+den Bericht ausgegeben (siehe \code{\link[=subchunkify]{subchunkify()}}).
 }
 \description{
-Beispiel einer Sechserskala
+Gibt eine Beispiel-Abbildung im Stil von \code{\link[=barplot_sk]{barplot_sk()}} aus, in der die
+prozentuale Häufigkeit, der Mittelwert und die Standardabweichung
+beschriftet sind. Gedacht für den Abschnitt „Erläuterung zu Grafiken“ am
+Anfang eines Berichts.
 }
 \examples{
-bsp_evasys_sk6() |> markdown_in_viewer()
+\dontshow{
+.old_wd <- setwd(tempdir())
+}
+bsp_evasys_sk6()
+\dontshow{
+setwd(.old_wd)
+}
 
 }
+\seealso{
+Weitere Legenden:
+\code{\link[=bsp_boxplot]{bsp_boxplot()}},
+\code{\link[=bsp_table_stat]{bsp_table_stat()}}
+}
+\concept{legenden}
