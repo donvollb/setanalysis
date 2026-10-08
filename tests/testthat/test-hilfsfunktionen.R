@@ -200,3 +200,16 @@ test_that("open.answers() erzeugt den Verweis auf den Anhang", {
     "open.answers"
   )
 })
+
+test_that("markdown_in_viewer() stellt die vorherigen Einstellungen wieder her", {
+  # früher: knitr.duplicate.label wurde danach fest auf "forbid" gesetzt
+  withr::local_options(viewer = function(...) invisible(NULL), knitr.duplicate.label = "testwert")
+  withr::local_dir(withr::local_tempdir())
+  dev_vorher <- knitr::opts_chunk$get("dev")
+  reset_setanalysis_state()
+
+  markdown_in_viewer(merge_sc(BspDaten$dataLVE$V3_D, show.plot = FALSE))
+
+  expect_identical(getOption("knitr.duplicate.label"), "testwert")
+  expect_identical(knitr::opts_chunk$get("dev"), dev_vorher)
+})

@@ -54,6 +54,6 @@ merge_fachsem <- function(x, # Daten
   )
 
   cat("  \n  \n")
-  subchunkify(barplot_freq(x, xlab = "Fachsemester"), fig_height = 5, fig_width = 10)
+  subchunkify(barplot_freq(x, xlab = "Fachsemester"), fig_height = fig.height, fig_width = 10)
   cat("  \n  \n")
 }

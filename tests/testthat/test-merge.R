@@ -273,6 +273,30 @@ test_that("merge_open() mit Anhang verweist und appendix_open() sammelt", {
   )
 })
 
+test_that("appendix_open() übernimmt keine Antworten aus einem vorherigen Bericht", {
+  leer <- c(NA_character_, NA_character_)
+  attr(leer, "label") <- "Leere Frage"
+  local_inkl(`1.34` = TRUE, `1.35` = TRUE)
+  reset_setanalysis_state()
+  withr::local_dir(withr::local_tempdir())
+
+  # Bericht 1 mit Anhang
+  invisible(capture.output({
+    merge_open(showup$offen, nr = "1.34")
+    appendix_open()
+  }))
+  expect_identical(list_open_answers$anchor.nr, 0)
+  expect_identical(ls(list_open_answers), "anchor.nr")
+
+  # Bericht 2 in derselben R-Sitzung: Anhang enthält nur die eigene Frage
+  bericht2 <- capture.output({
+    merge_open(leer, nr = "1.35")
+    appendix_open()
+  })
+  expect_true(any(grepl("Leere Frage", bericht2)))
+  expect_false(any(grepl("Welche weiteren Informationen", bericht2)))
+})
+
 test_that("appendix_open() gibt ohne vorherige offene Fragen nichts aus", {
   reset_setanalysis_state()
   expect_length(capture.output(appendix_open()), 0)
@@ -333,15 +357,52 @@ test_that("merge_many() meldet nicht unterstützte Typen", {
   expect_error(merge_many(x), "nicht unterstützten Typ")
 })
 
-# Bekannte Fehler (werden in einem späteren Schritt behoben) --------------
+# Korrigierte Fehler in merge_many() ---------------------------------------
 
-test_that("BEKANNTER FEHLER: merge_many() scheitert, wenn die letzte Spalte sk/mc ist", {
-  # Abbildungen der vorherigen Fragen nicht ins Testverzeichnis schreiben
-  withr::local_dir(withr::local_tempdir())
-  reset_setanalysis_state()
-  expect_error(capture.output(merge_many(showup, nr_auto = FALSE)))
+test_that("merge_many() wertet auch eine Skalenfrage als letzte Spalte aus", {
+  # früher: Abbruch mit „undefined columns selected“
+  expect_report_snapshot(merge_many(showup, nr_auto = FALSE), "merge_many-letzte-spalte-sk")
 })
 
-test_that("BEKANNTER FEHLER: merge_many() scheitert bei Spalten ohne Typ", {
-  expect_error(merge_many(data.frame(a = 1:3, b = 1:3)), "length zero|Länge 0|Länge null")
+test_that("merge_many() wertet eine einzelne Skalenfrage einzeln aus", {
+  # früher: Abbruch mit „object 'counter' not found“
+  ausgabe <- function(code) {
+    reset_setanalysis_state()
+    withr::local_dir(withr::local_tempdir())
+    capture.output(code)
+  }
+  expect_identical(
+    ausgabe(merge_many(lve[, c("KF_01", "V3_D")], nr_auto = FALSE)),
+    ausgabe(merge_many(lve[, c("KF_01", "V3_D")], nr_auto = FALSE, multi.sk = FALSE))
+  )
+})
+
+test_that("merge_many() wird nicht von einer globalen Variable `counter` gestört", {
+  # früher: Abbruch mit „only 0's may be mixed with negative subscripts“
+  ausgabe <- function() {
+    reset_setanalysis_state()
+    withr::local_dir(withr::local_tempdir())
+    capture.output(merge_many(showup[, 1:12], nr_auto = FALSE))
+  }
+  ohne_counter <- ausgabe()
+
+  assign("counter", 5, envir = globalenv())
+  withr::defer(rm("counter", envir = globalenv()))
+  expect_identical(ausgabe(), ohne_counter)
+})
+
+test_that("merge_many() meldet Spalten ohne Typ verständlich", {
+  expect_error(merge_many(data.frame(a = 1:3, b = 1:3)), "hat keinen Typ")
+})
+
+# Weitere korrigierte Fehler ---------------------------------------------
+
+test_that("merge_fachsem() berücksichtigt fig.height", {
+  # früher: Höhe immer 5 (= Standardwert, daher bleibt die Standardausgabe gleich)
+  reset_setanalysis_state()
+  withr::local_dir(withr::local_tempdir())
+  invisible(capture.output(merge_fachsem(lve$FachSemN, fig.height = 3)))
+
+  svg <- paste(readLines(list.files("figure", full.names = TRUE)), collapse = "")
+  expect_match(svg, "height='216.00pt'", fixed = TRUE) # 3 Zoll
 })

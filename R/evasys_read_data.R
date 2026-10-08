@@ -101,7 +101,7 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
       # Daraus ziehen wir jetzt folgende Infos:
 
       attr(data[, var_name], "label") <- sub("^.*? ", "", section[section$var == "Fragetext:", 2]) # Den Fragetext als "label"
-      attr(data[, var_name], "nr") <- sub("? .*$", "", section[section$var == "Fragetext:", 2]) # Die Nummer der Frage im Fragebogen als "nr"
+      attr(data[, var_name], "nr") <- sub(" .*$", "", section[section$var == "Fragetext:", 2]) # Die Nummer der Frage im Fragebogen als "nr"
       # Den Fragetyp als "type", dabei die evasys-Bezeichnung in die Kurzform
       # des Pakets übersetzen (aus "1 aus n" wird z.B. "sc")
       evasys_type <- section[section$var == "Fragetyp:", 2]

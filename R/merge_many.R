@@ -13,66 +13,58 @@ merge_many <- function(x, # Ausschnitt aus dem Datensatz
                        nr_auto = TRUE, # Soll die Nummer automatisch ermittelt werden?
                        nr = "", #
                        inkl = "nr") {
-  # Prüfung, ob es überhaupt mehr als eine Spalte ist
+  # Nur eine Spalte: direkt auswerten -------------------------------------
   if (!is.list(x)) {
     return(merge_auto(x, nr_auto = nr_auto, nr = nr, inkl = inkl))
   }
 
-  # Schleife für die Verarbeitung der Items
-  for (i in seq_len(ncol(x))) {
-    type <- attr(x[, i], "type")
+  evaluate <- function(columns) merge_auto(columns, nr_auto = nr_auto, nr = nr, inkl = inkl)
+  type_of <- function(k) attr(x[, k], "type")
+  nr_of <- function(k) attr(x[, k], "nr")
 
-    # Prüfen, ob es eine einzeln auszuwertende Spalte ist -----------------
-    if (type %in% c("sc", "open/num") | (type == "sk" & isFALSE(multi.sk))) {
-      merge_auto(x[, i], nr_auto = nr_auto, nr = nr, inkl = inkl)
+  # Spalten Frage für Frage auswerten -------------------------------------
+  # `first` und `last` sind die erste und letzte Spalte der aktuellen Frage
 
-      # Spezialbehandlung von mc-Items --------------------------------------
-    } else if (type == "mc") {
-      # Prüfen, ob die Nummer die gleiche ist wie bei der nächsten Spalte
-      if (attr(x[, i], "nr") == attr(x[, i + 1], "nr")) {
-        # Falls ja: Zähler einstellen und sonst nichts tun
-        if (!exists("counter")) {
-          counter <- 1
-        } else {
-          counter <- counter + 1
-        }
+  first <- 1
+  while (first <= ncol(x)) {
+    type <- type_of(first)
+    .check_type(type, names(x)[[first]])
+    last <- first
 
-        # Falls nein: Anhand des Zählers alle Spalten des mc-Items auswählen und
-        # den Zähler danach wieder entfernen
-      } else {
-        merge_auto(x[, (i - counter):i], nr_auto = nr_auto, nr = nr, inkl = inkl)
-        rm(counter)
+    if (type == "mc") {
+      # Alle folgenden Spalten mit derselben Fragenummer gehören zur MC-Frage
+      while (last < ncol(x) && identical(nr_of(last + 1), nr_of(first))) {
+        last <- last + 1
       }
-
-      # Spezialbehandlungen sk-Items (falls multi.sk TRUE ist) --------------
-    } else if (type == "sk") {
-      # Prüfen, ob die nächste Spalte auch ein sk-Item ist
-      if (attr(x[, i + 1], "type") == "sk") {
-        # Falls ja: Zähler einstellen und sonst nichts tun
-        if (!exists("counter")) {
-          counter <- 1
-        } else {
-          counter <- counter + 1
-        }
-
-        # Falls nein: Anhand des Zählers alle aufeinanderfolgenden sk-Items
-        # auswählen und den Zähler danach wieder entfernen
-      } else {
-        merge_auto(x[, (i - counter):i], nr_auto = nr_auto, nr = nr, inkl = inkl)
-        rm(counter)
+      evaluate(x[, first:last, drop = FALSE])
+    } else if (type == "sk" && !isFALSE(multi.sk)) {
+      # Aufeinanderfolgende Skalenfragen gemeinsam auswerten
+      while (last < ncol(x) && identical(type_of(last + 1), "sk")) {
+        last <- last + 1
       }
-
-      # Fehlermeldungen, falls der Typ nicht stimmt   -----------------------
-    } else if (!is.null(type)) {
-      stop(paste0(
-        "Die Spalte „", names(x)[[i]],
-        "“ hat den nicht unterstützten Typ „", type, "“."
-      ))
+      if (last > first) evaluate(x[, first:last]) else evaluate(x[, first])
     } else {
-      stop(
-        "Die Spalte „", names(x)[[i]],
-        "“ hat keinen Typ (Typen sind z. B. „sc“, „open“, „sk“)."
-      )
+      evaluate(x[, first])
     }
+
+    first <- last + 1
+  }
+}
+
+# Prüfen, ob merge_many() den Typ einer Spalte auswerten kann
+.check_type <- function(type, column_name) {
+  if (is.null(type)) {
+    stop(
+      "Die Spalte „", column_name,
+      "“ hat keinen Typ (Typen sind z. B. „sc“, „open“, „sk“).",
+      call. = FALSE
+    )
+  }
+  if (!type %in% c("sc", "mc", "sk", "open/num")) {
+    stop(
+      "Die Spalte „", column_name,
+      "“ hat den nicht unterstützten Typ „", type, "“.",
+      call. = FALSE
+    )
   }
 }

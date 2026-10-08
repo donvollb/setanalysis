@@ -154,4 +154,9 @@ appendix_open <- function(freq = "auto") {
       appendix = TRUE, is_appendix = TRUE
     )
   }
+
+  # Gesammelte Antworten löschen, damit ein weiterer Bericht in derselben
+  # R-Sitzung nicht die offenen Antworten dieses Berichts übernimmt
+  rm(list = ls(list_open_answers, all.names = TRUE), envir = list_open_answers)
+  list_open_answers$anchor.nr <- 0
 }

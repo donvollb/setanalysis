@@ -79,15 +79,18 @@ markdown_in_viewer <- function(markdown_function) {
     )
   }
 
-  # Bisherige Bildoptionen speichern um sie später wiederherzustellen ----
+  # Einstellungen ändern und beim Verlassen der Funktion (auch bei einem
+  # Fehler) auf die vorherigen Werte zurücksetzen --------------------------
   old_dev <- knitr::opts_chunk$get("dev")
-
-  # Einstellungsänderungen ------------------------------------------------
-  options(knitr.duplicate.label = "allow") # vermeidet Fehlermeldungen
+  old_options <- options(knitr.duplicate.label = "allow") # vermeidet Fehlermeldungen
+  on.exit({
+    options(old_options)
+    knitr::opts_chunk$set(dev = old_dev)
+  })
   knitr::opts_chunk$set(dev = "svglite") # sorgt für richtige Plot-Darstellung
 
   # HTML Code für richtige Schriftart und Seitenbreite --------------------
-  font_css <- "<style> body {font-family: 'Red Hat Text'</style> \n\n"
+  font_css <- "<style> body {font-family: 'Red Hat Text'} </style> \n\n"
 
   # Ergebnis, das normalerweise in die Konsole gedruckt wird, „abfangen“ --
   output_md <- capture.output(markdown_function)
@@ -100,8 +103,4 @@ markdown_in_viewer <- function(markdown_function) {
   markdown::mark_html(text = html_md, template = FALSE) |>
     htmltools::HTML() |>
     htmltools::html_print()
-
-  # Einstellungen zurücksetzen --------------------------------------------
-  options(knitr.duplicate.label = "forbid")
-  knitr::opts_chunk$set(dev = old_dev)
 }

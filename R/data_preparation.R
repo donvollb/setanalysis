@@ -50,11 +50,8 @@ label_test <- function(col, # Spalte aus der Info-Tabelle, z.B. info$Fb.text
 
   labels_col <- unique(col)
 
-  if (length(exception != 0)) {
-    for (k in seq_along(exception)) {
-      labels_col <- labels_col[labels_col != exception[k]]
-    }
-  }
+  # Ausnahmen nicht prüfen
+  labels_col <- labels_col[!labels_col %in% exception]
 
   if (!is.null(attr(var, "levels"))) {
     labels_var <- attr(var, "levels")

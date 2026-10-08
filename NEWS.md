@@ -20,8 +20,26 @@ Fehlerbehebung aufgeführt.
   Diagramm; sie stehen weiterhin in der Tabelle. Dadurch wird die Abbildung bei
   `fig.height = "default"` entsprechend niedriger. Die Beispieldaten
   `BspDaten$Plots$mc` wurden passend dazu bereinigt.
+* `merge_many()` wurde neu strukturiert und bricht in folgenden Fällen nicht
+  mehr ab:
+  - die letzte Spalte ist eine Skalen- oder MC-Frage,
+  - eine einzelne Skalenfrage steht zwischen anderen Fragen (sie wird jetzt
+    einzeln ausgewertet),
+  - in der globalen Umgebung existiert eine Variable `counter`.
+
+  Spalten ohne Fragetyp führen zu einer verständlichen Fehlermeldung.
+* `appendix_open()` leert nach der Ausgabe den Speicher der offenen Antworten.
+  Werden mehrere Berichte in derselben R-Sitzung erstellt (z. B. mit
+  `rmarkdown::render()` in einer Schleife), enthält der Anhang eines Berichts
+  damit nicht mehr die offenen Antworten der vorherigen Berichte.
+* `merge_fachsem()` berücksichtigt das Argument `fig.height` (bisher war die
+  Höhe der Abbildung immer 5; der Standardwert bleibt 5).
 * `merge_fachsem()` bricht bei einer ungültigen `group` jetzt mit einer
   verständlichen Fehlermeldung ab (bisher: „Objekt 'caps' nicht gefunden“).
+* `markdown_in_viewer()` stellt die vorherigen knitr-Einstellungen nach der
+  Vorschau wieder her (bisher wurde `knitr.duplicate.label` fest auf
+  `"forbid"` gesetzt).
+* `label_test()`: Ausnahmen werden einfacher und robuster herausgefiltert.
 * `input_tabelle()` wertet die Bedingungen der Regeltabelle jetzt direkt mit
   den Spalten der Berichtstabelle aus, statt die Spaltennamen per Textersatz
   umzuschreiben. Bestehende Regeltabellen liefern dasselbe Ergebnis; zusätzlich
