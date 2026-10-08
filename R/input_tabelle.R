@@ -9,16 +9,14 @@
 
 input_tabelle <- function(blank.path = NULL,
                           rules.path = NULL) {
-  ############################
-  # SETUP UND DATEN EINLESEN #
-  ############################
+  # Dateien einlesen (ohne Pfad: Auswahl per Dialogfenster) ---------------
 
   if (is.null(blank.path)) {
     rstudioapi::showDialog("Blank einlesen", "Wähle die <b>blank-Datei</b> aus.")
     blank.path <- file.choose()
   }
-  blank <- readxl::read_excel(blank.path) # Einlesen der blank-Datei
-  m <- ncol(blank) # wird für Schleife später benötigt, Anzahl der Spalten in der Blank Datei
+  blank <- readxl::read_excel(blank.path) # eine Zeile pro Bericht
+  n_original <- ncol(blank)
 
   if (is.null(rules.path)) {
     rstudioapi::showDialog(
@@ -27,132 +25,53 @@ input_tabelle <- function(blank.path = NULL,
     )
     rules.path <- file.choose()
   }
-  rules <- readxl::read_excel(rules.path) # Einlesen der TRUE-FALSE Datei
-  colnames(rules) <- c("var", "bed", "anm") # Neue Spaltennamen
+  rules <- readxl::read_excel(rules.path)
+  rule_vars <- rules[[1]] # Name der Variable, z. B. "inkl.2.1" oder "header2"
+  conditions <- rules[[2]] # Bedingung, z. B. 'Art != "speziell"'
 
-  # Weitere Vorbereitungen für Schleife
-  rules$bed_new <- NA # Erstelle neue Spalte
-  names <- colnames(blank) # Namen der Spalten von blank, wichtig für die Schleife
-  names <- paste0(names, " ") # Leerzeichen hinter jeden Namen, damit z.B. Studiengang.Teil nicht miterkannt wird
+  # Regeln nacheinander auswerten -----------------------------------------
+  # Jede Regel ergibt eine neue Spalte (TRUE/FALSE pro Bericht), die hinten
+  # angehängt wird. Die Reihenfolge ist wichtig: header-Regeln greifen auf
+  # die zuvor erzeugten inkl.-Spalten zurück.
 
-
-  ###########################################
-  # MAIN LOOP 1: Bearbeiten der Bedingungen #
-  ###########################################
-
-  # Diese Schleife bearbeitet die "Regeln" in der TRUE-FALSE-Datei und wandelt sie weiter in R-Code um
-  # Aus "Studiengang == "Psychologie"" wird z.B. "blank$Studiengang == "Psychologie""
-  # Zudem werden Regeln für header-Variablen erstellt (damit man das nicht manuell eintippen muss)
-
-
-  for (i in 1:nrow(rules)) {
-    # für jede inkl./Variable
-
-    if (grepl(paste(names, collapse = "|"), rules$bed[i])) {
-      # Falls einer der Spaltennamen vorkommt
-
-      rules$bed_new[i] <- rules$bed[i] # Übertrage die Regel in die neue Spalte
-
-      for (k in 1:length(names)) {
-        # Gehe alle Spaltennamen durch
-
-        if (grepl(names[k], rules$bed[i])) {
-          # Wenn ein Spaltenname vorkommt
-
-          rules$bed_new[i] <- gsub(names[k], paste0("blank$", names[k]), rules$bed_new[i]) # Setze vor den Namen ein "blank$" uns speichere es ab
-        }
-      }
-    }
-
-
-    if (grepl("header", rules$var[i])) {
-      # Wenn es um eine header-Variable geht
-
-      nr <- as.numeric(sub(
-        "header", # Speichere die Nummer des headers ab (zum Beispiel header2 -> 2)
-        "", rules$var[i]
-      ))
-      l <- length(which(startsWith(rules$var, paste0(
-        "inkl.", nr, "."
-      )))) # Wie viele inkl. Variablen gibt es zu diesem header?
-      rules$bed_new[i] <- "" # Leere die Variable in bed-new (falls die Schleife aus Versehen mehrmals läuft)
-
-      for (n in 1:l) {
-        # Für jede inkl. Variable
-
-        rules$bed_new[i] <- ifelse(
-          rules$bed_new[i] == "",
-          # Falls das Feld leer ist:
-          paste0(rules$bed_new[i], "blank$inkl.", nr, ".", n, " == TRUE"),
-          # Schreibe es ohne |
-          paste0(rules$bed_new[i], " | blank$inkl.", nr, ".", n, " == TRUE")
-        ) # ansonsten mit | davor
-      }
-    }
-
-    if (rules$bed[i] == "immer TRUE") {
-      rules$bed_new[i] <- "immer TRUE"
-    } # Übertrage "immer TRUE", falls es in der Bedingung steht
-    if (rules$bed[i] == "immer FALSE") {
-      rules$bed_new[i] <- "immer FALSE"
-    } # Übertrage "immer FALSE", falls es in der Bedingung steht
+  for (i in seq_along(rule_vars)) {
+    value <- .evaluate_rule(
+      rule_vars[i], conditions[i],
+      rule_vars = rule_vars, data = blank, env = parent.frame()
+    )
+    blank[n_original + i] <- ifelse(value, TRUE, FALSE)
+    colnames(blank)[n_original + i] <- rule_vars[i]
   }
 
-  ####################
-  # ENDE MAIN LOOP 1 #
-  ####################
+  # Im Master-Bericht alle Fragen einschließen ----------------------------
+  # WICHTIG: Der Master-Bericht muss in der ersten Zeile der blank-Datei stehen!
 
+  blank[1, (n_original + 1):ncol(blank)] <- TRUE
 
-  ##########################################################################
-  # MAIN LOOP 2: Anwenden der Regeln und übertragen in den BLANK-Datensatz #
-  ##########################################################################
+  blank
+}
 
-  # In dieser Schleife werden die Regeln der "rules"-Daten angewandt und in "blank" übertragen
-  # Dort wird dann automatisch für jeden Bericht entschieden, welche "inkl.-Variablen" auf "TRUE" gesetzt werden
-
-  for (n in 1:nrow(rules)) {
-    # Für jede Regel
-
-    f <- n + m # Addiere die Zeile plus die Anzahl der ursprünglichen Spalten in blank (damit die Variable dahinter gesetzt wird und nichts überschreibt)
-
-    if (rules$bed_new[n] == "immer TRUE") {
-      # Wenn die Regel "immer TRUE" ist
-      blank[f] <- rep(TRUE, nrow(blank)) # Schreibe in allen Reihen "TRUE"
-    }
-
-
-    if (rules$bed_new[n] == "immer FALSE") {
-      # Wenn die Regel "immer FALSE" ist
-      blank[f] <- rep(FALSE, nrow(blank)) # Schreibe in allen Reihen "FALSE"
-    }
-
-
-    if (rules$bed_new[n] != "immer FALSE" &
-      rules$bed_new[n] != "immer TRUE")
-    # Falls die Regel weder "immer TRUE" noch "immer FALSE" ist
-
-      {
-        blank[f] <- ifelse(eval(parse(text = rules$bed_new[n])), TRUE, FALSE) # Interpretiere die Regel als "R-Code" und schreibe so die inkl. Variablen
-      }
-
-    colnames(blank)[f] <- rules$var[n] # Überschreibe den Namen der neuen Variable mit der jeweiligen inkl.Variable
+# Eine Regel der Regeltabelle für alle Berichte auswerten
+#
+# - "immer TRUE" / "immer FALSE": für alle Berichte gleich
+# - header-Zeilen (z. B. "header2"): TRUE, wenn eine der Variablen
+#   inkl.2.1, inkl.2.2, … TRUE ist (die Bedingung in der Tabelle wird ignoriert)
+# - sonst: Die Bedingung ist R-Code und wird mit den Spalten der
+#   Berichtstabelle ausgewertet, z. B. 'Art != "speziell"'
+.evaluate_rule <- function(rule_var, condition, rule_vars, data, env) {
+  if (condition == "immer TRUE") {
+    return(rep(TRUE, nrow(data)))
+  }
+  if (condition == "immer FALSE") {
+    return(rep(FALSE, nrow(data)))
   }
 
-  ####################
-  # ENDE MAIN LOOP 2 #
-  ####################
+  if (grepl("header", rule_var)) {
+    section_nr <- as.numeric(sub("header", "", rule_var))
+    n_items <- sum(startsWith(rule_vars, paste0("inkl.", section_nr, ".")))
+    item_cols <- paste0("inkl.", section_nr, ".", 1:n_items)
+    return(Reduce(`|`, lapply(item_cols, \(col) data[[col]] == TRUE)))
+  }
 
-
-  #################################################
-  # ALLE INKL-VARIABLEN IM MASTER AUF TRUE SETZEN #
-  #################################################
-
-  # WICHTIG: Master-Bericht muss erster Bericht in blank sein!!!
-  blank[1, (m + 1):ncol(blank)] <- TRUE # Setze TRUE in alle inkl-Spalten der ersten Zeile
-
-  ###############
-  # ABSPEICHERN #
-  ###############
-
-  return(blank)
+  eval(str2lang(condition), envir = data, enclos = env)
 }

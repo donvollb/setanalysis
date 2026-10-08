@@ -22,6 +22,12 @@ Fehlerbehebung aufgeführt.
   `BspDaten$Plots$mc` wurden passend dazu bereinigt.
 * `merge_fachsem()` bricht bei einer ungültigen `group` jetzt mit einer
   verständlichen Fehlermeldung ab (bisher: „Objekt 'caps' nicht gefunden“).
+* `input_tabelle()` wertet die Bedingungen der Regeltabelle jetzt direkt mit
+  den Spalten der Berichtstabelle aus, statt die Spaltennamen per Textersatz
+  umzuschreiben. Bestehende Regeltabellen liefern dasselbe Ergebnis; zusätzlich
+  funktionieren nun Bedingungen ohne Leerzeichen nach dem Spaltennamen
+  (z. B. `Art=="alles"`, bisher Abbruch), und Spaltennamen innerhalb von
+  Texten (z. B. `Fach == "Art und Weise"`) werden nicht mehr verfälscht.
 * `merge.open()` ist wieder von außen aufrufbar. roxygen hatte die Funktion
   fälschlich als S3-Methode von `merge()` registriert statt sie zu exportieren.
 
