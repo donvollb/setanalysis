@@ -81,6 +81,13 @@ Fehlerbehebung aufgeführt.
 * Alle Beispiele laufen und legen keine Dateien mehr im Arbeitsverzeichnis an.
   Für `evasys_read_data()` und `input_tabelle()` liegen fiktive
   Beispieldateien in `inst/extdata/`.
+* Neue Vignette „Einen Evaluationsbericht erstellen“
+  (`vignette("bericht-erstellen", package = "setanalysis")`): Daten einlesen,
+  Berichte über Berichts- und Regeltabelle festlegen, Bericht in Quarto
+  schreiben, alle Berichte erstellen.
+* README neu geschrieben, zusätzlich auf Englisch (`README.en.md`), mit
+  Vorschaubildern aus den Beispieldaten (erzeugt mit
+  `data-raw/readme_vorschau.R`).
 
 * Alle veralteten Funktionsnamen (z. B. `merge.sc()`, `grade()`,
   `open.answers()`) sind in einer gemeinsamen Hilfeseite

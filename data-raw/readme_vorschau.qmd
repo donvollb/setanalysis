@@ -1,0 +1,38 @@
+---
+format:
+  typst:
+    keep-typ: true
+    mainfont: "Red Hat Text"
+    fontsize: 10pt
+execute:
+  echo: false
+  warning: false
+---
+
+<!-- Vorschaubilder für README und Vignette. Erzeugen mit: source("data-raw/readme_vorschau.R") -->
+
+```{=typst}
+#set page(width: 16cm, height: auto, margin: 0.8cm, numbering: none, footer: none)
+```
+
+```{r}
+#| include: false
+devtools::load_all("..", quiet = TRUE)
+lve <- BspDaten$dataLVE
+showup <- BspDaten$dataSHOWUP
+```
+
+```{r}
+#| output: asis
+cat("## Kernfragen\n\n")
+merge_aggr_sk(lve[, c("KF_01", "KF_02", "KF_03")], kennung = lve$Kennung, aggr = TRUE)
+merge_grade(lve$Note, lve$Kennung)
+```
+
+{{< pagebreak >}}
+
+```{r}
+#| output: asis
+merge_mc(showup[, paste0("abschluss_", 1:7)], digits = 0)
+merge_sk(showup$info_ausr_studgang, alt1 = "kann ich nicht beurteilen", alt1.num = 0)
+```

@@ -5,3 +5,6 @@
 ^\.Rproj\.user$
 ^data-raw$
 ^man/roxygen$
+^README\.en\.md$
+^doc$
+^Meta$

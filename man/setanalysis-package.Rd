@@ -19,6 +19,9 @@ Typst-Format gedacht.
 \item \strong{Daten einlesen:} \code{\link[=evasys_read_data]{evasys_read_data()}} liest Rohdaten und Codebuch aus
 evasys ein und versieht jede Variable mit Fragetext (\code{label}),
 Fragenummer (\code{nr}), Fragetyp (\code{type}) und Antwortcodes (\code{labels}).
+Achtung: Beim Auswählen von Zeilen (\code{daten[auswahl, ]}) entfernt R diese
+Attribute; wie man sie erhält, zeigt die Vignette
+\code{vignette("bericht-erstellen", package = "setanalysis")}.
 \item \strong{Berichte festlegen} (optional): \code{\link[=input_tabelle]{input_tabelle()}} liest eine
 Berichtstabelle (eine Zeile pro Bericht) und eine Regeltabelle und legt
 damit fest, welche Fragen in welchen Bericht kommen.

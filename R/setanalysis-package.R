@@ -12,6 +12,9 @@
 #' 1. **Daten einlesen:** [evasys_read_data()] liest Rohdaten und Codebuch aus
 #'    evasys ein und versieht jede Variable mit Fragetext (`label`),
 #'    Fragenummer (`nr`), Fragetyp (`type`) und Antwortcodes (`labels`).
+#'    Achtung: Beim Auswählen von Zeilen (`daten[auswahl, ]`) entfernt R diese
+#'    Attribute; wie man sie erhält, zeigt die Vignette
+#'    `vignette("bericht-erstellen", package = "setanalysis")`.
 #' 2. **Berichte festlegen** (optional): [input_tabelle()] liest eine
 #'    Berichtstabelle (eine Zeile pro Bericht) und eine Regeltabelle und legt
 #'    damit fest, welche Fragen in welchen Bericht kommen.
