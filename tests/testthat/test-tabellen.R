@@ -1,8 +1,9 @@
 test_that("lv_table() formatiert Tabellen unverändert", {
   expect_table_snapshot(lv_table(head(mtcars, 5)), "lv_table-standard")
+  # ohne drat: 3.85 wird auf eine Stelle je nach Betriebssystem unterschiedlich gerundet
   expect_table_snapshot(
-    lv_table(head(mtcars, 5),
-      col.width = c(30, rep(7, 10)), bold = FALSE,
+    lv_table(head(mtcars[, names(mtcars) != "drat"], 5),
+      col.width = c(30, rep(7, 9)), bold = FALSE,
       digits = 1, striped = FALSE
     ),
     "lv_table-optionen"
