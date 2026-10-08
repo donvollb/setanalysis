@@ -1,0 +1,400 @@
+# Das Paket pflegen
+
+Dieser Artikel richtet sich an alle, die setanalysis weiterentwickeln:
+Fehler beheben, Funktionen ergänzen, die Dokumentation verbessern oder
+neue Versionen veröffentlichen. Er erklärt, wie das Repository aufgebaut
+ist, was bei Änderungen zu beachten ist, was die automatischen Prüfungen
+auf GitHub tun und wie ein Release entsteht.
+
+## 1. Das Repository übernehmen
+
+Das ursprüngliche Repository <https://github.com/donvollb/setanalysis>
+wird nicht weiter gepflegt. Wer das Paket weiterentwickelt, legt deshalb
+zuerst eine eigene Kopie in einem beliebigen GitHub-Konto an (persönlich
+oder als Organisation) und arbeitet nur noch dort. In den Beispielen
+unten steht `<konto>` für den Namen dieses Kontos.
+
+### Eine Kopie mit der gesamten History anlegen
+
+Die Kopie soll die gesamte History enthalten, also alle Commits,
+Branches und Tags. Dafür gibt es zwei Wege.
+
+**Auf der GitHub-Website (ohne Installation):**
+
+1.  Oben rechts auf **+** → *Import repository* klicken.
+2.  Als Quelle `https://github.com/donvollb/setanalysis` eintragen,
+    darunter Konto und Namen für das neue Repository wählen (z. B.
+    `setanalysis`), Sichtbarkeit *Public* → *Begin import*.
+3.  Nach wenigen Minuten ist die Kopie fertig. Danach das neue
+    Repository auf den eigenen Rechner holen, z. B. in RStudio über
+    *File → New Project → Version Control → Git* mit der Adresse des
+    neuen Repositorys.
+
+**Im Terminal (mit Git):** Dafür muss [Git](https://git-scm.com)
+installiert sein. Die Befehle laufen in jedem Terminal, z. B. im Reiter
+*Terminal* von RStudio oder Positron. Vorher auf GitHub ein neues,
+**leeres** Repository anlegen (ohne README, Lizenz oder `.gitignore`):
+
+``` bash
+git clone https://github.com/donvollb/setanalysis.git
+cd setanalysis
+git remote set-url origin https://github.com/<konto>/setanalysis.git
+git push -u origin --all
+git push origin --tags
+```
+
+Die erste Zeile lädt das alte Repository herunter, die dritte stellt die
+Zieladresse auf das neue Repository um, die letzten beiden übertragen
+alle Branches und Tags dorthin.
+
+Alternativ lässt sich das Repository auf GitHub **forken** (Schaltfläche
+*Fork*). Ein Fork bleibt sichtbar mit dem Original verbunden; Issues und
+GitHub Actions sind dort zunächst ausgeschaltet und müssen in den
+Einstellungen eingeschaltet werden. Für eine dauerhafte Übernahme ist
+die eigenständige Kopie übersichtlicher.
+
+### Verweise auf das alte Repository ersetzen
+
+Die Adresse `donvollb` steht an mehreren Stellen. Am einfachsten nach
+`donvollb` suchen (in RStudio: *Edit → Find in Files*) und die Treffer
+anpassen:
+
+- `DESCRIPTION`: Felder `URL` und `BugReports`,
+- `_pkgdown.yml`: Feld `url` und die Links in der Navigation,
+- `README.md` und `README.en.md`: Installationsbefehl, Badges, Links zur
+  Website,
+- Vignette und Artikel: Links zur Berichtsvorlage
+  [set-template](https://github.com/donvollb/set-template), falls diese
+  ebenfalls übernommen wird.
+
+In `DESCRIPTION` unter `Authors@R` die neue verantwortliche Person mit
+der Rolle `"cre"` (Maintainer, mit E-Mail-Adresse) eintragen. Bisherige
+Autoren bleiben mit der Rolle `"aut"` stehen.
+
+### GitHub Actions und GitHub Pages einschalten
+
+**GitHub Actions** prüft bei jeder Änderung automatisch das Paket und
+baut die Website (Abschnitt 5). **GitHub Pages** stellt die Website
+(`https://<konto>.github.io/setanalysis/`) ins Netz. Pages ist nur für
+die Website nötig: Ohne Pages lässt sich das Paket genauso installieren
+und nutzen. Die Hilfeseiten gibt es dann nur in R
+([`?setanalysis`](https://donvollb.github.io/setanalysis/reference/setanalysis-package.md)),
+die Anleitung als Datei `vignettes/bericht-erstellen.Rmd` im Repository
+(bei der Installation von GitHub wird sie meist nicht mitgebaut). Wer
+auf die Website verzichtet, löscht `.github/workflows/pkgdown.yaml` und
+die Links zur Website in README und `DESCRIPTION`.
+
+1.  **Actions:** *Settings → Actions → General* → „Allow all actions and
+    reusable workflows“. Ab dann läuft bei jedem Push die Prüfung (siehe
+    Abschnitt 5).
+2.  **Website erstmals bauen:** Unter *Actions → pkgdown → Run workflow*
+    den Branch `main` wählen und starten. Der Lauf legt den Branch
+    `gh-pages` mit der fertigen Website an.
+3.  **Pages einschalten:** *Settings → Pages* → *Source: Deploy from a
+    branch* → Branch `gh-pages`, Ordner `/ (root)` → *Save*. Nach ein
+    bis zwei Minuten ist die Website unter
+    `https://<konto>.github.io/setanalysis/` erreichbar. Diese Adresse
+    in `_pkgdown.yml` und `DESCRIPTION` eintragen.
+
+Alle drei Schritte gehen über die Website, weitere Programme sind nicht
+nötig. Wer lieber im Terminal arbeitet, kann die
+[GitHub-CLI](https://cli.github.com) (Befehl `gh`) installieren und sich
+mit `gh auth login` anmelden; Schritt 3 lautet dann:
+
+``` bash
+gh api -X POST repos/<konto>/setanalysis/pages -f "source[branch]=gh-pages" -f "source[path]=/"
+```
+
+## 2. Arbeitsumgebung
+
+- R (aktuelle Version) und eine Entwicklungsumgebung (siehe unten),
+
+- die Entwicklungswerkzeuge:
+
+  ``` r
+
+  install.packages(c("devtools", "testthat", "withr", "svglite", "pkgdown", "rmarkdown", "quarto"))
+  ```
+
+- [Quarto](https://quarto.org) (≥ 1.7, enthält Typst), damit sich
+  Berichte rendern lassen und der Typst-Test läuft,
+
+- Git und ein GitHub-Konto mit Schreibrechten auf das Repository.
+
+### Welche Entwicklungsumgebung?
+
+- **RStudio** – die Empfehlung für den Einstieg: Paketentwicklung, Git
+  und Terminal sind eingebaut, die Tastenkürzel in Abschnitt 4 gelten
+  hier. Beim ersten Mal den Ordner des Repositorys als Projekt anlegen
+  (*File → New Project → Existing Directory*), danach über *File → Open
+  Project* öffnen. So stimmt das Arbeitsverzeichnis. Die dabei
+  entstehende Datei `setanalysis.Rproj` wird nicht ins Repository
+  übernommen.
+- **Positron** – die neuere Umgebung der RStudio-Entwickler (Posit),
+  aufgebaut wie VS Code und mit eingebauter R-Unterstützung. Gut
+  geeignet, wer auch mit anderen Sprachen arbeitet oder VS Code kennt.
+  Den Ordner des Repositorys öffnen (*File → Open Folder*). Die
+  `devtools`-Befehle laufen in der R-Konsole wie überall;
+  RStudio-Tastenkürzel lassen sich in den Einstellungen einschalten.
+- **VS Code** – möglich mit der Erweiterung *R* (REditorSupport) und dem
+  R-Paket `languageserver`, braucht aber mehr Einrichtung. Wer VS Code
+  mag, ist mit Positron meist besser bedient.
+
+Die Befehle in diesem Artikel funktionieren in allen drei Umgebungen; wo
+Tastenkürzel genannt sind, sind es die von RStudio.
+
+## 3. Aufbau des Repositorys
+
+| Ort | Inhalt |
+|----|----|
+| `R/` | Quellcode, ein Thema pro Datei (z. B. `merge_sc.R`, `tables.R`, `plots_bar.R`); die Dokumentation steht als `#'`-Kommentar direkt über jeder Funktion |
+| `man/` | Hilfeseiten, **automatisch erzeugt** aus den `#'`-Kommentaren – nicht von Hand bearbeiten |
+| `NAMESPACE` | exportierte Funktionen, ebenfalls automatisch erzeugt |
+| `tests/testthat/` | Tests; `_snaps/` enthält die gespeicherten Vergleichsausgaben |
+| `vignettes/` | Anleitung „Einen Evaluationsbericht erstellen“; `vignettes/articles/` enthält Artikel nur für die Website (wie diesen) |
+| `data/`, `inst/extdata/` | Beispieldaten `BspDaten` und Beispieldateien für [`evasys_read_data()`](https://donvollb.github.io/setanalysis/reference/evasys_read_data.md) und [`input_tabelle()`](https://donvollb.github.io/setanalysis/reference/input_tabelle.md) |
+| `data-raw/` | Skripte, die Beispieldaten und Vorschaubilder erzeugen (nicht Teil des Pakets) |
+| `inst/fonts/` | Schrift für die Grafiken (Red Hat Text mit gleich breiten Ziffern) |
+| `.github/workflows/` | automatische Prüfung und Website (Abschnitt 5) |
+| `_pkgdown.yml` | Aufbau der Website |
+| `NEWS.md` | Änderungen je Version, erscheint auf der Website als Changelog |
+
+Sprache: Dokumentation, Kommentare und Ausgaben sind deutsch, Namen von
+Funktionen, Argumenten und Dateien englisch.
+
+## 4. Änderungen vornehmen
+
+### Branches
+
+- `main` ist der **veröffentlichte Stand**. Von dort installiert
+  `pak::pak("<konto>/setanalysis")`, und daraus entsteht die Website.
+  Auf `main` wird nie direkt gearbeitet.
+- `dev` ist der **Entwicklungsstand**. Alle Änderungen entstehen hier
+  (oder in einem eigenen Branch, der von `dev` abzweigt und per Pull
+  Request zurückkommt).
+- Nach `main` kommt `dev` nur bei einem Release (Abschnitt 6) oder für
+  reine Korrekturen an der Dokumentation.
+
+``` bash
+git switch dev
+git pull
+# … ändern, prüfen, committen …
+git push
+```
+
+### Der Arbeitsablauf in R
+
+``` r
+
+devtools::load_all()  # Paket aus dem Quellcode laden   (RStudio: Strg+Shift+L)
+devtools::document()  # Hilfeseiten neu erzeugen        (Strg+Shift+D)
+devtools::test()      # Tests ausführen                 (Strg+Shift+T)
+devtools::check()     # vollständige Paketprüfung       (Strg+Shift+E)
+```
+
+1.  Code oder `#'`-Kommentare in `R/` ändern.
+2.  **Nach jeder Änderung an `#'`-Kommentaren `devtools::document()`
+    ausführen** und die geänderten Dateien in `man/` mitcommitten. Sonst
+    passen Hilfeseiten und Code nicht zusammen; die automatische Prüfung
+    bemerkt das nicht.
+3.  `devtools::test()` – alle Tests müssen bestehen.
+4.  Vor einem Merge nach `main`: `devtools::check()`. Erwartet sind 0
+    Fehler und eine WARNING zu Umlauten im R-Code (bewusst akzeptiert,
+    siehe Abschnitt 5).
+5.  In `NEWS.md` unter der obersten Überschrift „(Entwicklungsversion)“
+    eintragen, was sich für Nutzerinnen und Nutzer ändert.
+
+### Tests und Snapshots
+
+Die meisten Tests sind **Snapshot-Tests**: Sie speichern die Ausgabe
+einer Funktion (Markdown/Typst-Text, Tabellen, SVG-Grafiken) in
+`tests/testthat/_snaps/` und vergleichen bei jedem Lauf, ob sie gleich
+geblieben ist. So fällt jede unbeabsichtigte Änderung sofort auf.
+
+Ändert sich eine Ausgabe **absichtlich** (z. B. nach einer
+Fehlerbehebung), schlägt der Test fehl und testthat legt die neue
+Fassung daneben (`*.new.*`). Dann:
+
+``` r
+
+testthat::snapshot_review()  # Unterschiede ansehen
+testthat::snapshot_accept()  # neue Fassung übernehmen, wenn sie stimmt
+```
+
+Danach die geänderten Dateien in `_snaps/` mitcommitten. Neue Snapshots
+immer lokal erzeugen; auf GitHub gelten fehlende Snapshots als Fehler.
+
+Zwei Besonderheiten:
+
+- **SVG-Grafiken werden nur lokal verglichen.** Die Textmaße in den
+  SVG-Dateien hängen von den installierten Schriften ab und
+  unterscheiden sich zwischen Betriebssystemen. Auf GitHub
+  (Umgebungsvariable `CI=true`) werden deshalb nur Text- und
+  Tabellenausgaben verglichen (Hilfsfunktion `expect_svg_snapshot()` in
+  `tests/testthat/helper-snapshots.R`).
+- **Rundung auf der Grenze vermeiden.** Werte wie 3.85, auf eine Stelle
+  gerundet, ergeben je nach System 3.8 oder 3.9. Testdaten deshalb so
+  wählen, dass keine solchen Grenzfälle entstehen.
+
+### Beispieldaten und Bilder
+
+Beispieldaten, Beispieldateien und Vorschaubilder werden nicht von Hand
+bearbeitet, sondern mit den Skripten in `data-raw/` erzeugt (Aufruf
+jeweils im Kopf des Skripts), z. B.:
+
+``` r
+
+source("data-raw/BspDaten.R")        # BspDaten (zufällig, reproduzierbar)
+source("data-raw/readme_vorschau.R") # Vorschaubilder für README und Vignette
+```
+
+Ändern sich dadurch die Beispieldaten, ändern sich auch viele Snapshots:
+erst prüfen, dass nur die Daten und nicht der Code die Ursache sind,
+dann übernehmen.
+
+### Die Website lokal ansehen
+
+``` r
+
+pkgdown::build_site()
+```
+
+Das Ergebnis liegt im Ordner `docs/` (wird nicht committet; die echte
+Website baut GitHub).
+
+## 5. Was auf GitHub automatisch passiert
+
+Im Ordner `.github/workflows/` liegen zwei Workflows. Ihre Läufe stehen
+im Reiter *Actions* des Repositorys.
+
+### R-CMD-check: die Paketprüfung
+
+- **Wann?** Bei jedem Push auf `main` oder `dev` und bei Pull Requests.
+  Keine Prüfung, wenn sich nur Dateien ändern, die das Paket nicht
+  betreffen (READMEs, `LICENSE.md`, `_pkgdown.yml`, Vorschaubilder,
+  `data-raw/`, Artikel in `vignettes/articles/`). Von Hand starten:
+  *Actions → R-CMD-check → Run workflow*.
+- **Was?** `R CMD check` mit allen Tests, Beispielen und der Vignette,
+  parallel auf Windows, macOS und Linux mit der aktuellen R-Version,
+  Linux zusätzlich mit der vorherigen Version („oldrel-1“) und der
+  kommenden Entwicklungsversion („devel“). Die meisten Läufe dauern 3–4
+  Minuten, „devel“ bis zu 12 Minuten, weil dort alle Pakete aus dem
+  Quellcode gebaut werden.
+- **Wann ist er rot?** Nur bei Fehlern (`error-on: '"error"'`). Die
+  WARNING zu Umlauten im R-Code ist bewusst akzeptiert, weil Ausgaben
+  und Meldungen des Pakets deutsch sind.
+- Wird kurz hintereinander zweimal gepusht, bricht der ältere Lauf ab.
+- Das Badge „R-CMD-check“ in der README zeigt den Stand von `main`.
+
+**Wenn ein Lauf fehlschlägt:** Im Lauf das rote System anklicken, dann
+den Schritt *Run r-lib/actions/check-r-package*; der Abschnitt „Failed
+tests“ nennt Test und Grund. Bei geänderten Snapshots lädt der Lauf die
+neuen Fassungen als Artefakt hoch, lokal ansehen mit:
+
+``` r
+testthat::snapshot_download_gh("<konto>/setanalysis", <Nummer des Laufs>)
+```
+
+Mit der GitHub-CLI: `gh run list`, `gh run watch`,
+`gh run view --log-failed`.
+
+### pkgdown: die Website
+
+- **Wann?** Bei jedem Push auf `main`, bei jedem Release und von Hand.
+- **Was?** Baut die Website aus README, Hilfeseiten, Vignette, Artikeln
+  und `NEWS.md` und legt sie im Branch `gh-pages` ab, aus dem GitHub
+  Pages sie ausliefert. Der Branch `gh-pages` wird nie von Hand
+  bearbeitet.
+- Aufbau der Website (Menü, Gruppen der Funktionsreferenz, Farbe):
+  `_pkgdown.yml`. Neue Funktionen müssen dort in einer der Gruppen unter
+  `reference` eingetragen werden, sonst bricht der Workflow ab.
+
+## 6. Ein Release veröffentlichen
+
+### Versionsnummern
+
+Versionen haben die Form `Hauptversion.Nebenversion.Patch`:
+
+- `1.1.1` – nur Fehlerbehebungen,
+- `1.2.0` – neue Funktionen, bestehende Aufrufe funktionieren weiter,
+- `2.0.0` – Änderungen, nach denen bestehende Berichte angepasst werden
+  müssen.
+
+Auf `dev` trägt das Paket zwischen zwei Releases eine
+**Entwicklungsversion** mit `.9000` am Ende (z. B. `1.1.0.9000`). Daran
+ist erkennbar, dass es sich nicht um einen veröffentlichten Stand
+handelt.
+
+### Ablauf
+
+1.  Auf `dev`: in `DESCRIPTION` die Version setzen (z. B. `1.2.0`) und
+    in `NEWS.md` die Überschrift „setanalysis (Entwicklungsversion)“
+    durch „setanalysis 1.2.0“ ersetzen.
+
+2.  `devtools::check()` lokal, dann committen und pushen; warten, bis
+    R-CMD-check auf GitHub grün ist.
+
+3.  `dev` nach `main` übernehmen und einen Tag setzen:
+
+    ``` bash
+    git switch main
+    git pull
+    git merge --ff-only dev   # klappt, wenn auf main nichts Eigenes passiert ist
+    git push
+    git tag -a v1.2.0 -m "setanalysis 1.2.0"
+    git push origin v1.2.0
+    git switch dev
+    ```
+
+    Meldet `--ff-only` einen Fehler, enthält `main` Commits, die auf
+    `dev` fehlen: dann zuerst `main` in `dev` übernehmen
+    (`git merge main` auf `dev`), prüfen, und den Schritt wiederholen.
+
+4.  Auf GitHub unter *Releases → Draft a new release* den Tag wählen,
+    als Titel „setanalysis 1.2.0“ und als Text den Abschnitt aus
+    `NEWS.md` eintragen. Mit der GitHub-CLI:
+
+    ``` bash
+    gh release create v1.2.0 --title "setanalysis 1.2.0" --notes-file release-notes.md
+    ```
+
+    Das Veröffentlichen startet den pkgdown-Workflow; die Website zeigt
+    danach den neuen Stand.
+
+5.  Auf `dev` gleich die nächste Entwicklungsversion setzen
+    (`1.2.0.9000`) und in `NEWS.md` wieder eine Überschrift „setanalysis
+    (Entwicklungsversion)“ anlegen.
+
+### Nur die Dokumentation korrigieren
+
+Für Tippfehler oder Ergänzungen in Hilfeseiten, Vignette, Artikeln oder
+README ist kein neuer Release nötig. Weil auf `dev` schon die
+Entwicklungsversion (und eventuell unveröffentlichter Code) steht, wird
+die Korrektur in einem eigenen Branch von `main` aus gemacht:
+
+``` bash
+git switch main
+git pull
+git switch -c doku-korrektur
+# … ändern, bei #'-Kommentaren devtools::document(), committen …
+git switch main
+git merge doku-korrektur
+git push                  # die Website aktualisiert sich von selbst
+git switch dev
+git merge main            # die Korrektur auch auf dev übernehmen
+git push
+git branch -d doku-korrektur
+```
+
+So steht auf `main` weiterhin die veröffentlichte Versionsnummer.
+
+## 7. Häufige Stolpersteine
+
+| Problem | Ursache und Lösung |
+|----|----|
+| Hilfeseite zeigt alten Text | `devtools::document()` vergessen |
+| Ein Bericht bricht beim Rendern mit „unclosed delimiter“ ab | Text mit Typst-Sonderzeichen wird ungeschützt ausgegeben; Tabellenzellen maskiert [`lv_table()`](https://donvollb.github.io/setanalysis/reference/lv_table.md) bereits, eigener Typst-Code im Tabellenkopf muss selbst maskiert werden |
+| Im Projektordner entsteht ein Ordner `figure/` | Auswertungsfunktionen außerhalb eines Berichts aufgerufen (die Grafiken landen im Arbeitsverzeichnis); in Tests und Beispielen in einem temporären Ordner arbeiten |
+| Test schlägt nur auf GitHub fehl | Plattformabhängige Ausgabe (Rundung, Schriften); den Unterschied im Artefakt des Laufs ansehen (Abschnitt 5) |
+| pkgdown-Workflow schlägt fehl: „topics missing from index“ | Neue Funktion fehlt in `_pkgdown.yml` unter `reference` |
+| Vignette lässt sich lokal nicht bauen: „pandoc not found“ | Außerhalb von RStudio fehlt pandoc; Quarto bringt eines mit, z. B. `Sys.setenv(RSTUDIO_PANDOC = "C:/Program Files/Quarto/bin/tools")` vor dem Bauen |

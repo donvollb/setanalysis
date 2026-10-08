@@ -150,7 +150,11 @@ The behaviour of all functions is covered by snapshot tests (testthat)
 that compare the generated report building blocks, including the charts
 (SVG). The scripts that generate the example data and preview images are
 in `data-raw/`. Changes are listed in the
-[changelog](https://donvollb.github.io/setanalysis/news/) (German).
+[changelog](https://donvollb.github.io/setanalysis/news/) (German). How
+to maintain the package (branches, tests, GitHub Actions, releases) is
+described in the article [Das Paket
+pflegen](https://donvollb.github.io/setanalysis/articles/paket-pflegen.html)
+(German).
 
 ## Authors and licence
 

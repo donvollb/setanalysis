@@ -35,6 +35,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/bericht-erstellen.html">Einen Evaluationsbericht erstellen</a></li>
+    <li><a class="dropdown-item" href="../articles/paket-pflegen.html">Das Paket pflegen</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -61,32 +62,73 @@
       <h1>Einen Evaluationsbericht erstellen</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/donvollb/setanalysis/blob/v1.1.0/vignettes/bericht-erstellen.Rmd" class="external-link"><code>vignettes/bericht-erstellen.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/donvollb/setanalysis/blob/main/vignettes/bericht-erstellen.Rmd" class="external-link"><code>vignettes/bericht-erstellen.Rmd</code></a></small>
       <div class="d-none name"><code>bericht-erstellen.Rmd</code></div>
     </div>
 
     
     
-<p>Diese Anleitung zeigt den Weg von den Rohdaten einer Befragung bis zu
-den fertigen PDF-Berichten:</p>
-<ol style="list-style-type: decimal">
-<li>Daten aus evasys einlesen,</li>
-<li>festlegen, welche Fragen in welchen Bericht kommen,</li>
-<li>den Bericht in Quarto schreiben,</li>
-<li>alle Berichte auf einmal erstellen.</li>
-</ol>
-<p>Die Schritte 1 und 2 laufen hier mit den fiktiven Beispieldateien des
-Pakets. Eine vollständige Berichtsvorlage mit Layout und zwei
-lauffähigen Beispielen gibt es unter <a href="https://github.com/donvollb/set-template" class="external-link">set-template</a>.</p>
+<p>Diese Anleitung zeigt den Weg vom evasys-Export bis zu den fertigen
+PDF-Berichten. Ein Auswertungsprojekt besteht aus drei Dateien, die
+nacheinander und unterschiedlich oft ausgeführt werden:</p>
+<table class="table">
+<colgroup>
+<col width="33%">
+<col width="33%">
+<col width="33%">
+</colgroup>
+<thead><tr class="header">
+<th>Datei</th>
+<th>Wann?</th>
+<th>Was passiert?</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td><code>vorbereitung.R</code></td>
+<td>einmal pro Befragung</td>
+<td>Daten einlesen und bereinigen, festlegen, welche Fragen in welchen
+Bericht kommen, Schreibweisen prüfen, speichern</td>
+</tr>
+<tr class="even">
+<td><code>bericht.qmd</code></td>
+<td>einmal pro Bericht</td>
+<td>Daten laden, auf den Bericht einschränken, Fragen auswerten</td>
+</tr>
+<tr class="odd">
+<td><code>alle-berichte-rendern.R</code></td>
+<td>am Ende</td>
+<td>
+<code>bericht.qmd</code> für jede Zeile der Berichtstabelle zu einem
+PDF rendern</td>
+</tr>
+</tbody>
+</table>
+<p>Die Vorlage <a href="https://github.com/donvollb/set-template" class="external-link">set-template</a> enthält
+genau diese drei Dateien als lauffähiges Beispiel
+(<code>beispiele/vorbereitung.R</code>,
+<code>beispiele/kohorte.qmd</code>,
+<code>beispiele/alle-berichte-rendern.R</code>) und dazu das Layout der
+Berichte.</p>
+<p><strong>Nur ein einziger Bericht?</strong> Dann entfallen Berichts-
+und Regeltabelle: Die Daten werden direkt im Bericht eingelesen, und die
+Schritte 1.3, 1.4 sowie die Abschnitte zu Schaltern und Filtern in Teil
+2 fallen weg.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://donvollb.github.io/setanalysis/">setanalysis</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="daten-aus-evasys-einlesen">1. Daten aus evasys einlesen<a class="anchor" aria-label="anchor" href="#daten-aus-evasys-einlesen"></a>
+<h2 id="vorbereitung-vorbereitung-r-einmal-pro-befragung">1. Vorbereitung (<code>vorbereitung.R</code>, einmal pro
+Befragung)<a class="anchor" aria-label="anchor" href="#vorbereitung-vorbereitung-r-einmal-pro-befragung"></a>
 </h2>
+<p>Die Vorbereitung läuft einmal, bevor der erste Bericht erstellt wird.
+Ihr Ergebnis sind zwei Dateien: die aufbereiteten Daten und die
+Berichtstabelle. Die Beispiele hier nutzen die fiktiven Dateien, die im
+Paket liegen.</p>
+<div class="section level3">
+<h3 id="den-evasys-export-einlesen">1.1 Den evasys-Export einlesen<a class="anchor" aria-label="anchor" href="#den-evasys-export-einlesen"></a>
+</h3>
 <p>evasys exportiert die Antworten (Rohdaten) und ein Codebuch mit
 Fragetexten, Fragetypen und Antwortoptionen, jeweils als CSV-Datei.
-<code><a href="../reference/evasys_read_data.html">evasys_read_data()</a></code> liest beide ein und hängt die
-Informationen aus dem Codebuch an die Variablen an:</p>
+<code><a href="../reference/evasys_read_data.html">evasys_read_data()</a></code> liest beide ein:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rohdaten</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"beispiel_evasys_rohdaten.csv"</span>, package <span class="op">=</span> <span class="st">"setanalysis"</span><span class="op">)</span></span>
 <span><span class="va">codebuch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"beispiel_evasys_codebuch.csv"</span>, package <span class="op">=</span> <span class="st">"setanalysis"</span><span class="op">)</span></span>
@@ -95,8 +137,8 @@ Informationen aus dem Codebuch an die Variablen an:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">daten</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "semester"    "zufrieden"   "abschluss_1" "abschluss_2" "kommentar"  </span></span>
 <span><span class="co">#&gt; [6] "alter"</span></span></code></pre></div>
-<p>Jede Variable trägt jetzt vier Attribute, auf die die
-Auswertungsfunktionen zugreifen:</p>
+<p>Jede Variable trägt danach vier Attribute aus dem Codebuch. Auf sie
+greifen alle Auswertungsfunktionen zu:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">daten</span><span class="op">$</span><span class="va">zufrieden</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $label</span></span>
@@ -117,10 +159,10 @@ Auswertungsfunktionen zugreifen:</p>
 <span><span class="co">#&gt;                         7</span></span></code></pre></div>
 <ul>
 <li>
-<code>label</code>: Fragetext (Überschrift im Bericht),</li>
+<code>label</code>: Fragetext, wird im Bericht zur Überschrift,</li>
 <li>
-<code>nr</code>: Fragenummer im Fragebogen (für die inkl.-Logik,
-siehe Schritt 2),</li>
+<code>nr</code>: Fragenummer im Fragebogen (für die Schalter, siehe
+1.3),</li>
 <li>
 <code>type</code>: Fragetyp, <code>"sc"</code> (Single Choice),
 <code>"mc"</code> (Multiple Choice), <code>"sk"</code> (Skala) oder
@@ -134,59 +176,29 @@ Choice und Skalen).</li>
 <code>"-"</code>, <code>"."</code> oder <code>"[Freitextfeld]"</code> in
 offenen Antworten durch <code>NA</code>. Ohne Pfadangaben öffnet sich in
 RStudio ein Dialog zur Dateiauswahl.</p>
-<p>Daten aus anderen Quellen lassen sich genauso nutzen, wenn man die
-Attribute selbst setzt:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">note</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">note</span>, <span class="st">"label"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Welche Gesamtnote geben Sie der Veranstaltung?"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">note</span>, <span class="st">"nr"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"3.1"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">note</span>, <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"sk"</span></span></code></pre></div>
+</div>
 <div class="section level3">
-<h3 id="zeilen-filtern-ohne-die-attribute-zu-verlieren">Zeilen filtern, ohne die Attribute zu verlieren<a class="anchor" aria-label="anchor" href="#zeilen-filtern-ohne-die-attribute-zu-verlieren"></a>
+<h3 id="daten-bereinigen-bei-bedarf">1.2 Daten bereinigen (bei Bedarf)<a class="anchor" aria-label="anchor" href="#daten-bereinigen-bei-bedarf"></a>
 </h3>
-<p>Für einen Bericht über einen Teil der Daten (z. B. einen Fachbereich)
-werden Zeilen ausgewählt. Dabei entfernt R die Attribute der
-Spalten:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">lve</span> <span class="op">&lt;-</span> <span class="va">BspDaten</span><span class="op">$</span><span class="va">dataLVE</span></span>
-<span><span class="va">auswahl</span> <span class="op">&lt;-</span> <span class="va">lve</span><span class="op">$</span><span class="va">Teilbereich</span> <span class="op">==</span> <span class="st">"Beispielkunde - SoSe24"</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">lve</span><span class="op">[</span><span class="va">auswahl</span>, <span class="op">]</span><span class="op">$</span><span class="va">KF_01</span>, <span class="st">"label"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
-<p>Eine kleine Hilfsfunktion überträgt sie wieder:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">zeilen_waehlen</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">daten</span>, <span class="va">auswahl</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">neu</span> <span class="op">&lt;-</span> <span class="va">daten</span><span class="op">[</span><span class="va">auswahl</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
-<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">spalte</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">daten</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu">mostattributes</span><span class="op">(</span><span class="va">neu</span><span class="op">[[</span><span class="va">spalte</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">daten</span><span class="op">[[</span><span class="va">spalte</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span>  <span class="va">neu</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="fu">zeilen_waehlen</span><span class="op">(</span><span class="va">lve</span>, <span class="va">auswahl</span><span class="op">)</span><span class="op">$</span><span class="va">KF_01</span>, <span class="st">"label"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich."</span></span></code></pre></div>
-<p>Mit <code><a href="../reference/label_test.html">label_test()</a></code> lässt sich vorher prüfen, ob die Namen
-in der Berichtstabelle genauso geschrieben sind wie in den Daten:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/label_test.html">label_test</a></span><span class="op">(</span><span class="va">BspDaten</span><span class="op">$</span><span class="va">pInfo</span><span class="op">$</span><span class="va">FB.txt.falsch</span>, <span class="va">lve</span><span class="op">$</span><span class="va">Teilbereich</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Der Eintrag \"Angewandte Fktion - SoSe24\" aus der Berichtstabelle kommt nicht in gleicher Schreibweise in der Variable vor."</span></span></code></pre></div>
+<p>Hier ist Platz für Korrekturen, die für alle Berichte gelten, z. B.
+Namen in offenen Antworten unkenntlich machen:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">daten</span><span class="op">$</span><span class="va">kommentar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"Frau Beispiel"</span>, <span class="st">"[Name entfernt]"</span>, <span class="va">daten</span><span class="op">$</span><span class="va">kommentar</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="festlegen-welche-fragen-in-welchen-bericht-kommen">2. Festlegen, welche Fragen in welchen Bericht kommen<a class="anchor" aria-label="anchor" href="#festlegen-welche-fragen-in-welchen-bericht-kommen"></a>
-</h2>
+<div class="section level3">
+<h3 id="festlegen-welche-fragen-in-welchen-bericht-kommen">1.3 Festlegen, welche Fragen in welchen Bericht kommen<a class="anchor" aria-label="anchor" href="#festlegen-welche-fragen-in-welchen-bericht-kommen"></a>
+</h3>
 <p>Oft entstehen aus einer Befragung viele Berichte, z. B. einer pro
 Studiengang, und nicht jede Frage gehört in jeden Bericht. Das regeln
 zwei Excel-Tabellen.</p>
 <p>Die <strong>Berichtstabelle</strong> enthält eine Zeile pro Bericht
 mit den Merkmalen, nach denen sich die Berichte unterscheiden. Die erste
-Zeile ist der Master-Bericht mit allen Fragen (zur Kontrolle):</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+Zeile ist immer der Master-Bericht mit allen Fragen (zur Kontrolle):</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">berichte_pfad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"beispiel_berichte.xlsx"</span>, package <span class="op">=</span> <span class="st">"setanalysis"</span><span class="op">)</span></span>
 <span><span class="va">regeln_pfad</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"beispiel_regeln.xlsx"</span>, package <span class="op">=</span> <span class="st">"setanalysis"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">berichte</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">berichte_pfad</span><span class="op">)</span></span>
-<span><span class="va">berichte</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Code"</span>, <span class="st">"Art"</span>, <span class="st">"Abschluss"</span>, <span class="st">"Studiengang"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">berichte_pfad</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Code"</span>, <span class="st">"Art"</span>, <span class="st">"Abschluss"</span>, <span class="st">"Studiengang"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
 <span><span class="co">#&gt;   Code                     Art          Abschluss                   Studiengang </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       </span></span>
@@ -196,16 +208,14 @@ Zeile ist der Master-Bericht mit allen Fragen (zur Kontrolle):</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> M.Sc._Musterwissenschaft Studiengang  Master of Science (M.Sc.)   Musterwisse…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> B.A._Beispielkunde       Studiengang  Bachelor of Arts (B.A.)     Beispielkun…</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Sonderauswertung         speziell     alle                        alle</span></span></code></pre></div>
-<p>Die <strong>Regeltabelle</strong> enthält eine Zeile pro Frage.
-<code>inkl.2.1</code> steht für Frage 2.1, die Bedingung ist R-Code mit
-den Spaltennamen der Berichtstabelle. Zusätzlich gibt es
+<p>Die <strong>Regeltabelle</strong> enthält eine Zeile pro Frage:
+<code>inkl.2.1</code> steht für Frage 2.1, die Bedingung daneben ist
+R-Code mit den Spaltennamen der Berichtstabelle. Zusätzlich gibt es
 <code>immer TRUE</code> und <code>immer FALSE</code>.
-<code>header</code>-Zeilen stehen für ganze Abschnitte: Ein Abschnitt
-erscheint, sobald eine seiner Fragen erscheint (diese Bedingung wird
-automatisch erzeugt).</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">regeln</span> <span class="op">&lt;-</span> <span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">regeln_pfad</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">regeln</span><span class="op">)</span></span>
+<code>header</code>-Zeilen stehen für ganze Abschnitte; ein Abschnitt
+erscheint automatisch, sobald eine seiner Fragen erscheint.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu">readxl</span><span class="fu">::</span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html" class="external-link">read_excel</a></span><span class="op">(</span><span class="va">regeln_pfad</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Variable                         TRUE (in einen Bericht rein), wenn…</span></span>
 <span><span class="co">#&gt; 1 inkl.1.1                                                  immer TRUE</span></span>
 <span><span class="co">#&gt; 2 inkl.1.2                                           Art != "speziell"</span></span>
@@ -218,10 +228,12 @@ automatisch erzeugt).</p>
 <span><span class="co">#&gt; 9  header3                         eine der inkl.3.x-Variablen == TRUE</span></span></code></pre></div>
 <p><code><a href="../reference/input_tabelle.html">input_tabelle()</a></code> wertet die Regeln für jeden Bericht aus
 und hängt pro Regel eine Spalte mit <code>TRUE</code> oder
-<code>FALSE</code> an:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tabelle</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/input_tabelle.html">input_tabelle</a></span><span class="op">(</span><span class="va">berichte_pfad</span>, <span class="va">regeln_pfad</span><span class="op">)</span></span>
-<span><span class="va">tabelle</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Code"</span>, <span class="st">"inkl.1.3"</span>, <span class="st">"inkl.2.1"</span>, <span class="st">"header2"</span>, <span class="st">"inkl.3.1"</span>, <span class="st">"header3"</span><span class="op">)</span><span class="op">]</span></span>
+<code>FALSE</code> an die Berichtstabelle an. Diese Spalten sind die
+<strong>Schalter</strong>, mit denen jeder Bericht später seine Fragen
+auswählt:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">berichte</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/input_tabelle.html">input_tabelle</a></span><span class="op">(</span><span class="va">berichte_pfad</span>, <span class="va">regeln_pfad</span><span class="op">)</span></span>
+<span><span class="va">berichte</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Code"</span>, <span class="st">"inkl.1.3"</span>, <span class="st">"inkl.2.1"</span>, <span class="st">"header2"</span>, <span class="st">"inkl.3.1"</span>, <span class="st">"header3"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 6</span></span></span>
 <span><span class="co">#&gt;   Code                     inkl.1.3 inkl.2.1 header2 inkl.3.1 header3</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span>  </span></span>
@@ -231,47 +243,215 @@ und hängt pro Regel eine Spalte mit <code>TRUE</code> oder
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> M.Sc._Musterwissenschaft FALSE    TRUE     TRUE    FALSE    FALSE  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> B.A._Beispielkunde       FALSE    FALSE    FALSE   FALSE    FALSE  </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> Sonderauswertung         FALSE    FALSE    FALSE   TRUE     TRUE</span></span></code></pre></div>
-<p>Im Bericht werden die Werte der aktuellen Zeile als Variablen
-gesetzt. Jede Auswertungsfunktion mit dem Argument
-<code>nr = "2.1"</code> fragt dann die Variable <code>inkl.2.1</code> ab
-und gibt nur etwas aus, wenn sie <code>TRUE</code> ist:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">bericht</span> <span class="op">&lt;-</span> <span class="va">tabelle</span><span class="op">[</span><span class="va">params</span><span class="op">$</span><span class="va">i</span>, <span class="op">]</span> <span class="co"># Zeile des aktuellen Berichts</span></span>
-<span><span class="va">schalter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"^(inkl|header)"</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">bericht</span><span class="op">)</span>, value <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">bericht</span><span class="op">[</span><span class="va">schalter</span><span class="op">]</span><span class="op">)</span>, envir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html" class="external-link">environment</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Ganze Abschnitte lassen sich in Quarto mit
-<code>#| eval: !expr header2</code> ein- und ausblenden. Ohne
-Fragenummer oder mit <code>inkl = TRUE</code> erscheint eine Frage
-immer.</p>
+<p>An dieser Stelle lassen sich auch weitere Angaben ergänzen, z. B. der
+Titel oder der Dateiname jedes Berichts:</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">berichte</span><span class="op">$</span><span class="va">Dateiname</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"Befragung2024_"</span>, <span class="va">berichte</span><span class="op">$</span><span class="va">Code</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="schreibweisen-prüfen">1.4 Schreibweisen prüfen<a class="anchor" aria-label="anchor" href="#schreibweisen-pr%C3%BCfen"></a>
+</h3>
+<p>Jeder Bericht wird später über die Einträge der Berichtstabelle
+gefiltert, z. B. alle Antworten mit dem Abschluss „Bachelor of Science
+(B.Sc.)“. Steht dieser Text in der Tabelle anders als in den Daten,
+bleibt der Bericht leer. <code><a href="../reference/label_test.html">label_test()</a></code> vergleicht beide
+Schreibweisen, hier am Beispiel der Lehrveranstaltungsevaluation in
+<code>BspDaten</code>, deren Berichtstabelle einen Tippfehler
+enthält:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/label_test.html">label_test</a></span><span class="op">(</span><span class="va">BspDaten</span><span class="op">$</span><span class="va">pInfo</span><span class="op">$</span><span class="va">FB.txt.falsch</span>, <span class="va">BspDaten</span><span class="op">$</span><span class="va">dataLVE</span><span class="op">$</span><span class="va">Teilbereich</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Der Eintrag \"Angewandte Fktion - SoSe24\" aus der Berichtstabelle kommt nicht in gleicher Schreibweise in der Variable vor."</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="speichern">1.5 Speichern<a class="anchor" aria-label="anchor" href="#speichern"></a>
+</h3>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">daten</span>, <span class="st">"daten.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">berichte</span>, <span class="st">"berichte.rds"</span><span class="op">)</span></span></code></pre></div>
+<p>Als <code>.rds</code> gespeichert bleiben die Attribute erhalten
+(anders als bei CSV oder Excel).</p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="den-bericht-schreiben">3. Den Bericht schreiben<a class="anchor" aria-label="anchor" href="#den-bericht-schreiben"></a>
+<h2 id="der-bericht-bericht-qmd-einmal-pro-bericht">2. Der Bericht (<code>bericht.qmd</code>, einmal pro Bericht)<a class="anchor" aria-label="anchor" href="#der-bericht-bericht-qmd-einmal-pro-bericht"></a>
 </h2>
-<p>Die Auswertungsfunktionen geben den Bericht als Markdown bzw. Typst
-aus. Sie stehen deshalb in R-Chunks mit <code>output: asis</code>. Ein
-minimaler Bericht:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Lehrveranstaltungsevaluation"</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="an">format:</span><span class="co"> typst</span></span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="co">---</span></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a><span class="in">#| include: false</span></span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a><span class="in">library(setanalysis)</span></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a><span class="in">change_analysis_defaults(color.bars = "#507289") # Akzentfarbe der Grafiken</span></span>
-<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="in">daten &lt;- BspDaten$dataLVE</span></span>
-<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a></span>
-<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a><span class="fu"># Kernfragen</span></span>
-<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a><span class="in">#| output: asis</span></span>
-<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a><span class="in">merge_aggr_sk(daten[, c("KF_01", "KF_02", "KF_03")], kennung = daten$Kennung, aggr = TRUE)</span></span>
-<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a><span class="in">merge_grade(daten$Note, daten$Kennung)</span></span>
-<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
-<p><img src="vorschau-bericht.png" class="r-plt" alt="Ausschnitt aus einem Bericht: Tabelle und Boxplots für drei Skalenfragen, darunter die Gesamtnote" width="70%" style="display: block; margin: auto;"></p>
+<p>Der Bericht ist ein Quarto-Dokument. Er wird für jeden Bericht einmal
+gerendert; welcher Bericht gerade entsteht, sagt der Parameter
+<code>i</code> (die Zeile der Berichtstabelle). Ein vollständiges
+Gerüst:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Befragung 2024"</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="an">format:</span><span class="co"> typst</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="an">params:</span></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co">  i: 1 # Zeile der Berichtstabelle (1 = Master-Bericht)</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="in">#| include: false</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="in">library(setanalysis)</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="in"># (1) Einstellungen für alle Auswertungen</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="in">change_analysis_defaults(color.bars = "#507289", open.appendix = TRUE)</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="in"># (2) Vorbereitete Daten laden (aus vorbereitung.R)</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="in">daten &lt;- readRDS("daten.rds")</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="in">berichte &lt;- readRDS("berichte.rds")</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="in"># (3) Zeile dieses Berichts wählen und die Schalter als Variablen setzen</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a><span class="in">bericht &lt;- berichte[params$i, ]</span></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a><span class="in">schalter &lt;- grep("^(inkl|header)", names(bericht), value = TRUE)</span></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="in">list2env(as.list(bericht[schalter]), envir = environment())</span></span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a><span class="in"># (4) Daten auf diesen Bericht einschränken</span></span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a><span class="in">#     (hier angenommen: Single-Choice-Frage "abschluss", deren Antworttexte</span></span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a><span class="in">#     den Einträgen der Spalte Abschluss in der Berichtstabelle entsprechen)</span></span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a><span class="in">zeilen_waehlen &lt;- function(daten, auswahl) {</span></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a><span class="in">  neu &lt;- daten[auswahl, , drop = FALSE]</span></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="in">  for (spalte in names(daten)) {</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="in">    mostattributes(neu[[spalte]]) &lt;- attributes(daten[[spalte]])</span></span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a><span class="in">  }</span></span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a><span class="in">  neu</span></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="in">if (bericht$Abschluss != "alle") {</span></span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a><span class="in">  codes &lt;- attr(daten$abschluss, "labels")</span></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a><span class="in">  daten &lt;- zeilen_waehlen(daten, daten$abschluss == codes[bericht$Abschluss])</span></span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="fu"># 1. Studium</span></span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a></span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a><span class="in">#| eval: !expr header1</span></span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a><span class="in">#| output: asis</span></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a><span class="in"># (5) Fragen auswerten</span></span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a><span class="in">merge_sc(daten$semester, nr = "1.1")</span></span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a><span class="in">merge_sk(daten$zufrieden, nr = "1.2", alt1 = "kann ich nicht beurteilen", alt1.num = 7)</span></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a><span class="in">merge_mc(daten[, c("abschluss_1", "abschluss_2")], nr = "1.3")</span></span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a></span>
+<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a><span class="fu"># 2. Anmerkungen</span></span>
+<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a><span class="in">#| eval: !expr header2</span></span>
+<span id="cb11-55"><a href="#cb11-55" tabindex="-1"></a><span class="in">#| output: asis</span></span>
+<span id="cb11-56"><a href="#cb11-56" tabindex="-1"></a><span class="in">merge_open(daten$kommentar, nr = "2.1")</span></span>
+<span id="cb11-57"><a href="#cb11-57" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-58"><a href="#cb11-58" tabindex="-1"></a></span>
+<span id="cb11-59"><a href="#cb11-59" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-60"><a href="#cb11-60" tabindex="-1"></a><span class="in">#| output: asis</span></span>
+<span id="cb11-61"><a href="#cb11-61" tabindex="-1"></a><span class="in"># (6) Anhang mit den offenen Antworten, immer am Ende</span></span>
+<span id="cb11-62"><a href="#cb11-62" tabindex="-1"></a><span class="in">appendix_open()</span></span>
+<span id="cb11-63"><a href="#cb11-63" tabindex="-1"></a><span class="in">```</span></span></code></pre></div>
+<p>Die folgenden Abschnitte erklären die nummerierten Teile.</p>
 <div class="section level3">
-<h3 id="die-passende-funktion-für-jeden-fragetyp">Die passende Funktion für jeden Fragetyp<a class="anchor" aria-label="anchor" href="#die-passende-funktion-f%C3%BCr-jeden-fragetyp"></a>
+<h3 id="einstellungen">(1) Einstellungen<a class="anchor" aria-label="anchor" href="#einstellungen"></a>
+</h3>
+<p><code><a href="../reference/change_analysis_defaults.html">change_analysis_defaults()</a></code> legt Voreinstellungen fest,
+die für alle folgenden Auswertungen gelten, z. B. die Akzentfarbe der
+Grafiken oder ob bei Single-Choice-Fragen auch eine Grafik erscheint
+(<code>show.plot.sc</code>). Alle Einstellungen stehen unter
+<code><a href="../reference/setanalysis_defaults.html">?setanalysis_defaults</a></code>.</p>
+</div>
+<div class="section level3">
+<h3 id="daten-laden">(2) Daten laden<a class="anchor" aria-label="anchor" href="#daten-laden"></a>
+</h3>
+<p>Der Bericht liest die Dateien aus der Vorbereitung. Dadurch läuft das
+Einlesen nur einmal und nicht für jeden Bericht neu.</p>
+</div>
+<div class="section level3">
+<h3 id="schalter-setzen">(3) Schalter setzen<a class="anchor" aria-label="anchor" href="#schalter-setzen"></a>
+</h3>
+<p>Die Zeile des aktuellen Berichts enthält die Schalter aus 1.3.
+<code><a href="https://rdrr.io/r/base/list2env.html" class="external-link">list2env()</a></code> macht daraus Variablen wie <code>inkl.1.3</code>
+oder <code>header2</code>. Jede Auswertungsfunktion mit dem Argument
+<code>nr = "1.3"</code> fragt dann die Variable <code>inkl.1.3</code> ab
+und gibt nur etwas aus, wenn sie <code>TRUE</code> ist. Ganze Abschnitte
+(Überschrift und Fragen) blendet die Chunk-Option
+<code>#| eval: !expr header2</code> aus. Ohne <code>nr</code> oder mit
+<code>inkl = TRUE</code> erscheint eine Frage immer.</p>
+</div>
+<div class="section level3">
+<h3 id="daten-auf-den-bericht-einschränken">(4) Daten auf den Bericht einschränken<a class="anchor" aria-label="anchor" href="#daten-auf-den-bericht-einschr%C3%A4nken"></a>
+</h3>
+<p>Ein Bericht über einen Studiengang soll nur dessen Antworten zeigen.
+Beim Auswählen von Zeilen entfernt R aber die Attribute der Spalten, und
+ohne Fragetext und Antwortcodes funktionieren die Auswertungsfunktionen
+nicht richtig:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">lve</span> <span class="op">&lt;-</span> <span class="va">BspDaten</span><span class="op">$</span><span class="va">dataLVE</span></span>
+<span><span class="va">auswahl</span> <span class="op">&lt;-</span> <span class="va">lve</span><span class="op">$</span><span class="va">Teilbereich</span> <span class="op">==</span> <span class="st">"Beispielkunde - SoSe24"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">lve</span><span class="op">[</span><span class="va">auswahl</span>, <span class="op">]</span><span class="op">$</span><span class="va">KF_01</span>, <span class="st">"label"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; NULL</span></span></code></pre></div>
+<p>Die kleine Hilfsfunktion <code>zeilen_waehlen()</code> aus dem Gerüst
+überträgt die Attribute nach dem Auswählen wieder:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">zeilen_waehlen</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">daten</span>, <span class="va">auswahl</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">neu</span> <span class="op">&lt;-</span> <span class="va">daten</span><span class="op">[</span><span class="va">auswahl</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
+<span>  <span class="kw">for</span> <span class="op">(</span><span class="va">spalte</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">daten</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="fu">mostattributes</span><span class="op">(</span><span class="va">neu</span><span class="op">[[</span><span class="va">spalte</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/attributes.html" class="external-link">attributes</a></span><span class="op">(</span><span class="va">daten</span><span class="op">[[</span><span class="va">spalte</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="op">}</span></span>
+<span>  <span class="va">neu</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="fu">zeilen_waehlen</span><span class="op">(</span><span class="va">lve</span>, <span class="va">auswahl</span><span class="op">)</span><span class="op">$</span><span class="va">KF_01</span>, <span class="st">"label"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Didaktische Hilfsmittel (z.B. Folien, Begleitmaterialien) waren für mich hilfreich."</span></span></code></pre></div>
+<p>Die Einträge der Berichtstabelle (hier
+<code>bericht$Abschluss</code>) sind Antworttexte; in den Daten stehen
+Codes. Das Gerüst übersetzt den Text deshalb über das Attribut
+<code>labels</code> in den passenden Code.</p>
+</div>
+<div class="section level3">
+<h3 id="fragen-auswerten">(5) Fragen auswerten<a class="anchor" aria-label="anchor" href="#fragen-auswerten"></a>
+</h3>
+<p>Die Auswertungsfunktionen schreiben Markdown bzw. Typst in die
+Ausgabe. Sie stehen deshalb in Chunks mit <code>#| output: asis</code>.
+Jede Funktion erzeugt Überschrift (aus dem Fragetext), Tabelle und, je
+nach Fragetyp und Einstellungen, eine Grafik:</p>
+<p><img src="vorschau-bericht.png" class="r-plt" alt="Ausschnitt aus einem Bericht: Tabelle und Boxplots für drei Skalenfragen, darunter die Gesamtnote" width="70%" style="display: block; margin: auto;"></p>
+<p>Welche Funktion zu welcher Frage passt, steht in der Übersicht unter
+<a href="#nachschlagen">Nachschlagen</a>.</p>
+</div>
+<div class="section level3">
+<h3 id="anhang-mit-den-offenen-antworten">(6) Anhang mit den offenen Antworten<a class="anchor" aria-label="anchor" href="#anhang-mit-den-offenen-antworten"></a>
+</h3>
+<p>Bei <code>open.appendix = TRUE</code> erscheint an der Stelle einer
+offenen Frage nur ein Link in den Anhang. <code><a href="../reference/appendix_open.html">appendix_open()</a></code>
+gibt am Ende alle gesammelten Antworten aus und leert danach den
+Speicher, damit der nächste Bericht in derselben R-Sitzung neu beginnt.
+Es gehört deshalb ans Ende jedes Berichts, auch wenn er keine offenen
+Fragen enthält.</p>
+</div>
+</div>
+<div class="section level2">
+<h2 id="alle-berichte-erstellen-alle-berichte-rendern-r">3. Alle Berichte erstellen
+(<code>alle-berichte-rendern.R</code>)<a class="anchor" aria-label="anchor" href="#alle-berichte-erstellen-alle-berichte-rendern-r"></a>
+</h2>
+<p>Zum Schluss wird der Bericht für jede Zeile der Berichtstabelle
+gerendert, jeweils mit dem passenden Parameter <code>i</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quarto-dev/quarto-r" class="external-link">quarto</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">berichte</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"berichte.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">berichte</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">quarto_render</span><span class="op">(</span></span>
+<span>    input <span class="op">=</span> <span class="st">"bericht.qmd"</span>,</span>
+<span>    output_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">berichte</span><span class="op">$</span><span class="va">Dateiname</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">".pdf"</span><span class="op">)</span>,</span>
+<span>    execute_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="va">i</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
+<p>Das Beispielskript <code>beispiele/alle-berichte-rendern.R</code> in
+<a href="https://github.com/donvollb/set-template" class="external-link">set-template</a>
+ergänzt das um ein Protokoll der Stichprobengrößen, überspringt Berichte
+mit zu wenigen Stimmen und macht nach einem Fehler mit dem nächsten
+Bericht weiter.</p>
+</div>
+<div class="section level2">
+<h2 id="nachschlagen">Nachschlagen<a class="anchor" aria-label="anchor" href="#nachschlagen"></a>
+</h2>
+<div class="section level3">
+<h3 id="welche-funktion-für-welche-frage">Welche Funktion für welche Frage?<a class="anchor" aria-label="anchor" href="#welche-funktion-f%C3%BCr-welche-frage"></a>
 </h3>
 <table class="table">
 <colgroup>
@@ -323,39 +503,8 @@ minimaler Bericht:</p>
 <code>type</code> selbst, <code><a href="../reference/merge_many.html">merge_many()</a></code> wertet einen ganzen
 Block von Spalten aus und fasst dabei die Spalten einer
 Multiple-Choice-Frage zusammen:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/merge_many.html">merge_many</a></span><span class="op">(</span><span class="va">daten</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"semester"</span>, <span class="st">"zufrieden"</span>, <span class="st">"abschluss_1"</span>, <span class="st">"abschluss_2"</span>, <span class="st">"kommentar"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="einstellungen">Einstellungen<a class="anchor" aria-label="anchor" href="#einstellungen"></a>
-</h3>
-<p>Farben, Spaltenbreiten und Voreinstellungen, z. B. ob bei
-Single-Choice-Fragen auch eine Grafik erscheint, stehen in
-<code>setanalysis_defaults</code> und gelten für alle folgenden
-Aufrufe:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/change_analysis_defaults.html">change_analysis_defaults</a></span><span class="op">(</span></span>
-<span>  color.bars   <span class="op">=</span> <span class="st">"#507289"</span>, <span class="co"># Akzentfarbe</span></span>
-<span>  show.plot.sc <span class="op">=</span> <span class="cn">FALSE</span>,     <span class="co"># Single Choice nur als Tabelle</span></span>
-<span>  show.plot.mc <span class="op">=</span> <span class="cn">FALSE</span>      <span class="co"># Multiple Choice nur als Tabelle</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>Eine Liste aller Einstellungen steht unter
-<code><a href="../reference/setanalysis_defaults.html">?setanalysis_defaults</a></code>.</p>
-</div>
-<div class="section level3">
-<h3 id="offene-antworten-im-anhang">Offene Antworten im Anhang<a class="anchor" aria-label="anchor" href="#offene-antworten-im-anhang"></a>
-</h3>
-<p>Mit <code>appendix = TRUE</code> erscheint an der Stelle einer
-offenen Frage nur ein Link in den Anhang. <code><a href="../reference/appendix_open.html">appendix_open()</a></code>
-gibt am Ende des Berichts alle gesammelten Antworten aus und leert
-danach den Speicher, damit der nächste Bericht in derselben R-Sitzung
-neu beginnt:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/merge_open.html">merge_open</a></span><span class="op">(</span><span class="va">daten</span><span class="op">$</span><span class="va">kommentar</span>, nr <span class="op">=</span> <span class="st">"3.1"</span>, appendix <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># … weitere Fragen …</span></span>
-<span></span>
-<span><span class="fu"><a href="../reference/appendix_open.html">appendix_open</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/merge_many.html">merge_many</a></span><span class="op">(</span><span class="va">daten</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"semester"</span>, <span class="st">"zufrieden"</span>, <span class="st">"abschluss_1"</span>, <span class="st">"abschluss_2"</span>, <span class="st">"kommentar"</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="legenden">Legenden<a class="anchor" aria-label="anchor" href="#legenden"></a>
@@ -363,40 +512,27 @@ neu beginnt:</p>
 <p><code><a href="../reference/bsp_table_stat.html">bsp_table_stat()</a></code>, <code><a href="../reference/bsp_boxplot.html">bsp_boxplot()</a></code> und
 <code><a href="../reference/bsp_evasys_sk6.html">bsp_evasys_sk6()</a></code> erzeugen Erläuterungen zu den Kennwerten
 und Grafiken, z. B. für einen Abschnitt „Hinweise zum Lesen des
-Berichts“.</p>
+Berichts“ am Ende.</p>
 </div>
 <div class="section level3">
-<h3 id="vorschau-ohne-rendern">Vorschau ohne Rendern<a class="anchor" aria-label="anchor" href="#vorschau-ohne-rendern"></a>
+<h3 id="vorschau-einer-einzelnen-auswertung">Vorschau einer einzelnen Auswertung<a class="anchor" aria-label="anchor" href="#vorschau-einer-einzelnen-auswertung"></a>
 </h3>
 <p>In RStudio zeigt <code><a href="../reference/markdown_in_viewer.html">markdown_in_viewer()</a></code> das Ergebnis einer
-einzelnen Auswertung im Viewer an:</p>
+Auswertung im Viewer an, ohne den ganzen Bericht zu rendern:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/markdown_in_viewer.html">markdown_in_viewer</a></span><span class="op">(</span><span class="fu"><a href="../reference/merge_sc.html">merge_sc</a></span><span class="op">(</span><span class="va">BspDaten</span><span class="op">$</span><span class="va">dataLVE</span><span class="op">$</span><span class="va">V3_D</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
-</div>
-<div class="section level2">
-<h2 id="alle-berichte-erstellen">4. Alle Berichte erstellen<a class="anchor" aria-label="anchor" href="#alle-berichte-erstellen"></a>
-</h2>
-<p>Das Quarto-Dokument erhält einen Parameter <code>i</code> für die
-Zeile der Berichtstabelle (<code>params: i: 1</code> im YAML-Kopf). Ein
-R-Skript rendert dann jeden Bericht nacheinander:</p>
+<div class="section level3">
+<h3 id="eigene-daten-ohne-evasys">Eigene Daten ohne evasys<a class="anchor" aria-label="anchor" href="#eigene-daten-ohne-evasys"></a>
+</h3>
+<p>Daten aus anderen Quellen lassen sich genauso auswerten, wenn man die
+Attribute selbst setzt:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/quarto-dev/quarto-r" class="external-link">quarto</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tabelle</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/input_tabelle.html">input_tabelle</a></span><span class="op">(</span><span class="st">"berichte.xlsx"</span>, <span class="st">"regeln.xlsx"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">tabelle</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">quarto_render</span><span class="op">(</span></span>
-<span>    input <span class="op">=</span> <span class="st">"bericht.qmd"</span>,</span>
-<span>    output_file <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">tabelle</span><span class="op">$</span><span class="va">Code</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>, <span class="st">".pdf"</span><span class="op">)</span>,</span>
-<span>    execute_params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>i <span class="op">=</span> <span class="va">i</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="op">}</span></span></code></pre></div>
-<p>Das Beispielskript <code>beispiele/alle-berichte-rendern.R</code> in
-<a href="https://github.com/donvollb/set-template" class="external-link">set-template</a>
-ergänzt das um ein Protokoll der Stichprobengrößen, überspringt Berichte
-mit zu wenigen Stimmen und macht nach einem Fehler mit dem nächsten
-Bericht weiter.</p>
+<code class="sourceCode R"><span><span class="va">note</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="cn">NA</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">note</span>, <span class="st">"label"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"Welche Gesamtnote geben Sie der Veranstaltung?"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">note</span>, <span class="st">"nr"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"3.1"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/attr.html" class="external-link">attr</a></span><span class="op">(</span><span class="va">note</span>, <span class="st">"type"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"sk"</span></span></code></pre></div>
+</div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
