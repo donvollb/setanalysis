@@ -60,7 +60,9 @@ Fehlerbehebung aufgeführt.
 * `markdown_in_viewer()` stellt die vorherigen knitr-Einstellungen nach der
   Vorschau wieder her (bisher wurde `knitr.duplicate.label` fest auf
   `"forbid"` gesetzt).
-* `label_test()`: Ausnahmen werden einfacher und robuster herausgefiltert.
+* `label_test()`: Ausnahmen werden einfacher und robuster herausgefiltert. Die
+  Meldungen sprechen jetzt von der „Berichtstabelle“ statt vom internen
+  Objektnamen `personalized.info`.
 * `input_tabelle()` wertet die Bedingungen der Regeltabelle jetzt direkt mit
   den Spalten der Berichtstabelle aus, statt die Spaltennamen per Textersatz
   umzuschreiben. Bestehende Regeltabellen liefern dasselbe Ergebnis; zusätzlich

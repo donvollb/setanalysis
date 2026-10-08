@@ -82,10 +82,10 @@ label_test <- function(col, var, exception = "alle") {
   }
 
   if (all(labels_col %in% labels_var)) {
-    output <- "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
+    output <- "Alle Einträge der Spalte aus der Berichtstabelle kommen in gleicher Schreibweise auch in der Variable vor."
   } else {
     false_labels <- labels_col[which(!(labels_col %in% labels_var))]
-    output <- paste0("Das Label \"", false_labels, "\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor.")
+    output <- paste0("Der Eintrag \"", false_labels, "\" aus der Berichtstabelle kommt nicht in gleicher Schreibweise in der Variable vor.")
   }
   return(print(output))
 }

@@ -17,20 +17,20 @@
     Code
       label_test(BspDaten$pInfo$FB.txt, BspDaten$dataLVE$Teilbereich)
     Output
-      [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
+      [1] "Alle Einträge der Spalte aus der Berichtstabelle kommen in gleicher Schreibweise auch in der Variable vor."
     Code
       label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich)
     Output
-      [1] "Das Label \"Angewandte Fktion - SoSe24\" aus der Spalte von personalized.info kommt nicht in gleicher Schreibweise in den Labels der Variable vor."
+      [1] "Der Eintrag \"Angewandte Fktion - SoSe24\" aus der Berichtstabelle kommt nicht in gleicher Schreibweise in der Variable vor."
     Code
       label_test(BspDaten$pInfo$FB.txt.falsch, BspDaten$dataLVE$Teilbereich,
       exception = "Angewandte Fktion - SoSe24")
     Output
-      [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
+      [1] "Alle Einträge der Spalte aus der Berichtstabelle kommen in gleicher Schreibweise auch in der Variable vor."
     Code
       label_test(c("ja", "nein"), BspDaten$Tabellen$freq)
     Output
-      [1] "Alle Labels der Spalte aus personalized.info kommen in gleicher Schreibweise auch in der Variable vor"
+      [1] "Alle Einträge der Spalte aus der Berichtstabelle kommen in gleicher Schreibweise auch in der Variable vor."
 
 # Standardeinstellungen haben die erwarteten Werte
 
