@@ -3,12 +3,35 @@
 on:
   push:
     branches: [main, master, dev]
+    # Kein Check, wenn sich nur Dateien ändern, die R CMD check nicht betreffen
+    # (Hilfeseiten und Vignette werden weiter geprüft)
+    paths-ignore:
+      - "README.md"
+      - "README.en.md"
+      - "LICENSE.md"
+      - "_pkgdown.yml"
+      - "man/figures/**"
+      - "data-raw/**"
+      - ".github/workflows/pkgdown.yaml"
   pull_request:
+    paths-ignore:
+      - "README.md"
+      - "README.en.md"
+      - "LICENSE.md"
+      - "_pkgdown.yml"
+      - "man/figures/**"
+      - "data-raw/**"
+      - ".github/workflows/pkgdown.yaml"
   workflow_dispatch:
 
 name: R-CMD-check.yaml
 
 permissions: read-all
+
+# Bei einem neuen Push auf denselben Branch den noch laufenden Check abbrechen
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   R-CMD-check:

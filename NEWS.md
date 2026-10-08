@@ -1,4 +1,4 @@
-# setanalysis (Entwicklungsversion)
+# setanalysis 1.1.0
 
 Überarbeitung von Dokumentation, Paketstruktur und Code. Die Ausgabe der
 Funktionen bleibt unverändert, sofern unten nicht ausdrücklich als
