@@ -23,9 +23,11 @@ barplot_freq <- function(x, # Daten
 
   x_max <- max(table(x))
 
-  # Bisherige Grafikparameter speichern -----------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -49,12 +51,8 @@ barplot_freq <- function(x, # Daten
   # Achsenbeschriftungen hinzufügen ---------------------------------------
 
   .text_left(pretty(c(0, x_max), n = 4), at = pretty(c(0, x_max), n = 4))
-  .text_bottom(levels(x), at = seq(0.7, -0.5 + 1.2 * nlevels(x), by = 1.2))
+  .text_bottom(levels(x), at = .bar_centers(nlevels(x)))
   .text_bottom_2(xlab, line = 2.5)
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }
 
 #' Barplot zur Abbildung von von SC/MC-Fragen
@@ -92,9 +90,11 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
 
   maxAnzahlZeichen <- max(nchar(unlist(strsplit(x$label, "\n"))))
 
-  # Bisherige Grafikparameter speichern -----------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -117,7 +117,7 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
 
   # Achsenbeschriftungen hinzufügen ---------------------------------------
 
-  .text_left(rev(x$label), at = seq(0.7, -0.5 + 1.2 * nrow(x), by = 1.2))
+  .text_left(rev(x$label), at = .bar_centers(nrow(x)))
   .text_bottom(pretty(c(0, max(x$freq)), n = 4), at = pretty(c(0, max(x$freq)), n = 4))
 
   # Prozentzahlen rechts neben die Balken schrieben -----------------------
@@ -125,13 +125,9 @@ barplot_scmc <- function(x, # Daten (data.frame mit Fragetexten, Häufigkeit und
   text(
     labels = paste(sprintf("%.1f", rev(x$perc)), "%"),
     x = rev(x$freq) + max(x$freq) * 0.03,
-    y = seq(0.7, -0.5 + 1.2 * nrow(x), by = 1.2),
+    y = .bar_centers(nrow(x)),
     adj = 0
   )
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }
 
 #' Barplot-Boxplot Hypbrid für die Darstellung von ordinalskalierten Variablen
@@ -161,15 +157,17 @@ barplot_sk <- function(x, # Daten
   x[!(x %in% c(1:number))] <- NA
   x <- x[!is.na(x)]
 
-  tmin <- sapply(tmin, \(x) paste(strwrap(x, width = 15), collapse = "\n"))
-  tmax <- sapply(tmax, \(x) paste(strwrap(x, width = 15), collapse = "\n"))
+  tmin <- .wrap_labels(tmin, width = 15)
+  tmax <- .wrap_labels(tmax, width = 15)
 
 
   xtab <- table(c(x, 1:number)) - 1 # damit alle angezeigt werden
 
-  # Bisherige Grafikparameter speichern -----------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -181,7 +179,7 @@ barplot_sk <- function(x, # Daten
 
   # Hilfslinien -----------------------------------------------------------
 
-  abline(v = seq(0.7, -0.5 + 1.2 * number, by = 1.2), col = "grey70")
+  abline(v = .bar_centers(number), col = "grey70")
 
   # Eigentlichen Barplot zeichnen -----------------------------------------
 
@@ -189,9 +187,9 @@ barplot_sk <- function(x, # Daten
 
   # X-Achsenbeschriftungen und Prozentzahlen hinzufügen -------------------
 
-  .text_bottom(1:number, at = seq(0.7, -0.5 + 1.2 * number, by = 1.2))
+  .text_bottom(1:number, at = .bar_centers(number))
   .text_top(paste(sprintf("%.1f", 100 * prop.table(xtab)), "%"),
-    at = seq(0.7, -0.5 + 1.2 * number, by = 1.2)
+    at = .bar_centers(number)
   )
 
   # Beschriftungen der Pole hinzufügen ------------------------------------
@@ -209,8 +207,4 @@ barplot_sk <- function(x, # Daten
     horizontal = TRUE, range = 0, ylim = c(0.6, number + 0.4), medlwd = 4,
     boxlwd = 0.01, xlim = c(0.3, 1.3), whisklty = 1, outline = FALSE
   )
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }

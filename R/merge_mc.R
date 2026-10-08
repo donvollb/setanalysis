@@ -140,7 +140,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
   # Automatische Zeilenumbrüche einfügen ----------------------------------
 
-  results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, 40), collapse = "\n"))
+  results[, 1] <- .wrap_labels(results[, 1], width = 40)
 
   # freq-Spale in numerische Daten umwandeln (bisher character) ---------
 

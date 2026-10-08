@@ -74,3 +74,32 @@ test_that("Legenden-Abbildungen (bsp.*) bleiben unverändert", {
   expect_report_snapshot(bsp_boxplot(), "bsp_boxplot")
   expect_report_snapshot(bsp_evasys_sk6(), "bsp_evasys_sk6")
 })
+
+test_that("Plotfunktionen geben nichts sichtbar zurück", {
+  # Ein sichtbarer Rückgabewert würde im Bericht mit ausgegeben
+  svglite::svglite(withr::local_tempfile(fileext = ".svg"))
+  withr::defer(grDevices::dev.off())
+
+  unsichtbar <- function(code) expect_false(withVisible(code)$visible)
+
+  unsichtbar(barplot_freq(BspDaten$Plots$num))
+  unsichtbar(barplot_scmc(BspDaten$Plots$sc))
+  unsichtbar(barplot_sk(BspDaten$dataLVE$KF_01, tmin = "links", tmax = "rechts"))
+  unsichtbar(boxplot_aggr_sk(
+    BspDaten$Plots$aggr.data, BspDaten$Plots$aggr.labels, BspDaten$Plots$aggr.skala
+  ))
+  unsichtbar(boxplot_grade(BspDaten$Plots$grade))
+  unsichtbar(boxplot_rueck(BspDaten$Plots$rueck))
+  unsichtbar(boxplot_wl(BspDaten$Plots$WL))
+})
+
+test_that("Plotfunktionen stellen die Grafikparameter wieder her", {
+  svglite::svglite(withr::local_tempfile(fileext = ".svg"))
+  withr::defer(grDevices::dev.off())
+  vorher <- graphics::par(no.readonly = TRUE)
+
+  barplot_sk(BspDaten$dataLVE$KF_01, tmin = "links", tmax = "rechts")
+  boxplot_grade(BspDaten$Plots$grade)
+
+  expect_identical(graphics::par(no.readonly = TRUE), vorher)
+})

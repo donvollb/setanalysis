@@ -54,21 +54,20 @@ merge_sc <- function(x, # Daten
 
   # automatische Zeilenumbrüche bei langen Labels -------------------------
 
-  results[, 1] <- sapply(results[, 1], \(x) paste(strwrap(x, width = 40), collapse = "\n"))
+  results[, 1] <- .wrap_labels(results[, 1], width = 40)
 
   results <- results[!(rownames(results) %in% c("NA's", "Total")), ]
   colnames(results) <- c("label", "freq", "perc")
 
   if (show.plot == TRUE) {
+    # Höhe der Abbildung: eine Zeile pro Antwortoption plus Rand
     if (fig.height == "default") {
-      subchunkify(barplot_scmc(results, xlab = "Häufigkeit"),
-        fig_height = (1 + nrow(results)), fig_width = 9
-      )
-    } else {
-      subchunkify(barplot_scmc(x = results, xlab = "Häufigkeit"),
-        fig_height = fig.height, fig_width = 9
-      )
+      fig.height <- 1 + nrow(results)
     }
+
+    subchunkify(barplot_scmc(results, xlab = "Häufigkeit"),
+      fig_height = fig.height, fig_width = 9
+    )
   }
 
   if (pagebreak == TRUE) {

@@ -117,7 +117,7 @@ bsp_evasys_sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
 
       # Hilfslinien -----------------------------------------------------------
 
-      abline(v = seq(0.7, -0.5 + 1.2 * number, by = 1.2), col = "grey70"),
+      abline(v = .bar_centers(number), col = "grey70"),
 
       # Eigentlichen Barplot zeichnen -----------------------------------------
 
@@ -125,9 +125,9 @@ bsp_evasys_sk6 <- function(x = "default") # Daten, bei "default" wird ein Beispi
 
       # X-Achsenbeschriftungen und Prozentzahlen hinzufügen -------------------
 
-      .text_bottom(1:number, at = seq(0.7, -0.5 + 1.2 * number, by = 1.2)),
+      .text_bottom(1:number, at = .bar_centers(number)),
       .text_top(paste(sprintf("%.1f", 100 * prop.table(xtab)), "%"),
-        at = seq(0.7, -0.5 + 1.2 * number, by = 1.2)
+        at = .bar_centers(number)
       ),
 
       # Beschriftungen der Pole hinzufügen ------------------------------------

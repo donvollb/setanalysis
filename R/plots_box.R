@@ -26,9 +26,11 @@ boxplot_aggr_sk <- function(x, # Daten
   n_items <- ncol(daten)
   n_skala <- length(skala)
 
-  # Bisherige Grafikparameter speichern -----------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -71,10 +73,6 @@ boxplot_aggr_sk <- function(x, # Daten
       side = 1, line = 3, col = "gray15", font = 3
     )
   }
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }
 
 #' Abbildung der Gesamtnote
@@ -89,9 +87,11 @@ boxplot_aggr_sk <- function(x, # Daten
 
 boxplot_grade <- function(x) # Daten
 {
-  # Aktuelle Grafikparameter speichern ------------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -119,10 +119,6 @@ boxplot_grade <- function(x) # Daten
       "ausreichend", "mangelhaft", "ungenügend"
     )
   )
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }
 
 #' Abbildung des Rücklaufs
@@ -137,9 +133,11 @@ boxplot_grade <- function(x) # Daten
 
 boxplot_rueck <- function(x) # Daten
 {
-  # Aktuelle Grafikparameter speichern ------------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -164,10 +162,6 @@ boxplot_rueck <- function(x) # Daten
   .text_bottom(c("0", "20", "40", "60", "80", "100"),
     at = c(0, 20, 40, 60, 80, 100)
   )
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }
 
 #' Boxplot mit Workloads der LVs: Funktioniert, sollte überarbeitet werden
@@ -192,9 +186,11 @@ boxplot_wl <- function(x, # Daten
   n <- length(x)
   n_skala <- length(skala)
 
-  # Bisherige Grafikparameter speichern -----------------------------------
+  # Grafikparameter speichern; sie werden beim Verlassen der Funktion
+  # (auch bei einem Fehler) wiederhergestellt
 
   opar <- par(no.readonly = TRUE)
+  on.exit(par(opar))
 
   # Grafikparameter für den Plot einstellen -------------------------------
 
@@ -225,8 +221,4 @@ boxplot_wl <- function(x, # Daten
 
   # mtext(bquote(bold(.(info1)) ~ .(info2)), side = 1, line = 3, col = "gray15")
   .text_bottom_2(paste("angegebener Workload der LV [n =", n, "]"), line = 3)
-
-  # Vorher gesicherte Grafikparameter wiederherstellen --------------------
-
-  par(opar)
 }

@@ -221,29 +221,19 @@ merge_aggr_sk <- function(x, # Daten
 
     # Automatische Zeilenumbrüche einfügen --------------------------------
 
-    labels <- sapply(labels, \(x) paste(strwrap(x, width = 49), collapse = "\n"))
+    labels <- .wrap_labels(labels, width = 49)
 
+    # Höhe der Abbildung: eine Zeile pro Item plus Rand; bei ungerader Anzahl
+    # Stufen etwas mehr Platz für den Hinweistext unter der Abbildung
     if (fig.height == "default") {
-      if (number %% 2 != 0) { # bei ungerader Anzahl Stufen mehr Platz für Hinweistext
-        subchunkify(
-          boxplot_aggr_sk(x, labels, labels.skala),
-          fig_height = (length(labels) + 1.5),
-          fig_width = 9
-        )
-      } else {
-        subchunkify(
-          boxplot_aggr_sk(x, labels, labels.skala),
-          fig_height = (length(labels) + 1),
-          fig_width = 9
-        )
-      }
-    } else {
-      subchunkify(
-        boxplot_aggr_sk(x, labels, labels.skala),
-        fig_height = fig.height,
-        fig_width = 9
-      )
+      fig.height <- length(labels) + if (number %% 2 != 0) 1.5 else 1
     }
+
+    subchunkify(
+      boxplot_aggr_sk(x, labels, labels.skala),
+      fig_height = fig.height,
+      fig_width = 9
+    )
   }
 
   cat("  \n  \n")

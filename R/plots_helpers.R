@@ -117,3 +117,16 @@
     ...
   ) # z. B. Position und Text
 }
+
+# Mittelpunkte der Balken, die barplot() mit Standardwerten zeichnet
+# (Balkenbreite 1, Abstand 0.2 → 0.7, 1.9, 3.1, …); für Beschriftungen und
+# Hilfslinien an den Balken
+.bar_centers <- function(n) {
+  seq(0.7, -0.5 + 1.2 * n, by = 1.2)
+}
+
+# Lange Beschriftungen auf mehrere Zeilen umbrechen (höchstens `width`
+# Zeichen pro Zeile)
+.wrap_labels <- function(labels, width) {
+  sapply(labels, \(x) paste(strwrap(x, width = width), collapse = "\n"))
+}
