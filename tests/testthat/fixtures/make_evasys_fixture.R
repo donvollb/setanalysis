@@ -1,10 +1,12 @@
 # Erzeugt einen kleinen, fiktiven evasys-Export (Rohdaten + Codebuch) -----
 #
-# Die Struktur ist aus evasys_read_data() abgeleitet: Das Codebuch besteht aus
-# Abschnitten pro Variable ("Variable:", "Fragetext:", "Fragetyp:", ggf.
-# "Werte:" mit Zeilen "1: …"), getrennt durch eine Zeile "------"; nach dem
-# letzten Abschnitt folgen zwei weitere Zeilen. Bei MC-Fragen steht der
-# Variablenname mehrfach (Frage + eine Antwortoption pro Abschnitt).
+# Das Codebuch ist im Format eines echten evasys-Codebuchs aufgebaut (Inhalte
+# erfunden): Abschnitte pro Variable mit "Variable:", "Fragetyp:",
+# "Fragetext:", ggf. "Zeichenlimit:" und "Wert:"/"Werte:"; die erste Zeile
+# nach "Werte:" mit Antwortoptionen beginnt in der Folgezeile ("1 : …").
+# Abschnitte sind durch "------------" getrennt (zwischen Fragengruppen
+# doppelt), Texte stehen in dreifachen Anführungszeichen. Bei MC-Fragen steht
+# der Variablenname mehrfach (Frage + eine Antwortoption pro Abschnitt).
 # Beide Dateien sind wie bei evasys Latin-1-kodiert und durch Semikolon getrennt.
 #
 # Ausführen aus dem Paketverzeichnis:
@@ -19,34 +21,60 @@ rohdaten <- c(
   '1;7;1;0;"Übersichtlicheres Modulhandbuch";"/"'
 )
 
-abschnitt <- function(variable, fragetext, fragetyp, werte = NULL) {
-  c(
-    paste0('Variable:;"', variable, '"'),
-    paste0('Fragetext:;"', fragetext, '"'),
-    paste0('Fragetyp:;"', fragetyp, '"'),
-    if (!is.null(werte)) c("Werte:;", paste0(';"', werte, '"')),
-    ";------"
-  )
-}
+trenner <- "------------"
+optionen <- function(werte) paste0('" ";"""', werte, '"""')
 
 codebuch <- c(
-  abschnitt(
-    "semester", "1.1 In welchem Semester sind Sie?", "1 aus n",
-    c("1: erstes Semester", "2: höheres Semester")
+  'Variable:;"""semester"""',
+  'Fragetyp:;"1 aus n"',
+  'Fragetext:;"""1.1 In welchem Semester sind Sie?"""',
+  'Wert:;"<leer>: Ungültig / Keine Antwort"',
+  optionen(c("1: erstes Semester", "2: höheres Semester")),
+  trenner,
+  'Variable:;"""zufrieden"""',
+  "Fragetyp:;Skalafrage",
+  'Fragetext:;"""1.2 Ich bin mit dem Studium zufrieden."""',
+  'Werte:;"<leer>: Ungültig / Keine Antwort"',
+  optionen(c(
+    "1 : trifft gar nicht zu", "2 : ", "3 : ", "4 : ", "5 : ", "6 : trifft voll zu",
+    "7 : kann ich nicht beurteilen"
+  )),
+  trenner,
+  'Variable:;"""abschluss"""',
+  'Fragetyp:;"n aus m"',
+  'Fragetext:;"""1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich)"""',
+  trenner,
+  'Variable:;"""abschluss"""',
+  'Fragetyp:;"n aus m"',
+  paste0(
+    'Fragetext:;"""\'1.3 Welchen Abschluss streben Sie an? ',
+    '(Mehrfachnennung möglich)\' : Bachelor"""'
   ),
-  abschnitt(
-    "zufrieden", "1.2 Ich bin mit dem Studium zufrieden.", "Skalafrage",
-    c(
-      "1: trifft gar nicht zu", "2: ", "3: ", "4: ", "5: ", "6: trifft voll zu",
-      "7: kann ich nicht beurteilen"
-    )
+  'Werte:;"0 : nicht angekreuzt"',
+  '" ";"""1"": angekreuzt"',
+  trenner,
+  'Variable:;"""abschluss"""',
+  'Fragetyp:;"n aus m"',
+  paste0(
+    'Fragetext:;"""\'1.3 Welchen Abschluss streben Sie an? ',
+    '(Mehrfachnennung möglich)\' : Master"""'
   ),
-  abschnitt("abschluss", "1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich)", "n aus m"),
-  abschnitt("abschluss", "1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich) : Bachelor", "n aus m"),
-  abschnitt("abschluss", "1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich) : Master", "n aus m"),
-  abschnitt("kommentar", "2.1 Was möchten Sie uns noch mitteilen?", "Offene Frage"),
-  abschnitt("alter", "2.2 Wie alt sind Sie?", "Offene Frage"),
-  ";" # zweite Zeile nach dem letzten Abschnitt
+  'Werte:;"0 : nicht angekreuzt"',
+  '" ";"""2"": angekreuzt"',
+  trenner,
+  trenner,
+  'Variable:;"""kommentar"""',
+  "Zeichenlimit:;1500",
+  'Fragetyp:;"Offene Frage"',
+  'Fragetext:;"""2.1 Was möchten Sie uns noch mitteilen?"""',
+  'Wert:;"Antworttext / Platzhalter"',
+  trenner,
+  'Variable:;"""alter"""',
+  "Zeichenlimit:;3",
+  'Fragetyp:;"Offene Frage"',
+  'Fragetext:;"""2.2 Wie alt sind Sie?"""',
+  'Wert:;"Antworttext / Platzhalter"',
+  trenner
 )
 
 ordner <- "tests/testthat/fixtures"
