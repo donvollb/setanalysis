@@ -18,6 +18,10 @@ system2("quarto", c(
   shQuote("man/figures/vorschau-{p}.png"), "--ppi", "150"
 ))
 
+# Seite 1 auch für die Vignette (Bilder müssen im Ordner vignettes/ liegen,
+# damit sie im Paket und auf der pkgdown-Seite gefunden werden)
+file.copy("man/figures/vorschau-1.png", "vignettes/vorschau-bericht.png", overwrite = TRUE)
+
 # Zwischenergebnisse entfernen
 unlink(c(
   typ, file.path(ordner, "readme_vorschau.pdf"),

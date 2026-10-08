@@ -1,7 +1,8 @@
 # setanalysis
 
-[Deutsch](README.md) · **English**
+[Deutsch](https://github.com/donvollb/setanalysis#readme) · **English** · [Website](https://donvollb.github.io/setanalysis/) (German)
 
+[![R-CMD-check](https://github.com/donvollb/setanalysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/donvollb/setanalysis/actions/workflows/R-CMD-check.yaml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE.md)
 
 R package for personalised survey reports, in particular course evaluations
@@ -87,8 +88,11 @@ In RStudio, a single analysis can be previewed without rendering:
 4. **Render all reports**, e.g. with `quarto::quarto_render()` in a loop over
    the rows of the report table.
 
-The vignette `vignette("bericht-erstellen", package = "setanalysis")` walks
-through all steps (in German); `?setanalysis` gives an overview.
+The vignette
+[Einen Evaluationsbericht erstellen](https://donvollb.github.io/setanalysis/articles/bericht-erstellen.html)
+walks through all steps (in German). All help pages are in the
+[function reference](https://donvollb.github.io/setanalysis/reference/);
+in R, `?setanalysis` gives an overview.
 
 A complete report template with layout (header and footer, table of
 contents, accent colour) and two working examples is
@@ -121,7 +125,7 @@ evaluation and a first-year student survey in the format of
 The behaviour of all functions is covered by snapshot tests (testthat) that
 compare the generated report building blocks, including the charts (SVG).
 The scripts that generate the example data and preview images are in
-`data-raw/`. Changes are listed in [NEWS.md](NEWS.md) (German).
+`data-raw/`. Changes are listed in the [changelog](https://donvollb.github.io/setanalysis/news/) (German).
 
 ## Authors and licence
 

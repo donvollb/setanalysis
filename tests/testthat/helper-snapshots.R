@@ -28,6 +28,21 @@ local_inkl <- function(..., .env = parent.frame()) {
   withr::defer(rm(list = namen, envir = globalenv()), envir = .env)
 }
 
+# Abbildungen (SVG) nur lokal vergleichen ----------------------------------
+# svglite schreibt Textbreiten in die SVG-Dateien, die von den installierten
+# Schriften und vom Betriebssystem abhängen. In der CI (GitHub Actions) werden
+# deshalb nur Text- und Tabellenausgaben verglichen.
+
+svg_vergleichen <- function() !isTRUE(as.logical(Sys.getenv("CI", "false")))
+
+expect_svg_snapshot <- function(pfad, name) {
+  if (svg_vergleichen()) {
+    expect_snapshot_file(pfad, name, compare = compare_file_text)
+  } else {
+    announce_snapshot_file(name = name)
+  }
+}
+
 # Snapshot der Berichtsausgabe (cat-Ausgabe + Abbildungen) ----------------
 
 expect_report_snapshot <- function(code, name) {
@@ -54,9 +69,7 @@ expect_report_snapshot <- function(code, name) {
 
   abbildungen <- sort(list.files(file.path(dir, "figure"), full.names = TRUE))
   for (abb in abbildungen) {
-    expect_snapshot_file(abb, paste0(name, "-", basename(abb)),
-      compare = compare_file_text
-    )
+    expect_svg_snapshot(abb, paste0(name, "-", basename(abb)))
   }
 }
 
@@ -67,7 +80,7 @@ expect_plot_snapshot <- function(code, name, width = 9, height = 2) {
   pfad <- file.path(withr::local_tempdir(), paste0(name, ".svg"))
   svglite::svglite(pfad, width = width, height = height)
   tryCatch(force(code), finally = grDevices::dev.off())
-  expect_snapshot_file(pfad, paste0(name, ".svg"), compare = compare_file_text)
+  expect_svg_snapshot(pfad, paste0(name, ".svg"))
 }
 
 # Snapshot einer tinytable-Tabelle (als Typst-Code) -----------------------

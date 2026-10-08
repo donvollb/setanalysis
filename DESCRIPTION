@@ -13,7 +13,7 @@ Description: Funktionen zur Erstellung personalisierter Ergebnisberichte für
     Über Regeltabellen lassen sich aus einer einzigen Vorlage viele Berichte,
     z. B. für einzelne Fachbereiche oder Studiengänge, erzeugen.
 License: MIT + file LICENSE
-URL: https://github.com/donvollb/setanalysis
+URL: https://donvollb.github.io/setanalysis/, https://github.com/donvollb/setanalysis
 BugReports: https://github.com/donvollb/setanalysis/issues
 Depends:
   R (>= 4.1.0)

@@ -186,7 +186,7 @@ merge_grade(daten$Note, daten$Kennung)
 ````
 
 ```{r, echo = FALSE, out.width = "70%", fig.align = "center", fig.alt = "Ausschnitt aus einem Bericht: Tabelle und Boxplots für drei Skalenfragen, darunter die Gesamtnote"}
-knitr::include_graphics("../man/figures/vorschau-1.png")
+knitr::include_graphics("vorschau-bericht.png")
 ```
 
 ### Die passende Funktion für jeden Fragetyp

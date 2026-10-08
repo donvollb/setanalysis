@@ -106,6 +106,10 @@ Fehlerbehebung aufgeführt.
 * Automatisierte Tests mit testthat: Snapshot-Tests halten die Ausgabe aller
   Auswertungs-, Tabellen- und Grafikfunktionen fest (Typst-Text und
   SVG-Abbildungen), sodass unbeabsichtigte Änderungen sofort auffallen.
+* GitHub Actions: `R CMD check` läuft bei jedem Push auf Windows, macOS und
+  Linux (die SVG-Abbildungen werden dort nicht verglichen, weil ihre Textmaße
+  von den installierten Schriften abhängen). Die Website
+  <https://donvollb.github.io/setanalysis/> wird mit pkgdown erzeugt.
 * `DESCRIPTION` vervollständigt: Titel, Beschreibung, Autoren, Links zum
   Repository und alle verwendeten Basis-Pakete unter `Imports`.
 * `subchunkify()` legt keine Variable `sub.nr` mehr in der globalen Umgebung

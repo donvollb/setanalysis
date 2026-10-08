@@ -1,7 +1,8 @@
 # setanalysis
 
-**Deutsch** · [English](README.en.md)
+**Deutsch** · [English](README.en.md) · [Website](https://donvollb.github.io/setanalysis/)
 
+[![R-CMD-check](https://github.com/donvollb/setanalysis/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/donvollb/setanalysis/actions/workflows/R-CMD-check.yaml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE.md)
 
 R-Paket für personalisierte Ergebnisberichte von Befragungen, insbesondere
@@ -90,8 +91,10 @@ anzeigen: `markdown_in_viewer(merge_sc(BspDaten$dataLVE$V3_D))`.
    Schleife über die Zeilen der Berichtstabelle.
 
 Eine ausführliche Anleitung mit allen Schritten steht in der Vignette
-`vignette("bericht-erstellen", package = "setanalysis")`, einen Überblick
-gibt `?setanalysis`.
+[Einen Evaluationsbericht erstellen](https://donvollb.github.io/setanalysis/articles/bericht-erstellen.html).
+Alle Hilfeseiten gibt es in der
+[Funktionsreferenz](https://donvollb.github.io/setanalysis/reference/), einen
+Überblick in R mit `?setanalysis`.
 
 Eine fertige Berichtsvorlage mit Layout (Kopf- und Fußzeile,
 Inhaltsverzeichnis, Akzentfarbe) und zwei lauffähigen Beispielen ist
@@ -124,7 +127,7 @@ Lehrveranstaltungsevaluation und einer Studieneingangsbefragung im Format von
 Das Verhalten der Funktionen ist mit Snapshot-Tests (testthat) abgesichert,
 die die erzeugten Berichtsbausteine einschließlich der Grafiken (SVG)
 vergleichen. Die Skripte, mit denen Beispieldaten und Vorschaubilder erzeugt
-werden, liegen in `data-raw/`. Änderungen stehen in [NEWS.md](NEWS.md).
+werden, liegen in `data-raw/`. Änderungen stehen im [Changelog](https://donvollb.github.io/setanalysis/news/).
 
 ## Autoren und Lizenz
 

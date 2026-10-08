@@ -1,0 +1,90 @@
+url: https://donvollb.github.io/setanalysis/
+lang: de
+
+template:
+  bootstrap: 5
+  bslib:
+    primary: "#507289"
+
+navbar:
+  structure:
+    left: [intro, reference, articles, news]
+    right: [search, english, github]
+  components:
+    intro:
+      text: Anleitung
+      href: articles/bericht-erstellen.html
+    english:
+      text: English
+      href: https://github.com/donvollb/setanalysis/blob/main/README.en.md
+
+home:
+  links:
+  - text: Berichtsvorlage set-template
+    href: https://github.com/donvollb/set-template
+  - text: README in English
+    href: https://github.com/donvollb/setanalysis/blob/main/README.en.md
+
+reference:
+- title: Überblick
+  contents:
+  - setanalysis-package
+- title: Auswertung je Frage
+  desc: >
+    Erzeugen Überschrift, Tabelle und Abbildung für eine Frage. Aufruf in
+    Quarto-Chunks mit `output: asis`.
+  contents:
+  - merge_sc
+  - merge_mc
+  - merge_sk
+  - merge_aggr_sk
+  - merge_num
+  - merge_fachsem
+  - merge_subj
+  - merge_grade
+  - merge_wl
+  - merge_rueck
+  - merge_open
+  - appendix_open
+  - merge_auto
+  - merge_many
+- title: Daten aufbereiten
+  contents:
+  - evasys_read_data
+  - input_tabelle
+  - aggr_data
+  - label_test
+- title: Tabellen
+  contents:
+  - lv_table
+  - table_freq
+  - table_stat_single
+  - table_stat_multi
+- title: Grafiken
+  contents:
+  - barplot_freq
+  - barplot_scmc
+  - barplot_sk
+  - boxplot_aggr_sk
+  - boxplot_grade
+  - boxplot_rueck
+  - boxplot_wl
+- title: Legenden
+  desc: Erläuterungen zu Kennwerten und Grafiken für den Anfang oder das Ende eines Berichts.
+  contents:
+  - bsp_table_stat
+  - bsp_boxplot
+  - bsp_evasys_sk6
+- title: Einstellungen und Werkzeuge
+  contents:
+  - change_analysis_defaults
+  - setanalysis_defaults
+  - list_open_answers
+  - subchunkify
+  - markdown_in_viewer
+- title: Beispieldaten
+  contents:
+  - BspDaten
+- title: Frühere Funktionsnamen
+  contents:
+  - setanalysis-deprecated
