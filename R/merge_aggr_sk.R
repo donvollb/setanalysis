@@ -90,12 +90,10 @@ merge_aggr_sk <- function(x, # Daten
   if (number == "default") { # zieht sich automatisch die Anzahl der Stufen
     # Items, falls diese nicht angegeben wurde
 
-    StufenListe <- list()
     if (!is.null(ncol(x))) {
-      for (k in 1:ncol(x)) {
-        StufenListe[k] <- length(attr(x[, k], "labels"))
-      }
-      Stufen <- unique(StufenListe)
+      Stufen <- unique(vapply(
+        seq_len(ncol(x)), \(k) length(attr(x[, k], "labels")), integer(1)
+      ))
       if (length(Stufen) != 1) { # Fehlermeldung bei unterschiedlicher Anzahl Stufen
         stop("Die ausgewählten Items haben eine unterschiedliche
            Anzahl an Stufen.")
@@ -116,10 +114,8 @@ merge_aggr_sk <- function(x, # Daten
   }
 
 
-  ListeLabels <- list()
-  for (k in 1:length(x)) {
-    ListeLabels[[k]] <- names((attr(x[, k], "labels")))[1:number] # nicht Relevante Labels werden abgeschnitten
-  }
+  # Antwortlabels je Item (nicht relevante Labels werden abgeschnitten)
+  ListeLabels <- lapply(seq_len(ncol(x)), \(k) names(attr(x[, k], "labels"))[1:number])
 
   TabelleLabels <- as.data.frame(ListeLabels, col.names = 1:ncol(x))
 
@@ -182,20 +178,17 @@ merge_aggr_sk <- function(x, # Daten
   }
 
 
-  # Alternativantworten in Listen schreiben (für die Tabelle) -------------
-  if (alt1 != FALSE) {
-    alt1.list <- NULL
+  # Häufigkeit der Ausweichoptionen je Item zählen (für die Tabelle) ------
+  count_per_item <- function(value) {
+    vapply(seq_len(ncol(x)), \(k) sum(x[, k] == value, na.rm = TRUE), integer(1))
+  }
 
-    for (l in 1:ncol(x)) {
-      alt1.list <- c(alt1.list, sum(x[, l] == alt1.num, na.rm = TRUE))
-    }
+  if (alt1 != FALSE) {
+    alt1.list <- count_per_item(alt1.num)
   }
 
   if (alt2 != FALSE) {
-    alt2.list <- NULL
-    for (l in 1:ncol(x)) {
-      alt2.list <- c(alt2.list, sum(x[, l] == alt2.num, na.rm = TRUE))
-    }
+    alt2.list <- count_per_item(alt2.num)
   }
 
   x[x < 1 | x > number] <- NA

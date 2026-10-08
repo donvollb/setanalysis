@@ -1,0 +1,40 @@
+Variable:;"semester"
+Fragetext:;"1.1 In welchem Semester sind Sie?"
+Fragetyp:;"1 aus n"
+Werte:;
+;"1: erstes Semester"
+;"2: höheres Semester"
+;------
+Variable:;"zufrieden"
+Fragetext:;"1.2 Ich bin mit dem Studium zufrieden."
+Fragetyp:;"Skalafrage"
+Werte:;
+;"1: trifft gar nicht zu"
+;"2: "
+;"3: "
+;"4: "
+;"5: "
+;"6: trifft voll zu"
+;"7: kann ich nicht beurteilen"
+;------
+Variable:;"abschluss"
+Fragetext:;"1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich)"
+Fragetyp:;"n aus m"
+;------
+Variable:;"abschluss"
+Fragetext:;"1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich) : Bachelor"
+Fragetyp:;"n aus m"
+;------
+Variable:;"abschluss"
+Fragetext:;"1.3 Welchen Abschluss streben Sie an? (Mehrfachnennung möglich) : Master"
+Fragetyp:;"n aus m"
+;------
+Variable:;"kommentar"
+Fragetext:;"2.1 Was möchten Sie uns noch mitteilen?"
+Fragetyp:;"Offene Frage"
+;------
+Variable:;"alter"
+Fragetext:;"2.2 Wie alt sind Sie?"
+Fragetyp:;"Offene Frage"
+;------
+;

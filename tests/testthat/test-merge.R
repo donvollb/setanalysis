@@ -133,6 +133,22 @@ test_that("merge_aggr_sk() gibt mehrere Skalenfragen unverändert aus", {
   )
 })
 
+test_that("merge_aggr_sk() zählt Ausweichoptionen unverändert", {
+  items <- kf_123[1:40, 1:2]
+  for (n in names(items)) attributes(items[[n]]) <- attributes(kf_123[[n]])
+  items$KF_01[c(1, 5, 9)] <- 0 # erste Ausweichoption
+  items$KF_01[c(2, 3)] <- 7 # zweite Ausweichoption
+  items$KF_02[c(4, 6, 8, 10)] <- 7
+
+  expect_report_snapshot(
+    merge_aggr_sk(items,
+      alt1 = "weiß nicht", alt2 = "trifft nicht zu",
+      alt1.num = 0, alt2.num = 7, show.plot = FALSE
+    ),
+    "merge_aggr_sk-ausweichoptionen-gezaehlt"
+  )
+})
+
 test_that("merge_aggr_sk() bricht bei unterschiedlicher Stufenanzahl ab", {
   gemischt <- data.frame(a = lve$KF_01, b = lve$V3_D)
   expect_error(merge_aggr_sk(gemischt), "unterschiedliche")
@@ -181,6 +197,10 @@ test_that("merge_fachsem() gibt Fachsemester unverändert aus", {
     merge_fachsem(lve$FachSemN, group = "m"),
     "merge_fachsem-master"
   )
+})
+
+test_that("merge_fachsem() meldet eine ungültige Gruppe verständlich", {
+  expect_error(merge_fachsem(lve$FachSemN, group = "x"), "`group` muss")
 })
 
 # merge_grade(), merge_rueck(), merge_wl() --------------------------------

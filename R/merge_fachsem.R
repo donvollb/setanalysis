@@ -21,41 +21,39 @@ merge_fachsem <- function(x, # Daten
 {
   inkl <- .resolve_inkl(inkl, nr)
 
-  if (inkl == TRUE) {
-    if (group == "a") {
-      caps <- "(alle)"
-      xl <- "Fachsemester alle"
-    }
-
-    if (group == "b") {
-      caps <- "(nur Bachelor)"
-      xl <- "Fachsemester Bachelor"
-    }
-
-    if (group == "m") {
-      caps <- "(nur Master)"
-      xl <- "Fachsemester Master"
-    }
-
-
-    x[x >= cutoff] <- cutoff
-    x <- factor(x)
-    levels(x)[cutoff] <- paste0(cutoff, "+")
-
-    cat(paste0("## Fachsemester ", caps, "  \n  \n"))
-    cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehört: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
-
-
-    subchunkify(
-      table_freq(x,
-        col1.name = xl, col2.name = "n",
-        cutoff = cutoff
-      )
-    )
-
-
-    cat("  \n  \n")
-    subchunkify(barplot_freq(x, xlab = "Fachsemester"), fig_height = 5, fig_width = 10) # xlab ist Label x-Achse
-    cat("  \n  \n")
+  if (inkl != TRUE) {
+    return(invisible())
   }
+
+  # Beschriftungen je nach Gruppe -----------------------------------------
+
+  captions <- c(a = "(alle)", b = "(nur Bachelor)", m = "(nur Master)")
+  col_names <- c(
+    a = "Fachsemester alle", b = "Fachsemester Bachelor", m = "Fachsemester Master"
+  )
+  if (!group %in% names(captions)) {
+    stop('`group` muss "a" (alle), "b" (Bachelor) oder "m" (Master) sein.', call. = FALSE)
+  }
+
+  # Alle Werte ab `cutoff` zusammenfassen ---------------------------------
+
+  x[x >= cutoff] <- cutoff
+  x <- factor(x)
+  levels(x)[cutoff] <- paste0(cutoff, "+")
+
+  # Ausgabe ---------------------------------------------------------------
+
+  cat(paste0("## Fachsemester ", captions[[group]], "  \n  \n"))
+  cat("### Bezogen auf das Fach, dem die vorliegende Veranstaltung zugehört: in welchem Fachsemester sind Sie eingeschrieben?  \n  \n")
+
+  subchunkify(
+    table_freq(x,
+      col1.name = col_names[[group]], col2.name = "n",
+      cutoff = cutoff
+    )
+  )
+
+  cat("  \n  \n")
+  subchunkify(barplot_freq(x, xlab = "Fachsemester"), fig_height = 5, fig_width = 10)
+  cat("  \n  \n")
 }

@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='648.00pt' height='180.00pt' viewBox='0 0 648.00 180.00'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: #FFFFFF;'/>
+<defs>
+  <clipPath id='cpMC4wMHw2NDguMDB8MC4wMHwxODAuMDA='>
+    <rect x='0.00' y='0.00' width='648.00' height='180.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwxODAuMDA=)'>
+</g>
+<defs>
+  <clipPath id='cpNjYuMjR8NjQwLjgwfDcuMjB8MTUxLjIw'>
+    <rect x='66.24' y='7.20' width='574.56' height='144.00' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNjYuMjR8NjQwLjgwfDcuMjB8MTUxLjIw)'>
+<line x1='87.52' y1='151.20' x2='87.52' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='239.52' y1='151.20' x2='239.52' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='391.52' y1='151.20' x2='391.52' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+<line x1='543.52' y1='151.20' x2='543.52' y2='7.20' style='stroke-width: 0.75; stroke: #B3B3B3; stroke-linecap: square; stroke-linejoin: miter;' />
+</g>
+<g clip-path='url(#cpMC4wMHw2NDguMDB8MC4wMHwxODAuMDA=)'>
+<rect x='87.52' y='84.76' width='304.00' height='55.56' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<rect x='87.52' y='18.09' width='456.00' height='55.56' style='stroke-width: 0.75; stroke-linecap: square; stroke-linejoin: miter; fill: #6DACDC;' />
+<polygon points='66.24,151.20 640.80,151.20 640.80,7.20 66.24,7.20 ' style='stroke-width: 1.12; stroke-linecap: square; stroke-linejoin: miter;' />
+<text x='51.84' y='116.73' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.11px' lengthAdjust='spacingAndGlyphs'>Master</text>
+<text x='51.84' y='50.07' text-anchor='end' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='47.61px' lengthAdjust='spacingAndGlyphs'>Bachelor</text>
+<text x='87.52' y='177.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='8.28px' lengthAdjust='spacingAndGlyphs'>0</text>
+<text x='239.52' y='177.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='4.62px' lengthAdjust='spacingAndGlyphs'>1</text>
+<text x='391.52' y='177.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>2</text>
+<text x='543.52' y='177.12' text-anchor='middle' style='font-size: 12.00px; font-weight: bold;fill: #262626; font-family: "Red Hat Text";' textLength='7.20px' lengthAdjust='spacingAndGlyphs'>3</text>
+</g>
+<g clip-path='url(#cpNjYuMjR8NjQwLjgwfDcuMjB8MTUxLjIw)'>
+<text x='405.20' y='116.74' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.34px' lengthAdjust='spacingAndGlyphs'>40.0 %</text>
+<text x='557.20' y='50.07' style='font-size: 12.00px;fill: #262626; font-family: "Red Hat Text";' textLength='37.12px' lengthAdjust='spacingAndGlyphs'>60.0 %</text>
+</g>
+<defs>
+  <clipPath id='cpNTkuMDR8NjE3Ljc2fDU5LjA0fDEwNi41Ng=='>
+    <rect x='59.04' y='59.04' width='558.72' height='47.52' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNTkuMDR8NjE3Ljc2fDU5LjA0fDEwNi41Ng==)'>
+</g>
+</g>
+</svg>

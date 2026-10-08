@@ -82,16 +82,16 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
   val.labels <- sub(".*: ", "", as.character(lapply(x, attr, which = "label")))
 
 
+  # Wie oft wurde jede Antwortoption gewählt (Wert ungleich 0)?
+  counts <- vapply(seq_len(length(x)), \(n) sum(x[, n] != 0, na.rm = TRUE), integer(1))
+
   if (valid.perc == TRUE) {
     results <- data.frame(matrix(nrow = length(x), ncol = 4))
     colnames(results) <- c(col1.name, col2.name, "%", "gültige %")
     results[, 1] <- val.labels
-
-    for (n in 1:length(x)) {
-      results[n, 2] <- sum(x[, n] != 0, na.rm = TRUE)
-      results[n, 3] <- results[n, 2] / nrow(x) * 100
-      results[n, 4] <- results[n, 2] / nrow(x[!is.na(x[, 1]), ]) * 100
-    }
+    results[, 2] <- counts
+    results[, 3] <- counts / nrow(x) * 100
+    results[, 4] <- counts / nrow(x[!is.na(x[, 1]), ]) * 100
 
     if (order.table != FALSE) {
       decreasing <- ifelse(order.table == "decreasing", TRUE, FALSE)
@@ -109,10 +109,8 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
 
     colnames(results) <- c(col1.name, "N_votes", "\\%")
     results[, 1] <- val.labels
-    for (n in 1:length(x)) {
-      results[n, 2] <- as.numeric(sum(x[, n] != 0, na.rm = TRUE))
-      results[n, 3] <- results[n, 2] / nrow(x) * 100
-    }
+    results[, 2] <- as.numeric(counts)
+    results[, 3] <- counts / nrow(x) * 100
   }
 
   if (ncol(results) == 4) {

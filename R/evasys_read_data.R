@@ -51,7 +51,7 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
 
 
   # Bilde eine Schleife mit allen Variablennamen
-  for (i in 1:length(var.names.raw)) {
+  for (i in seq_along(var.names.raw)) {
     var.name.tmp <-
       var.names.raw[i] # Speichere den Variablennamen temporär ab
 
@@ -84,7 +84,7 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
   # In der nächsten Schleife ziehen wir dann die wichtigen Infos (Labels, etc.) aus dem Codebuch und schreiben sie mit in den Datensatz
 
   # Bilde eine Schleife mit allen Variablennamen
-  for (i in 1:length(var.names)) {
+  for (i in seq_along(var.names)) {
     var.name.tmp <- var.names[i] # Speichere den aktuellen Variablennamen ab
 
     if (var.name.tmp %in% colnames(data)) { # Wenn der Variablenname im Datensatz als Spalte vorkommt
@@ -108,37 +108,25 @@ evasys_read_data <- function(raw.data.path = NULL, codebook.path = NULL) {
 
       attr(data[, var.name.tmp], "label") <- sub("^.*? ", "", attrs[attrs$var == "Fragetext:", 2]) # Den Fragetext als "label"
       attr(data[, var.name.tmp], "nr") <- sub("? .*$", "", attrs[attrs$var == "Fragetext:", 2]) # Die Nummer der Frage im Fragebogen als "nr"
-      attr(data[, var.name.tmp], "type") <- attrs[attrs$var == "Fragetyp:", 2] # Den Fragetyp als "type"
-
-      # In den nächsten Zeilen passen wir die Typbezeichnung ein wenig an, aus "1 aus n" wird z.B. "sc"
-      if (attr(data[, var.name.tmp], "type") == "1 aus n") {
-        attr(data[, var.name.tmp], "type") <- "sc"
-      }
-      if (attr(data[, var.name.tmp], "type") == "n aus m") {
-        attr(data[, var.name.tmp], "type") <- "mc"
-      }
-      if (attr(data[, var.name.tmp], "type") == "Skalafrage") {
-        attr(data[, var.name.tmp], "type") <- "sk"
-      }
-      if (attr(data[, var.name.tmp], "type") == "Offene Frage") {
-        attr(data[, var.name.tmp], "type") <- "open/num"
-      }
+      # Den Fragetyp als "type", dabei die evasys-Bezeichnung in die Kurzform
+      # des Pakets übersetzen (aus "1 aus n" wird z.B. "sc")
+      evasys_type <- attrs[attrs$var == "Fragetyp:", 2]
+      type_names <- c(
+        "1 aus n" = "sc", "n aus m" = "mc", "Skalafrage" = "sk", "Offene Frage" = "open/num"
+      )
+      attr(data[, var.name.tmp], "type") <-
+        if (evasys_type %in% names(type_names)) type_names[[evasys_type]] else evasys_type
 
 
       # Nun fehlen nur noch die Value Labels, also was z.B. die Antwortoption "1" bei der Frage nach dem Abschluss bedeutet
 
       # Da dass nur bei Skalen- oder SC-Fragen nötig ist, prüfen wir mit einer if-Klausel, ob es sich um eine solche Frage handelt
       if (attrs[attrs$var == "Fragetyp:", 2] %in% c("1 aus n", "Skalafrage")) {
-        # Die beiden folgenden Objekte legen wir leer an, wir brauchen die später
-        nums <- NULL # Die Nummern der Antwortoptionen (z.B. 1 bis 6)
-        nams <- NULL # Was die Nummern dann bedeuten (z.B. "trifft gar nicht zu")
-
-        # Die Antortoptionen stehen über mehrere Zeilen verteilt im "attrs"-Objekt, daher läuft unsere Schleife über jede der Zeilen
-        for (k in (which(attrs$var %in% c("Wert:", "Werte:")) + 1):nrow(attrs)) {
-          nums <- c(nums, as.numeric(sub(": .*?$", "", attrs[k, 2]))) # Hier schnappt sie sich die Nummer
-          nams <- c(nams, sub("^.*?: ", "", attrs[k, 2])) # Hier die Antwortoption
-          # Diese werden jeweils zu den Objekten hinzugefügt
-        }
+        # Die Antwortoptionen stehen in den Zeilen nach "Wert:" bzw. "Werte:",
+        # jeweils in der Form "1: trifft gar nicht zu"
+        value_rows <- attrs[(which(attrs$var %in% c("Wert:", "Werte:")) + 1):nrow(attrs), 2]
+        nums <- as.numeric(sub(": .*?$", "", value_rows)) # Die Nummern der Antwortoptionen (z.B. 1 bis 6)
+        nams <- sub("^.*?: ", "", value_rows) # Was die Nummern bedeuten (z.B. "trifft gar nicht zu")
 
         # Hier werden dann die Antwortoptionen als "labels" der variable hinzugefügt
         attr(data[, var.name.tmp], "labels") <- setNames(nums, nams)

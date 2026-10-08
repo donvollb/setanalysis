@@ -64,74 +64,64 @@ merge_open <- function(x, # Daten
     return(invisible())
   }
 
-  ## Erzeugung des Eigentlichen Outputs mit den Offenen Fragen ------------
+  ## Erzeugung des eigentlichen Outputs mit den offenen Antworten ---------
+  ## (ohne Anhang oder im Anhang selbst)
 
-  if (appendix == FALSE | is_appendix == TRUE) {
-    if (anchor != FALSE) {
-      cat("###", nr, attr(x, "label"), paste0("{#sec-", anchor, ".bottom}"), "\n \n")
-      cat(paste0("[zurück nach oben](#sec-", anchor, ".top) \n\n"))
-    } else {
-      cat("###", nr, attr(x, "label"), "\n \n")
-    }
-    if (length(na.omit(x)) == 0) { # Falls es keine offenen Antworten gibt
-
-      cat("*Keine offenen Antworten zu dieser Frage.*  \n\n")
-      return(invisible())
-    }
-
-    ### Leerzeichen vorne und hinten entfernen, NAs entfernen ---------------
-
-    x <- trimws(x[!is.na(x)])
-
-    ### Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
-
-    if (freq == "auto") {
-      freq <- length(unique(tolower(x))) < length(x)
-    }
-
-    ### Alphabetisch sortieren und in Dataframe umwandeln -------------------
-
-    x <- x[order(x)]
-    x <- as.data.frame(x)
-
-    ### Tabelle mit oder ohne Häufigkeiten erzeugen -------------------------
-
-    if (freq == TRUE) {
-      # Wieder in Vektor umwandeln
-      x <- unlist(x, use.names = FALSE)
-
-      # Gruppen nach Kleinbuchstaben bilden
-      Gruppen <- split(x, tolower(x))
-
-      # für jede Gruppe: die häufigste Schreibweise auswählen
-      most_used <- function(x) names(which.max(table(x)))
-      Hauptschreibweisen <- sapply(Gruppen, most_used)
-
-      # Häufigkeiten (aller Varianten) zählen
-      Häufigkeiten <- lengths(Gruppen)
-
-      # Tabelle mit den Repräsentanten und den Häufigkeiten
-      Tabelle <- data.frame(
-        Antwort = Hauptschreibweisen,
-        Häufigkeit = Häufigkeiten,
-        row.names = NULL
-      )
-
-      # Nach Häufigkeit sortieren
-      Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
-
-      # Formatierung der Tabelle
-      subchunkify(lv_table(Tabelle, col.width = c(137, 18), striped = FALSE))
-    } else {
-      colnames(x) <- "Antwort"
-
-      cat("*Die folgenden Antworten wurden jeweils nur einmal gegeben:*  \n\n")
-
-      subchunkify(lv_table(x, col.width = 159, striped = FALSE))
-    }
-
-    cat(" \n\n")
+  if (anchor != FALSE) {
+    cat("###", nr, attr(x, "label"), paste0("{#sec-", anchor, ".bottom}"), "\n \n")
+    cat(paste0("[zurück nach oben](#sec-", anchor, ".top) \n\n"))
+  } else {
+    cat("###", nr, attr(x, "label"), "\n \n")
   }
+
+  if (length(na.omit(x)) == 0) {
+    cat("*Keine offenen Antworten zu dieser Frage.*  \n\n")
+    return(invisible())
+  }
+
+  ### NAs entfernen, Leerzeichen vorne und hinten entfernen, sortieren -----
+
+  x <- trimws(x[!is.na(x)])
+  x <- x[order(x)]
+
+  ### Herausfinden, ob Häufigkeitstabelle sinnvoll ist (Gibt es Antworten mehrmals?)
+
+  if (freq == "auto") {
+    freq <- length(unique(tolower(x))) < length(x)
+  }
+
+  ### Tabelle mit oder ohne Häufigkeiten erzeugen -------------------------
+
+  if (freq == TRUE) {
+    # Gruppen nach Kleinbuchstaben bilden
+    Gruppen <- split(x, tolower(x))
+
+    # für jede Gruppe: die häufigste Schreibweise auswählen
+    most_used <- function(x) names(which.max(table(x)))
+    Hauptschreibweisen <- sapply(Gruppen, most_used)
+
+    # Häufigkeiten (aller Varianten) zählen
+    Häufigkeiten <- lengths(Gruppen)
+
+    # Tabelle mit den Repräsentanten und den Häufigkeiten
+    Tabelle <- data.frame(
+      Antwort = Hauptschreibweisen,
+      Häufigkeit = Häufigkeiten,
+      row.names = NULL
+    )
+
+    # Nach Häufigkeit sortieren
+    Tabelle <- Tabelle[order(-Tabelle$Häufigkeit, Tabelle$Antwort), ]
+
+    # Formatierung der Tabelle
+    subchunkify(lv_table(Tabelle, col.width = c(137, 18), striped = FALSE))
+  } else {
+    cat("*Die folgenden Antworten wurden jeweils nur einmal gegeben:*  \n\n")
+
+    subchunkify(lv_table(data.frame(Antwort = x), col.width = 159, striped = FALSE))
+  }
+
+  cat(" \n\n")
 }
 
 #' Funktion um alle offenen Antworten unten in den Anhang zu packen

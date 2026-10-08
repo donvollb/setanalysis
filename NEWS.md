@@ -20,6 +20,8 @@ Fehlerbehebung aufgeführt.
   Diagramm; sie stehen weiterhin in der Tabelle. Dadurch wird die Abbildung bei
   `fig.height = "default"` entsprechend niedriger. Die Beispieldaten
   `BspDaten$Plots$mc` wurden passend dazu bereinigt.
+* `merge_fachsem()` bricht bei einer ungültigen `group` jetzt mit einer
+  verständlichen Fehlermeldung ab (bisher: „Objekt 'caps' nicht gefunden“).
 * `merge.open()` ist wieder von außen aufrufbar. roxygen hatte die Funktion
   fälschlich als S3-Methode von `merge()` registriert statt sie zu exportieren.
 

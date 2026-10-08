@@ -24,17 +24,10 @@ merge_wl <- function(WL, # WL der Daten
 
   # Noch nicht aggregierte Daten aggregieren ------------------------------
 
+  # (Median je Kennung, in der Reihenfolge des ersten Auftretens)
+
   if (already.aggr == FALSE) {
-    wl.aggr <- vector()
-
-    ## Schleife, die alle Kennungen durchgeht und den Median berechnet ------
-
-    for (Ausgewählte.Kennung in unique(kennung)) {
-      wl.tmp <- WL[kennung == Ausgewählte.Kennung]
-      md <- median(wl.tmp, na.rm = TRUE)
-      wl.aggr[length(wl.aggr) + 1] <- md
-    }
-    WL <- wl.aggr
+    WL <- vapply(unique(kennung), \(k) median(WL[kennung == k], na.rm = TRUE), numeric(1))
   }
 
   # Boxplot erstellen -----------------------------------------------------
