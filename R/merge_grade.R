@@ -21,13 +21,7 @@ merge_grade <- function(x, # Daten
                         inkl = "nr", # TRUE oder FALSE, ob die Funktion ausgeführt wird; "nr" zieht sich automatisch die entsprechende inkl. Variable
                         nr = "") # Nummer, die Grundlage für entsprechende inkl. Variable ist und vorne an den Fragetext gestellt wird
 {
-  if (inkl == "nr") {
-    if (nr == "") {
-      inkl <- TRUE
-    } else {
-      inkl <- eval(parse(text = paste0("inkl.", nr)))
-    }
-  }
+  inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {
     return(invisible())

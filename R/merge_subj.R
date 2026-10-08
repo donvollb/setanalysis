@@ -25,21 +25,9 @@ merge_subj <- function(x1, # Daten von Fach 1
 {
   # Überprüfung der inkl-Parameter ----------------------------------------
 
-  if (inkl1 == "nr1") {
-    if (nr1 == "") {
-      inkl1 <- TRUE
-    } else {
-      inkl1 <- eval(parse(text = paste0("inkl.", nr1)))
-    }
-  }
+  inkl1 <- .resolve_inkl(inkl1, nr1, marker = "nr1")
 
-  if (inkl2 == "nr2") {
-    if (nr2 == "") {
-      inkl2 <- TRUE
-    } else {
-      inkl2 <- eval(parse(text = paste0("inkl.", nr2)))
-    }
-  }
+  inkl2 <- .resolve_inkl(inkl2, nr2, marker = "nr2")
 
   if (inkl1 != TRUE | inkl2 != TRUE) {
     return(invisible())

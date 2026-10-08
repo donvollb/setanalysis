@@ -27,13 +27,7 @@ merge_sc <- function(x, # Daten
                      pagebreak = FALSE, # Seitenumbruch dahinter?
                      digits = 1) # Anzahl Nachkommastellen
 {
-  if (inkl == "nr") {
-    if (nr == "") {
-      inkl <- TRUE
-    } else {
-      inkl <- eval(parse(text = paste0("inkl.", nr)))
-    }
-  }
+  inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {
     return(invisible())

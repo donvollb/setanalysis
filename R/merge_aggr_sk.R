@@ -65,16 +65,14 @@ merge_aggr_sk <- function(x, # Daten
       nrs.ends <- nr1:nr.end
       nrs <- paste0(header, ".", nrs.ends)
 
-      inkls <- NULL
-      for (k in 1:length(nrs)) {
-        inkls[k] <- eval(parse(text = paste0("inkl.", nrs[k])))
-      }
+      # inkl.-Variable für jedes Item nachschlagen
+      inkls <- sapply(nrs, .inkl_value, env = environment(), USE.NAMES = FALSE)
 
       x <- x[, inkls] # Variablen entfernen, die nicht vorkommen sollen
       nrs <- nrs[inkls] # Nummern entfernen, die nicht vorkommen sollen
 
-      if (length(nrs > 0)) {
-        for (k in 1:length(nrs)) {
+      if (length(nrs) > 0) {
+        for (k in seq_along(nrs)) {
           attr(x[, k], "label") <- paste(nrs[k], attr(x[, k], "label"))
         }
       }

@@ -44,13 +44,7 @@ merge_mc <- function(x, # Daten (dataframe mit mehreren Spalten) -> Wichtig: Dar
                      digits = 1, # Wie viele Nachkommastellen sollen angezeigt werden?
                      show.plot = setanalysis_defaults$show.plot.mc) # Soll der Plot angezeigt werden?
 {
-  if (inkl == "nr") {
-    if (nr == "") {
-      inkl <- TRUE
-    } else {
-      inkl <- eval(parse(text = paste0("inkl.", nr)))
-    }
-  }
+  inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {
     return(invisible())

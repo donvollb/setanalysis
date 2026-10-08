@@ -36,13 +36,7 @@ merge_sk <- function(x, # Daten
     return(invisible())
   } # ohne gültige Daten nicht ausführen
 
-  if (inkl == "nr") {
-    if (nr == "") {
-      inkl <- TRUE
-    } else {
-      inkl <- eval(parse(text = paste0("inkl.", nr)))
-    }
-  }
+  inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE) {
     return(invisible())

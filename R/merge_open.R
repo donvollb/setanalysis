@@ -36,13 +36,7 @@ merge_open <- function(x, # Daten
                        is_appendix = FALSE, # Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
                        anchor = FALSE) # Nur relevant, falls es einen Anhang gibt. Wenn TRUE, wird der Output für den Anhang erzeugt.
 {
-  if (inkl == "nr") {
-    if (nr == "") {
-      inkl <- TRUE
-    } else {
-      inkl <- eval(parse(text = paste0("inkl.", nr)))
-    }
-  }
+  inkl <- .resolve_inkl(inkl, nr)
 
   if (inkl != TRUE | inkl_global != TRUE) {
     return(invisible())
@@ -163,8 +157,8 @@ appendix_open <- function(freq = "auto") {
   cat("# Anhang: Fragen mit offenem Antwortformat  \n  \n")
 
   for (k in seq_len(anchor.nr)) {
-    x <- eval(parse(text = paste0("list_open_answers$var.", k)))
-    q.nr <- eval(parse(text = paste0("list_open_answers$nr.", k)))
+    x <- list_open_answers[[paste0("var.", k)]]
+    q.nr <- list_open_answers[[paste0("nr.", k)]]
     merge_open(x,
       nr = q.nr, anchor = k, freq = freq,
       appendix = TRUE, is_appendix = TRUE
