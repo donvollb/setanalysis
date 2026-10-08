@@ -1,3 +1,13 @@
+# setanalysis (Entwicklungsversion)
+
+## Dokumentation
+
+* Die Anleitung „Einen Evaluationsbericht erstellen“ ist neu gegliedert: nach
+  den drei Dateien eines Auswertungsprojekts (Vorbereitung, Bericht, alle
+  Berichte erstellen) und danach, wann welcher Schritt ausgeführt wird.
+* Neuer Artikel auf der Website: „Das Paket pflegen“ (Übernahme des
+  Repositorys, Arbeitsweise mit Branches, Tests, GitHub Actions, Releases).
+
 # setanalysis 1.1.0
 
 Überarbeitung von Dokumentation, Paketstruktur und Code. Die Ausgabe der
